@@ -1,0 +1,42 @@
+{
+  "name": "ki-anfragen-frontend",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^2.2.2",
+    "@astrojs/vercel": "3.8.1",
+    "@supabase/supabase-js": "2.32.0",
+    "@types/react": "^18.2.13",
+    "@types/react-dom": "^18.2.6",
+    "astro": "^2.10.9",
+    "common-tags": "1.8.2",
+    "gpt3-tokenizer": "1.1.5",
+    "openai": "3.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/common-tags": "1.8.1",
+    "@typescript-eslint/eslint-plugin": "6.4.0",
+    "@typescript-eslint/parser": "6.4.0",
+    "eslint": "8.47.0",
+    "eslint-plugin-astro": "0.28.0",
+    "eslint-plugin-react": "7.33.2",
+    "prettier": "3.0.2",
+    "prettier-plugin-astro": "0.11.1"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": false,
+    "useTabs": true,
+    "printWidth": 80
+  }
+}

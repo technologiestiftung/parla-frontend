@@ -1,3 +1,5 @@
+.vercel
+.vscode
 # Logs
 logs
 *.log

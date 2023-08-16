@@ -1,0 +1,42 @@
+---
+// Component Imports
+import Counter from "../components/Counter";
+import Search from "../components/Search";
+import Layout from "../layouts/Layout.astro";
+const someProps = {
+	title: "Hello World",
+};
+
+export const title = "Home";
+// Full Astro Component Syntax:
+// https://docs.astro.build/core-concepts/astro-components/
+
+---
+
+<Layout {...someProps}>
+	<Search client:load />
+</Layout>
+
+<!-- <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<style>
+			html,
+			body {
+				font-family: system-ui;
+				margin: 0;
+			}
+			body {
+				padding: 2rem;
+			}
+		</style>
+	</head>
+	<body>
+		<main> -->
+
+		<!-- </main>
+	</body>
+</html> -->

@@ -1,0 +1,7 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  // allow jsx in .astro files
+  "compilerOptions": {
+    "jsx": "react"
+  }
+}
