@@ -1,19 +1,23 @@
-import type { APIContext } from "astro";
 import { codeBlock, oneLine } from "common-tags";
 import GPT3Tokenizer from "gpt3-tokenizer";
 import type { CreateChatCompletionRequest } from "openai";
-import type { Database } from "../lib/database";
-import { ApplicationError, EnvError, UserError } from "../lib/errors";
-import supabase from "../lib/supabase";
-export async function post(context: APIContext) {
+import { ApplicationError, EnvError, UserError } from "../../../lib/errors";
+import supabase from "../../../lib/supabase";
+import { NextRequest } from "next/server";
+
+export const config = {
+	runtime: "edge",
+};
+
+export async function POST(req: NextRequest) {
 	try {
-		const OPENAI_KEY = import.meta.env.OPENAI_KEY;
-		const OPENAI_MODEL = import.meta.env.OPENAI_MODEL;
+		const OPENAI_KEY = process.env.OPENAI_KEY;
+		const OPENAI_MODEL = process.env.OPENAI_MODEL;
 		if (OPENAI_KEY === undefined) throw new EnvError("OPENAI_KEY");
 		if (OPENAI_MODEL === undefined) throw new EnvError("OPENAI_MODEL");
 
 		// 1. get the query from the request ✓
-		const requestJson = await context.request.json();
+		const requestJson = await req.json();
 
 		const { query } = requestJson;
 		if (query === undefined) {
@@ -106,6 +110,29 @@ export async function post(context: APIContext) {
 				pagesError,
 			);
 		}
+		// match documents to pdfs
+		const { error: docsError, data: docs } = await supabase
+			.from("parsed_documents")
+			.select("*")
+			.in(
+				"id",
+				sections.map((section) => section.parsed_document_id),
+			);
+		if (docsError) {
+			throw new ApplicationError("Failed to match docsSections to docs");
+		}
+
+		const { error: pdfError, data: pdfs } = await supabase
+			.from("dokument")
+			.select("*")
+			.in(
+				"id",
+				docs.map((doc) => doc.dokument_id),
+			);
+		if (pdfError) {
+			throw new ApplicationError("Failed to match docs to pdfs");
+		}
+
 		// 4. create a prompt with the
 		const tokenizer = new GPT3Tokenizer({ type: "gpt3" });
 		let tokenCount = 0;
@@ -118,14 +145,14 @@ export async function post(context: APIContext) {
 			const section = sections[i];
 			let content = section.content ?? "";
 			// filter one unique page from the array pages by matching the content pageSection["page_id"] with the page.id
-			if (uniqueSectionIds.has(section.id)) {
-				const section = sections.find(
-					(sec) => sec.id === section.id,
-				) as Database["public"]["Tables"]["parsed_document_sections"]["Row"];
-				// if (section) {
-				// 	content += `**[Quelle](${section.})**\n\n`;
-				// }
-			}
+			// if (uniqueSectionIds.has(section.id)) {
+			// 	const section = sections.find(
+			// 		(sec) => sec.id === section.id,
+			// 	) as Database["public"]["Tables"]["parsed_document_sections"]["Row"];
+			// 	// if (section) {
+			// 	// 	content += `**[Quelle](${section.})**\n\n`;
+			// 	// }
+			// }
 
 			const encoded = tokenizer.encode(content);
 			tokenCount += encoded.text.length;
@@ -141,14 +168,13 @@ export async function post(context: APIContext) {
 		}
 		const prompt = codeBlock`
 		${oneLine`
-			Du bist ein sehr begeisterter und freundlicher  Mitarbeiter des Verwaltung, der gerne Menschen hilft! Du antwortest immer in Deutsch. Du benutzt immer das Du nie das Sie.
+			Du bist ein freundlicher Assistent des Verwaltung. Du antwortest immer in Deutsch. Du benutzt immer das Sie nie das du.
 			Mit den folgenden Abschnitte aus das den schriftlichen Anfragen, beantwortest du die Frage nur mit diesen Informationen, ausgegeben im Markdown-Format. Wenn du unsicher bist und die Antwort nicht explizit in dem Abschnitte des schriftlichen Anfrage: steht, sagst du: Entschuldigung, damit kann ich leider nicht helfen.
 		`}
 		${oneLine`Abschnitte des schriftlichen Anfrage:`}
 		${contextText}
 		Antwort als Markdown (mit möglichen Zitaten in Anführungszeichen), in diesem Format:
 		Antwort Text
-
 
 		Das ist die Frage des Benutzers:
 	`;
@@ -184,13 +210,21 @@ export async function post(context: APIContext) {
 		}
 		const json = await response.json();
 
-		return new Response(JSON.stringify({ json }), {
-			status: 200,
-			headers: {
-				"Content-Type": "application/json",
-				"Cache-Control": "s-maxage=10, stale-while-revalidate",
+		return new Response(
+			JSON.stringify({
+				json,
+				pdfs,
+				sections,
+				docs,
+			}),
+			{
+				status: 200,
+				headers: {
+					"Content-Type": "application/json",
+					"Cache-Control": "s-maxage=10, stale-while-revalidate",
+				},
 			},
-		});
+		);
 	} catch (error: unknown) {
 		if (error instanceof UserError) {
 			console.error(error);
