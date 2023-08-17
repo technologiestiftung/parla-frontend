@@ -34,10 +34,17 @@ export async function post(context: APIContext) {
 				body: JSON.stringify({
 					input: sanitizedQuery,
 				}),
-			}
-		).then((res) => res.json());
+			},
+		);
 
-		const [results] = moderationResponse.results;
+		if (!moderationResponse.ok) {
+			throw new ApplicationError(
+				`OpenAI moderation failed with status ${moderationResponse.status}`,
+			);
+		}
+		const moderationResponseJson = await moderationResponse.json();
+
+		const [results] = moderationResponseJson.results;
 
 		if (results.flagged) {
 			throw new UserError("Flagged content", {
@@ -58,13 +65,13 @@ export async function post(context: APIContext) {
 					model: "text-embedding-ada-002",
 					input: sanitizedQuery.replaceAll("\n", " "),
 				}),
-			}
+			},
 		);
 
 		if (embeddingResponse.status !== 200) {
 			throw new ApplicationError(
 				"Failed to create embedding for question",
-				embeddingResponse
+				embeddingResponse,
 			);
 		}
 
@@ -80,23 +87,23 @@ export async function post(context: APIContext) {
 				match_threshold: 0.78,
 				match_count: 10,
 				min_content_length: 50,
-			}
+			},
 		);
+		console.log("docSections", docSections);
 
 		if (matchError) {
 			throw new ApplicationError("Failed to match page sections", matchError);
 		}
+		const ids = docSections.map((section) => section.id);
 		const { error: pagesError, data: sections } = await supabase
 			.from("parsed_document_sections")
 			.select("*")
-			.in(
-				"id",
-				docSections.map((doc) => doc.id)
-			);
+			.in("id", ids);
+
 		if (pagesError) {
 			throw new ApplicationError(
 				"Failed to match pages to pageSections",
-				pagesError
+				pagesError,
 			);
 		}
 		// 4. create a prompt with the
@@ -113,7 +120,7 @@ export async function post(context: APIContext) {
 			// filter one unique page from the array pages by matching the content pageSection["page_id"] with the page.id
 			if (uniqueSectionIds.has(section.id)) {
 				const section = sections.find(
-					(sec) => sec.id === section.id
+					(sec) => sec.id === section.id,
 				) as Database["public"]["Tables"]["parsed_document_sections"]["Row"];
 				// if (section) {
 				// 	content += `**[Quelle](${section.})**\n\n`;
@@ -158,6 +165,8 @@ export async function post(context: APIContext) {
 			temperature: 0,
 			stream: false,
 		};
+		console.log("These are the complitionOptions");
+		console.log(completionOptions);
 		const response = await fetch("https://api.openai.com/v1/chat/completions", {
 			method: "POST",
 			headers: {
@@ -170,7 +179,7 @@ export async function post(context: APIContext) {
 		if (response.status !== 200) {
 			throw new ApplicationError(
 				"Failed to create completion for question",
-				response
+				response,
 			);
 		}
 		const json = await response.json();
