@@ -26,6 +26,7 @@
     "@types/common-tags": "1.8.1",
     "@typescript-eslint/eslint-plugin": "6.4.0",
     "@typescript-eslint/parser": "6.4.0",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "8.47.0",
     "eslint-plugin-astro": "0.28.0",
     "eslint-plugin-react": "7.33.2",
@@ -38,5 +39,10 @@
     "singleQuote": false,
     "useTabs": true,
     "printWidth": 80
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
