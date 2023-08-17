@@ -5,9 +5,7 @@ import { ApplicationError, EnvError, UserError } from "../../../lib/errors";
 import supabase from "../../../lib/supabase";
 import { NextRequest } from "next/server";
 
-export const config = {
-	runtime: "edge",
-};
+export const runtime = "edge";
 
 export async function POST(req: NextRequest) {
 	try {
