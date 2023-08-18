@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import "./Search.css";
+import { ResponseObject } from "@/app/api/vector-search/route";
 export default function Search() {
-	const [result, setResult] = useState<Record<string, unknown> | null>(null);
+	const [result, setResult] = useState<ResponseObject | null>(null);
 	const [query, setQuery] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [errors, setErrors] = useState<Error | null>(null);
@@ -57,11 +58,11 @@ export default function Search() {
 	}
 
 	return (
-		<main>
+		<>
 			<div className="row">
 				<div className="col">
 					{/* <h1 className="text-4xl text-left py-5">Search</h1> */}
-					<form onSubmit={handleSubmit}>
+					<form onSubmit={handleSubmit} className="flex max-w-fit">
 						<input
 							className="border border-gray-400 rounded-l px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
 							ref={inputRef}
@@ -83,10 +84,29 @@ export default function Search() {
 					<h2 className="text-2xl py-2">Results</h2>
 					{loading && "Loading..."}
 					{/* @ts-ignore */}
-					{result && <p>{result?.json?.choices[0].message.content}</p>}
+					{result && <p>{result?.gpt.choices[0].message.content}</p>}
 					{errors && <>{errors.message}</>}
 				</div>
 			</div>
-		</main>
+			<div className="row">
+				<div className="col">
+					<h2 className="text-2xl py-2">referenziete PDFs</h2>
+
+					<ul>
+						{result &&
+							result.pdfs.map((pdf) => (
+								<li key={pdf.id}>
+									<a
+										href={`${pdf.lokurl}`}
+										className="underline text-blue-500 hover:text-blue-800 visited:text-blue-950"
+									>
+										{pdf.titel} | {pdf.desk}
+									</a>
+								</li>
+							))}
+					</ul>
+				</div>
+			</div>
+		</>
 	);
 }
