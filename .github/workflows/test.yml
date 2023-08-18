@@ -1,15 +1,5 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests
 name: Node.js CI
-env:
-  NEXT_PUBLIC_SUPABASE_URL: http://localhost:54321
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
-  SUPABASE_SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU
-  NEXT_PUBLIC_COLORTHIEF_URL: http://localhost:8080
-  # Get your key at https://platform.openai.com/account/api-keys
-  OPENAI_API_KEY: sk-123
-  NODE_ENV: test
-  NEXT_PUBLIC_HUMAN_MODELS_PATH: /models
-
 on:
   push:
     branches: [main]
@@ -18,6 +8,14 @@ on:
 
 jobs:
   build:
+    env:
+      CI: true
+      # This is production environment variables
+      SUPABASE_URL: http://localhost:54321
+      SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
+      OPENAI_KEY: sk-abc...
+      OPENAI_MODEL: gpt-3.5-turbo
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
