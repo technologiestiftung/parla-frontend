@@ -6,6 +6,78 @@ import supabase from "../../../lib/supabase";
 import { NextRequest } from "next/server";
 
 export const runtime = "edge";
+export interface ResponseObject {
+	gpt: Gpt;
+	pdfs: Pdf[];
+	sections: Section[];
+	docs: Doc[];
+}
+
+interface Gpt {
+	id: string;
+	object: string;
+	created: number;
+	model: string;
+	choices: Choice[];
+	usage: Usage;
+}
+
+interface Choice {
+	index: number;
+	message: {
+		role: string;
+		content: string;
+	};
+	finish_reason: string;
+}
+
+interface Usage {
+	prompt_tokens: number;
+	completion_tokens: number;
+	total_tokens: number;
+}
+
+interface Pdf {
+	id: number;
+	reihnr: string;
+	dherk: string;
+	dherkl: string;
+	wp: string;
+	dokart: string;
+	dokartl: string;
+	doktyp: string;
+	doktypl: string;
+	nrintyp: string;
+	desk: string;
+	titel: string;
+	doknr: string;
+	dokdat: string;
+	lokurl?: string;
+	sb?: any;
+	vkdat?: any;
+	hnr?: any;
+	jg?: any;
+	abstract?: string;
+	urheber?: string;
+	vorgang_id?: number;
+}
+
+interface Section {
+	id: number;
+	parsed_document_id: number;
+	content?: any;
+	token_count?: number;
+	embeddings?: any;
+	heading?: string;
+}
+
+interface Doc {
+	id?: number;
+	filename?: string;
+	checksum?: string;
+	meta?: null;
+	dokument_id?: number;
+}
 
 export async function POST(req: NextRequest) {
 	try {
@@ -167,7 +239,7 @@ export async function POST(req: NextRequest) {
 		const prompt = codeBlock`
 		${oneLine`
 			Du bist ein freundlicher Assistent des Verwaltung. Du antwortest immer in Deutsch. Du benutzt immer das Sie nie das du.
-			Mit den folgenden Abschnitte aus das den schriftlichen Anfragen, beantwortest du die Frage nur mit diesen Informationen, ausgegeben im Markdown-Format. Wenn du unsicher bist und die Antwort nicht explizit in dem Abschnitte des schriftlichen Anfrage: steht, sagst du: Entschuldigung, damit kann ich leider nicht helfen.
+			Mit den folgenden Abschnitte aus das den schriftlichen Anfragen, beantwortest du die Frage nur mit diesen Informationen, ausgegeben im Markdown-Format. Wenn du unsicher bist und die Antwort nicht explizit in dem Abschnitte des schriftlichen Anfrage: steht, schreibst du eine kurze Zusammenfassung der Abschnitt. Bitte immer nur kurze Zusammenfassungen und mache klar, dass du eine Zusammenfassung schreibst, indem du "Zusammenfassung Kontext" voran stellst.
 		`}
 		${oneLine`Abschnitte des schriftlichen Anfrage:`}
 		${contextText}
@@ -210,11 +282,11 @@ export async function POST(req: NextRequest) {
 
 		return new Response(
 			JSON.stringify({
-				json,
+				gpt: json,
 				pdfs,
 				sections,
 				docs,
-			}),
+			} as ResponseObject),
 			{
 				status: 200,
 				headers: {
