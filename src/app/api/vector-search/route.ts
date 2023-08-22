@@ -4,9 +4,14 @@ import type { CreateChatCompletionRequest } from "openai";
 import { ApplicationError, EnvError, UserError } from "../../../lib/errors";
 import supabase from "../../../lib/supabase";
 import { NextRequest } from "next/server";
+import { Database } from "@/lib/database";
 
+type Section = Database["public"]["Tables"]["parsed_document_sections"]["Row"];
+type Pdf = Database["public"]["Tables"]["dokument"]["Row"];
+type Doc = Database["public"]["Tables"]["parsed_documents"]["Row"];
 export const runtime = "edge";
 export interface ResponseObject {
+	details: ResponseDetail;
 	gpt: Gpt;
 	pdfs: Pdf[];
 	sections: Section[];
@@ -37,48 +42,24 @@ interface Usage {
 	total_tokens: number;
 }
 
-interface Pdf {
-	id: number;
-	reihnr: string;
-	dherk: string;
-	dherkl: string;
-	wp: string;
-	dokart: string;
-	dokartl: string;
-	doktyp: string;
-	doktypl: string;
-	nrintyp: string;
-	desk: string;
-	titel: string;
-	doknr: string;
-	dokdat: string;
-	lokurl?: string;
-	sb?: any;
-	vkdat?: any;
-	hnr?: any;
-	jg?: any;
-	abstract?: string;
-	urheber?: string;
-	vorgang_id?: number;
+// interface Section {
+// 	id: number;
+// 	parsed_document_id: number;
+// 	content?: any;
+// 	token_count?: number;
+// 	embeddings?: any;
+// 	heading?: string;
+// }
+
+export interface ResponseSection extends Partial<Section> {
+	parsed_documents?: Doc[];
+	pdfs?: Pdf[];
 }
 
-interface Section {
-	id: number;
-	parsed_document_id: number;
-	content?: any;
-	token_count?: number;
-	embeddings?: any;
-	heading?: string;
+export interface ResponseDetail {
+	gpt?: Gpt;
+	sections: ResponseSection[];
 }
-
-interface Doc {
-	id?: number;
-	filename?: string;
-	checksum?: string;
-	meta?: null;
-	dokument_id?: number;
-}
-
 export async function POST(req: NextRequest) {
 	try {
 		const OPENAI_KEY = process.env.OPENAI_KEY;
@@ -171,7 +152,7 @@ export async function POST(req: NextRequest) {
 		const ids = docSections.map((section) => section.id);
 		const { error: pagesError, data: sections } = await supabase
 			.from("parsed_document_sections")
-			.select("*")
+			.select("content,id,parsed_document_id")
 			.in("id", ids);
 
 		if (pagesError) {
@@ -180,6 +161,9 @@ export async function POST(req: NextRequest) {
 				pagesError,
 			);
 		}
+		const responseDetail: ResponseDetail = {
+			sections: sections,
+		};
 		// match documents to pdfs
 		const { error: docsError, data: docs } = await supabase
 			.from("parsed_documents")
@@ -191,6 +175,11 @@ export async function POST(req: NextRequest) {
 		if (docsError) {
 			throw new ApplicationError("Failed to match docsSections to docs");
 		}
+		responseDetail.sections.forEach((section, i, arr) => {
+			section.parsed_documents = docs.filter(
+				(doc) => doc.id === section.parsed_document_id,
+			);
+		});
 
 		const { error: pdfError, data: pdfs } = await supabase
 			.from("dokument")
@@ -203,6 +192,14 @@ export async function POST(req: NextRequest) {
 			throw new ApplicationError("Failed to match docs to pdfs");
 		}
 
+		responseDetail.sections.forEach((section, i, arr) => {
+			section.pdfs = pdfs.filter(
+				(pdf) =>
+					section.parsed_documents
+						?.map((doc) => doc.dokument_id)
+						.includes(pdf.id),
+			);
+		});
 		// 4. create a prompt with the
 		const tokenizer = new GPT3Tokenizer({ type: "gpt3" });
 		let tokenCount = 0;
@@ -261,8 +258,8 @@ export async function POST(req: NextRequest) {
 			temperature: 0,
 			stream: false,
 		};
-		console.log("These are the complitionOptions");
-		console.log(completionOptions);
+		// console.log("These are the complitionOptions");
+		// console.log(completionOptions);
 		const response = await fetch("https://api.openai.com/v1/chat/completions", {
 			method: "POST",
 			headers: {
@@ -279,9 +276,11 @@ export async function POST(req: NextRequest) {
 			);
 		}
 		const json = await response.json();
+		responseDetail.gpt = json;
 
 		return new Response(
 			JSON.stringify({
+				details: responseDetail,
 				gpt: json,
 				pdfs,
 				sections,
