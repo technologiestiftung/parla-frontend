@@ -13,7 +13,7 @@ export default function Search() {
 	const [query, setQuery] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [errors, setErrors] = useState<Error | null>(null);
-	const inputRef = useRef<HTMLInputElement>(null);
+	const inputRef = useRef<HTMLTextAreaElement>(null);
 
 	const examplesQuestions: Question[] = [
 		{
@@ -88,52 +88,37 @@ export default function Search() {
 
 	return (
 		<>
-			<div className="row w-96 text-left">
+			<div className="row text-left">
 				<div className="col text-left">
 					<h1 className="text-4xl py-5">ParDok AI Suche</h1>
 				</div>
 			</div>
-			<div className="row w-96">
-				<div className="col">
-					<h2 className="text-2xl py-5">Beispiel Fragen</h2>
-				</div>
-			</div>
-			{examplesQuestions.map((example) => (
-				<div className="row w-96 " key={example.pdf}>
-					<div className="col">
-						<button
-							onClick={() => {
-								setQuery(example.query);
-								if (inputRef.current) inputRef.current.value = example.query;
-							}}
-							className="bg-gray-500 hover:bg-gray-700 text-white py-5 px-4 m-2 rounded-r text-left"
-						>
-							<span className="font-bold">{example.pdf}</span>: {example.query}
-						</button>
-					</div>
-				</div>
-			))}
-			<div className="row w-96">
-				<div className="col">
+			<div className="row">
+				<div className="col w-full">
 					{/* <h1 className="text-4xl text-left py-5">Search</h1> */}
-					<form onSubmit={handleSubmit} className="flex max-w-fit">
-						<input
-							className="border border-gray-400 rounded-l px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+					<form onSubmit={handleSubmit} className="flex w-full flex-col">
+						<label htmlFor="query" className="py-4">
+							Frage:
+						</label>
+						<textarea
+							id="query"
+							name="query"
+							className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
 							ref={inputRef}
-							type="text"
-							placeholder="Search"
+							placeholder="Frage hier eingeben"
 							onChange={(e) => setQuery(e.target.value)}
 						/>
 						<button
-							className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-r"
+							className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4"
 							type="submit"
 						>
-							Search
+							Senden
 						</button>
 					</form>
 				</div>
 			</div>
-			<div className="row w-96 text-left">
+
+			<div className="row text-left">
 				<div className="col">
 					<h2 className="text-2xl py-2">Ergebnisse</h2>
 					{loading && "Loading..."}
@@ -142,55 +127,58 @@ export default function Search() {
 					{errors && <>{errors.message}</>}
 				</div>
 			</div>
-			<div className="row w-96">
+			<div className="row">
 				<div className="col">
 					<h2 className="text-2xl py-2 text-left">referenzierte Daten</h2>
 
-					<ul className="list-disc text-left">
+					<ul className="list-none text-left">
 						{result &&
 							result.details &&
 							result.details.sections.map((section) => {
 								if (!section.pdfs) return null;
 								const { desk, titel, lokurl } = section.pdfs[0];
+								const { content } = section;
 								const pdfFilename = lokurl
 									?.split("/")
 									.findLast((str) => str.endsWith(".pdf"));
 
 								return (
-									<li key={section.id}>
-										<details>
-											<summary>
-												{desk} | {titel} | {pdfFilename}
-											</summary>
+									<li key={section.id} className="p-4 pb-8">
+										<table>
+											<tbody>
+												{section.pdfs.map((pdf) => (
+													<>
+														<tr>
+															<td>Titel:</td>
+															<td>{titel}</td>
+														</tr>
+														<tr>
+															<td>PDF:</td>
+															<td>
+																<a
+																	target="_blank"
+																	rel="noreferrer"
+																	href={pdf.lokurl ? pdf.lokurl : ""}
+																	className="underline text-blue-500 hover:text-blue-800 visited:text-blue-950"
+																>
+																	{pdfFilename}
+																</a>
+															</td>
+														</tr>
 
-											<table>
-												<tbody>
-													{section.pdfs.map((pdf) => (
-														<>
-															<tr key={pdf.id}>
-																<th>titel</th>
-																<th>URL</th>
-																<th>desk</th>
-															</tr>
-															<tr>
-																<td>
-																	<a
-																		target="_blank"
-																		rel="noreferrer"
-																		href={pdf.lokurl ? pdf.lokurl : ""}
-																		className="underline text-blue-500 hover:text-blue-800 visited:text-blue-950"
-																	>
-																		{pdfFilename}
-																	</a>
-																</td>
-																<td>{desk}</td>
-															</tr>
-														</>
-													))}
-												</tbody>
-											</table>
-										</details>
-										<a
+														<tr>
+															<td>Beschreibung:</td>
+															<td>{desk}</td>
+														</tr>
+													</>
+												))}
+												<tr>
+													<td>Kontext</td>
+													<td>{content}</td>
+												</tr>
+											</tbody>
+										</table>
+										{/* <a
 											target="_blank"
 											rel="noreferrer"
 											href={`${lokurl}`}
@@ -201,13 +189,33 @@ export default function Search() {
 										<span> | </span>
 										<span>{desk}</span>
 										<span> | </span>
-										<span>{titel}</span>
+										<span>{titel}</span> */}
 									</li>
 								);
 							})}
 					</ul>
 				</div>
 			</div>
+			<div className="row">
+				<div className="col">
+					<h2 className="text-2xl py-5">Beispiel Fragen</h2>
+				</div>
+			</div>
+			{examplesQuestions.map((example) => (
+				<div className="row " key={example.pdf}>
+					<div className="col">
+						<button
+							onClick={() => {
+								setQuery(example.query);
+								if (inputRef.current) inputRef.current.value = example.query;
+							}}
+							className="bg-gray-500 hover:bg-gray-700 text-white py-5 px-4  text-left"
+						>
+							<span className="font-bold">{example.pdf}</span>: {example.query}
+						</button>
+					</div>
+				</div>
+			))}
 		</>
 	);
 }

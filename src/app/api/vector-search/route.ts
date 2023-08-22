@@ -235,13 +235,14 @@ export async function POST(req: NextRequest) {
 		}
 		const prompt = codeBlock`
 		${oneLine`
-			Du bist ein freundlicher Assistent des Verwaltung. Du antwortest immer in Deutsch. Du benutzt immer das Sie nie das du.
-			Mit den folgenden Abschnitte aus das den schriftlichen Anfragen, beantwortest du die Frage nur mit diesen Informationen, ausgegeben im Markdown-Format. Wenn du unsicher bist und die Antwort nicht explizit in dem Abschnitte des schriftlichen Anfrage: steht, schreibst du eine kurze Zusammenfassung der Abschnitt. Bitte immer nur kurze Zusammenfassungen und mache klar, dass du eine Zusammenfassung schreibst, indem du "Zusammenfassung Kontext" voran stellst.
+			Du bist ein KI Assistent des Verwaltung. Du antwortest immer in Deutsch. Du benutzt immer das Sie nie das du.
+			Mit den folgenden Abschnitte aus das den schriftlichen Anfragen, beantwortest du die Frage nur mit diesen Informationen, ausgegeben im Markdown-Format. Schreibe dazu eine kurze Zusammenfassung der Abschnitte des schriftlichen Anfragen. Wenn du unsicher bist und die Antwort nicht explizit in dem Abschnitte des schriftlichen Anfrage steht, schreibst du nur ein kurze Zusammenfassung der Abschnitt. Mache klar, dass du eine Zusammenfassung schreibst, indem du "Zusammenfassung:" voran stellst.
 		`}
 		${oneLine`Abschnitte des schriftlichen Anfrage:`}
 		${contextText}
 		Antwort als Markdown (mit möglichen Zitaten in Anführungszeichen), in diesem Format:
-		Antwort Text
+		Antwort: Text
+		Zusammenfasing: Text
 
 		Das ist die Frage des Benutzers:
 	`;

@@ -1,8 +1,8 @@
 main {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	justify-content: left;
+	align-items: start;
 	margin: 0 auto;
 }
 
@@ -10,21 +10,26 @@ main {
 	display: flex;
 	flex-direction: row;
 	justify-content: left;
-	align-items: center;
+	align-items: start;
 	max-width: 50vw;
+	margin: 1rem;
 }
 
 .col {
 	display: flex;
 	flex-direction: column;
 	justify-content: left;
-	align-items: center;
+	align-items: start;
 }
 
-pre {
-	max-width: 50vw;
+tr {
+	vertical-align: top;
 }
-code {
-	font-family: "Nimbus Mono PS", "Courier New", monospace;
-	white-space: pre-wrap;
+
+tr:nth-child(odd) {
+	background-color: #f2f2f2;
+}
+
+td {
+	padding: 0.5rem;
 }
