@@ -5,6 +5,7 @@ import { ApplicationError, EnvError, UserError } from "../../../lib/errors";
 import supabase from "../../../lib/supabase";
 import { NextRequest } from "next/server";
 import { Database } from "@/lib/database";
+import { createPrompt } from "./creat-prompt";
 
 type Section = Database["public"]["Tables"]["parsed_document_sections"]["Row"];
 type Pdf = Database["public"]["Tables"]["dokument"]["Row"];
@@ -37,6 +38,7 @@ interface Usage {
 
 export interface ResponseSection extends Partial<Section> {
 	parsed_documents?: Doc[];
+	similarity?: number;
 	pdfs?: Pdf[];
 }
 
@@ -144,7 +146,7 @@ export async function POST(req: NextRequest) {
 		} = await embeddingResponse.json();
 
 		// 4. make the similarity search
-		const { error: matchError, data: docSections } = await supabase.rpc(
+		const { error: matchSectionError, data: docSections } = await supabase.rpc(
 			"match_parsed_dokument_sections",
 			{
 				embedding,
@@ -153,26 +155,36 @@ export async function POST(req: NextRequest) {
 				min_content_length: 50,
 			},
 		);
-		console.log("docSections", docSections);
-
-		if (matchError) {
-			throw new ApplicationError("Failed to match page sections", matchError);
+		if (matchSectionError) {
+			throw new ApplicationError(
+				"Failed to match page sections",
+				matchSectionError,
+			);
 		}
-		const ids = docSections.map((section) => section.id);
-		const { error: pagesError, data: sections } = await supabase
+		const { error: sectionsError, data: sections } = await supabase
 			.from("parsed_document_sections")
 			.select("content,id,parsed_document_id")
-			.in("id", ids);
+			.in(
+				"id",
+				docSections.map((section) => section.id),
+			);
 
-		if (pagesError) {
+		if (sectionsError) {
 			throw new ApplicationError(
 				"Failed to match pages to pageSections",
-				pagesError,
+				sectionsError,
 			);
 		}
 		const responseDetail: ResponseDetail = {
-			sections: sections,
+			sections: sections.map((section) => {
+				const docSection = docSections.find((sec) => section.id === sec.id);
+				return {
+					similarity: docSection?.similarity ?? 0,
+					...section,
+				};
+			}),
 		};
+
 		// match documents to pdfs
 		const { error: docsError, data: docs } = await supabase
 			.from("parsed_documents")
@@ -184,12 +196,11 @@ export async function POST(req: NextRequest) {
 		if (docsError) {
 			throw new ApplicationError("Failed to match docsSections to docs");
 		}
-		responseDetail.sections.forEach((section, i, arr) => {
+		responseDetail.sections.forEach((section) => {
 			section.parsed_documents = docs.filter(
 				(doc) => doc.id === section.parsed_document_id,
 			);
 		});
-
 		const { error: pdfError, data: pdfs } = await supabase
 			.from("dokument")
 			.select("*")
@@ -200,7 +211,6 @@ export async function POST(req: NextRequest) {
 		if (pdfError) {
 			throw new ApplicationError("Failed to match docs to pdfs");
 		}
-
 		responseDetail.sections.forEach((section, i, arr) => {
 			section.pdfs = pdfs.filter(
 				(pdf) =>
@@ -209,65 +219,14 @@ export async function POST(req: NextRequest) {
 						.includes(pdf.id),
 			);
 		});
-		// 4. create a prompt with the
-		const tokenizer = new GPT3Tokenizer({ type: "gpt3" });
-		let tokenCount = 0;
-		let contextText = "";
-		const uniqueSectionIds = new Set();
-		for (const sec of sections) {
-			uniqueSectionIds.add(sec.id);
-		}
-		for (let i = 0; i < sections.length; i++) {
-			const section = sections[i];
-			let content = section.content ?? "";
+		const completionOptions = createPrompt({
+			sections,
+			MAX_CONTENT_TOKEN_LENGTH,
+			OPENAI_MODEL,
+			sanitizedQuery,
+			MAX_TOKENS,
+		});
 
-			const encoded = tokenizer.encode(content);
-			tokenCount += encoded.text.length;
-
-			if (tokenCount >= MAX_CONTENT_TOKEN_LENGTH) {
-				throw new ApplicationError(
-					`Reached max token count of ${MAX_CONTENT_TOKEN_LENGTH}.`,
-					{
-						tokenCount,
-					},
-				);
-				break;
-			}
-
-			contextText += `${content.trim()}\n---\n`;
-		}
-		const prompt = codeBlock`
-		${oneLine`
-			Du bist ein KI Assistent des Verwaltung. Du antwortest immer in Deutsch. Du benutzt immer das Sie nie das du.
-			Mit den folgenden Abschnitte aus das den schriftlichen Anfragen, beantwortest du die Frage nur mit diesen Informationen. Schreibe dazu eine ausführeliche Zusammenfassung der Abschnitte des schriftlichen Anfragen. Trenne deine Antwort und deine Zusammenfassung mit einem neue indem du "Zusammenfassung:" voran stellst.
-		`}
-		${oneLine`Abschnitte des schriftlichen Anfrage:`}
-		${contextText}
-		${oneLine`Ende Abschnitte des schriftlichen Anfrage`}
-
-		Antworte in diesem Format:
-		~~~
-		**Antwort:** Text
-		Zusammenfasing: Text
-		~~~
-		Das ist die Frage des Benutzers:
-	`;
-		const completionOptions: CreateChatCompletionRequest = {
-			model: OPENAI_MODEL,
-			messages: [
-				{
-					role: "system",
-					content: prompt,
-				},
-				{ role: "user", content: sanitizedQuery },
-			],
-			// max tokens only applies to the reponse length
-			max_tokens: MAX_TOKENS,
-			temperature: 0.5,
-			stream: false,
-		};
-		// console.log("These are the complitionOptions");
-		console.log(completionOptions);
 		const response = await fetch("https://api.openai.com/v1/chat/completions", {
 			method: "POST",
 			headers: {
@@ -286,13 +245,124 @@ export async function POST(req: NextRequest) {
 		const json = await response.json();
 		responseDetail.gpt = json;
 
-		return new Response(JSON.stringify([responseDetail] as ResponseDetail[]), {
-			status: 200,
-			headers: {
-				"Content-Type": "application/json",
-				"Cache-Control": "s-maxage=10, stale-while-revalidate",
-			},
+		// START ----------------------------------------------------------------
+		// TODO: This is only for testing purpose and can be removed
+		const { error: matchSectionErrorLarge, data: docSectionsLarge } =
+			await supabase.rpc("match_parsed_dokument_sections_large", {
+				embedding,
+				match_threshold: 0.85,
+				match_count: 5,
+				min_content_length: 50,
+			});
+		if (matchSectionErrorLarge) {
+			throw new ApplicationError(
+				"Failed to match page sections large",
+				matchSectionErrorLarge,
+			);
+		}
+
+		const { error: sectionsErrorLarge, data: sectionsLarge } = await supabase
+			.from("parsed_document_sections_large")
+			.select("content,id,parsed_document_id")
+			.in(
+				"id",
+				docSectionsLarge.map((section) => section.id),
+			);
+
+		if (sectionsErrorLarge) {
+			throw new ApplicationError(
+				"Failed to match pages to pageSections Large",
+				sectionsErrorLarge,
+			);
+		}
+		const responseDetailLarge: ResponseDetail = {
+			sections: sectionsLarge.map((section) => {
+				const docSection = docSectionsLarge.find(
+					(sec) => section.id === sec.id,
+				);
+				return {
+					similarity: docSection?.similarity ?? 0,
+					...section,
+				};
+			}),
+		};
+
+		const { error: docsLargeError, data: docsLarge } = await supabase
+			.from("parsed_documents")
+			.select("*")
+			.in(
+				"id",
+				sectionsLarge.map((section) => section.parsed_document_id),
+			);
+		if (docsLargeError) {
+			throw new ApplicationError("Failed to match docsSections to docs");
+		}
+		responseDetailLarge.sections.forEach((section) => {
+			section.parsed_documents = docsLarge.filter(
+				(doc) => doc.id === section.parsed_document_id,
+			);
 		});
+		console.log(responseDetailLarge);
+		const { error: pdfErrorLarge, data: pdfsLarge } = await supabase
+			.from("dokument")
+			.select("*")
+			.in(
+				"id",
+				docsLarge.map((doc) => doc.dokument_id),
+			);
+		if (pdfErrorLarge) {
+			throw new ApplicationError("Failed to match docs to pdfs large");
+		}
+
+		responseDetailLarge.sections.forEach((section) => {
+			section.pdfs = pdfsLarge.filter(
+				(pdf) =>
+					section.parsed_documents
+						?.map((doc) => doc.dokument_id)
+						.includes(pdf.id),
+			);
+		});
+
+		const completionOptionsLarge = createPrompt({
+			sections: responseDetailLarge.sections,
+			MAX_CONTENT_TOKEN_LENGTH,
+			OPENAI_MODEL,
+			sanitizedQuery,
+			MAX_TOKENS,
+		});
+
+		const responseLarge = await fetch(
+			"https://api.openai.com/v1/chat/completions",
+			{
+				method: "POST",
+				headers: {
+					Authorization: `Bearer ${OPENAI_KEY}`,
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(completionOptionsLarge),
+			},
+		);
+
+		if (responseLarge.status !== 200) {
+			throw new ApplicationError(
+				"Failed to create completion for question",
+				responseLarge,
+			);
+		}
+		const jsonLarge = await responseLarge.json();
+		responseDetailLarge.gpt = jsonLarge;
+		// END ----------------------------------------------------------------
+
+		return new Response(
+			JSON.stringify([responseDetail, responseDetailLarge] as ResponseDetail[]),
+			{
+				status: 200,
+				headers: {
+					"Content-Type": "application/json",
+					"Cache-Control": "s-maxage=10, stale-while-revalidate",
+				},
+			},
+		);
 	} catch (error: unknown) {
 		if (error instanceof UserError) {
 			console.error(error);
