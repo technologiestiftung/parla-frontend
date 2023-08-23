@@ -66,6 +66,31 @@ export async function POST(req: NextRequest) {
 		const OPENAI_MODEL = process.env.OPENAI_MODEL;
 		if (OPENAI_KEY === undefined) throw new EnvError("OPENAI_KEY");
 		if (OPENAI_MODEL === undefined) throw new EnvError("OPENAI_MODEL");
+		let MAX_CONTENT_TOKEN_LENGTH = 1500;
+		const MAX_TOKENS = 2048;
+		// set MAX_CONTENT_LENGTH based on the openai model
+		// models we use
+		// - gpt-4 has max tokens length of 8192
+		// - gpt-3.5-turbo has max tokens length of 4096
+		// - gpt-3.5-turbo-16k has max tokens length of 16384
+		switch (OPENAI_MODEL) {
+			case "gpt-4":
+				MAX_CONTENT_TOKEN_LENGTH = 8192;
+				// MAX_TOKENS = 8192;
+				break;
+			case "gpt-3.5-turbo":
+				MAX_CONTENT_TOKEN_LENGTH = 2048;
+				// MAX_TOKENS = 2048;
+				break;
+			case "gpt-3.5-turbo-16k":
+				MAX_CONTENT_TOKEN_LENGTH = 8192;
+				// MAX_TOKENS = 16384;
+				break;
+			default:
+				MAX_CONTENT_TOKEN_LENGTH = 1500;
+				// MAX_TOKENS = 2048;
+				break;
+		}
 
 		// 1. get the query from the request ✓
 		const requestJson = await req.json();
@@ -139,8 +164,8 @@ export async function POST(req: NextRequest) {
 			"match_parsed_dokument_sections",
 			{
 				embedding,
-				match_threshold: 0.78,
-				match_count: 10,
+				match_threshold: 0.85,
+				match_count: 5,
 				min_content_length: 50,
 			},
 		);
@@ -211,23 +236,17 @@ export async function POST(req: NextRequest) {
 		for (let i = 0; i < sections.length; i++) {
 			const section = sections[i];
 			let content = section.content ?? "";
-			// filter one unique page from the array pages by matching the content pageSection["page_id"] with the page.id
-			// if (uniqueSectionIds.has(section.id)) {
-			// 	const section = sections.find(
-			// 		(sec) => sec.id === section.id,
-			// 	) as Database["public"]["Tables"]["parsed_document_sections"]["Row"];
-			// 	// if (section) {
-			// 	// 	content += `**[Quelle](${section.})**\n\n`;
-			// 	// }
-			// }
 
 			const encoded = tokenizer.encode(content);
 			tokenCount += encoded.text.length;
 
-			if (tokenCount >= 1500) {
-				// throw new ApplicationError("Reached max token count of 1500.", {
-				// 	tokenCount,
-				// });
+			if (tokenCount >= MAX_CONTENT_TOKEN_LENGTH) {
+				throw new ApplicationError(
+					`Reached max token count of ${MAX_CONTENT_TOKEN_LENGTH}.`,
+					{
+						tokenCount,
+					},
+				);
 				break;
 			}
 
