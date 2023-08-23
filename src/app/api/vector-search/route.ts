@@ -10,13 +10,6 @@ type Section = Database["public"]["Tables"]["parsed_document_sections"]["Row"];
 type Pdf = Database["public"]["Tables"]["dokument"]["Row"];
 type Doc = Database["public"]["Tables"]["parsed_documents"]["Row"];
 export const runtime = "edge";
-export interface ResponseObject {
-	details: ResponseDetail;
-	gpt: Gpt;
-	pdfs: Pdf[];
-	sections: Section[];
-	docs: Doc[];
-}
 
 interface Gpt {
 	id: string;
@@ -41,15 +34,6 @@ interface Usage {
 	completion_tokens: number;
 	total_tokens: number;
 }
-
-// interface Section {
-// 	id: number;
-// 	parsed_document_id: number;
-// 	content?: any;
-// 	token_count?: number;
-// 	embeddings?: any;
-// 	heading?: string;
-// }
 
 export interface ResponseSection extends Partial<Section> {
 	parsed_documents?: Doc[];
@@ -283,7 +267,7 @@ export async function POST(req: NextRequest) {
 			stream: false,
 		};
 		// console.log("These are the complitionOptions");
-		// console.log(completionOptions);
+		console.log(completionOptions);
 		const response = await fetch("https://api.openai.com/v1/chat/completions", {
 			method: "POST",
 			headers: {
@@ -302,22 +286,13 @@ export async function POST(req: NextRequest) {
 		const json = await response.json();
 		responseDetail.gpt = json;
 
-		return new Response(
-			JSON.stringify({
-				details: responseDetail,
-				gpt: json,
-				pdfs,
-				sections,
-				docs,
-			} as ResponseObject),
-			{
-				status: 200,
-				headers: {
-					"Content-Type": "application/json",
-					"Cache-Control": "s-maxage=10, stale-while-revalidate",
-				},
+		return new Response(JSON.stringify([responseDetail] as ResponseDetail[]), {
+			status: 200,
+			headers: {
+				"Content-Type": "application/json",
+				"Cache-Control": "s-maxage=10, stale-while-revalidate",
 			},
-		);
+		});
 	} catch (error: unknown) {
 		if (error instanceof UserError) {
 			console.error(error);
