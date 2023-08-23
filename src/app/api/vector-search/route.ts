@@ -236,14 +236,17 @@ export async function POST(req: NextRequest) {
 		const prompt = codeBlock`
 		${oneLine`
 			Du bist ein KI Assistent des Verwaltung. Du antwortest immer in Deutsch. Du benutzt immer das Sie nie das du.
-			Mit den folgenden Abschnitte aus das den schriftlichen Anfragen, beantwortest du die Frage nur mit diesen Informationen, ausgegeben im Markdown-Format. Schreibe dazu eine kurze Zusammenfassung der Abschnitte des schriftlichen Anfragen. Wenn du unsicher bist und die Antwort nicht explizit in dem Abschnitte des schriftlichen Anfrage steht, schreibst du nur ein kurze Zusammenfassung der Abschnitt. Mache klar, dass du eine Zusammenfassung schreibst, indem du "Zusammenfassung:" voran stellst.
+			Mit den folgenden Abschnitte aus das den schriftlichen Anfragen, beantwortest du die Frage nur mit diesen Informationen. Schreibe dazu eine ausführeliche Zusammenfassung der Abschnitte des schriftlichen Anfragen. Trenne deine Antwort und deine Zusammenfassung mit einem neue indem du "Zusammenfassung:" voran stellst.
 		`}
 		${oneLine`Abschnitte des schriftlichen Anfrage:`}
 		${contextText}
-		Antwort als Markdown (mit möglichen Zitaten in Anführungszeichen), in diesem Format:
-		Antwort: Text
-		Zusammenfasing: Text
+		${oneLine`Ende Abschnitte des schriftlichen Anfrage`}
 
+		Antworte in diesem Format:
+		~~~
+		**Antwort:** Text
+		Zusammenfasing: Text
+		~~~
 		Das ist die Frage des Benutzers:
 	`;
 		const completionOptions: CreateChatCompletionRequest = {
@@ -255,8 +258,9 @@ export async function POST(req: NextRequest) {
 				},
 				{ role: "user", content: sanitizedQuery },
 			],
-			max_tokens: 2048,
-			temperature: 0,
+			// max tokens only applies to the reponse length
+			max_tokens: MAX_TOKENS,
+			temperature: 0.5,
 			stream: false,
 		};
 		// console.log("These are the complitionOptions");
