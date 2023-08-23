@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import "./Search.css";
-import { ResponseObject } from "@/app/api/vector-search/route";
+import ReactMarkdown from "react-markdown";
+import { ResponseDetail } from "@/app/api/vector-search/route";
+import SearchResult from "./SearchResult";
 
 interface Question {
 	query: string;
@@ -9,7 +11,7 @@ interface Question {
 }
 
 export default function Search() {
-	const [result, setResult] = useState<ResponseObject | null>(null);
+	const [result, setResult] = useState<ResponseDetail[] | null>(null);
 	const [query, setQuery] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [errors, setErrors] = useState<Error | null>(null);
@@ -62,7 +64,7 @@ export default function Search() {
 			setErrors(new Error("failed to fetch dat avia /api/vector-search"));
 			return;
 		}
-		const json = await response.json();
+		const json = (await response.json()) as ResponseDetail[];
 		setResult(json);
 		console.log(json);
 		setLoading(false);
@@ -117,37 +119,60 @@ export default function Search() {
 					</form>
 				</div>
 			</div>
-
-			<div className="row text-left">
-				<div className="col">
-					<h2 className="text-2xl py-2">Ergebnisse</h2>
-					{loading && "Loading..."}
-
-					{result && <p>{result?.details?.gpt?.choices[0].message.content}</p>}
-					{errors && <>{errors.message}</>}
+			{loading && (
+				<>
+					<div className="row">
+						<div className="col">{"Loading..."}</div>
+					</div>
+				</>
+			)}
+			{errors && (
+				<>
+					<div className="row">
+						<div className="col">
+							<h2 className="text-2xl py-2 text-left">{errors.name}</h2>
+							<p>{errors.message}</p>
+						</div>
+					</div>
+				</>
+			)}
+			{result &&
+				result.length > 0 &&
+				result.map((result) => (
+					<SearchResult result={result} key={result.gpt?.id} />
+				))}
+			{/* <>
+				<div className="row text-left">
+					<div className="col">
+						<h2 className="text-2xl py-2">Ergebnisse</h2>
+						{result && (
+							<ReactMarkdown>
+								{`${result[0].gpt?.choices[0].message.content}`
+									.split("Zusammenfassung: ")
+									.join("\n\n**Zusammenfassung:** ")}
+							</ReactMarkdown>
+						)}
+					</div>
 				</div>
-			</div>
-			<div className="row">
-				<div className="col">
-					<h2 className="text-2xl py-2 text-left">referenzierte Daten</h2>
+				<div className="row">
+					<div className="col">
+						<h2 className="text-2xl py-2 text-left">referenzierte Daten</h2>
+						<ul className="list-none text-left w-full">
+							{result &&
+								result[0] &&
+								result[0].sections.map((section) => {
+									if (!section.pdfs) return null;
+									const { desk, titel, lokurl } = section.pdfs[0];
+									const { content } = section;
+									const pdfFilename = lokurl
+										?.split("/")
+										.findLast((str) => str.endsWith(".pdf"));
 
-					<ul className="list-none text-left">
-						{result &&
-							result.details &&
-							result.details.sections.map((section) => {
-								if (!section.pdfs) return null;
-								const { desk, titel, lokurl } = section.pdfs[0];
-								const { content } = section;
-								const pdfFilename = lokurl
-									?.split("/")
-									.findLast((str) => str.endsWith(".pdf"));
-
-								return (
-									<li key={section.id} className="p-4 pb-8">
-										<table>
-											<tbody>
+									return (
+										<li key={section.id} className="py-4 pb-8 overflow-x-auto">
+											<table className="table-auto min-w-full">
 												{section.pdfs.map((pdf) => (
-													<>
+													<tbody key={pdf.id}>
 														<tr>
 															<td>Titel:</td>
 															<td>{titel}</td>
@@ -170,32 +195,23 @@ export default function Search() {
 															<td>Beschreibung:</td>
 															<td>{desk}</td>
 														</tr>
-													</>
+													</tbody>
 												))}
-												<tr>
-													<td>Kontext</td>
-													<td>{content}</td>
-												</tr>
-											</tbody>
-										</table>
-										{/* <a
-											target="_blank"
-											rel="noreferrer"
-											href={`${lokurl}`}
-											className="underline text-blue-500 hover:text-blue-800 visited:text-blue-950"
-										>
-											{pdfFilename}
-										</a>
-										<span> | </span>
-										<span>{desk}</span>
-										<span> | </span>
-										<span>{titel}</span> */}
-									</li>
-								);
-							})}
-					</ul>
+												<tbody>
+													<tr>
+														<td>Kontext</td>
+														<td>{content}</td>
+													</tr>
+												</tbody>
+											</table>
+										</li>
+									);
+								})}
+						</ul>
+					</div>
 				</div>
-			</div>
+			</> */}
+
 			<div className="row">
 				<div className="col">
 					<h2 className="text-2xl py-5">Beispiel Fragen</h2>
