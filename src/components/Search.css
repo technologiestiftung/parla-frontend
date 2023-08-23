@@ -20,6 +20,7 @@ main {
 	flex-direction: column;
 	justify-content: left;
 	align-items: flex-start;
+	max-width: 100%;
 }
 
 tr {
@@ -37,5 +38,11 @@ td {
 @media screen and (max-width: 600px) {
 	.row {
 		max-width: 100%;
+	}
+	table {
+		width: 100%;
+	}
+	tbody {
+		display: inline-block;
 	}
 }
