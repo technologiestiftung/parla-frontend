@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import "./Search.css";
-import ReactMarkdown from "react-markdown";
 import { ResponseDetail } from "@/app/api/vector-search/route";
 import SearchResult from "./SearchResult";
 
@@ -97,7 +96,6 @@ export default function Search() {
 			</div>
 			<div className="row">
 				<div className="col w-full">
-					{/* <h1 className="text-4xl text-left py-5">Search</h1> */}
 					<form onSubmit={handleSubmit} className="flex w-full flex-col">
 						<label htmlFor="query" className="py-4">
 							Frage:
@@ -138,79 +136,7 @@ export default function Search() {
 			)}
 			{result &&
 				result.length > 0 &&
-				result.map((result) => (
-					<SearchResult result={result} key={result.gpt?.id} />
-				))}
-			{/* <>
-				<div className="row text-left">
-					<div className="col">
-						<h2 className="text-2xl py-2">Ergebnisse</h2>
-						{result && (
-							<ReactMarkdown>
-								{`${result[0].gpt?.choices[0].message.content}`
-									.split("Zusammenfassung: ")
-									.join("\n\n**Zusammenfassung:** ")}
-							</ReactMarkdown>
-						)}
-					</div>
-				</div>
-				<div className="row">
-					<div className="col">
-						<h2 className="text-2xl py-2 text-left">referenzierte Daten</h2>
-						<ul className="list-none text-left w-full">
-							{result &&
-								result[0] &&
-								result[0].sections.map((section) => {
-									if (!section.pdfs) return null;
-									const { desk, titel, lokurl } = section.pdfs[0];
-									const { content } = section;
-									const pdfFilename = lokurl
-										?.split("/")
-										.findLast((str) => str.endsWith(".pdf"));
-
-									return (
-										<li key={section.id} className="py-4 pb-8 overflow-x-auto">
-											<table className="table-auto min-w-full">
-												{section.pdfs.map((pdf) => (
-													<tbody key={pdf.id}>
-														<tr>
-															<td>Titel:</td>
-															<td>{titel}</td>
-														</tr>
-														<tr>
-															<td>PDF:</td>
-															<td>
-																<a
-																	target="_blank"
-																	rel="noreferrer"
-																	href={pdf.lokurl ? pdf.lokurl : ""}
-																	className="underline text-blue-500 hover:text-blue-800 visited:text-blue-950"
-																>
-																	{pdfFilename}
-																</a>
-															</td>
-														</tr>
-
-														<tr>
-															<td>Beschreibung:</td>
-															<td>{desk}</td>
-														</tr>
-													</tbody>
-												))}
-												<tbody>
-													<tr>
-														<td>Kontext</td>
-														<td>{content}</td>
-													</tr>
-												</tbody>
-											</table>
-										</li>
-									);
-								})}
-						</ul>
-					</div>
-				</div>
-			</> */}
+				result.map((res) => <SearchResult result={res} key={res.gpt?.id} />)}
 
 			<div className="row">
 				<div className="col">
@@ -218,14 +144,14 @@ export default function Search() {
 				</div>
 			</div>
 			{examplesQuestions.map((example) => (
-				<div className="row " key={example.pdf}>
-					<div className="col">
+				<div className="row" key={example.pdf}>
+					<div className="col w-full">
 						<button
 							onClick={() => {
 								setQuery(example.query);
 								if (inputRef.current) inputRef.current.value = example.query;
 							}}
-							className="bg-gray-500 hover:bg-gray-700 text-white py-5 px-4  text-left"
+							className="bg-gray-500 hover:bg-gray-700 text-white py-5 px-4  text-left w-full"
 						>
 							<span className="font-bold">{example.pdf}</span>: {example.query}
 						</button>
