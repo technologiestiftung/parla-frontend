@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import "./Search.css";
-import { ResponseDetail } from "@/app/api/vector-search/route";
 import SearchResult from "./SearchResult";
+import { ResponseDetail } from "@/lib/common";
 
 interface Question {
 	query: string;
@@ -49,15 +49,18 @@ export default function Search() {
 	}, []);
 
 	async function vectorSearch(query: string): Promise<void> {
-		const response = await fetch(`/api/vector-search`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
+		const response = await fetch(
+			`${process.env.NEXT_PUBLIC_KI_ANFRAGEN_API_URL}/vector-search`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					query,
+				}),
 			},
-			body: JSON.stringify({
-				query,
-			}),
-		});
+		);
 		if (!response.ok) {
 			setLoading(false);
 			setErrors(new Error("failed to fetch dat avia /api/vector-search"));
