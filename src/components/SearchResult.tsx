@@ -1,4 +1,4 @@
-import { ResponseDetail } from "@/app/api/vector-search/route";
+import { ResponseDetail } from "@/lib/common";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
