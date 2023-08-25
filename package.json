@@ -18,7 +18,8 @@
 		"gpt3-tokenizer": "1.1.5",
 		"openai": "3.3.0",
 		"react": "^18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"react-markdown": "8.0.7"
 	},
 	"devDependencies": {
 		"@technologiestiftung/semantic-release-config": "1.2.3",

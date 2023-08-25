@@ -162,6 +162,37 @@ export interface Database {
           }
         ]
       }
+      parsed_document_metadata: {
+        Row: {
+          embedding: string | null
+          id: number
+          parsed_document_id: number | null
+          raw_metadata: Json | null
+          token_count: number | null
+        }
+        Insert: {
+          embedding?: string | null
+          id?: number
+          parsed_document_id?: number | null
+          raw_metadata?: Json | null
+          token_count?: number | null
+        }
+        Update: {
+          embedding?: string | null
+          id?: number
+          parsed_document_id?: number | null
+          raw_metadata?: Json | null
+          token_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "parsed_document_metadata_parsed_document_id_fkey"
+            columns: ["parsed_document_id"]
+            referencedRelation: "parsed_documents"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       parsed_document_sections: {
         Row: {
           content: string | null
@@ -190,6 +221,77 @@ export interface Database {
         Relationships: [
           {
             foreignKeyName: "parsed_document_sections_parsed_document_id_fkey"
+            columns: ["parsed_document_id"]
+            referencedRelation: "parsed_documents"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      parsed_document_sections_large: {
+        Row: {
+          content: string | null
+          embedding: string | null
+          heading: string | null
+          id: number
+          parsed_document_id: number | null
+          token_count: number | null
+        }
+        Insert: {
+          content?: string | null
+          embedding?: string | null
+          heading?: string | null
+          id?: number
+          parsed_document_id?: number | null
+          token_count?: number | null
+        }
+        Update: {
+          content?: string | null
+          embedding?: string | null
+          heading?: string | null
+          id?: number
+          parsed_document_id?: number | null
+          token_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "parsed_document_sections_large_parsed_document_id_fkey"
+            columns: ["parsed_document_id"]
+            referencedRelation: "parsed_documents"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      parsed_document_tables: {
+        Row: {
+          accuracy: number | null
+          id: number
+          name: string | null
+          order: number | null
+          page: number | null
+          parsed_document_id: number | null
+          whitespace: number | null
+        }
+        Insert: {
+          accuracy?: number | null
+          id?: number
+          name?: string | null
+          order?: number | null
+          page?: number | null
+          parsed_document_id?: number | null
+          whitespace?: number | null
+        }
+        Update: {
+          accuracy?: number | null
+          id?: number
+          name?: string | null
+          order?: number | null
+          page?: number | null
+          parsed_document_id?: number | null
+          whitespace?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "parsed_document_tables_parsed_document_id_fkey"
             columns: ["parsed_document_id"]
             referencedRelation: "parsed_documents"
             referencedColumns: ["id"]
@@ -279,6 +381,21 @@ export interface Database {
     }
     Functions: {
       match_parsed_dokument_sections: {
+        Args: {
+          embedding: string
+          match_threshold: number
+          match_count: number
+          min_content_length: number
+        }
+        Returns: {
+          id: number
+          parsed_document_id: number
+          heading: string
+          content: string
+          similarity: number
+        }[]
+      }
+      match_parsed_dokument_sections_large: {
         Args: {
           embedding: string
           match_threshold: number
