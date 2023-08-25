@@ -1,11 +1,13 @@
 import { ResponseDetail } from "@/lib/common";
-import React from "react";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 interface SearchResultProps {
 	result: ResponseDetail;
 }
 export default function SearchResult({ result }: SearchResultProps) {
+	// const [isExpanded, setIsExpanded] = useState(false);
+
 	return (
 		<>
 			<div className="row text-left">
@@ -29,7 +31,10 @@ export default function SearchResult({ result }: SearchResultProps) {
 							.map((section) => {
 								const { content, similarity } = section;
 								return (
-									<li key={section.id} className="py-4 pb-8 overflow-x-auto">
+									<li
+										key={section.id}
+										className="py-4 pb-8 overflow-x-auto table-container"
+									>
 										<table className="table-auto min-w-full">
 											{section.pdfs &&
 												section.pdfs.map((pdf) => (
@@ -67,7 +72,18 @@ export default function SearchResult({ result }: SearchResultProps) {
 												</tr>
 												<tr>
 													<td>Kontext</td>
-													<td>{content}</td>
+													<td
+													// onMouseEnter={() => setIsExpanded(true)}
+													// onMouseLeave={() => setIsExpanded(false)}
+													>
+														{/* <div
+															className={
+																isExpanded ? "h-auto" : "h-10 overflow-hidden"
+															}
+														> */}
+														{content}
+														{/* </div> */}
+													</td>
 												</tr>
 											</tbody>
 										</table>
