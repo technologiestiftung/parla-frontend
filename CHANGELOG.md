@@ -1,3 +1,23 @@
+# [1.1.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.0.0...v1.1.0) (2023-08-25)
+
+
+### Bug Fixes
+
+* Missing type ([0c919f5](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/0c919f501244e6d7e1ba3884fb75e499966ef8e6))
+* Width on small screens ([ab3a31c](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/ab3a31cd308135678bdb9dc5235386444f3c0d15))
+
+
+### Features
+
+* Duplicate call to api with larger text chunks ([168e963](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/168e9631f3fbfa90b9c05d1da9bbe41687234727))
+* **explorer:** adds reponse data as table ([3ccacc2](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/3ccacc29312296a084f13775c7720883e111bcf8))
+* Favicon ([a89e3cd](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/a89e3cd2b576d51826f1968d86aa9617fa1d4517))
+* Markdown rendering ([f74adbc](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/f74adbccc12ada86e32178c4959327630bbc62d2))
+* Max tokens based on model ([c200a2c](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/c200a2ce67a92fe156adc3d2beaa1b5cddb02824))
+* Prompt creation in own function ([36a618d](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/36a618d32256fcabd21082751d52c03fadfb047a))
+* Refine prompt ([9bd9d36](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/9bd9d3684f66335c881380c4e0a54cc9abdb7208))
+* Results as component for double tests ([1f1ea6a](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/1f1ea6a5f215fe9ec2fc5e0552101c45eb54f1f3))
+
 # 1.0.0 (2023-08-18)
 
 
