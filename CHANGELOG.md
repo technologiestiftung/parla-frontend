@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.1.0...v1.2.0) (2023-08-25)
+
+
+### Features
+
+* **SearchResult:** Sorted by similarity ([bf702d6](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/bf702d662b75deed29c5ab6e13c4a88b8be77fc4))
+
 # [1.1.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.0.0...v1.1.0) (2023-08-25)
 
 
