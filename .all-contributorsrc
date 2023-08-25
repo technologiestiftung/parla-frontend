@@ -1,5 +1,5 @@
 {
-  "projectName": "template-default",
+  "projectName": "ki-anfragen-frontend",
   "projectOwner": "technologiestiftung",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -10,7 +10,18 @@
   "commit": true,
   "commitConvention": "angular",
   "contributors": [
+    {
+      "login": "ff6347",
+      "name": "Fabian Morón Zirfas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/315106?v=4",
+      "profile": "https://fabianmoronzirfas.me",
+      "contributions": [
+        "code",
+        "infra"
+      ]
+    }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true
+  "skipCi": true,
+  "commitType": "docs"
 }
