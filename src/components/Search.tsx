@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { examplesQuestions } from "../lib/examples-questions";
 import { Column } from "./Column";
 import { InputNumber } from "./InputNumber";
-import { Label } from "./Label";
+import { Label, createLabels } from "./Label";
 import { Row } from "./Row";
 import "./Search.css";
 import SearchResult from "./SearchResult";
@@ -16,7 +16,7 @@ export const MODELS: Record<string, Model> = {
 	GPT_3_5_TURBO_16K: "gpt-3.5-turbo-16k",
 };
 
-const formValuesDefault: FormValues = {
+export const formValuesDefault: FormValues = {
 	query: "",
 	openai_model: MODELS.GPT_3_5_TURBO_16K,
 	temperature: 0.5,
@@ -25,13 +25,13 @@ const formValuesDefault: FormValues = {
 	match_count: 5,
 	min_content_length: 50,
 };
+const labels = createLabels(formValuesDefault);
 
 export default function Search() {
 	const [result, setResult] = useState<ResponseDetail[] | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [formValues, setFormValues] = useState<FormValues>(formValuesDefault);
-
 	useEffect(() => {
 		console.log(formValues);
 	}, [formValues]);
@@ -113,12 +113,7 @@ export default function Search() {
 						onSubmit={handleSubmit}
 						className="flex w-full flex-col justify-between"
 					>
-						<Label
-							text={"Frage"}
-							title={
-								"Hier sollte die Frage eingegeben werden die an >ki.anfragen gesendet werden soll. Halten sie die Frage kurz"
-							}
-						></Label>
+						<Label {...labels.query}></Label>
 						<textarea
 							id="query"
 							name="query"
@@ -127,10 +122,7 @@ export default function Search() {
 							onChange={handleInputChange}
 							value={formValues.query}
 						/>
-						<Label
-							text={"Temperatur"}
-							title={`Werte zwischen 0-2 Standarteinstellung: ${formValuesDefault.temperature}. Niedrigere Temperatureinstellungen führen zu konsistenteren Ergebnissen, während höhere Werte zu vielfältigeren und kreativeren Ergebnissen führen. Wählen Sie einen Temperaturwert aus, basierend auf dem gewünschten Kompromiss zwischen Konsistenz und Kreativität für Ihre spezifische Anwendung.`}
-						></Label>
+						<Label {...labels.temperature}></Label>
 						{
 							<InputNumber
 								id="temperature"
@@ -146,10 +138,7 @@ export default function Search() {
 								handleInputChange={handleInputChange}
 							/>
 						}
-						<Label
-							text={"Ähnlichkeits Schwellenwert"}
-							title={`Werte zwischen 0-1. Standarteinstellung: ${formValuesDefault.match_threshold} Der Schwellenwert legt fest, wie groß die Ähnlichkeitswerte sein müssen, damit die Frage und die gespeicherten Abschnitte der Anfragen als ähnlich betrachtet werden. Wenn die Ähnlichkeitswert über dem Schwellenwert liegt, werden sie als ähnlich betrachtet. Diese werden dan an >ki.anfragen gesendet um eine Antwort zu erhalten.`}
-						></Label>
+						<Label {...labels.match_threshold}></Label>
 
 						<InputNumber
 							name="match_threshold"
@@ -164,12 +153,7 @@ export default function Search() {
 							}
 							handleInputChange={handleInputChange}
 						/>
-						{
-							<Label
-								text={"Suchindex Proben"}
-								title={`Werte zwischen 1-49. Standarteinstellung: ${formValuesDefault.num_probes} Um die Suche in den Abschnitten der Anfragen zu verbessern, haben wir diese indexiert. Ein IVFFlat-Index teilt Vektoren in Listen auf und sucht dann eine Teilmenge dieser Listen, die dem Abfragevektor am nächsten liegen. 1 Bedeutet das er nur eine Liste durchsucht 49 bedeutet das er alle durchscht. Je geringer der Wert desto schneller die Suche, desto schlechter das Ergebnis.`}
-							></Label>
-						}
+						{<Label {...labels.num_probes}></Label>}
 						<InputNumber
 							name="num_probes"
 							id="num_probes"
@@ -184,10 +168,7 @@ export default function Search() {
 							handleInputChange={handleInputChange}
 						/>
 
-						<Label
-							text={"Treffer Anzahl"}
-							title={`Werte zwischen 1-10. Standarteinstellung: ${formValuesDefault.match_count} Die Menge an Abschnitten die als Kontext für die Frage verwendet werden sollen. Je mehr Abschnitte desto mehr Kosten entstehen, aber desto mehr Information. erhält.`}
-						></Label>
+						<Label {...labels.match_count} text={"Treffer Anzahl"}></Label>
 						<InputNumber
 							id="match_count"
 							name="match_count"
@@ -201,10 +182,7 @@ export default function Search() {
 							}
 							handleInputChange={handleInputChange}
 						/>
-						<Label
-							text={"Minimum Treffer Länge"}
-							title={`Werte zwischen 1-10000. Standarteinstellung: ${formValuesDefault.min_content_length} Dieser Wert gibt die länge an Abschnitten an, die als Kontext für die Frage verwendet werden sollen.`}
-						></Label>
+						<Label {...labels.min_content_length}></Label>
 
 						<InputNumber
 							id="min_content_length"
@@ -220,10 +198,7 @@ export default function Search() {
 							handleInputChange={handleInputChange}
 						/>
 
-						<Label
-							text={"OpenAI Model"}
-							title={`3 Modelle. Standarteinstellung: ${formValuesDefault.openai_model} Dieser Wert gibt den Modell an, der verwendet wird. Achtung! Das Modell bestimmt auch wieviel Kontext mit gegeben werden kann. GPT 3.5-turbo hat einen Kontext von 4 Tokens. Das ist meist zu klein für unseren Bedarf. die 16k Version hat einen Kontext von 16000 Tokens. Damit können wir bis zu 10 Abschnitte und die Frage verarbeiten. GPT-4 ist das beste aber auch teuerste Model und hat einen Kontext von 8000 Tokens.`}
-						></Label>
+						<Label {...labels.openai_model}></Label>
 
 						<select
 							className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
