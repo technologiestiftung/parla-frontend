@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.2.0...v1.3.0) (2023-08-29)
+
+
+### Features
+
+* Icons with tooltips ([43b470b](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/43b470b58bf16ea3279990fc41a601bccefae636))
+* **search paramters:** Add opts to tweak request ([e315722](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/e3157220ab684924d9b7dc31937e222a6bdc74b3))
+
 # [1.2.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.1.0...v1.2.0) (2023-08-25)
 
 
