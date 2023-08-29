@@ -1,34 +1,20 @@
 "use client";
+import type { FormValues, Model, ResponseDetail } from "@/lib/common";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
+import { examplesQuestions } from "../lib/examples-questions";
+import { Column } from "./Column";
+import { InputNumber } from "./InputNumber";
+import { Label } from "./Label";
+import { Row } from "./Row";
 import "./Search.css";
 import SearchResult from "./SearchResult";
-import { Model, ResponseDetail } from "@/lib/common";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { Label } from "./Label";
-import { InputNumber } from "./InputNumber";
-import { Row } from "./Row";
-import { Column } from "./Column";
 export const MODELS: Record<string, Model> = {
 	GPT_4: "gpt-4",
 	GPT_3_5_TURBO: "gpt-3.5-turbo",
 	GPT_3_5_TURBO_16K: "gpt-3.5-turbo-16k",
 };
-
-interface Question {
-	query: string;
-	pdf: string;
-}
-
-export interface FormValues {
-	query?: string;
-	temperature?: number;
-	match_threshold?: number;
-	num_probes?: number;
-	match_count?: number;
-	min_content_length?: number;
-	openai_model?: Model;
-}
 
 const formValuesDefault: FormValues = {
 	query: "",
@@ -39,29 +25,6 @@ const formValuesDefault: FormValues = {
 	match_count: 5,
 	min_content_length: 50,
 };
-
-const examplesQuestions: Question[] = [
-	{
-		query:
-			"Wie bewertet der Berliner Senat das private Engagement, bei dem Ehrenamtliche Berliner Gewässer von Müll und Schrott befreien?",
-		pdf: "S19-10055.pdf",
-	},
-	{
-		query:
-			"Wie viel Personen sind 2021 bisher insgesamt aus der Republik Polen in Deutschland eingereist und haben in Berlin einen Asylantrag gestellt? Wie viel davon waren Frauen, wie viel Männer, wie viel Kinder? Welche Staatsangehörigkeit hatten die Personen?",
-		pdf: "S19-10090.pdf",
-	},
-	{
-		query:
-			"Wie ist der aktuelle Stand der Planungen der Fußgängerüberwege am Jacques-Offenbach-Platz in Mahlsdorf?",
-		pdf: "S19-10105.pdf",
-	},
-	{
-		query:
-			"Wie begründet sich die deutlich ungleiche Besoldung von Ärtzt:innen am Landesinstitut für gerichtliche und soziale Medizin Berlin sowie am Institut für Rechtsmedizin der Charité?",
-		pdf: "S19-10011.pdf",
-	},
-];
 
 export default function Search() {
 	const [result, setResult] = useState<ResponseDetail[] | null>(null);
@@ -109,7 +72,7 @@ export default function Search() {
 		}
 		const json = (await response.json()) as ResponseDetail[];
 		setResult(json);
-		console.log(json);
+		console.info(json);
 		setLoading(false);
 	}
 
@@ -143,26 +106,9 @@ export default function Search() {
 	}
 
 	return (
-		<div className=" sm:w-full md:w-1/2">
-			<Row additionalClassNames="text-left">
-				<Column additionalClassNames="text-left">
-					<h1 className="text-4xl py-5 font-extrabold">{">ki.anfragen"}</h1>
-					<p>
-						Ein KI gestütztes Suchemaschine für Schriftliche Anfragen aus der
-						Wahlperiode 19 des Berliner Abgeordnetenhauses. Die original Quellen
-						sind auf{" "}
-						<a
-							target="_blank"
-							href="https://www.parlament-berlin.de/dokumente/open-data"
-						>
-							parlament-berlin.de/dokumente/open-data
-						</a>{" "}
-						zu finden
-					</p>
-				</Column>
-			</Row>
+		<>
 			<Row>
-				<div className="col w-full">
+				<Column additionalClassNames="w-full">
 					<form
 						onSubmit={handleSubmit}
 						className="flex w-full flex-col justify-between"
@@ -299,7 +245,10 @@ export default function Search() {
 								</p>
 							</div>
 						)}
-						<div className="py-4"></div>
+						<div
+							// separate the button from the select
+							className="py-4"
+						></div>
 						<button
 							className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4"
 							type="submit"
@@ -311,7 +260,7 @@ export default function Search() {
 							)}
 						</button>
 					</form>
-				</div>
+				</Column>
 			</Row>
 
 			{errors && (
@@ -349,7 +298,7 @@ export default function Search() {
 					</Column>
 				</Row>
 			))}
-		</div>
+		</>
 	);
 }
 function H2({ message }: { message: string }) {

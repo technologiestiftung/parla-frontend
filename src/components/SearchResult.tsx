@@ -1,4 +1,4 @@
-import { ResponseDetail } from "@/lib/common";
+import type { ResponseDetail } from "@/lib/common";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
