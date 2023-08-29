@@ -3,6 +3,22 @@ import { Database } from "./database.js";
 type Section = Database["public"]["Tables"]["parsed_document_sections"]["Row"];
 type Pdf = Database["public"]["Tables"]["dokument"]["Row"];
 type Doc = Database["public"]["Tables"]["parsed_documents"]["Row"];
+export type Model = "gpt-4" | "gpt-3.5-turbo" | "gpt-3.5-turbo-16k";
+
+export interface Question {
+	query: string;
+	pdf: string;
+}
+
+export interface FormValues {
+	query?: string;
+	temperature?: number;
+	match_threshold?: number;
+	num_probes?: number;
+	match_count?: number;
+	min_content_length?: number;
+	openai_model?: Model;
+}
 
 interface Gpt {
 	id: string;

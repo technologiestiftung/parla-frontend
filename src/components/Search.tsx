@@ -1,54 +1,52 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import type { FormValues, Model, ResponseDetail } from "@/lib/common";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
+import { examplesQuestions } from "../lib/examples-questions";
+import { Column } from "./Column";
+import { InputNumber } from "./InputNumber";
+import { Label, createLabels } from "./Label";
+import { Row } from "./Row";
 import "./Search.css";
 import SearchResult from "./SearchResult";
-import { ResponseDetail } from "@/lib/common";
+export const MODELS: Record<string, Model> = {
+	GPT_4: "gpt-4",
+	GPT_3_5_TURBO: "gpt-3.5-turbo",
+	GPT_3_5_TURBO_16K: "gpt-3.5-turbo-16k",
+};
 
-interface Question {
-	query: string;
-	pdf: string;
-}
+export const formValuesDefault: FormValues = {
+	query: "",
+	openai_model: MODELS.GPT_3_5_TURBO_16K,
+	temperature: 0.5,
+	match_threshold: 0.85,
+	num_probes: 7,
+	match_count: 5,
+	min_content_length: 50,
+};
+const labels = createLabels(formValuesDefault);
 
 export default function Search() {
 	const [result, setResult] = useState<ResponseDetail[] | null>(null);
-	const [query, setQuery] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [errors, setErrors] = useState<Error | null>(null);
-	const inputRef = useRef<HTMLTextAreaElement>(null);
-
-	const examplesQuestions: Question[] = [
-		{
-			query:
-				"Wie bewertet der Berliner Senat das private Engagement, bei dem Ehrenamtliche Berliner Gewässer von Müll und Schrott befreien?",
-			pdf: "S19-10055.pdf",
-		},
-		{
-			query:
-				"Wie viel Personen sind 2021 bisher insgesamt aus der Republik Polen in Deutschland eingereist und haben in Berlin einen Asylantrag gestellt? Wie viel davon waren Frauen, wie viel Männer, wie viel Kinder? Welche Staatsangehörigkeit hatten die Personen?",
-			pdf: "S19-10090.pdf",
-		},
-		{
-			query:
-				"Wie ist der aktuelle Stand der Planungen der Fußgängerüberwege am Jacques-Offenbach-Platz in Mahlsdorf?",
-			pdf: "S19-10105.pdf",
-		},
-		{
-			query:
-				"Wie begründet sich die deutlich ungleiche Besoldung von Ärtzt:innen am Landesinstitut für gerichtliche und soziale Medizin Berlin sowie am Institut für Rechtsmedizin der Charité?",
-			pdf: "S19-10011.pdf",
-		},
-	];
-
-	// clear the search result on load
+	const [errors, setErrors] = useState<Record<string, any> | null>(null);
+	const [formValues, setFormValues] = useState<FormValues>(formValuesDefault);
 	useEffect(() => {
-		setResult(null);
-		setQuery("");
-		if (inputRef.current) {
-			inputRef.current.value = "";
-		}
-	}, []);
+		console.log(formValues);
+	}, [formValues]);
 
-	async function vectorSearch(query: string): Promise<void> {
+	async function vectorSearch({
+		query,
+		openai_model,
+		temperature,
+		match_threshold,
+		num_probes,
+		match_count,
+	}: FormValues): Promise<void> {
+		if (!query) {
+			throw new Error("no query provided");
+		}
 		const response = await fetch(
 			`${process.env.NEXT_PUBLIC_KI_ANFRAGEN_API_URL}/vector-search`,
 			{
@@ -58,109 +56,226 @@ export default function Search() {
 				},
 				body: JSON.stringify({
 					query,
+					openai_model,
+					temperature,
+					match_threshold,
+					num_probes,
+					match_count,
 				}),
 			},
 		);
 		if (!response.ok) {
 			setLoading(false);
-			setErrors(new Error("failed to fetch dat avia /api/vector-search"));
+			const error = await response.json();
+			setErrors(error);
 			return;
 		}
 		const json = (await response.json()) as ResponseDetail[];
 		setResult(json);
-		console.log(json);
+		console.info(json);
 		setLoading(false);
 	}
+
+	const handleInputChange = (
+		event: React.ChangeEvent<
+			HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+		>,
+	) => {
+		const { name, value } = event.target;
+
+		setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
+	};
 
 	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 		setErrors(null);
 		setLoading(true);
-		if (query.length === 0) {
+		if (formValues.query && formValues.query.length === 0) {
 			setLoading(false);
-			setErrors(new Error("no query provided"));
+			setErrors({ message: "no query provided" });
 			return;
 		}
-		vectorSearch(query).catch((error) => {
-			setLoading(false);
-			setErrors(error);
-			console.error(error);
-		});
-
-		return false;
+		if (formValues.query) {
+			vectorSearch(formValues).catch((error) => {
+				setLoading(false);
+				setErrors(error);
+				console.error(error);
+			});
+			return false;
+		}
 	}
 
 	return (
 		<>
-			<div className="row text-left">
-				<div className="col text-left">
-					<h1 className="text-4xl py-5">ParDok AI Suche</h1>
-				</div>
-			</div>
-			<div className="row">
-				<div className="col w-full">
-					<form onSubmit={handleSubmit} className="flex w-full flex-col">
-						<label htmlFor="query" className="py-4">
-							Frage:
-						</label>
+			<Row>
+				<Column additionalClassNames="w-full">
+					<form
+						onSubmit={handleSubmit}
+						className="flex w-full flex-col justify-between"
+					>
+						<Label {...labels.query}></Label>
 						<textarea
 							id="query"
 							name="query"
 							className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-							ref={inputRef}
 							placeholder="Frage hier eingeben"
-							onChange={(e) => setQuery(e.target.value)}
+							onChange={handleInputChange}
+							value={formValues.query}
 						/>
+						<Label {...labels.temperature}></Label>
+						{
+							<InputNumber
+								id="temperature"
+								name="temperature"
+								min="0"
+								max="2"
+								step="0.01"
+								value={
+									formValues.temperature
+										? formValues.temperature
+										: formValuesDefault.temperature!
+								}
+								handleInputChange={handleInputChange}
+							/>
+						}
+						<Label {...labels.match_threshold}></Label>
+
+						<InputNumber
+							name="match_threshold"
+							id="match_threshold"
+							min="0"
+							max="1"
+							step="0.01"
+							value={
+								formValues.match_threshold
+									? formValues.match_threshold
+									: formValuesDefault.match_threshold!
+							}
+							handleInputChange={handleInputChange}
+						/>
+						{<Label {...labels.num_probes}></Label>}
+						<InputNumber
+							name="num_probes"
+							id="num_probes"
+							min="1"
+							max="49"
+							step="1"
+							value={
+								formValues.num_probes
+									? formValues.num_probes
+									: formValuesDefault.num_probes!
+							}
+							handleInputChange={handleInputChange}
+						/>
+
+						<Label {...labels.match_count} text={"Treffer Anzahl"}></Label>
+						<InputNumber
+							id="match_count"
+							name="match_count"
+							min="1"
+							max="10"
+							step="1"
+							value={
+								formValues.match_count
+									? formValues.match_count
+									: formValuesDefault.match_count!
+							}
+							handleInputChange={handleInputChange}
+						/>
+						<Label {...labels.min_content_length}></Label>
+
+						<InputNumber
+							id="min_content_length"
+							name="min_content_length"
+							min="10"
+							max="10000"
+							// step="10"
+							value={
+								formValues.min_content_length
+									? formValues.min_content_length
+									: formValuesDefault.min_content_length!
+							}
+							handleInputChange={handleInputChange}
+						/>
+
+						<Label {...labels.openai_model}></Label>
+
+						<select
+							className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+							name="openai_model"
+							id="openai_model"
+							value={formValues?.openai_model || MODELS.GPT_3_5_TURBO_16K}
+							onChange={handleInputChange}
+						>
+							{Object.values(MODELS).map((model) => (
+								<option key={model} value={model}>
+									{model}
+								</option>
+							))}
+						</select>
+						{formValues.openai_model === MODELS.GPT_4 && (
+							<div className="py-4">
+								<p className="text-red-500 font-bold">
+									Achtung!: Dies macht die Fragen langsamer und teurer!
+								</p>
+							</div>
+						)}
+						<div
+							// separate the button from the select
+							className="py-4"
+						></div>
 						<button
-							className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4"
+							className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4"
 							type="submit"
 						>
-							Senden
+							{loading ? (
+								<FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+							) : (
+								"Senden"
+							)}
 						</button>
 					</form>
-				</div>
-			</div>
-			{loading && (
-				<>
-					<div className="row">
-						<div className="col">{"Loading..."}</div>
-					</div>
-				</>
-			)}
+				</Column>
+			</Row>
+
 			{errors && (
 				<>
-					<div className="row">
-						<div className="col">
-							<h2 className="text-2xl py-2 text-left">{errors.name}</h2>
-							<p>{errors.message}</p>
-						</div>
-					</div>
+					<Row>
+						<Column>
+							{<H2 message={errors.message as string} />}
+							<pre>
+								<code>{JSON.stringify(errors, null, 2)}</code>
+							</pre>
+						</Column>
+					</Row>
 				</>
 			)}
 			{result &&
 				result.length > 0 &&
 				result.map((res) => <SearchResult result={res} key={res.gpt?.id} />)}
 
-			<div className="row">
-				<div className="col">
-					<h2 className="text-2xl py-5">Beispiel Fragen</h2>
-				</div>
-			</div>
+			<Row>
+				<Column>
+					<H2 message="Beispiel Fragen"></H2>
+				</Column>
+			</Row>
 			{examplesQuestions.map((example) => (
-				<div className="row" key={example.pdf}>
-					<div className="col w-full">
+				<Row key={example.pdf}>
+					<Column additionalClassNames="w-full py-4">
 						<button
 							onClick={() => {
-								setQuery(example.query);
-								if (inputRef.current) inputRef.current.value = example.query;
+								setFormValues({ ...formValues, query: example.query });
 							}}
-							className="bg-gray-500 hover:bg-gray-700 text-white py-5 px-4  text-left w-full"
+							className="bg-blue-700 hover:bg-blue-900 text-white py-5 px-4  text-left w-full"
 						>
 							<span className="font-bold">{example.pdf}</span>: {example.query}
 						</button>
-					</div>
-				</div>
+					</Column>
+				</Row>
 			))}
 		</>
 	);
+}
+function H2({ message }: { message: string }) {
+	return <h2 className="text-2xl py-2 pt-8 text-left">{message}</h2>;
 }

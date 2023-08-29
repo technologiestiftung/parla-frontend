@@ -1,4 +1,4 @@
-import { ResponseDetail } from "@/lib/common";
+import type { ResponseDetail } from "@/lib/common";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
@@ -45,7 +45,7 @@ export default function SearchResult({ result }: SearchResultProps) {
 																	target="_blank"
 																	rel="noreferrer"
 																	href={pdf.lokurl ? pdf.lokurl : ""}
-																	className="underline text-blue-500 hover:text-blue-800 visited:text-blue-950"
+																	className="underline text-blue-700 hover:text-blue-900"
 																>
 																	{pdf.lokurl
 																		?.split("/")
