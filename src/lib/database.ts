@@ -199,6 +199,7 @@ export interface Database {
           embedding: string | null
           heading: string | null
           id: number
+          page: number | null
           parsed_document_id: number | null
           token_count: number | null
         }
@@ -207,6 +208,7 @@ export interface Database {
           embedding?: string | null
           heading?: string | null
           id?: number
+          page?: number | null
           parsed_document_id?: number | null
           token_count?: number | null
         }
@@ -215,46 +217,13 @@ export interface Database {
           embedding?: string | null
           heading?: string | null
           id?: number
+          page?: number | null
           parsed_document_id?: number | null
           token_count?: number | null
         }
         Relationships: [
           {
             foreignKeyName: "parsed_document_sections_parsed_document_id_fkey"
-            columns: ["parsed_document_id"]
-            referencedRelation: "parsed_documents"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      parsed_document_sections_large: {
-        Row: {
-          content: string | null
-          embedding: string | null
-          heading: string | null
-          id: number
-          parsed_document_id: number | null
-          token_count: number | null
-        }
-        Insert: {
-          content?: string | null
-          embedding?: string | null
-          heading?: string | null
-          id?: number
-          parsed_document_id?: number | null
-          token_count?: number | null
-        }
-        Update: {
-          content?: string | null
-          embedding?: string | null
-          heading?: string | null
-          id?: number
-          parsed_document_id?: number | null
-          token_count?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "parsed_document_sections_large_parsed_document_id_fkey"
             columns: ["parsed_document_id"]
             referencedRelation: "parsed_documents"
             referencedColumns: ["id"]
@@ -386,21 +355,7 @@ export interface Database {
           match_threshold: number
           match_count: number
           min_content_length: number
-        }
-        Returns: {
-          id: number
-          parsed_document_id: number
-          heading: string
-          content: string
-          similarity: number
-        }[]
-      }
-      match_parsed_dokument_sections_large: {
-        Args: {
-          embedding: string
-          match_threshold: number
-          match_count: number
-          min_content_length: number
+          num_probes: number
         }
         Returns: {
           id: number
