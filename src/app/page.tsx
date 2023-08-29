@@ -7,12 +7,13 @@ export default function Home() {
 		<div className=" sm:w-full md:w-1/2">
 			<Row additionalClassNames="text-left">
 				<Column additionalClassNames="text-left">
-					<h1 className="text-4xl py-5 font-extrabold">{">ki.anfragen"}</h1>
+					<h1 className="text-4xl py-5 font-extrabold ">{">ki.anfragen"}</h1>
 					<p>
 						Ein KI gestütztes Suchemaschine für Schriftliche Anfragen aus der
 						Wahlperiode 19 des Berliner Abgeordnetenhauses. Die original Quellen
 						sind auf{" "}
 						<a
+							className="underline text-blue-700 hover:text-blue-900"
 							target="_blank"
 							href="https://www.parlament-berlin.de/dokumente/open-data"
 						>

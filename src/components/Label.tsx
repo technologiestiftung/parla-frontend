@@ -45,7 +45,7 @@ export function Label({ title, text }: { text: string; title: string }) {
 			<FontAwesomeIcon
 				size="xs"
 				icon={faExclamationCircle}
-				className="text-gray-400 ml-2"
+				className="text-blue-700 ml-2"
 				title={title}
 			/>
 		</label>

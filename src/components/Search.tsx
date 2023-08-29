@@ -225,7 +225,7 @@ export default function Search() {
 							className="py-4"
 						></div>
 						<button
-							className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4"
+							className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4"
 							type="submit"
 						>
 							{loading ? (
@@ -266,7 +266,7 @@ export default function Search() {
 							onClick={() => {
 								setFormValues({ ...formValues, query: example.query });
 							}}
-							className="bg-gray-500 hover:bg-gray-700 text-white py-5 px-4  text-left w-full"
+							className="bg-blue-700 hover:bg-blue-900 text-white py-5 px-4  text-left w-full"
 						>
 							<span className="font-bold">{example.pdf}</span>: {example.query}
 						</button>
