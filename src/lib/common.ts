@@ -1,4 +1,5 @@
-import { Database } from "./database.js";
+import type { CreateChatCompletionRequest } from "openai";
+import type { Database } from "./database.js";
 
 type Section = Database["public"]["Tables"]["parsed_document_sections"]["Row"];
 type Pdf = Database["public"]["Tables"]["dokument"]["Row"];
@@ -10,7 +11,7 @@ export interface Question {
 	pdf: string;
 }
 
-export interface FormValues {
+export interface Body {
 	query?: string;
 	temperature?: number;
 	match_threshold?: number;
@@ -53,4 +54,6 @@ export interface ResponseSection extends Partial<Section> {
 export interface ResponseDetail {
 	gpt?: Gpt;
 	sections: ResponseSection[];
+	requestBody?: Body;
+	completionOptions?: CreateChatCompletionRequest;
 }
