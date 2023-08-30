@@ -4,9 +4,9 @@ import Search from "../components/Search";
 
 export default function Home() {
 	return (
-		<div className=" sm:w-full md:w-1/2">
-			<Row additionalClassNames="text-left">
-				<Column additionalClassNames="text-left">
+		<div className="sm:w-full md:w-1/2 flex flex-col gap-8">
+			<Row>
+				<Column>
 					<h1 className="text-4xl py-5 font-extrabold ">{">ki.anfragen"}</h1>
 					<p>
 						Ein KI gestütztes Suchemaschine für Schriftliche Anfragen aus der
