@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.3.0...v1.3.1) (2023-08-30)
+
+
+### Bug Fixes
+
+* **types:** type was not renamed in Label ([377b782](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/377b782f271280d95c978124d049d62429d687c7))
+
 # [1.3.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.2.0...v1.3.0) (2023-08-29)
 
 
