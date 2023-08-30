@@ -11,20 +11,20 @@
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "6.4.2",
 		"@fortawesome/react-fontawesome": "0.2.0",
-		"@types/node": "20.5.0",
-		"@types/react": "18.2.20",
-		"@types/react-dom": "18.2.7",
-		"autoprefixer": "10.4.15",
 		"common-tags": "1.8.2",
 		"gpt3-tokenizer": "1.1.5",
-		"openai": "3.3.0",
-		"react": "^18.2.0",
+		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-markdown": "8.0.7"
 	},
 	"devDependencies": {
+		"autoprefixer": "10.4.15",
+		"openai": "3.3.0",
 		"@technologiestiftung/semantic-release-config": "1.2.3",
 		"@types/common-tags": "1.8.1",
+		"@types/node": "20.5.7",
+		"@types/react": "18.2.0",
+		"@types/react-dom": "18.2.0",
 		"@typescript-eslint/eslint-plugin": "6.4.0",
 		"@typescript-eslint/parser": "6.4.0",
 		"cz-conventional-changelog": "3.3.0",
@@ -35,13 +35,19 @@
 		"postcss": "8.4.28",
 		"prettier": "3.0.2",
 		"prettier-plugin-astro": "0.11.1",
-		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"tailwindcss": "3.3.3",
 		"typescript": "5.1.6"
 	},
 	"eslintConfig": {
 		"extends": "next/core-web-vitals"
+	},
+	"prettier": {
+		"tabWidth": 2,
+		"semi": true,
+		"singleQuote": false,
+		"useTabs": true,
+		"printWidth": 80
 	},
 	"config": {
 		"commitizen": {
