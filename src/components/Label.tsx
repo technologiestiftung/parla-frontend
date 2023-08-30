@@ -2,9 +2,9 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
-import { FormValues } from "@/lib/common";
+import { Body } from "@/lib/common";
 
-export function createLabels(formDefaultValues: FormValues) {
+export function createLabels(formDefaultValues: Body) {
 	return {
 		query: {
 			text: "Frage",
