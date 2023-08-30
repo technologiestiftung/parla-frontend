@@ -11,3 +11,7 @@ body {
 	background: #fff;
 	font-family: system-ui, sans-serif;
 }
+
+p {
+	padding-bottom: 1rem !important;
+}
