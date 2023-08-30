@@ -1,7 +1,9 @@
 ![](https://img.shields.io/badge/Built%20with%20%E2%9D%A4%EF%B8%8F-at%20Technologiestiftung%20Berlin-blue)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # _>ki.anfragen (frontend)_
@@ -20,6 +22,10 @@ This is a the frontend for the explorational project _>ki.anfragen_. This is not
 
 ```plain
 NEXT_PUBLIC_KI_ANFRAGEN_API_URL=https://domain-of-your-api-server.dev
+# if you are using basic authentication
+# this is how you add your user and password uses:
+# - https://github.com/labd/nextjs-basic-auth-middleware#readme
+BASIC_AUTH_CREDENTIALS=user:pass
 ```
 
 ## Installation
