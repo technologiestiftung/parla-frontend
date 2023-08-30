@@ -1,15 +1,3 @@
-tr {
-	vertical-align: top;
-}
-
-tr:nth-child(odd) {
-	background-color: #f2f2f2;
-}
-
-td {
-	padding: 0.5rem;
-}
-
 @media screen and (max-width: 600px) {
 	table {
 		width: 100%;

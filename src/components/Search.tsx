@@ -1,5 +1,5 @@
 "use client";
-import type { FormValues, Model, ResponseDetail } from "@/lib/common";
+import type { Body, Model, ResponseDetail } from "@/lib/common";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
@@ -10,13 +10,14 @@ import { Label, createLabels } from "./Label";
 import { Row } from "./Row";
 import "./Search.css";
 import SearchResult from "./SearchResult";
+import { H2 } from "./h2";
 export const MODELS: Record<string, Model> = {
 	GPT_4: "gpt-4",
 	GPT_3_5_TURBO: "gpt-3.5-turbo",
 	GPT_3_5_TURBO_16K: "gpt-3.5-turbo-16k",
 };
 
-export const formValuesDefault: FormValues = {
+export const formValuesDefault: Body = {
 	query: "",
 	openai_model: MODELS.GPT_3_5_TURBO_16K,
 	temperature: 0.5,
@@ -31,7 +32,7 @@ export default function Search() {
 	const [result, setResult] = useState<ResponseDetail[] | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [errors, setErrors] = useState<Record<string, any> | null>(null);
-	const [formValues, setFormValues] = useState<FormValues>(formValuesDefault);
+	const [formValues, setFormValues] = useState<Body>(formValuesDefault);
 	useEffect(() => {
 		console.log(formValues);
 	}, [formValues]);
@@ -43,7 +44,7 @@ export default function Search() {
 		match_threshold,
 		num_probes,
 		match_count,
-	}: FormValues): Promise<void> {
+	}: Body): Promise<void> {
 		if (!query) {
 			throw new Error("no query provided");
 		}
@@ -261,7 +262,7 @@ export default function Search() {
 			</Row>
 			{examplesQuestions.map((example) => (
 				<Row key={example.pdf}>
-					<Column additionalClassNames="w-full py-4">
+					<Column additionalClassNames="w-full">
 						<button
 							onClick={() => {
 								setFormValues({ ...formValues, query: example.query });
@@ -275,7 +276,4 @@ export default function Search() {
 			))}
 		</>
 	);
-}
-function H2({ message }: { message: string }) {
-	return <h2 className="text-2xl py-2 pt-8 text-left">{message}</h2>;
 }

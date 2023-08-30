@@ -9,7 +9,7 @@ export function Column({
 }) {
 	return (
 		<div
-			className={`"flex flex-col justify-start items-start max-w-full"
+			className={`"flex flex-col justify-start items-start max-w-full text-left"
 	 ${additionalClassNames ? additionalClassNames : ""}`}
 		>
 			{" "}
