@@ -124,37 +124,42 @@ export default function Search() {
 							onChange={handleInputChange}
 							value={formValues.query}
 						/>
-						<Label {...labels.temperature}></Label>
-						{
-							<InputNumber
-								id="temperature"
-								name="temperature"
-								min="0"
-								max="2"
-								step="0.01"
-								value={
-									formValues.temperature
-										? formValues.temperature
-										: formValuesDefault.temperature!
-								}
-								handleInputChange={handleInputChange}
-							/>
-						}
-						<Label {...labels.match_threshold}></Label>
+						<div className="lg:flex lg:flex-col xl:flex-row xl:gap-8">
+							<div className="lg:w-1/2 xl:flex xl:flex-col lg:pt-8">
+								<Label {...labels.temperature}></Label>
 
-						<InputNumber
-							name="match_threshold"
-							id="match_threshold"
-							min="0"
-							max="1"
-							step="0.01"
-							value={
-								formValues.match_threshold
-									? formValues.match_threshold
-									: formValuesDefault.match_threshold!
-							}
-							handleInputChange={handleInputChange}
-						/>
+								<InputNumber
+									id="temperature"
+									name="temperature"
+									min="0"
+									max="2"
+									step="0.01"
+									value={
+										formValues.temperature
+											? formValues.temperature
+											: formValuesDefault.temperature!
+									}
+									handleInputChange={handleInputChange}
+								/>
+							</div>
+							<div className="lg:w-1/2 xl:flex xl:flex-col lg:pt-8">
+								<Label {...labels.match_threshold}></Label>
+
+								<InputNumber
+									name="match_threshold"
+									id="match_threshold"
+									min="0"
+									max="1"
+									step="0.01"
+									value={
+										formValues.match_threshold
+											? formValues.match_threshold
+											: formValuesDefault.match_threshold!
+									}
+									handleInputChange={handleInputChange}
+								/>
+							</div>
+						</div>
 						{<Label {...labels.num_probes}></Label>}
 						<InputNumber
 							name="num_probes"
