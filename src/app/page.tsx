@@ -9,7 +9,7 @@ export default function Home() {
 				<Column>
 					<h1 className="text-4xl py-5 font-extrabold ">{">ki.anfragen"}</h1>
 					<p>
-						Ein KI gestütztes Suchemaschine für Schriftliche Anfragen aus der
+						Eine KI Suchmaschine für Schriftliche Anfragen aus der
 						Wahlperiode 19 des Berliner Abgeordnetenhauses. Die original Quellen
 						sind auf{" "}
 						<a
