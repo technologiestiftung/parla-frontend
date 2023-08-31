@@ -122,4 +122,4 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 - https://github.com/technologiestiftung/ki-anfragen-supabase
 - https://github.com/technologiestiftung/oeffentliches-gestalten-gpt-search
 - https://github.com/supabase-community/nextjs-openai-doc-search
-<!-- touch -->
+<!-- touch again -->
