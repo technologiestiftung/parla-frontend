@@ -257,7 +257,7 @@ export default function Search() {
 
 			<Row>
 				<Column>
-					<H2 message="Beispiel Fragen"></H2>
+					<H2 message="Beispiel-Fragen"></H2>
 				</Column>
 			</Row>
 			{examplesQuestions.map((example) => (
