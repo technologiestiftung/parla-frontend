@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.3.1...v1.3.2) (2023-08-31)
+
+
+### Bug Fixes
+
+* typos ([3c8cea0](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/3c8cea0a6d197ced133197a5a588112011f2a05f))
+
 ## [1.3.1](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.3.0...v1.3.1) (2023-08-30)
 
 ### Bug Fixes
