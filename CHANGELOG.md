@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.3.2...v1.4.0) (2023-08-31)
+
+
+### Features
+
+* 5 rows in textarea ([80986ab](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/80986ab85ad6960905970a6b6b344afc9288288e))
+
 ## [1.3.2](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.3.1...v1.3.2) (2023-08-31)
 
 
