@@ -40,12 +40,12 @@ export function createLabels(formDefaultValues: Body) {
 
 export function Label({ title, text }: { text: string; title: string }) {
 	return (
-		<label className="py-2 pt-4" htmlFor="num_probes">
+		<label className="py-2 pt-4  text-sm" htmlFor="num_probes">
 			{text}
 			<FontAwesomeIcon
-				size="xs"
+				size="1x"
 				icon={faExclamationCircle}
-				className="text-blue-700 ml-2"
+				className="text-blue-700 ml-2 h-3 pb-1"
 				title={title}
 			/>
 		</label>
