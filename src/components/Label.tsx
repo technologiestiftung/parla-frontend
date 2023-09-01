@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+
 import { Body } from "@/lib/common";
 
 export function createLabels(formDefaultValues: Body) {
@@ -43,9 +45,9 @@ export function Label({ title, text }: { text: string; title: string }) {
 		<label className="py-2 pt-4  text-sm" htmlFor="num_probes">
 			{text}
 			<FontAwesomeIcon
-				size="1x"
+				size="sm"
 				icon={faExclamationCircle}
-				className="text-blue-700 ml-2 h-3 pb-1"
+				className="text-blue-700 ml-2 pb-1"
 				title={title}
 			/>
 		</label>
