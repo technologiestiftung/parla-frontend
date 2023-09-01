@@ -1,3 +1,17 @@
+# [1.5.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.4.0...v1.5.0) (2023-09-01)
+
+
+### Bug Fixes
+
+* **icon:** Remove flashing by including fa css ([67c4c9f](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/67c4c9f38b4c28c3bb9a29a57125c2c116a66831))
+* **iconsa:** remve icon flash ([218fd67](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/218fd672ca39727c942e6728b2689ee5ae754c1d))
+
+
+### Features
+
+* **layout:** Make layout more condensed ([179081b](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/179081b7faf0a492ab14747a776fa5162615089d))
+* **search:** WIP Make ui more condensed ([06456b9](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/06456b9abb953addcb6a9882333b6dd7e2762f27))
+
 # [1.4.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.3.2...v1.4.0) (2023-08-31)
 
 
