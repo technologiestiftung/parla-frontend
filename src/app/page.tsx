@@ -4,7 +4,7 @@ import Search from "../components/Search";
 
 export default function Home() {
 	return (
-		<div className="sm:w-full md:w-1/2 flex flex-col gap-8">
+		<div className="sm:w-full md:w-1/2 flex flex-col gap-0">
 			<Row>
 				<Column>
 					<h1 className="text-4xl py-5 font-extrabold ">

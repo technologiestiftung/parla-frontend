@@ -114,107 +114,127 @@ export default function Search() {
 						onSubmit={handleSubmit}
 						className="flex w-full flex-col justify-between"
 					>
-						<Label {...labels.query}></Label>
-						<textarea
-							rows={5}
-							id="query"
-							name="query"
-							className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-							placeholder="Frage hier eingeben"
-							onChange={handleInputChange}
-							value={formValues.query}
-						/>
-						<Label {...labels.temperature}></Label>
-						{
-							<InputNumber
-								id="temperature"
-								name="temperature"
-								min="0"
-								max="2"
-								step="0.01"
-								value={
-									formValues.temperature
-										? formValues.temperature
-										: formValuesDefault.temperature!
-								}
-								handleInputChange={handleInputChange}
-							/>
-						}
-						<Label {...labels.match_threshold}></Label>
+						<ResponsiveFormRow>
+							<ResponsiveFormRowItem>
+								<Label {...labels.query}></Label>
+								<textarea
+									rows={5}
+									id="query"
+									name="query"
+									className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+									placeholder="Frage hier eingeben"
+									onChange={handleInputChange}
+									value={formValues.query}
+								/>
+							</ResponsiveFormRowItem>
+						</ResponsiveFormRow>
+						<ResponsiveFormRow>
+							<ResponsiveFormRowItem>
+								<Label {...labels.temperature}></Label>
 
-						<InputNumber
-							name="match_threshold"
-							id="match_threshold"
-							min="0"
-							max="1"
-							step="0.01"
-							value={
-								formValues.match_threshold
-									? formValues.match_threshold
-									: formValuesDefault.match_threshold!
-							}
-							handleInputChange={handleInputChange}
-						/>
-						{<Label {...labels.num_probes}></Label>}
-						<InputNumber
-							name="num_probes"
-							id="num_probes"
-							min="1"
-							max="49"
-							step="1"
-							value={
-								formValues.num_probes
-									? formValues.num_probes
-									: formValuesDefault.num_probes!
-							}
-							handleInputChange={handleInputChange}
-						/>
+								<InputNumber
+									id="temperature"
+									name="temperature"
+									min="0"
+									max="2"
+									step="0.01"
+									value={
+										formValues.temperature
+											? formValues.temperature
+											: formValuesDefault.temperature!
+									}
+									handleInputChange={handleInputChange}
+								/>
+							</ResponsiveFormRowItem>
+							<ResponsiveFormRowItem>
+								<Label {...labels.match_threshold}></Label>
 
-						<Label {...labels.match_count} text={"Treffer Anzahl"}></Label>
-						<InputNumber
-							id="match_count"
-							name="match_count"
-							min="1"
-							max="10"
-							step="1"
-							value={
-								formValues.match_count
-									? formValues.match_count
-									: formValuesDefault.match_count!
-							}
-							handleInputChange={handleInputChange}
-						/>
-						<Label {...labels.min_content_length}></Label>
+								<InputNumber
+									name="match_threshold"
+									id="match_threshold"
+									min="0"
+									max="1"
+									step="0.01"
+									value={
+										formValues.match_threshold
+											? formValues.match_threshold
+											: formValuesDefault.match_threshold!
+									}
+									handleInputChange={handleInputChange}
+								/>
+							</ResponsiveFormRowItem>
+						</ResponsiveFormRow>
+						<ResponsiveFormRow>
+							<ResponsiveFormRowItem>
+								{<Label {...labels.num_probes}></Label>}
+								<InputNumber
+									name="num_probes"
+									id="num_probes"
+									min="1"
+									max="49"
+									step="1"
+									value={
+										formValues.num_probes
+											? formValues.num_probes
+											: formValuesDefault.num_probes!
+									}
+									handleInputChange={handleInputChange}
+								/>
+							</ResponsiveFormRowItem>
+							<ResponsiveFormRowItem>
+								<Label {...labels.match_count} text={"Treffer Anzahl"}></Label>
+								<InputNumber
+									id="match_count"
+									name="match_count"
+									min="1"
+									max="10"
+									step="1"
+									value={
+										formValues.match_count
+											? formValues.match_count
+											: formValuesDefault.match_count!
+									}
+									handleInputChange={handleInputChange}
+								/>
+							</ResponsiveFormRowItem>
+						</ResponsiveFormRow>
+						<ResponsiveFormRow>
+							<ResponsiveFormRowItem>
+								<Label {...labels.min_content_length}></Label>
 
-						<InputNumber
-							id="min_content_length"
-							name="min_content_length"
-							min="10"
-							max="10000"
-							// step="10"
-							value={
-								formValues.min_content_length
-									? formValues.min_content_length
-									: formValuesDefault.min_content_length!
-							}
-							handleInputChange={handleInputChange}
-						/>
+								<InputNumber
+									id="min_content_length"
+									name="min_content_length"
+									min="10"
+									max="10000"
+									// step="10"
+									value={
+										formValues.min_content_length
+											? formValues.min_content_length
+											: formValuesDefault.min_content_length!
+									}
+									handleInputChange={handleInputChange}
+								/>
+							</ResponsiveFormRowItem>
+							<ResponsiveFormRowItem>
+								<Label {...labels.openai_model}></Label>
 
-						<Label {...labels.openai_model}></Label>
+								<select
+									className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+									name="openai_model"
+									id="openai_model"
+									value={formValues?.openai_model || MODELS.GPT_3_5_TURBO_16K}
+									onChange={handleInputChange}
+								>
+									{Object.values(MODELS).map((model) => (
+										<option key={model} value={model}>
+											{model}
+										</option>
+									))}
+								</select>
+							</ResponsiveFormRowItem>
+						</ResponsiveFormRow>
 
-						<select
-							className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-							name="openai_model"
-							id="openai_model"
-							value={formValues?.openai_model || MODELS.GPT_3_5_TURBO_16K}
-							onChange={handleInputChange}
-						>
-							{Object.values(MODELS).map((model) => (
-								<option key={model} value={model}>
-									{model}
-								</option>
-							))}
-						</select>
 						{formValues.openai_model === MODELS.GPT_4 && (
 							<div className="py-4">
 								<p className="text-red-500 font-bold">
@@ -226,16 +246,20 @@ export default function Search() {
 							// separate the button from the select
 							className="py-4"
 						></div>
-						<button
-							className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4"
-							type="submit"
-						>
-							{loading ? (
-								<FontAwesomeIcon icon={faSpinner} className="fa-spin" />
-							) : (
-								"Senden"
-							)}
-						</button>
+						<ResponsiveFormRow>
+							<ResponsiveFormRowItem>
+								<button
+									className=" bg-blue-700 hover:bg-blue-900 text-white font-bold py-4 w-full"
+									type="submit"
+								>
+									{loading ? (
+										<FontAwesomeIcon icon={faSpinner} className="fa-spin" />
+									) : (
+										"Senden"
+									)}
+								</button>
+							</ResponsiveFormRowItem>
+						</ResponsiveFormRow>
 					</form>
 				</Column>
 			</Row>
@@ -276,5 +300,31 @@ export default function Search() {
 				</Row>
 			))}
 		</>
+	);
+}
+
+interface ResponsiveFormDiv extends React.HTMLAttributes<HTMLDivElement> {
+	children: React.ReactNode;
+}
+
+function ResponsiveFormRow({ children, ...rest }: ResponsiveFormDiv) {
+	return (
+		<div
+			{...rest}
+			className="lg:flex lg:flex-col xl:flex-row xl:gap-8 lg:justify-between"
+		>
+			{children}
+		</div>
+	);
+}
+
+function ResponsiveFormRowItem({ children, ...rest }: ResponsiveFormDiv) {
+	return (
+		<div
+			{...rest}
+			className="sm:pt-6 lg:pt-2 xl:flex xl:flex-col lg:pt-8: lg:w-full"
+		>
+			{children}
+		</div>
 	);
 }
