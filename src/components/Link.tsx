@@ -1,14 +1,19 @@
 import React from "react";
 
-export function Link({ url, text }: { url: string; text?: string }) {
+interface LinkProps extends React.HTMLAttributes<HTMLAnchorElement> {
+	href: string;
+	children: React.ReactNode;
+}
+
+export function Link({ children, ...rest }: LinkProps) {
 	return (
 		<a
 			target="_blank"
 			rel="noreferrer"
-			href={url}
 			className="underline text-blue-700 hover:text-blue-900"
+			{...rest}
 		>
-			{text ? text : url}
+			{children}
 		</a>
 	);
 }

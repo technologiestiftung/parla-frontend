@@ -1,3 +1,4 @@
+import { Link } from "@/components/Link";
 import "./globals.css";
 import type { Metadata } from "next";
 
@@ -13,8 +14,17 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="de">
-			<body className="bg-slate-100 flex flex-col items-center w-screen">
-				{children}
+			<body className="bg-slate-100 flex flex-col items-center w-screen h-screen">
+				<main className="flex flex-col items-center flex-1">{children}</main>
+				<footer className="w-full text-center italic text-sm text-gray-400 mt-auto bg-gray-200">
+					<p className="pt-3 font-extrabold">{">ki.anfragen"}</p>
+					<p>
+						Ein Projekt des{" "}
+						<Link href="https://www.citylab-berlin.org/">
+							{"CityLAB Berlin"}
+						</Link>
+					</p>
+				</footer>
 			</body>
 		</html>
 	);

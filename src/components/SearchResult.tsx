@@ -54,14 +54,13 @@ export default function SearchResult({ result }: SearchResultProps) {
 																<TD additionalClassNames="font-bold">PDF:</TD>
 																<TD>
 																	{pdf.lokurl && (
-																		<Link
-																			url={pdf.lokurl}
-																			text={pdf.lokurl
+																		<Link href={pdf.lokurl}>
+																			{pdf.lokurl
 																				?.split("/")
 																				.findLast((str) =>
 																					str.endsWith(".pdf"),
 																				)}
-																		/>
+																		</Link>
 																	)}
 																</TD>
 															</TR>
