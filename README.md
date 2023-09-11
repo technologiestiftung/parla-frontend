@@ -1,12 +1,39 @@
 ![](https://img.shields.io/badge/Built%20with%20%E2%9D%A4%EF%B8%8F-at%20Technologiestiftung%20Berlin-blue)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # _>ki.anfragen (frontend)_
 
 This is a the frontend for the explorational project _>ki.anfragen_. This is not production ready. Currently we explore if we can make the parliamentary documentation provided by the "The Abgeordnetenhaus" of Berlin as open data https://www.parlament-berlin.de/dokumente/open-data more accessible by embedding all the data and do search it using vector similarity search. The project is heavily based on [this example](https://github.com/supabase-community/nextjs-openai-doc-search) from the supabase community. Built with [Next.js](https://nextjs.org/) deployed on vercel.com.
+
+## How it works with retrieval-augmented generation (RAG)
+
+```mermaid
+sequenceDiagram
+    participant User as User
+    participant Browser as Browser
+    participant OurAPI as Our API
+    participant OpenAI as OpenAI API
+    participant Supabase as Supabase
+
+    User ->> Browser: User writes question in frontend
+    Browser ->> OurAPI: Question is sent to our API
+    OurAPI ->> OpenAI: Our API moderates the question using OpenAI API
+    OpenAI -->> OurAPI: OpenAI API returns moderated question
+    OurAPI ->> OpenAI: Our API turns question to embedding through OpenAI API
+    OpenAI -->> OurAPI: OpenAI API returns embedding
+    OurAPI ->> Supabase: Our API compares question embedding to embeddings stored in database in Supabase
+    Supabase -->> OurAPI: Top n most similar questions are retrieved from the database in Supabase
+    OurAPI ->> OpenAI: Text from n most similar questions is used to augment a prompt and send to OpenAI API
+    OpenAI -->> OurAPI: OpenAI GPT generates response
+    OurAPI ->> Browser: Our API sends response back to user in frontend
+    Browser -->> User: User sees response in browser
+
+```
 
 ## Prerequisites
 
