@@ -11,6 +11,7 @@ import { Row } from "./Row";
 import "./Search.css";
 import SearchResult from "./SearchResult";
 import { H2 } from "./h2";
+import { vectorSearch } from "@/lib/vector-search";
 export const MODELS: Record<string, Model> = {
 	GPT_4: "gpt-4",
 	GPT_3_5_TURBO: "gpt-3.5-turbo",
@@ -37,46 +38,6 @@ export default function Search() {
 		console.log(formValues);
 	}, [formValues]);
 
-	async function vectorSearch({
-		query,
-		openai_model,
-		temperature,
-		match_threshold,
-		num_probes,
-		match_count,
-	}: Body): Promise<void> {
-		if (!query) {
-			throw new Error("no query provided");
-		}
-		const response = await fetch(
-			`${process.env.NEXT_PUBLIC_KI_ANFRAGEN_API_URL}/vector-search`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					query,
-					openai_model,
-					temperature,
-					match_threshold,
-					num_probes,
-					match_count,
-				}),
-			},
-		);
-		if (!response.ok) {
-			setLoading(false);
-			const error = await response.json();
-			setErrors(error);
-			return;
-		}
-		const json = (await response.json()) as ResponseDetail[];
-		setResult(json);
-		console.info(json);
-		setLoading(false);
-	}
-
 	const handleInputChange = (
 		event: React.ChangeEvent<
 			HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -97,11 +58,13 @@ export default function Search() {
 			return;
 		}
 		if (formValues.query) {
-			vectorSearch(formValues).catch((error) => {
-				setLoading(false);
-				setErrors(error);
-				console.error(error);
-			});
+			vectorSearch({ ...formValues, setErrors, setLoading, setResult }).catch(
+				(error) => {
+					setLoading(false);
+					setErrors(error);
+					console.error(error);
+				},
+			);
 			return false;
 		}
 	}
