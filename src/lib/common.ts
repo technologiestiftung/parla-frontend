@@ -52,8 +52,8 @@ export interface ResponseSection extends Partial<Section> {
 }
 
 export interface ResponseDetail {
-	gpt?: Gpt;
+	gpt: Gpt;
 	sections: ResponseSection[];
-	requestBody?: Body;
-	completionOptions?: CreateChatCompletionRequest;
+	requestBody: Body;
+	completionOptions: CreateChatCompletionRequest;
 }

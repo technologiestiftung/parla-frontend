@@ -1,37 +1,50 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
+import { isMobile } from "react-device-detect";
 
-import { result as fixture } from "@/fixtures/results";
+import { ChevronDownIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
+import { useLocalStorage } from "@/lib/hooks/localStorage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import { SplashScreen } from "@/components/splash-screen";
 import { Body, ResponseDetail } from "@/lib/common";
-import SearchResult from "@/components/SearchResult";
 import { vectorSearch } from "@/lib/vector-search";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { Table, TableCell, TableHead, TableRow } from "@/components/ui/table";
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableRow,
+} from "@/components/ui/table";
 import { Link } from "@/components/Link";
+import { Separator } from "@/components/ui/separator";
+import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
+import { CollapsibleTrigger } from "@/components/ui/collapsible";
 const defaultFormdata: Body = {
 	query: "",
 };
 
 const DEBUG = false;
 export default function Home() {
-	const [title, setTitle] = useState("");
+	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [isLoading, setIsLoading] = React.useState(false);
-	const [showSplah, setShowSplah] = React.useState(true);
+	const [showSplash, setShowSplash] = React.useState(true);
 	const [result, setResult] = useState<ResponseDetail[] | null>(null);
 	const [errors, setErrors] = useState<Record<string, any> | null>(null);
+	const [sidebarisOpen, setSidebarisOpen] = useState(true);
 
+	const { resultHistory, setResultHistory } = useLocalStorage(
+		"ki-anfragen-history",
+		[],
+	);
+
+	useEffect(() => {
+		setSidebarisOpen(!isMobile);
+		setShowSplash(true);
+	}, []);
 	useEffect(() => {
 		if (DEBUG) {
 			setTitle(
@@ -46,8 +59,6 @@ export default function Home() {
 
 	async function onSubmit(event: React.SyntheticEvent) {
 		event.preventDefault();
-		console.log(formData);
-		console.log(formData.query?.length);
 		setErrors(null);
 		setIsLoading(true);
 		if (formData.query?.length === 0) {
@@ -68,6 +79,8 @@ export default function Home() {
 				setErrors,
 				setLoading: setIsLoading,
 				setResult,
+				setResultHistory,
+				resultHistory,
 			}).catch((error) => {
 				setIsLoading(false);
 				setErrors(error);
@@ -80,30 +93,93 @@ export default function Home() {
 		setFormData((prevValues) => ({ ...prevValues, [name]: value }));
 	}
 
-	async function exampleClickHandler(
+	function exampleClickHandler(
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 		text: string,
 	) {
 		event.preventDefault();
 		setFormData((prevValues) => ({ ...prevValues, query: text }));
 	}
+
+	function newRequestHandler(event: React.MouseEvent<HTMLButtonElement>): void {
+		event.preventDefault();
+		setTitle(null);
+		setResult(null);
+		setErrors(null);
+		setFormData(defaultFormdata);
+	}
+
+	function restoreResultHistoryItem(id: string): void {
+		// filter an arroy ResponseDetail items by their gpt.id
+		const filtered = resultHistory.filter((item) => item.gpt?.id === id);
+		if (filtered.length > 0) {
+			setResult([filtered[0]]);
+			setTitle(filtered[0].requestBody?.query!);
+		}
+	}
+
 	return (
 		<>
-			{/* {showSplah && <SplashScreen open={showSplah} setOpen={setShowSplah} />} */}
+			{showSplash && <SplashScreen open={showSplash} setOpen={setShowSplash} />}
 			<div className="absolute h-screen w-full z-50">
 				<div className="lg:grid h-screen w-full lg:grid-cols-[280px_1fr]">
 					<aside className="sidebar border-r overflow-auto bg-slate-300">
 						<div className="px-4 py-2">
-							<Button className="w-full text-white bg-blue-400 hover:bg-blue-700 font-bold py-2 px-4 rounded-none">
+							<Button
+								onClick={newRequestHandler}
+								className="w-full text-white bg-blue-400 hover:bg-blue-700 font-bold py-2 px-4 rounded-none"
+							>
 								Neue Anfrage
 							</Button>
+
+							<Separator className="my-3" />
+
+							<div
+								className="flex bg-inherit rounded-none justify-between w-full items-center hover:bg-none"
+								onClick={() => {
+									setSidebarisOpen(!sidebarisOpen);
+								}}
+							>
+								<div className="text-slate-800">Anfrageverlauf</div>
+								{sidebarisOpen ? (
+									<ChevronDownIcon className="text-slate-800"></ChevronDownIcon>
+								) : (
+									<ChevronLeftIcon></ChevronLeftIcon>
+								)}
+							</div>
+
+							<Collapsible
+								open={sidebarisOpen}
+								onOpenChange={() => setSidebarisOpen(!sidebarisOpen)}
+							>
+								<CollapsibleContent className="p-2">
+									{resultHistory &&
+										resultHistory.map((history, i, arr) => {
+											return (
+												<React.Fragment key={history.gpt.id}>
+													<button
+														className="text-left w-full text-sm text-zinc-600 hover:text-zinc-100"
+														onClick={() =>
+															restoreResultHistoryItem(history.gpt.id)
+														}
+													>
+														{history.requestBody?.query}
+													</button>
+													{i !== arr.length - 1 ? (
+														<Separator className="my-3" />
+													) : null}
+												</React.Fragment>
+											);
+										})}
+								</CollapsibleContent>
+							</Collapsible>
 						</div>
 					</aside>
 					<main className="flex flex-col justify-between bg-slate-200 py-3">
 						<div className="flex flex-col gap-4 p-6 flex-1 overflow-auto" />
 						<div className="flex flex-col px-6 py-4 space-y-4">
 							<div className="flex flex-col space-y-2">
-								<div className=" w-1/2 mx-auto px-3">
+								<div className=" lg:w-1/2 lg:mx-auto px-3">
 									{!title && (
 										<h3 className="text-sm font-semibold text-zinc-900 py-3">
 											{
@@ -112,7 +188,7 @@ export default function Home() {
 										</h3>
 									)}
 								</div>
-								<div className="w-1/2 mx-auto">
+								<div className="lg:w-1/2 lg:mx-auto">
 									{title && (
 										<>
 											<h3 className="text-lg font-bold">Ihre Frage</h3>
@@ -122,8 +198,6 @@ export default function Home() {
 									{result &&
 										result.length > 0 &&
 										result.map((res) => (
-											// <SearchResult result={res} key={res.gpt?.id} />
-											// <SearchResult result={res} key={res.gpt?.id} />
 											<div key={res.gpt?.id}>
 												<h3 className="text-lg font-bold">Antwort</h3>
 												<p>{res.gpt?.choices[0].message.content}</p>
@@ -134,56 +208,59 @@ export default function Home() {
 																className="rounded-none mb-3"
 																key={section.id}
 															>
-																<CardHeader>
-																	{/* <CardTitle>{"sdlksmd"}</CardTitle> */}
-																	{/* <CardDescription>Card Description</CardDescription> */}
-																</CardHeader>
+																<CardHeader></CardHeader>
 																<CardContent>
 																	<Table>
-																		{section.pdfs &&
-																			section.pdfs.length > 0 &&
-																			section.pdfs.map((pdf) => {
-																				return (
-																					<React.Fragment key={pdf.id}>
-																						<TableRow>
-																							<TableHead>Thema</TableHead>
-																							<TableCell>{pdf.titel}</TableCell>
-																						</TableRow>
-																						<TableRow>
-																							<TableHead>
-																								Veröffentlichung
-																							</TableHead>
-																							<TableCell>
-																								{pdf.dokdat}
-																							</TableCell>
-																						</TableRow>
-																						<TableRow>
-																							<TableHead>Dokument</TableHead>
-																							<TableCell>
-																								{pdf.lokurl && (
-																									<Link href={pdf.lokurl}>
-																										{pdf.lokurl
-																											?.split("/")
-																											.findLast((str) =>
-																												str.endsWith(".pdf"),
-																											)}
-																									</Link>
-																								)}
-																								{", "}
-																								{`Seite ${section.page}`}
-																							</TableCell>
-																						</TableRow>
-																					</React.Fragment>
-																				);
-																			})}
-																		<TableRow className="border-none">
-																			<TableHead>Kontext</TableHead>
-																			<ExpandableTableCell
-																				content={
-																					section.content ? section.content : ""
-																				}
-																			></ExpandableTableCell>
-																		</TableRow>
+																		<TableBody>
+																			{section.pdfs &&
+																				section.pdfs.length > 0 &&
+																				section.pdfs.map((pdf) => {
+																					return (
+																						<React.Fragment key={pdf.id}>
+																							<TableRow>
+																								<TableHead>Thema</TableHead>
+																								<TableCell>
+																									{pdf.titel}
+																								</TableCell>
+																							</TableRow>
+																							<TableRow>
+																								<TableHead>
+																									Veröffentlichung
+																								</TableHead>
+																								<TableCell>
+																									{pdf.dokdat}
+																								</TableCell>
+																							</TableRow>
+																							<TableRow>
+																								<TableHead>Dokument</TableHead>
+																								<TableCell>
+																									{pdf.lokurl && (
+																										<Link href={pdf.lokurl}>
+																											{pdf.lokurl
+																												?.split("/")
+																												.findLast((str) =>
+																													str.endsWith(".pdf"),
+																												)}
+																										</Link>
+																									)}
+																									{", "}
+																									{`Seite ${section.page}`}
+																								</TableCell>
+																							</TableRow>
+																						</React.Fragment>
+																					);
+																				})}
+																			<TableRow className="border-none">
+																				<TableHead>Kontext</TableHead>
+																				<ExpandableTableCell
+																					content={
+																						section.content
+																							? section.content
+																							: ""
+																					}
+																				></ExpandableTableCell>
+																			</TableRow>
+																		</TableBody>
 																	</Table>
 																</CardContent>
 															</Card>

@@ -4,6 +4,8 @@ interface VectorSearchProps extends Body {
 	setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	setErrors: React.Dispatch<React.SetStateAction<Record<string, any> | null>>;
 	setResult: React.Dispatch<React.SetStateAction<ResponseDetail[] | null>>;
+	setResultHistory: (value: ResponseDetail[]) => void;
+	resultHistory: ResponseDetail[];
 }
 export async function vectorSearch({
 	query,
@@ -15,6 +17,8 @@ export async function vectorSearch({
 	setLoading,
 	setErrors,
 	setResult,
+	setResultHistory,
+	resultHistory,
 }: VectorSearchProps): Promise<void> {
 	if (!query) {
 		throw new Error("no query provided");
@@ -46,6 +50,6 @@ export async function vectorSearch({
 	}
 	const json = (await response.json()) as ResponseDetail[];
 	setResult(json);
-	console.info(json);
+	setResultHistory([...json, ...resultHistory]);
 	setLoading(false);
 }
