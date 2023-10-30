@@ -31,7 +31,7 @@ export default function Home() {
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [isLoading, setIsLoading] = React.useState(false);
-	const [showSplash, setShowSplash] = React.useState(true);
+	const [showSplash, setShowSplash] = React.useState(false);
 	const [result, setResult] = useState<ResponseDetail[] | null>(null);
 	const [errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarisOpen, setSidebarisOpen] = useState(true);
@@ -120,7 +120,7 @@ export default function Home() {
 
 	return (
 		<>
-			{showSplash && <SplashScreen open={showSplash} setOpen={setShowSplash} />}
+			<SplashScreen open={showSplash} setOpen={setShowSplash} />
 			<div className="absolute h-screen w-full z-50">
 				<div className="lg:grid h-screen w-full lg:grid-cols-[280px_1fr]">
 					<aside className="sidebar border-r overflow-auto bg-slate-300">
