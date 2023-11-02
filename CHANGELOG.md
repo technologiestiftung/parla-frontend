@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.5.0...v1.6.0) (2023-11-02)
+
+
+### Features
+
+* UI revamp + results from different doc sources ([#17](https://github.com/technologiestiftung/ki-anfragen-frontend/issues/17)) ([ac24aaf](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/ac24aafa347a84e944e00d28bb6f061c00ce3552))
+
 # [1.5.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.4.0...v1.5.0) (2023-09-01)
 
 
