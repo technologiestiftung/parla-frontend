@@ -5,6 +5,7 @@ import { Link } from "./Link";
 import { Row } from "./Row";
 import { H2 } from "./h2";
 import { TD, TR, Table } from "./table";
+import SearchResultSection from "./SearchResultSection";
 
 interface SearchResultProps {
 	result: ResponseDetail;
@@ -14,12 +15,10 @@ export default function SearchResult({ result }: SearchResultProps) {
 		<>
 			<Row>
 				<Column>
-					<H2 message="Ergebnisse" />
+					<H2 message="Antwort" />
 					{
 						<ReactMarkdown>
-							{`${result.gpt?.choices[0].message.content}`
-								.split("Zusammenfassung: ")
-								.join("\n\n**Zusammenfassung:** ")}
+							{`${result.gpt?.choices[0].message.content}`}
 						</ReactMarkdown>
 					}
 				</Column>
@@ -31,66 +30,21 @@ export default function SearchResult({ result }: SearchResultProps) {
 						{[...result.sections]
 							.sort((a, b) => (b.similarity ?? 0) - (a.similarity ?? 0))
 							.map((section) => {
-								const { content, similarity } = section;
 								return (
-									<div key={section.id} className="py-4 pb-8 overflow-x-auto">
-										<Table>
-											{section.pdfs &&
-												section.pdfs.map((pdf) => (
-													<>
-														<tbody key={pdf.id}>
-															<TR
-																withBg
-																additionalClassNames="border-t border-t-blue-500 border-2"
-															>
-																<TD additionalClassNames="font-bold">Titel:</TD>
-																<TD>{pdf.titel}</TD>
-															</TR>
-															<TR>
-																<TD additionalClassNames="font-bold">Seite:</TD>
-																<TD>{section.page}</TD>
-															</TR>
-															<TR withBg>
-																<TD additionalClassNames="font-bold">PDF:</TD>
-																<TD>
-																	{pdf.lokurl && (
-																		<Link href={pdf.lokurl}>
-																			{pdf.lokurl
-																				?.split("/")
-																				.findLast((str) =>
-																					str.endsWith(".pdf"),
-																				)}
-																		</Link>
-																	)}
-																</TD>
-															</TR>
-															<TR>
-																<TD additionalClassNames="font-bold">
-																	Beschreibung:
-																</TD>
-																<TD>{pdf.desk}</TD>
-															</TR>
-														</tbody>
-													</>
-												))}
-											<tbody>
-												<TR withBg>
-													<TD additionalClassNames="font-bold">Ähnlichkeit:</TD>
-													<TD>{similarity}</TD>
-												</TR>
-												<TR>
-													<TD additionalClassNames="font-bold">Kontext:</TD>
-													<TD>{content && <>{content}</>}</TD>
-												</TR>
-												<TR withBg>
-													<TD additionalClassNames="font-bold">
-														Token Anzahl:
-													</TD>
-													<TD>{section.token_count}</TD>
-												</TR>
-											</tbody>
-										</Table>
-									</div>
+									<SearchResultSection
+										sectionReport={undefined}
+										sectionDocument={section}
+									></SearchResultSection>
+								);
+							})}
+						{[...result.reportSections]
+							.sort((a, b) => (b.similarity ?? 0) - (a.similarity ?? 0))
+							.map((section) => {
+								return (
+									<SearchResultSection
+										sectionReport={section}
+										sectionDocument={undefined}
+									></SearchResultSection>
 								);
 							})}
 					</div>
