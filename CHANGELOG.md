@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.6.0...v1.6.1) (2023-11-02)
+
+
+### Bug Fixes
+
+* build errors ([248aa80](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/248aa800e9cb35a9dbe4f5a2da03d968da2eb2e6))
+
 # [1.6.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.5.0...v1.6.0) (2023-11-02)
 
 
