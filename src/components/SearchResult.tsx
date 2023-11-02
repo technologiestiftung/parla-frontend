@@ -32,6 +32,7 @@ export default function SearchResult({ result }: SearchResultProps) {
 							.map((section) => {
 								return (
 									<SearchResultSection
+										key={section.id}
 										sectionReport={undefined}
 										sectionDocument={section}
 									></SearchResultSection>
@@ -42,6 +43,7 @@ export default function SearchResult({ result }: SearchResultProps) {
 							.map((section) => {
 								return (
 									<SearchResultSection
+										key={section.id}
 										sectionReport={section}
 										sectionDocument={undefined}
 									></SearchResultSection>

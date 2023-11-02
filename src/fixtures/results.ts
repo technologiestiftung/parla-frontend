@@ -228,6 +228,7 @@ export const result: ResponseDetail = {
 			],
 		},
 	],
+	reportSections: [],
 	gpt: {
 		id: "chatcmpl-7tE85fjT1UKgpYGrL7X8czM2r7urM",
 		object: "chat.completion",
