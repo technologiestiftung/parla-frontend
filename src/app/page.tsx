@@ -2,26 +2,17 @@
 /* eslint-disable @next/next/no-img-element */
 import { isMobile } from "react-device-detect";
 
-import { ChevronDownIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
-import { useLocalStorage } from "@/lib/hooks/localStorage";
+import SearchResultSection from "@/components/SearchResultSection";
+import { SplashScreen } from "@/components/splash-screen";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useEffect, useState } from "react";
-import { SplashScreen } from "@/components/splash-screen";
-import { Body, ResponseDetail } from "@/lib/common";
-import { vectorSearch } from "@/lib/vector-search";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableRow,
-} from "@/components/ui/table";
-import { Link } from "@/components/Link";
 import { Separator } from "@/components/ui/separator";
+import { Body, ResponseDetail } from "@/lib/common";
+import { useLocalStorage } from "@/lib/hooks/localStorage";
+import { vectorSearch } from "@/lib/vector-search";
 import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
-import { CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronDownIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
+import React, { useEffect, useState } from "react";
 const defaultFormdata: Body = {
 	query: "",
 };
@@ -61,6 +52,8 @@ export default function Home() {
 		event.preventDefault();
 		setErrors(null);
 		setIsLoading(true);
+		setResult(null);
+
 		if (formData.query?.length === 0) {
 			setIsLoading(false);
 			setErrors({ query: "Bitte geben Sie eine Anfrage ein." });
@@ -204,66 +197,21 @@ export default function Home() {
 												{res.sections &&
 													res.sections.map((section) => {
 														return (
-															<Card
-																className="rounded-none mb-3"
+															<SearchResultSection
 																key={section.id}
-															>
-																<CardHeader></CardHeader>
-																<CardContent>
-																	<Table>
-																		<TableBody>
-																			{section.pdfs &&
-																				section.pdfs.length > 0 &&
-																				section.pdfs.map((pdf) => {
-																					return (
-																						<React.Fragment key={pdf.id}>
-																							<TableRow>
-																								<TableHead>Thema</TableHead>
-																								<TableCell>
-																									{pdf.titel}
-																								</TableCell>
-																							</TableRow>
-																							<TableRow>
-																								<TableHead>
-																									Veröffentlichung
-																								</TableHead>
-																								<TableCell>
-																									{pdf.dokdat}
-																								</TableCell>
-																							</TableRow>
-																							<TableRow>
-																								<TableHead>Dokument</TableHead>
-																								<TableCell>
-																									{pdf.lokurl && (
-																										<Link href={pdf.lokurl}>
-																											{pdf.lokurl
-																												?.split("/")
-																												.findLast((str) =>
-																													str.endsWith(".pdf"),
-																												)}
-																										</Link>
-																									)}
-																									{", "}
-																									{`Seite ${section.page}`}
-																								</TableCell>
-																							</TableRow>
-																						</React.Fragment>
-																					);
-																				})}
-																			<TableRow className="border-none">
-																				<TableHead>Kontext</TableHead>
-																				<ExpandableTableCell
-																					content={
-																						section.content
-																							? section.content
-																							: ""
-																					}
-																				></ExpandableTableCell>
-																			</TableRow>
-																		</TableBody>
-																	</Table>
-																</CardContent>
-															</Card>
+																sectionDocument={section}
+																sectionReport={undefined}
+															></SearchResultSection>
+														);
+													})}
+												{res.reportSections &&
+													res.reportSections.map((section) => {
+														return (
+															<SearchResultSection
+															key={section.id}
+																sectionDocument={undefined}
+																sectionReport={section}
+															></SearchResultSection>
 														);
 													})}
 											</div>
@@ -359,28 +307,5 @@ function Spinner() {
 				fill="#1C64F2"
 			/>
 		</svg>
-	);
-}
-
-function ExpandableTableCell({ content }: { content: string }) {
-	const [isExpanded, setIsExpanded] = useState<boolean>(false);
-	const handleClick = () => {
-		setIsExpanded(!isExpanded);
-	};
-	const displayedContent = isExpanded
-		? content
-		: `${content?.slice(0, 100)}${content.length > 100 ? "..." : ""}`;
-
-	return (
-		<TableCell>
-			{displayedContent}
-			<br />
-			<a
-				className="underline text-blue-700 hover:text-blue-900"
-				onClick={handleClick}
-			>
-				{isExpanded ? "Weniger…" : "Mehr…"}
-			</a>
-		</TableCell>
 	);
 }

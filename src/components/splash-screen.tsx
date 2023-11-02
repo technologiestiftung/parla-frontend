@@ -5,11 +5,10 @@
  * @see https://v0.dev/t/os3Im0Kjb6V
  */
 import {
-	DialogTitle,
-	DialogHeader,
-	DialogContent,
 	Dialog,
-	DialogClose,
+	DialogContent,
+	DialogHeader,
+	DialogTitle
 } from "@/components/ui/dialog";
 import { Link } from "./Link";
 

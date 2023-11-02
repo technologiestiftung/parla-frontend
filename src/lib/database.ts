@@ -7,31 +7,6 @@ export type Json =
 	| Json[];
 
 export interface Database {
-	graphql_public: {
-		Tables: {
-			[_ in never]: never;
-		};
-		Views: {
-			[_ in never]: never;
-		};
-		Functions: {
-			graphql: {
-				Args: {
-					operationName?: string;
-					query?: string;
-					variables?: Json;
-					extensions?: Json;
-				};
-				Returns: Json;
-			};
-		};
-		Enums: {
-			[_ in never]: never;
-		};
-		CompositeTypes: {
-			[_ in never]: never;
-		};
-	};
 	public: {
 		Tables: {
 			dokument: {
@@ -111,6 +86,7 @@ export interface Database {
 					{
 						foreignKeyName: "dokument_vorgang_id_fkey";
 						columns: ["vorgang_id"];
+						isOneToOne: false;
 						referencedRelation: "vorgang";
 						referencedColumns: ["id"];
 					},
@@ -157,6 +133,7 @@ export interface Database {
 					{
 						foreignKeyName: "nebeneintrag_vorgang_id_fkey";
 						columns: ["vorgang_id"];
+						isOneToOne: false;
 						referencedRelation: "vorgang";
 						referencedColumns: ["id"];
 					},
@@ -188,6 +165,7 @@ export interface Database {
 					{
 						foreignKeyName: "parsed_document_metadata_parsed_document_id_fkey";
 						columns: ["parsed_document_id"];
+						isOneToOne: false;
 						referencedRelation: "parsed_documents";
 						referencedColumns: ["id"];
 					},
@@ -225,6 +203,7 @@ export interface Database {
 					{
 						foreignKeyName: "parsed_document_sections_parsed_document_id_fkey";
 						columns: ["parsed_document_id"];
+						isOneToOne: false;
 						referencedRelation: "parsed_documents";
 						referencedColumns: ["id"];
 					},
@@ -262,6 +241,7 @@ export interface Database {
 					{
 						foreignKeyName: "parsed_document_tables_parsed_document_id_fkey";
 						columns: ["parsed_document_id"];
+						isOneToOne: false;
 						referencedRelation: "parsed_documents";
 						referencedColumns: ["id"];
 					},
@@ -293,7 +273,134 @@ export interface Database {
 					{
 						foreignKeyName: "parsed_documents_dokument_id_fkey";
 						columns: ["dokument_id"];
+						isOneToOne: false;
 						referencedRelation: "dokument";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			parsed_red_number_report_sections: {
+				Row: {
+					content: string | null;
+					embedding: string | null;
+					heading: string | null;
+					id: number;
+					page: number | null;
+					parsed_red_number_report_id: number | null;
+					token_count: number | null;
+				};
+				Insert: {
+					content?: string | null;
+					embedding?: string | null;
+					heading?: string | null;
+					id?: number;
+					page?: number | null;
+					parsed_red_number_report_id?: number | null;
+					token_count?: number | null;
+				};
+				Update: {
+					content?: string | null;
+					embedding?: string | null;
+					heading?: string | null;
+					id?: number;
+					page?: number | null;
+					parsed_red_number_report_id?: number | null;
+					token_count?: number | null;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "parsed_red_number_report_secti_parsed_red_number_report_id_fkey";
+						columns: ["parsed_red_number_report_id"];
+						isOneToOne: false;
+						referencedRelation: "parsed_red_number_reports";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			parsed_red_number_reports: {
+				Row: {
+					checksum: string | null;
+					id: number;
+					meta: Json | null;
+					red_number_report_id: number | null;
+				};
+				Insert: {
+					checksum?: string | null;
+					id?: number;
+					meta?: Json | null;
+					red_number_report_id?: number | null;
+				};
+				Update: {
+					checksum?: string | null;
+					id?: number;
+					meta?: Json | null;
+					red_number_report_id?: number | null;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "parsed_red_number_reports_red_number_report_id_fkey";
+						columns: ["red_number_report_id"];
+						isOneToOne: false;
+						referencedRelation: "red_number_reports";
+						referencedColumns: ["id"];
+					},
+				];
+			};
+			red_number_processes: {
+				Row: {
+					category: string | null;
+					description_text: string | null;
+					description_title: string | null;
+					id: number;
+					process_id: string;
+					status: string | null;
+				};
+				Insert: {
+					category?: string | null;
+					description_text?: string | null;
+					description_title?: string | null;
+					id?: number;
+					process_id: string;
+					status?: string | null;
+				};
+				Update: {
+					category?: string | null;
+					description_text?: string | null;
+					description_title?: string | null;
+					id?: number;
+					process_id?: string;
+					status?: string | null;
+				};
+				Relationships: [];
+			};
+			red_number_reports: {
+				Row: {
+					doc_name: string;
+					doc_ref: string | null;
+					doc_size: number | null;
+					id: number;
+					red_number_process_id: number | null;
+				};
+				Insert: {
+					doc_name: string;
+					doc_ref?: string | null;
+					doc_size?: number | null;
+					id?: number;
+					red_number_process_id?: number | null;
+				};
+				Update: {
+					doc_name?: string;
+					doc_ref?: string | null;
+					doc_size?: number | null;
+					id?: number;
+					red_number_process_id?: number | null;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "red_number_reports_red_number_process_id_fkey";
+						columns: ["red_number_process_id"];
+						isOneToOne: false;
+						referencedRelation: "red_number_processes";
 						referencedColumns: ["id"];
 					},
 				];
@@ -339,6 +446,7 @@ export interface Database {
 					{
 						foreignKeyName: "vorgang_export_id_fkey";
 						columns: ["export_id"];
+						isOneToOne: false;
 						referencedRelation: "export";
 						referencedColumns: ["id"];
 					},
@@ -349,6 +457,66 @@ export interface Database {
 			[_ in never]: never;
 		};
 		Functions: {
+			find_dokuments_with_missing_parsed_documents: {
+				Args: {
+					requested_doktyp: string;
+				};
+				Returns: {
+					id: number;
+					reihnr: string;
+					dherk: string;
+					dherkl: string;
+					wp: string;
+					dokart: string;
+					dokartl: string;
+					doktyp: string;
+					doktypl: string;
+					nrintyp: string;
+					desk: string;
+					titel: string;
+					doknr: string;
+					dokdat: string;
+					lokurl: string;
+					sb: string;
+					vkdat: string;
+					hnr: string;
+					jg: string;
+					abstract: string;
+					urheber: string;
+					vorgang_id: number;
+				}[];
+			};
+			find_parsed_documents_with_incomplete_embeddings: {
+				Args: {
+					requested_doktyp: string;
+				};
+				Returns: {
+					id: number;
+					filename: string;
+					checksum: string;
+					meta: Json;
+					dokument_id: number;
+				}[];
+			};
+			find_parsed_reports_with_incomplete_embeddings: {
+				Args: Record<PropertyKey, never>;
+				Returns: {
+					id: number;
+					checksum: string;
+					meta: Json;
+					red_number_report_id: number;
+				}[];
+			};
+			find_red_number_reports_with_missing_parsed_reports: {
+				Args: Record<PropertyKey, never>;
+				Returns: {
+					id: number;
+					doc_name: string;
+					doc_ref: string;
+					doc_size: number;
+					red_number_report_id: number;
+				}[];
+			};
 			match_parsed_dokument_sections: {
 				Args: {
 					embedding: string;
@@ -365,184 +533,29 @@ export interface Database {
 					similarity: number;
 				}[];
 			};
-		};
-		Enums: {
-			[_ in never]: never;
-		};
-		CompositeTypes: {
-			[_ in never]: never;
-		};
-	};
-	storage: {
-		Tables: {
-			buckets: {
-				Row: {
-					allowed_mime_types: string[] | null;
-					avif_autodetection: boolean | null;
-					created_at: string | null;
-					file_size_limit: number | null;
-					id: string;
-					name: string;
-					owner: string | null;
-					public: boolean | null;
-					updated_at: string | null;
-				};
-				Insert: {
-					allowed_mime_types?: string[] | null;
-					avif_autodetection?: boolean | null;
-					created_at?: string | null;
-					file_size_limit?: number | null;
-					id: string;
-					name: string;
-					owner?: string | null;
-					public?: boolean | null;
-					updated_at?: string | null;
-				};
-				Update: {
-					allowed_mime_types?: string[] | null;
-					avif_autodetection?: boolean | null;
-					created_at?: string | null;
-					file_size_limit?: number | null;
-					id?: string;
-					name?: string;
-					owner?: string | null;
-					public?: boolean | null;
-					updated_at?: string | null;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "buckets_owner_fkey";
-						columns: ["owner"];
-						referencedRelation: "users";
-						referencedColumns: ["id"];
-					},
-				];
-			};
-			migrations: {
-				Row: {
-					executed_at: string | null;
-					hash: string;
-					id: number;
-					name: string;
-				};
-				Insert: {
-					executed_at?: string | null;
-					hash: string;
-					id: number;
-					name: string;
-				};
-				Update: {
-					executed_at?: string | null;
-					hash?: string;
-					id?: number;
-					name?: string;
-				};
-				Relationships: [];
-			};
-			objects: {
-				Row: {
-					bucket_id: string | null;
-					created_at: string | null;
-					id: string;
-					last_accessed_at: string | null;
-					metadata: Json | null;
-					name: string | null;
-					owner: string | null;
-					path_tokens: string[] | null;
-					updated_at: string | null;
-					version: string | null;
-				};
-				Insert: {
-					bucket_id?: string | null;
-					created_at?: string | null;
-					id?: string;
-					last_accessed_at?: string | null;
-					metadata?: Json | null;
-					name?: string | null;
-					owner?: string | null;
-					path_tokens?: string[] | null;
-					updated_at?: string | null;
-					version?: string | null;
-				};
-				Update: {
-					bucket_id?: string | null;
-					created_at?: string | null;
-					id?: string;
-					last_accessed_at?: string | null;
-					metadata?: Json | null;
-					name?: string | null;
-					owner?: string | null;
-					path_tokens?: string[] | null;
-					updated_at?: string | null;
-					version?: string | null;
-				};
-				Relationships: [
-					{
-						foreignKeyName: "objects_bucketId_fkey";
-						columns: ["bucket_id"];
-						referencedRelation: "buckets";
-						referencedColumns: ["id"];
-					},
-				];
-			};
-		};
-		Views: {
-			[_ in never]: never;
-		};
-		Functions: {
-			can_insert_object: {
+			match_parsed_red_number_report_sections: {
 				Args: {
-					bucketid: string;
-					name: string;
-					owner: string;
-					metadata: Json;
+					embedding: string;
+					match_threshold: number;
+					match_count: number;
+					min_content_length: number;
+					num_probes: number;
 				};
+				Returns: {
+					id: number;
+					parsed_red_number_report_id: number;
+					heading: string;
+					content: string;
+					similarity: number;
+				}[];
+			};
+			regenerate_embedding_indices: {
+				Args: Record<PropertyKey, never>;
 				Returns: undefined;
 			};
-			extension: {
-				Args: {
-					name: string;
-				};
-				Returns: string;
-			};
-			filename: {
-				Args: {
-					name: string;
-				};
-				Returns: string;
-			};
-			foldername: {
-				Args: {
-					name: string;
-				};
-				Returns: unknown;
-			};
-			get_size_by_bucket: {
+			regenerate_embedding_indices_for_red_reports: {
 				Args: Record<PropertyKey, never>;
-				Returns: {
-					size: number;
-					bucket_id: string;
-				}[];
-			};
-			search: {
-				Args: {
-					prefix: string;
-					bucketname: string;
-					limits?: number;
-					levels?: number;
-					offsets?: number;
-					search?: string;
-					sortcolumn?: string;
-					sortorder?: string;
-				};
-				Returns: {
-					name: string;
-					id: string;
-					updated_at: string;
-					created_at: string;
-					last_accessed_at: string;
-					metadata: Json;
-				}[];
+				Returns: undefined;
 			};
 		};
 		Enums: {
