@@ -13,6 +13,7 @@ import { vectorSearch } from "@/lib/vector-search";
 import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
 import { ChevronDownIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
 import React, { useEffect, useState } from "react";
+import MobileSidebar from "@/components/MobileSidebar";
 const defaultFormdata: Body = {
 	query: "",
 };
@@ -27,6 +28,7 @@ export default function Home() {
 	const [errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarisOpen, setSidebarisOpen] = useState(true);
 
+
 	const { resultHistory, setResultHistory } = useLocalStorage(
 		"ki-anfragen-history",
 		[],
@@ -34,7 +36,7 @@ export default function Home() {
 
 	useEffect(() => {
 		setSidebarisOpen(!isMobile);
-		setShowSplash(true);
+		// setShowSplash(true);
 	}, []);
 	useEffect(() => {
 		if (DEBUG) {
@@ -114,9 +116,16 @@ export default function Home() {
 	return (
 		<>
 			<SplashScreen open={showSplash} setOpen={setShowSplash} />
-			<div className="absolute h-screen w-full z-50">
-				<div className="lg:grid h-screen w-full lg:grid-cols-[280px_1fr]">
-					<aside className="sidebar border-r overflow-auto bg-slate-300">
+			<div className="absolute min-h-screen w-full z-50">
+				<div className="flex flex-col min-h-screen lg:grid w-full lg:grid-cols-[280px_1fr]">
+					<MobileSidebar
+						resultHistory={resultHistory}
+						restoreResultHistoryItem={restoreResultHistoryItem}
+						isHistoryOpen={sidebarisOpen}
+						setSidebarisOpen={setSidebarisOpen}
+						newRequestHandler={newRequestHandler}
+					/>
+					<aside className="hidden lg:block sidebar border-r overflow-auto bg-slate-300">
 						<div className="px-4 py-2">
 							<Button
 								onClick={newRequestHandler}
@@ -168,11 +177,10 @@ export default function Home() {
 							</Collapsible>
 						</div>
 					</aside>
-					<main className="flex flex-col justify-between bg-slate-200 py-3">
-						<div className="flex flex-col gap-4 p-6 flex-1 overflow-auto" />
-						<div className="flex flex-col px-6 py-4 space-y-4">
+					<main className="flex min-h-screen justify-between bg-slate-200 py-3">
+						<div className="flex flex-col min-h-screen justify-between px-6 py-4 space-y-4">
 							<div className="flex flex-col space-y-2">
-								<div className=" lg:w-1/2 lg:mx-auto px-3">
+								<div className="lg:w-1/2 lg:mx-auto px-3">
 									{!title && (
 										<h3 className="text-sm font-semibold text-zinc-900 py-3">
 											{
