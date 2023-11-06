@@ -29,16 +29,16 @@ export function SplashScreen({
 			>
 				<DialogHeader className="flex justify-center mb-4">
 					<DialogTitle className="text-blue-400">
-						KI Assistent für Schriftliche Anfragen und Rote Nummern
+						KI-Assistent für Schriftliche Anfragen und Rote Nummern
 					</DialogTitle>
 				</DialogHeader>
 				<div className="space-y-3 text-sm">
 					<p>
 						Dieser Prototyp durchsucht die Schriftlichen Anfragen und die
-						Hauptausschussprotokolle (&quot;Rote Nummern&quot;) der Wahlperiode 19 des
-						Berliner Abgeordnetenhauses und erstellt anhand eines Large Language
-						Models Vorlagen für die Beantwortung der gestellten Frage. Die
-						Quellen sind auf{" "}
+						Hauptausschussprotokolle (&quot;Rote Nummern&quot;) der Wahlperiode
+						19 des Berliner Abgeordnetenhauses und erstellt anhand eines Large
+						Language Models Vorlagen für die Beantwortung der gestellten Frage.
+						Die Quellen sind auf{" "}
 						<a href="https://www.parlament-berlin.de/dokumente">
 							parlament-berlin.de/dokumente
 						</a>{" "}
