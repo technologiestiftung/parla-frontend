@@ -37,7 +37,7 @@ export function SplashScreen({
 						Dieser Prototyp durchsucht die Schriftlichen Anfragen und die
 						Hauptausschussprotokolle (&quot;Rote Nummern&quot;) der Wahlperiode
 						19 des Berliner Abgeordnetenhauses und erstellt anhand eines Large
-						Language Models Vorlagen für die Beantwortung der gestellten Fragen.
+						Language Models Vorlagen für die Beantwortung der gestellten Frage.
 						Die Quellen sind auf{" "}
 						<a href="https://www.parlament-berlin.de/dokumente">
 							parlament-berlin.de/dokumente

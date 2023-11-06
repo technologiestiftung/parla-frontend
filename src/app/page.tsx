@@ -18,14 +18,13 @@ const defaultFormdata: Body = {
 	query: "",
 };
 
-const DEBUG = false;
 export default function Home() {
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [showSplash, setShowSplash] = React.useState(false);
 	const [result, setResult] = useState<ResponseDetail[] | null>(null);
-	const [errors, setErrors] = useState<Record<string, any> | null>(null);
+	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(true);
 
 	const { resultHistory, setResultHistory } = useLocalStorage(
@@ -35,14 +34,7 @@ export default function Home() {
 
 	useEffect(() => {
 		setSidebarIsOpen(!isMobile);
-		// setShowSplash(true);
-	}, []);
-	useEffect(() => {
-		if (DEBUG) {
-			setTitle(
-				"Wie bewertet der Berliner Senat das private Engagement, bei dem Ehrenamtliche Berliner Gewässer von Müll und Schrott befreien?",
-			);
-		}
+		setShowSplash(true);
 	}, []);
 
 	useEffect(() => {
