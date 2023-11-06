@@ -18,16 +18,14 @@ const defaultFormdata: Body = {
 	query: "",
 };
 
-const DEBUG = false;
 export default function Home() {
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [showSplash, setShowSplash] = React.useState(false);
 	const [result, setResult] = useState<ResponseDetail[] | null>(null);
-	const [errors, setErrors] = useState<Record<string, any> | null>(null);
-	const [sidebarisOpen, setSidebarisOpen] = useState(true);
-
+	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
+	const [sidebarIsOpen, setSidebarIsOpen] = useState(true);
 
 	const { resultHistory, setResultHistory } = useLocalStorage(
 		"ki-anfragen-history",
@@ -35,15 +33,8 @@ export default function Home() {
 	);
 
 	useEffect(() => {
-		setSidebarisOpen(!isMobile);
-		// setShowSplash(true);
-	}, []);
-	useEffect(() => {
-		if (DEBUG) {
-			setTitle(
-				"Wie bewertet der Berliner Senat das private Engagement, bei dem Ehrenamtliche Berliner Gewässer von Müll und Schrott befreien?",
-			);
-		}
+		setSidebarIsOpen(!isMobile);
+		setShowSplash(true);
 	}, []);
 
 	useEffect(() => {
@@ -121,8 +112,8 @@ export default function Home() {
 					<MobileSidebar
 						resultHistory={resultHistory}
 						restoreResultHistoryItem={restoreResultHistoryItem}
-						isHistoryOpen={sidebarisOpen}
-						setSidebarisOpen={setSidebarisOpen}
+						isHistoryOpen={sidebarIsOpen}
+						setSidebarisOpen={setSidebarIsOpen}
 						newRequestHandler={newRequestHandler}
 					/>
 					<aside className="hidden lg:block sidebar border-r overflow-auto bg-slate-300">
@@ -139,11 +130,11 @@ export default function Home() {
 							<div
 								className="flex bg-inherit rounded-none justify-between w-full items-center hover:bg-none"
 								onClick={() => {
-									setSidebarisOpen(!sidebarisOpen);
+									setSidebarIsOpen(!sidebarIsOpen);
 								}}
 							>
 								<div className="text-slate-800">Anfrageverlauf</div>
-								{sidebarisOpen ? (
+								{sidebarIsOpen ? (
 									<ChevronDownIcon className="text-slate-800"></ChevronDownIcon>
 								) : (
 									<ChevronLeftIcon></ChevronLeftIcon>
@@ -151,8 +142,8 @@ export default function Home() {
 							</div>
 
 							<Collapsible
-								open={sidebarisOpen}
-								onOpenChange={() => setSidebarisOpen(!sidebarisOpen)}
+								open={sidebarIsOpen}
+								onOpenChange={() => setSidebarIsOpen(!sidebarIsOpen)}
 							>
 								<CollapsibleContent className="p-2">
 									{resultHistory &&
@@ -216,7 +207,7 @@ export default function Home() {
 													res.reportSections.map((section) => {
 														return (
 															<SearchResultSection
-															key={section.id}
+																key={section.id}
 																sectionDocument={undefined}
 																sectionReport={section}
 															></SearchResultSection>
