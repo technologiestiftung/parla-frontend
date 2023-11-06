@@ -233,7 +233,7 @@ export default function Home() {
 										<ExampleButton
 											onClick={exampleClickHandler}
 											text={
-												"Wie begründet sich die deutlich ungleiche Besoldung von Ärtzt:innen am Landesinstitut für gerichtliche und soziale Medizin Berlin sowie am Institut für Rechtsmedizin der Charité?"
+												"Wie begründet sich die deutlich ungleiche Besoldung von Ärtz:innen am Landesinstitut für gerichtliche und soziale Medizin Berlin sowie am Institut für Rechtsmedizin der Charité?"
 											}
 										/>
 									</>

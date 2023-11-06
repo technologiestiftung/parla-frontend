@@ -54,17 +54,17 @@ export function SplashScreen({
 				<div className="flex justify-around mt-4">
 					<img
 						className="w-1/3 h-7"
-						alt="logo citylab berlin"
+						alt="Logo CityLAB Berlin"
 						src="https://logos.citylab-berlin.org/logo-citylab-berlin-outline.svg"
 					/>
 					<img
 						className="w-1/3 h-7"
-						alt="logo der technologiestiftung berlin"
+						alt="Logo der Technologiestiftung Berlin"
 						src="https://logos.citylab-berlin.org/logo-tsb-outline.svg"
 					/>
 					<img
 						className="w-1/3 h-7"
-						alt="logo des regierenden bürgermeisters von berlin und der Senatskanzlei"
+						alt="Logo des Regierenden Bürgermeisters von Berlin und der Senatskanzlei"
 						src="https://logos.citylab-berlin.org/logo-senatskanzlei-buergermeister-horizontal.svg"
 					/>
 				</div>
