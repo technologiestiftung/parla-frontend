@@ -29,16 +29,16 @@ export function SplashScreen({
 			>
 				<DialogHeader className="flex justify-center mb-4">
 					<DialogTitle className="text-blue-400">
-						KI Assistent für Schriftliche Anfragen und Rote Nummern
+						KI-Assistent für Schriftliche Anfragen und Rote Nummern
 					</DialogTitle>
 				</DialogHeader>
 				<div className="space-y-3 text-sm">
 					<p>
 						Dieser Prototyp durchsucht die Schriftlichen Anfragen und die
-						Hauptausschussprotokolle (&quot;Rote Nummern&quot;) der Wahlperiode 19 des
-						Berliner Abgeordnetenhauses und erstellt anhand eines Large Language
-						Models Vorlagen für die Beantwortung der gestellten Frage. Die
-						Quellen sind auf{" "}
+						Hauptausschussprotokolle (&quot;Rote Nummern&quot;) der Wahlperiode
+						19 des Berliner Abgeordnetenhauses und erstellt anhand eines Large
+						Language Models Vorlagen für die Beantwortung der gestellten Fragen.
+						Die Quellen sind auf{" "}
 						<a href="https://www.parlament-berlin.de/dokumente">
 							parlament-berlin.de/dokumente
 						</a>{" "}
@@ -54,17 +54,17 @@ export function SplashScreen({
 				<div className="flex justify-around mt-4">
 					<img
 						className="w-1/3 h-7"
-						alt="logo citylab berlin"
+						alt="Logo CityLAB Berlin"
 						src="https://logos.citylab-berlin.org/logo-citylab-berlin-outline.svg"
 					/>
 					<img
 						className="w-1/3 h-7"
-						alt="logo der technologiestiftung berlin"
+						alt="Logo der Technologiestiftung Berlin"
 						src="https://logos.citylab-berlin.org/logo-tsb-outline.svg"
 					/>
 					<img
 						className="w-1/3 h-7"
-						alt="logo des regierenden bürgermeisters von berlin und der Senatskanzlei"
+						alt="Logo des Regierenden Bürgermeisters von Berlin und der Senatskanzlei"
 						src="https://logos.citylab-berlin.org/logo-senatskanzlei-buergermeister-horizontal.svg"
 					/>
 				</div>

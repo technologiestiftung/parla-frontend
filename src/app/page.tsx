@@ -26,8 +26,7 @@ export default function Home() {
 	const [showSplash, setShowSplash] = React.useState(false);
 	const [result, setResult] = useState<ResponseDetail[] | null>(null);
 	const [errors, setErrors] = useState<Record<string, any> | null>(null);
-	const [sidebarisOpen, setSidebarisOpen] = useState(true);
-
+	const [sidebarIsOpen, setSidebarIsOpen] = useState(true);
 
 	const { resultHistory, setResultHistory } = useLocalStorage(
 		"ki-anfragen-history",
@@ -35,7 +34,7 @@ export default function Home() {
 	);
 
 	useEffect(() => {
-		setSidebarisOpen(!isMobile);
+		setSidebarIsOpen(!isMobile);
 		// setShowSplash(true);
 	}, []);
 	useEffect(() => {
@@ -121,8 +120,8 @@ export default function Home() {
 					<MobileSidebar
 						resultHistory={resultHistory}
 						restoreResultHistoryItem={restoreResultHistoryItem}
-						isHistoryOpen={sidebarisOpen}
-						setSidebarisOpen={setSidebarisOpen}
+						isHistoryOpen={sidebarIsOpen}
+						setSidebarisOpen={setSidebarIsOpen}
 						newRequestHandler={newRequestHandler}
 					/>
 					<aside className="hidden lg:block sidebar border-r overflow-auto bg-slate-300">
@@ -139,11 +138,11 @@ export default function Home() {
 							<div
 								className="flex bg-inherit rounded-none justify-between w-full items-center hover:bg-none"
 								onClick={() => {
-									setSidebarisOpen(!sidebarisOpen);
+									setSidebarIsOpen(!sidebarIsOpen);
 								}}
 							>
 								<div className="text-slate-800">Anfrageverlauf</div>
-								{sidebarisOpen ? (
+								{sidebarIsOpen ? (
 									<ChevronDownIcon className="text-slate-800"></ChevronDownIcon>
 								) : (
 									<ChevronLeftIcon></ChevronLeftIcon>
@@ -151,8 +150,8 @@ export default function Home() {
 							</div>
 
 							<Collapsible
-								open={sidebarisOpen}
-								onOpenChange={() => setSidebarisOpen(!sidebarisOpen)}
+								open={sidebarIsOpen}
+								onOpenChange={() => setSidebarIsOpen(!sidebarIsOpen)}
 							>
 								<CollapsibleContent className="p-2">
 									{resultHistory &&
@@ -216,7 +215,7 @@ export default function Home() {
 													res.reportSections.map((section) => {
 														return (
 															<SearchResultSection
-															key={section.id}
+																key={section.id}
 																sectionDocument={undefined}
 																sectionReport={section}
 															></SearchResultSection>
@@ -242,7 +241,7 @@ export default function Home() {
 										<ExampleButton
 											onClick={exampleClickHandler}
 											text={
-												"Wie begründet sich die deutlich ungleiche Besoldung von Ärtzt:innen am Landesinstitut für gerichtliche und soziale Medizin Berlin sowie am Institut für Rechtsmedizin der Charité?"
+												"Wie begründet sich die deutlich ungleiche Besoldung von Ärtz:innen am Landesinstitut für gerichtliche und soziale Medizin Berlin sowie am Institut für Rechtsmedizin der Charité?"
 											}
 										/>
 									</>
