@@ -178,7 +178,7 @@ export default function Home() {
 						</div>
 					</aside>
 					<main className="flex min-h-screen justify-between bg-slate-200 py-3">
-						<div className="flex flex-col min-h-screen justify-between px-6 py-4 space-y-4">
+						<div className="flex flex-col min-h-screen justify-between px-10 py-4 space-y-4">
 							<div className="flex flex-col space-y-2">
 								<div className="lg:w-1/2 lg:mx-auto px-3">
 									{!title && (
