@@ -1,3 +1,11 @@
+## [1.6.2](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.6.1...v1.6.2) (2023-11-06)
+
+
+### Bug Fixes
+
+* add mobile sidebar ([2faa31d](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/2faa31d031bdd0b4616f98c82b9d0f3670df2366))
+* add padding to main ([26d7163](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/26d7163e452f6dfd813299f7503f066d87f5ff33))
+
 ## [1.6.1](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.6.0...v1.6.1) (2023-11-02)
 
 
