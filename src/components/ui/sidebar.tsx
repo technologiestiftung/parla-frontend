@@ -12,8 +12,8 @@ type SidebarProps = {
 
 function Sidebar(props: SidebarProps): JSX.Element {
 	return (
-		<aside className="hidden lg:block sidebar border-r overflow-auto bg-slate-50 border-b border-sate-200">
-			<header className="px-2 py-2">
+		<aside className="hidden lg:block sidebar overflow-y-auto">
+			<header className="px-1 py-2">
 				<a
 					href="/"
 					title="Startseite"
@@ -23,7 +23,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					<span className="text-slate-400 text-xs">?</span>
 				</a>
 			</header>
-			<div className="p-2 border-y border-slate-200">
+			<div className="px-1 py-2 border-y border-slate-200">
 				<Button
 					onClick={props.onNewRequest}
 					className="w-full text-white bg-blue-400 hover:bg-blue-700 font-bold py-2 px-4 flex justify-between"
@@ -32,7 +32,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					<span>+</span>
 				</Button>
 			</div>
-			<div className="p-2 py-2">
+			<div className="px-1 py-2">
 				<button
 					className="flex bg-inherit justify-between w-full items-center hover:bg-none px-4 py-3"
 					onClick={() => props.onSidebarOpenChange(!props.sidebarIsOpen)}

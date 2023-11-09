@@ -14,15 +14,14 @@ function PromptContent(props: PromptContentProps) {
 	return (
 		<div className="flex flex-col space-y-2">
 			{!title && (
-				<div className="lg:w-1/2 lg:mx-auto px-3">
-					<h3 className="text-sm font-semibold text-zinc-900 py-3">
-						{
-							"Schreiben Sie Ihre Frage in das Suchfeld oder klicken Sie auf auf eines der Beispiele, um den KI-Assistenten zu starten."
-						}
+				<div className="max-w-xl mx-auto px-3">
+					<h3 className="text-lg font-bold py-3">
+						Schreiben Sie Ihre Frage in das Suchfeld oder klicken Sie auf auf
+						eines der Beispiele, um den KI-Assistenten zu starten.
 					</h3>
 				</div>
 			)}
-			<div className="lg:w-1/2 lg:mx-auto">
+			<div className="max-w-xl mx-auto">
 				{title && (
 					<>
 						<h3 className="text-lg font-bold">Ihre Frage</h3>

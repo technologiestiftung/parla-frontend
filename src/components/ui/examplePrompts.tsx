@@ -12,7 +12,7 @@ function ExamplePrompts(props: ExamplePromptsProps): ReactNode {
 		<Button
 			key={example}
 			onClick={(evt) => props.onClick(example)}
-			className="inline whitespace-normal h-auto  p-2 text-sm text-zinc-600 hover:text-zinc-100  lg:w-1/2 lg:mx-auto text-left bg-slate-300 hover:bg-slate-500"
+			className="inline whitespace-normal h-auto  p-2 text-sm text-zinc-600 hover:text-zinc-100 max-w-xl mx-auto text-left bg-slate-300 hover:bg-slate-500"
 		>
 			{example}
 		</Button>

@@ -99,14 +99,7 @@ export default function Home() {
 		<>
 			<SplashScreen open={showSplash} setOpen={setShowSplash} />
 			<div className="min-h-screen w-full z-50">
-				<div className="flex flex-col min-h-screen lg:grid w-full lg:grid-cols-[280px_1fr]">
-					<MobileSidebar
-						resultHistory={resultHistory}
-						restoreResultHistoryItem={restoreResultHistoryItem}
-						isHistoryOpen={sidebarIsOpen}
-						setSidebarisOpen={setSidebarIsOpen}
-						newRequestHandler={newRequestHandler}
-					/>
+				<div className="flex flex-col min-h-screen lg:grid lg:grid-cols-[280px_1fr] lg:gap-4 bg-slate-100 lg:p-4">
 					<Sidebar
 						sidebarIsOpen={sidebarIsOpen}
 						onNewRequest={newRequestHandler}
@@ -119,8 +112,15 @@ export default function Home() {
 							/>
 						)}
 					</Sidebar>
-					<main className="flex min-h-screen justify-between bg-slate-200 py-3">
-						<div className="flex flex-col min-h-screen justify-between px-10 py-4 space-y-4">
+					<MobileSidebar
+						resultHistory={resultHistory}
+						restoreResultHistoryItem={restoreResultHistoryItem}
+						isHistoryOpen={sidebarIsOpen}
+						setSidebarisOpen={setSidebarIsOpen}
+						newRequestHandler={newRequestHandler}
+					/>
+					<main className="flex min-h-screen lg:min-h-[calc(100vh-4rem)] justify-center bg-white py-3 lg:rounded-md border border-slate-200">
+						<div className="flex flex-col min-h-full justify-between px-10 py-4 space-y-4">
 							<PromptContent
 								title={title}
 								results={results}
