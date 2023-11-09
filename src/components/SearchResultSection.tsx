@@ -71,7 +71,7 @@ export default function SearchResultSection({
 			sectionReport?.pdfs?.map((pdf) => {
 				return {
 					id: pdf.id,
-					url: pdf.doc_ref
+					url: pdf.doc_ref,
 				} as CombinedPdf;
 			}) ??
 			sectionDocument?.pdfs?.map((pdf) => {
@@ -86,7 +86,7 @@ export default function SearchResultSection({
 	} as CombinedSection;
 
 	return (
-		<Card className="rounded-none mb-3" key={combinedSection.id}>
+		<Card className="mb-3" key={combinedSection.id}>
 			<CardHeader></CardHeader>
 			<CardContent>
 				<Table>

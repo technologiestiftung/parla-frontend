@@ -25,7 +25,7 @@ export function SplashScreen({
 				onClick={() => {
 					setOpen(false);
 				}}
-				className=" bg-white dark:bg-gray-800 rounded-none shadow-lg  max-w-xl mx-auto my-8 px-6 py-4 z-50"
+				className=" bg-white dark:bg-gray-800 shadow-lg  max-w-xl mx-auto my-8 px-6 py-4 z-50"
 			>
 				<DialogHeader className="flex justify-center mb-4">
 					<DialogTitle className="text-blue-400">
