@@ -199,17 +199,6 @@ export default function Home() {
 															<SearchResultSection
 																key={section.id}
 																sectionDocument={section}
-																sectionReport={undefined}
-															></SearchResultSection>
-														);
-													})}
-												{res.reportSections &&
-													res.reportSections.map((section) => {
-														return (
-															<SearchResultSection
-																key={section.id}
-																sectionDocument={undefined}
-																sectionReport={section}
 															></SearchResultSection>
 														);
 													})}

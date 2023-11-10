@@ -1,14 +1,11 @@
-import type {
-	ResponseSectionDocument,
-	ResponseSectionReport,
-} from "@/lib/common";
+import type { ResponseSectionDocument } from "@/lib/common";
 import React, { useState } from "react";
 import { Link } from "./Link";
 import { Table } from "./table";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { TableBody, TableCell, TableHead, TableRow } from "./ui/table";
 
-interface CombinedPdf {
+interface Pdf {
 	id: number;
 	url: string;
 	desk: string | undefined;
@@ -22,12 +19,11 @@ interface CombinedSection {
 	content: string;
 	similarity: number;
 	token_count: number;
-	pdfs: Array<CombinedPdf>;
+	registered_documents: Array<Pdf>;
 	source: string;
 }
 
 interface SearchResultProps {
-	sectionReport: ResponseSectionReport | undefined;
 	sectionDocument: ResponseSectionDocument | undefined;
 }
 
@@ -55,65 +51,55 @@ function ExpandableTableCell({ content }: { content: string }) {
 }
 
 export default function SearchResultSection({
-	sectionReport,
 	sectionDocument,
 }: SearchResultProps) {
 	const combinedSection = {
-		id: sectionReport?.id ?? sectionDocument?.id,
-		source: sectionReport
-			? "Hauptausschussprotokoll (Rote Nummer)"
-			: "Schriftliche Anfrage",
-		page: sectionReport?.page ?? sectionDocument?.page,
-		content: sectionReport?.content ?? sectionDocument?.content,
-		similarity: sectionReport?.similarity ?? sectionDocument?.similarity,
-		token_count: sectionReport?.token_count ?? sectionDocument?.token_count,
-		pdfs:
-			sectionReport?.pdfs?.map((pdf) => {
+		id: sectionDocument?.id,
+		source: sectionDocument?.registered_documents?.[0]?.source_type,
+		page: sectionDocument?.page,
+		content: sectionDocument?.content,
+		similarity: sectionDocument?.similarity,
+		registered_documents: sectionDocument?.registered_documents?.map(
+			(reg_doc) => {
 				return {
-					id: pdf.id,
-					url: pdf.doc_ref
-				} as CombinedPdf;
-			}) ??
-			sectionDocument?.pdfs?.map((pdf) => {
-				return {
-					id: pdf.id,
-					url: pdf.lokurl,
-					desk: pdf.desk,
-					title: pdf.titel,
-					published_at: pdf.dokdat,
-				} as CombinedPdf;
-			}),
-	} as CombinedSection;
+					id: reg_doc.id,
+					url: reg_doc.source_url,
 
+					title: "TBD",
+					published_at: reg_doc.registered_at,
+				} as Pdf;
+			},
+		),
+	} as CombinedSection;
 	return (
 		<Card className="rounded-none mb-3" key={combinedSection.id}>
 			<CardHeader></CardHeader>
 			<CardContent>
 				<Table>
 					<TableBody>
-						{combinedSection.pdfs &&
-							combinedSection.pdfs.length > 0 &&
-							combinedSection.pdfs.map((pdf) => {
+						{combinedSection.registered_documents &&
+							combinedSection.registered_documents.length > 0 &&
+							combinedSection.registered_documents.map((reg_doc) => {
 								return (
-									<React.Fragment key={pdf.id}>
-										{pdf.title && (
+									<React.Fragment key={reg_doc.id}>
+										{reg_doc.title && (
 											<TableRow>
 												<TableHead>Thema</TableHead>
-												<TableCell>{pdf.title}</TableCell>
+												<TableCell>{reg_doc.title}</TableCell>
 											</TableRow>
 										)}
-										{pdf.published_at && (
+										{reg_doc.published_at && (
 											<TableRow>
-												<TableHead>Veröffentlichung</TableHead>
-												<TableCell>{pdf.published_at}</TableCell>
+												<TableHead>Registriert</TableHead>
+												<TableCell>{reg_doc.published_at}</TableCell>
 											</TableRow>
 										)}
 										<TableRow>
 											<TableHead>Dokument</TableHead>
 											<TableCell>
-												{pdf.url && (
-													<Link href={pdf.url}>
-														{pdf.url
+												{reg_doc.url && (
+													<Link href={reg_doc.url}>
+														{reg_doc.url
 															?.split("/")
 															.findLast((str) => str.endsWith(".pdf"))}
 													</Link>
