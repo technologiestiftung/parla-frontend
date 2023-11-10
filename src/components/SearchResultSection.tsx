@@ -65,7 +65,11 @@ export default function SearchResultSection({
 					id: reg_doc.id,
 					url: reg_doc.source_url,
 
-					title: "TBD",
+					title: reg_doc.source_type.toLowerCase().includes("schriftliche")
+						? //@ts-ignore
+						  reg_doc.metadata["Titel"]
+						: //@ts-ignore
+						  reg_doc.metadata["title"],
 					published_at: reg_doc.registered_at,
 				} as Pdf;
 			},
