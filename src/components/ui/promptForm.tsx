@@ -1,35 +1,33 @@
 import React, { FormEventHandler, ReactNode } from "react";
 import { Input } from "./input";
 import { Button } from "./button";
+import Envelope from "./envelopeIcon";
 
 type PromptFormProps = {
 	onSubmit: FormEventHandler<HTMLFormElement>;
 	query?: string;
 	isLoading: boolean;
-	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
 function PromptForm(props: PromptFormProps): ReactNode {
 	const { onSubmit, query, isLoading, onChange } = props;
 	return (
-		<form
-			onSubmit={onSubmit}
-			className="relative  lg:w-1/2 lg:mx-auto flex py-3"
-		>
+		<form onSubmit={onSubmit} className="relative w-full max-w-xl mx-auto flex">
 			<Input
 				value={query || ""}
 				name="query"
 				id="query"
-				className="w-full px-3"
+				className="w-[calc(100%+2rem)] -ml-4 pl-4 py-4 pr-12 resize-none"
 				placeholder="Stellen Sie hier ihre Anfrage"
-				type="text"
 				onChange={onChange}
 			/>
 			<Button
-				className="w-[130px] ml-2 bg-blue-400 hover:bg-blue-700 text-white font-bold"
+				className="absolute right-2 bottom-2 bg-blue-400 hover:bg-blue-700 text-white font-bold"
 				type="submit"
+				size="icon"
 			>
-				{isLoading ? <Spinner /> : "Anfrage stellen"}
+				{isLoading ? <Spinner /> : <Envelope />}
 			</Button>
 		</form>
 	);

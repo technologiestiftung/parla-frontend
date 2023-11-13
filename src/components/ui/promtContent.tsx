@@ -12,10 +12,10 @@ type PromptContentProps = {
 function PromptContent(props: PromptContentProps) {
 	const { title, results, onsubmit } = props;
 	return (
-		<div className="flex flex-col space-y-2">
+		<div className="space-y-2">
 			{!title && (
-				<div className="max-w-xl mx-auto px-3">
-					<h3 className="text-lg font-bold py-3">
+				<div className="max-w-xl mx-auto">
+					<h3 className="text-xl font-bold py-3">
 						Schreiben Sie Ihre Frage in das Suchfeld oder klicken Sie auf auf
 						eines der Beispiele, um den KI-Assistenten zu starten.
 					</h3>
@@ -24,8 +24,8 @@ function PromptContent(props: PromptContentProps) {
 			<div className="max-w-xl mx-auto">
 				{title && (
 					<>
-						<h3 className="text-lg font-bold">Ihre Frage</h3>
-						<p>{title}</p>
+						<h3 className="text-xl font-bold mb-2">Ihre Frage</h3>
+						<p className="text-lg font-light">{title}</p>
 					</>
 				)}
 				{results.map((res) => (

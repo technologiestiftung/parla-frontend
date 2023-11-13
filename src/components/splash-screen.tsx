@@ -22,26 +22,31 @@ export function SplashScreen({
 	return (
 		<Dialog open={open}>
 			<DialogContent
-				onClick={() => {
-					setOpen(false);
-				}}
-				className=" bg-white dark:bg-gray-800 shadow-lg  max-w-xl mx-auto my-8 px-6 py-4 z-50"
+				onClick={() => setOpen(false)}
+				className=" bg-white dark:bg-gray-800 shadow-lg  max-w-xl mx-auto px-6 md:px-8 py-4 md:py-6 z-50 max-h-screen overflow-y-auto"
 			>
-				<DialogHeader className="flex justify-center mb-4">
-					<DialogTitle className="text-blue-400">
-						KI-Assistent für Schriftliche Anfragen und Rote Nummern
+				<DialogHeader className="flex">
+					<DialogTitle className="py-3 text-left">
+						<span className="flex justify-between items-center text-lg font-bold rounded mb-4">
+							ki.anfragen
+						</span>
+						<span className="font-normal text-2xl">
+							KI-Assistent für Schriftliche Anfragen{" "}
+							<br className="hidden md:inline" />
+							und Rote Nummern
+						</span>
 					</DialogTitle>
 				</DialogHeader>
-				<div className="space-y-3 text-sm">
+				<div className="space-y-3 text-base">
 					<p>
 						Dieser Prototyp durchsucht die Schriftlichen Anfragen und die
 						Hauptausschussprotokolle (&quot;Rote Nummern&quot;) der Wahlperiode
 						19 des Berliner Abgeordnetenhauses und erstellt anhand eines Large
 						Language Models Vorlagen für die Beantwortung der gestellten Frage.
 						Die Quellen sind auf{" "}
-						<a href="https://www.parlament-berlin.de/dokumente">
+						<Link href="https://www.parlament-berlin.de/dokumente">
 							parlament-berlin.de/dokumente
-						</a>{" "}
+						</Link>{" "}
 						zu finden.
 					</p>
 					<p>
@@ -51,44 +56,41 @@ export function SplashScreen({
 					</p>
 					<p>Viel Spaß!</p>
 				</div>
-				<div className="flex justify-around mt-4">
+				<div className="flex justify-start mt-4 gap-x-8 gap-y-4 flex-wrap">
 					<img
-						className="w-1/3 h-7"
+						className="h-7"
 						alt="Logo CityLAB Berlin"
 						src="https://logos.citylab-berlin.org/logo-citylab-berlin-outline.svg"
 					/>
 					<img
-						className="w-1/3 h-7"
+						className="h-7"
 						alt="Logo der Technologiestiftung Berlin"
 						src="https://logos.citylab-berlin.org/logo-tsb-outline.svg"
 					/>
 					<img
-						className="w-1/3 h-7"
+						className="h-7"
 						alt="Logo des Regierenden Bürgermeisters von Berlin und der Senatskanzlei"
 						src="https://logos.citylab-berlin.org/logo-senatskanzlei-buergermeister-horizontal.svg"
 					/>
 				</div>
-				<div className="flex justify-around mt-4">
-					<Link
-						className="text-blue-500 underline text-xs"
-						href="https://citylab-berlin.org/de/start/"
-					>
+				<div className="flex justify-start gap-x-6 gap-y-3 mt-4 flex-wrap">
+					<Link className="text-sm" href="https://citylab-berlin.org/de/start/">
 						Kontakt
 					</Link>
 					<Link
-						className="text-blue-500 underline text-xs"
+						className="text-sm"
 						href="https://github.com/technologiestiftung/ki-anfragen-frontend"
 					>
 						Quellcode
 					</Link>
 					<Link
-						className="text-blue-500 underline text-xs"
+						className="text-sm"
 						href="https://citylab-berlin.org/de/data-privacy/"
 					>
 						Datenschutz
 					</Link>
 					<Link
-						className="text-blue-500 underline text-xs"
+						className="text-sm"
 						href="https://citylab-berlin.org/de/imprint/"
 					>
 						Impressum

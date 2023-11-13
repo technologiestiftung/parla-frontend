@@ -8,15 +8,29 @@ type ExamplePromptsProps = {
 
 function ExamplePrompts(props: ExamplePromptsProps): ReactNode {
 	const examples = props.examplePrompts || [];
-	return examples.map((example) => (
-		<Button
-			key={example}
-			onClick={(evt) => props.onClick(example)}
-			className="inline whitespace-normal h-auto  p-2 text-sm text-zinc-600 hover:text-zinc-100 max-w-xl mx-auto text-left bg-slate-300 hover:bg-slate-500"
-		>
-			{example}
-		</Button>
-	));
+	return (
+		<div className="max-w-xl mx-auto pt-3">
+			<h4 className="font-bold mb-3">Beispiele</h4>
+			<div className="flex flex-col gap-px bg-slate-200 border border-slate-200 relative rounded w-[calc(100%+2rem)] -ml-4">
+				{examples.map((example) => (
+					<Button
+						key={example}
+						onClick={(evt) => props.onClick(example)}
+						className={[
+							"block whitespace-normal h-auto px-4 py-3 text-base rounded-none",
+							"text-blue-700 hover:text-white text-left bg-white hover:bg-blue-700",
+							"hover:rounded relative focus-visible:z-10 focus-visible:rounded-sm",
+							"first-of-type:rounded-t last-of-type:rounded-b",
+						]
+							.filter(Boolean)
+							.join(" ")}
+					>
+						{example}
+					</Button>
+				))}
+			</div>
+		</div>
+	);
 }
 
 export default ExamplePrompts;

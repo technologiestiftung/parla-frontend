@@ -72,7 +72,7 @@ export default function Home() {
 		}
 	}
 
-	function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+	function onChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
 		const { name, value } = event.target;
 		setFormData((prevValues) => ({ ...prevValues, [name]: value }));
 	}
@@ -99,10 +99,26 @@ export default function Home() {
 			<SplashScreen open={showSplash} setOpen={setShowSplash} />
 			<div className="min-h-screen w-full z-50">
 				<div className="flex flex-col min-h-screen lg:grid lg:grid-cols-[280px_1fr] lg:gap-4 bg-slate-100 lg:p-4">
-					<Sidebar
-						sidebarIsOpen={sidebarIsOpen}
-						onNewRequest={newRequestHandler}
-						onSidebarOpenChange={setSidebarIsOpen}
+					<aside className="hidden lg:block sidebar overflow-y-auto">
+						<Sidebar
+							sidebarIsOpen={sidebarIsOpen}
+							onNewRequest={newRequestHandler}
+							onSidebarOpenChange={setSidebarIsOpen}
+						>
+							{resultHistory && (
+								<ResultHistory
+									resultHistory={resultHistory}
+									restoreResultHistoryItem={restoreResultHistoryItem}
+								/>
+							)}
+						</Sidebar>
+					</aside>
+					<MobileSidebar
+						resultHistory={resultHistory}
+						restoreResultHistoryItem={restoreResultHistoryItem}
+						isHistoryOpen={sidebarIsOpen}
+						setSidebarisOpen={setSidebarIsOpen}
+						newRequestHandler={newRequestHandler}
 					>
 						{resultHistory && (
 							<ResultHistory
@@ -110,14 +126,7 @@ export default function Home() {
 								restoreResultHistoryItem={restoreResultHistoryItem}
 							/>
 						)}
-					</Sidebar>
-					<MobileSidebar
-						resultHistory={resultHistory}
-						restoreResultHistoryItem={restoreResultHistoryItem}
-						isHistoryOpen={sidebarIsOpen}
-						setSidebarisOpen={setSidebarIsOpen}
-						newRequestHandler={newRequestHandler}
-					/>
+					</MobileSidebar>
 					<main className="flex min-h-screen lg:min-h-[calc(100vh-4rem)] justify-center bg-white py-3 lg:rounded-md border border-slate-200">
 						<div className="flex flex-col min-h-full justify-between px-10 py-4 space-y-4">
 							<PromptContent

@@ -2,6 +2,7 @@ import React, { MouseEventHandler, ReactNode } from "react";
 import { Button } from "./button";
 import { ChevronDownIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
 import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
+import { cn } from "@/lib/utils";
 
 type SidebarProps = {
 	onNewRequest: MouseEventHandler<HTMLButtonElement>;
@@ -12,12 +13,16 @@ type SidebarProps = {
 
 function Sidebar(props: SidebarProps): JSX.Element {
 	return (
-		<aside className="hidden lg:block sidebar overflow-y-auto">
+		<>
 			<header className="px-1 py-2">
 				<a
 					href="/"
 					title="Startseite"
-					className="py-3 px-4 flex justify-between items-center text-lg font-bold rounded"
+					className={cn(
+						"py-3 px-4 flex justify-between items-center text-lg font-bold rounded",
+						"focus-visible:ring-2 focus-visible:ring-blue-500",
+						"focus-visible:outline-none",
+					)}
 				>
 					<span>ki.anfragen</span>
 					<span className="text-slate-400 text-xs">?</span>
@@ -34,7 +39,11 @@ function Sidebar(props: SidebarProps): JSX.Element {
 			</div>
 			<div className="px-1 py-2">
 				<button
-					className="flex bg-inherit justify-between w-full items-center hover:bg-none px-4 py-3"
+					className={cn(
+						"flex bg-inherit justify-between w-full items-center hover:bg-none px-4 py-3",
+						"focus-visible:ring-2 focus-visible:ring-blue-500",
+						"focus-visible:outline-none focus-visible:rounded-sm",
+					)}
 					onClick={() => props.onSidebarOpenChange(!props.sidebarIsOpen)}
 				>
 					<div className="text-slate-600">Anfrageverlauf</div>
@@ -54,7 +63,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					</CollapsibleContent>
 				</Collapsible>
 			</div>
-		</aside>
+		</>
 	);
 }
 

@@ -1,42 +1,40 @@
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
+import React, { MouseEvent, ReactNode, useState } from "react";
 import { ResponseDetail } from "@/lib/common";
-import {
-	ChevronDownIcon,
-	ChevronLeftIcon,
-	HamburgerMenuIcon,
-} from "@radix-ui/react-icons";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { XIcon } from "lucide-react";
+import Sidebar from "./ui/sidebar";
+import { cva } from "class-variance-authority";
+import { Button } from "./ui/button";
 
 export default function MobileSidebar({
-	resultHistory,
-	restoreResultHistoryItem,
 	isHistoryOpen,
 	setSidebarisOpen,
 	newRequestHandler,
+	children,
 }: {
 	resultHistory: ResponseDetail[];
 	restoreResultHistoryItem: (id: string) => void;
 	isHistoryOpen: boolean;
 	setSidebarisOpen: (isOpen: boolean) => void;
-	newRequestHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	newRequestHandler: (event: MouseEvent<HTMLButtonElement>) => void;
+	children: ReactNode;
 }) {
 	const [isMobileSidebarVisible, setIsMobileSidebarVisible] = useState(false);
 
 	return (
 		<>
 			<div className="absolute top-0 lg:hidden z-60 p-3">
-				<button
+				<Button
 					onClick={() => setIsMobileSidebarVisible(!isMobileSidebarVisible)}
+					className="p3"
+					size="icon"
 				>
 					<HamburgerMenuIcon width={20} height={20} />
-				</button>
+				</Button>
 			</div>
 
 			<div
-				className={`absolute lg:hidden top-0 left-0 w-screen h-screen bg-grey-300 bg-white bg-opacity-40 z-40 ${
+				className={`absolute lg:hidden top-0 left-0 w-screen h-screen bg-grey-300 bg-slate-400 bg-opacity-40 z-40 ${
 					isMobileSidebarVisible ? "visible" : "invisible"
 				}`}
 				style={{
@@ -50,64 +48,29 @@ export default function MobileSidebar({
 							isMobileSidebarVisible ? "translate-x-0" : "-translate-x-80"
 						}`}
 					>
-						<aside className="w-80 h-full border-r overflow-auto bg-slate-300">
-							<div className="px-4 py-2">
-								<Button
-									onClick={newRequestHandler}
-									className="w-full text-white bg-blue-400 hover:bg-blue-700 font-bold py-2 px-4"
-								>
-									Neue Anfrage
-								</Button>
-
-								<Separator className="my-3" />
-
-								<div
-									className="flex bg-inherit justify-between w-full items-center hover:bg-none"
-									onClick={() => {
-										setSidebarisOpen(!isHistoryOpen);
-									}}
-								>
-									<div className="text-slate-800">Anfrageverlauf</div>
-									{isHistoryOpen ? (
-										<ChevronDownIcon className="text-slate-800"></ChevronDownIcon>
-									) : (
-										<ChevronLeftIcon></ChevronLeftIcon>
-									)}
-								</div>
-
-								<Collapsible
-									open={isHistoryOpen}
-									onOpenChange={() => setSidebarisOpen(!isHistoryOpen)}
-								>
-									<CollapsibleContent className="p-2">
-										{resultHistory &&
-											resultHistory.map((history, i, arr) => {
-												return (
-													<React.Fragment key={history.gpt.id}>
-														<button
-															className="text-left w-full text-sm text-zinc-600 hover:text-zinc-100"
-															onClick={() =>
-																restoreResultHistoryItem(history.gpt.id)
-															}
-														>
-															{history.requestBody?.query}
-														</button>
-														{i !== arr.length - 1 ? (
-															<Separator className="my-3" />
-														) : null}
-													</React.Fragment>
-												);
-											})}
-									</CollapsibleContent>
-								</Collapsible>
-							</div>
+						<aside className="w-80 h-full border-r overflow-auto bg-white px-4 shadow-lg">
+							<Sidebar
+								sidebarIsOpen={isHistoryOpen}
+								onNewRequest={newRequestHandler}
+								onSidebarOpenChange={setSidebarisOpen}
+							>
+								{children}
+							</Sidebar>
 						</aside>
-						<button
-							className="p-2"
+						<Button
+							className={[
+								"p-3 shadow-md flex gap-2 absolute top-2 left-[calc(100%+0.5rem)]",
+								"transition-opacity",
+								!isMobileSidebarVisible && "opacity-0 pointer-events-none",
+								isMobileSidebarVisible && "opacity-100",
+							]
+								.filter(Boolean)
+								.join(" ")}
 							onClick={() => setIsMobileSidebarVisible(false)}
 						>
 							<XIcon />
-						</button>
+							<span>Schließen</span>
+						</Button>
 					</div>
 					<div
 						className="flex w-1 grow"
