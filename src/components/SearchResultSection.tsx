@@ -1,14 +1,9 @@
-import type {
-	ResponseDocumentMatch,
-	ResponseSectionDocument,
-} from "@/lib/common";
-import React, { useState } from "react";
-import { Link } from "./Link";
+import type { ResponseDocumentMatch } from "@/lib/common";
+import { useState } from "react";
 import { Table } from "./table";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { TableBody, TableCell, TableHead, TableRow } from "./ui/table";
 
-interface Pdf {
 interface Pdf {
 	id: number;
 	url: string;
