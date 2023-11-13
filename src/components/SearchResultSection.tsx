@@ -41,7 +41,7 @@ function ExpandableTableCell({ content }: { content: string }) {
 			{displayedContent}
 			<br />
 			<a
-				className="underline text-blue-700 hover:text-blue-900"
+				className="underline text-blue-900 hover:text-blue-900"
 				onClick={handleClick}
 			>
 				{isExpanded ? "Weniger…" : "Mehr…"}

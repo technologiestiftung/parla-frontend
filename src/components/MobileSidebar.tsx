@@ -23,16 +23,6 @@ export default function MobileSidebar({
 
 	return (
 		<>
-			<div className="absolute top-0 lg:hidden z-60 p-3">
-				<Button
-					onClick={() => setIsMobileSidebarVisible(!isMobileSidebarVisible)}
-					className="p3"
-					size="icon"
-				>
-					<HamburgerMenuIcon width={20} height={20} />
-				</Button>
-			</div>
-
 			<div
 				className={`absolute lg:hidden top-0 left-0 w-screen h-screen bg-grey-300 bg-slate-400 bg-opacity-40 z-40 ${
 					isMobileSidebarVisible ? "visible" : "invisible"
@@ -48,7 +38,7 @@ export default function MobileSidebar({
 							isMobileSidebarVisible ? "translate-x-0" : "-translate-x-80"
 						}`}
 					>
-						<aside className="w-80 h-full border-r overflow-auto bg-white px-4 shadow-lg">
+						<aside className="w-80 h-screen border-r overflow-auto bg-white px-4 shadow-lg pb-4">
 							<Sidebar
 								sidebarIsOpen={isHistoryOpen}
 								onNewRequest={newRequestHandler}
@@ -59,7 +49,7 @@ export default function MobileSidebar({
 						</aside>
 						<Button
 							className={[
-								"p-3 shadow-md flex gap-2 absolute top-2 left-[calc(100%+0.5rem)]",
+								"px-2 sm:px-3 py-3 shadow-md flex gap-2 absolute top-2 left-[calc(100%+0.5rem)]",
 								"transition-opacity",
 								!isMobileSidebarVisible && "opacity-0 pointer-events-none",
 								isMobileSidebarVisible && "opacity-100",
@@ -69,7 +59,7 @@ export default function MobileSidebar({
 							onClick={() => setIsMobileSidebarVisible(false)}
 						>
 							<XIcon />
-							<span>Schließen</span>
+							<span className="hidden sm:inline">Schließen</span>
 						</Button>
 					</div>
 					<div
@@ -77,6 +67,15 @@ export default function MobileSidebar({
 						onClick={() => setIsMobileSidebarVisible(false)}
 					></div>
 				</div>
+			</div>
+			<div className="absolute top-0 lg:hidden z-60 p-3">
+				<Button
+					onClick={() => setIsMobileSidebarVisible(!isMobileSidebarVisible)}
+					className="p3"
+					size="icon"
+				>
+					<HamburgerMenuIcon width={20} height={20} />
+				</Button>
 			</div>
 		</>
 	);

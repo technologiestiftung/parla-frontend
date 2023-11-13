@@ -11,6 +11,7 @@ import MobileSidebar from "@/components/MobileSidebar";
 import ResultHistory from "@/components/ui/resultHistory";
 import PromptContent from "@/components/ui/promtContent";
 import PromptForm from "@/components/ui/promptForm";
+import { cn } from "@/lib/utils";
 const defaultFormdata: Body = {
 	query: "",
 };
@@ -99,7 +100,7 @@ export default function Home() {
 			<SplashScreen open={showSplash} setOpen={setShowSplash} />
 			<div className="min-h-screen w-full z-50">
 				<div className="flex flex-col min-h-screen lg:grid lg:grid-cols-[280px_1fr] lg:gap-4 bg-slate-100 lg:p-4">
-					<aside className="hidden lg:block sidebar overflow-y-auto">
+					<aside className="hidden h-[calc(100vh-2rem)] lg:block sidebar overflow-y-auto">
 						<Sidebar
 							sidebarIsOpen={sidebarIsOpen}
 							onNewRequest={newRequestHandler}
@@ -113,6 +114,31 @@ export default function Home() {
 							)}
 						</Sidebar>
 					</aside>
+					<main
+						className={cn(
+							"flex h-screen lg:h-[calc(100vh-2rem)] overflow-y-auto justify-center",
+							"bg-white  lg:rounded-md border border-slate-200 relative",
+						)}
+					>
+						<div className="w-full flex flex-col justify-between">
+							<div className="px-10 py-7 space-y-4">
+								<PromptContent
+									title={title}
+									results={results}
+									onsubmit={(text) =>
+										setFormData((s) => ({ ...s, query: text }))
+									}
+									isLoading={isLoading}
+								/>
+							</div>
+							<PromptForm
+								query={formData.query}
+								onChange={onChange}
+								onSubmit={onSubmit}
+								isLoading={isLoading}
+							/>
+						</div>
+					</main>
 					<MobileSidebar
 						resultHistory={resultHistory}
 						restoreResultHistoryItem={restoreResultHistoryItem}
@@ -127,21 +153,6 @@ export default function Home() {
 							/>
 						)}
 					</MobileSidebar>
-					<main className="flex min-h-screen lg:min-h-[calc(100vh-4rem)] justify-center bg-white py-3 lg:rounded-md border border-slate-200">
-						<div className="flex flex-col min-h-full justify-between px-10 py-4 space-y-4">
-							<PromptContent
-								title={title}
-								results={results}
-								onsubmit={(text) => setFormData((s) => ({ ...s, query: text }))}
-							/>
-							<PromptForm
-								query={formData.query}
-								onChange={onChange}
-								onSubmit={onSubmit}
-								isLoading={isLoading}
-							/>
-						</div>
-					</main>
 				</div>
 			</div>
 		</>

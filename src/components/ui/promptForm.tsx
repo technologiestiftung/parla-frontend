@@ -2,6 +2,7 @@ import React, { FormEventHandler, ReactNode } from "react";
 import { Input } from "./input";
 import { Button } from "./button";
 import Envelope from "./envelopeIcon";
+import { cn } from "@/lib/utils";
 
 type PromptFormProps = {
 	onSubmit: FormEventHandler<HTMLFormElement>;
@@ -13,23 +14,35 @@ type PromptFormProps = {
 function PromptForm(props: PromptFormProps): ReactNode {
 	const { onSubmit, query, isLoading, onChange } = props;
 	return (
-		<form onSubmit={onSubmit} className="relative w-full max-w-xl mx-auto flex">
-			<Input
-				value={query || ""}
-				name="query"
-				id="query"
-				className="w-[calc(100%+2rem)] -ml-4 pl-4 py-4 pr-12 resize-none"
-				placeholder="Stellen Sie hier ihre Anfrage"
-				onChange={onChange}
-			/>
-			<Button
-				className="absolute right-2 bottom-2 bg-blue-400 hover:bg-blue-700 text-white font-bold"
-				type="submit"
-				size="icon"
+		<div
+			className={cn(
+				"w-full sticky bottom-0",
+				"p-2 lg:px-0 bg-slate-50 border-t border-slate-200 shadow-lg",
+			)}
+		>
+			<form
+				onSubmit={onSubmit}
+				className="relative w-full max-w-xl mx-auto flex"
 			>
-				{isLoading ? <Spinner /> : <Envelope />}
-			</Button>
-		</form>
+				<Input
+					value={query || ""}
+					name="query"
+					id="query"
+					className="pl-4 py-4 pr-12 resize-none"
+					placeholder="Stellen Sie hier ihre Anfrage"
+					onChange={onChange}
+					disabled={isLoading}
+				/>
+				<Button
+					className="absolute right-2 bottom-2 bg-blue-700 hover:bg-blue-900 text-white font-bold"
+					type="submit"
+					size="icon"
+					disabled={isLoading}
+				>
+					{isLoading ? <Spinner /> : <Envelope />}
+				</Button>
+			</form>
+		</div>
 	);
 }
 
@@ -38,7 +51,7 @@ function Spinner() {
 		<svg
 			aria-hidden="true"
 			role="status"
-			className="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600"
+			className="inline w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
 			viewBox="0 0 100 101"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"

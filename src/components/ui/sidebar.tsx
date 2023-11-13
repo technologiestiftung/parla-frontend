@@ -20,7 +20,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					title="Startseite"
 					className={cn(
 						"py-3 px-4 flex justify-between items-center text-lg font-bold rounded",
-						"focus-visible:ring-2 focus-visible:ring-blue-500",
+						"focus-visible:ring-2 focus-visible:ring-blue-700",
 						"focus-visible:outline-none",
 					)}
 				>
@@ -31,7 +31,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 			<div className="px-1 py-2 border-y border-slate-200">
 				<Button
 					onClick={props.onNewRequest}
-					className="w-full text-white bg-blue-400 hover:bg-blue-700 font-bold py-2 px-4 flex justify-between"
+					className="w-full text-white bg-blue-700 hover:bg-blue-900 font-bold py-2 px-4 flex justify-between"
 				>
 					<span>Neue Anfrage</span>
 					<span>+</span>
@@ -41,12 +41,12 @@ function Sidebar(props: SidebarProps): JSX.Element {
 				<button
 					className={cn(
 						"flex bg-inherit justify-between w-full items-center hover:bg-none px-4 py-3",
-						"focus-visible:ring-2 focus-visible:ring-blue-500",
-						"focus-visible:outline-none focus-visible:rounded-sm",
+						"focus-visible:ring-2 focus-visible:ring-blue-700",
+						"focus-visible:outline-none focus-visible:rounded-sm my-2",
 					)}
 					onClick={() => props.onSidebarOpenChange(!props.sidebarIsOpen)}
 				>
-					<div className="text-slate-600">Anfrageverlauf</div>
+					<strong className="block font-bold">Anfrageverlauf</strong>
 					{props.sidebarIsOpen ? (
 						<ChevronDownIcon className="text-slate-400"></ChevronDownIcon>
 					) : (
@@ -58,9 +58,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					open={props.sidebarIsOpen}
 					onOpenChange={props.onSidebarOpenChange}
 				>
-					<CollapsibleContent className="p-2">
-						{props.children}
-					</CollapsibleContent>
+					<CollapsibleContent>{props.children}</CollapsibleContent>
 				</Collapsible>
 			</div>
 		</>
