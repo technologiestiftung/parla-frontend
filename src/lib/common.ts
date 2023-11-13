@@ -1,14 +1,16 @@
 import type { CreateChatCompletionRequest } from "openai";
 import type { Database } from "./database.js";
 
-type Section = Database["public"]["Tables"]["parsed_document_sections"]["Row"];
-type Pdf = Database["public"]["Tables"]["dokument"]["Row"];
-type Doc = Database["public"]["Tables"]["parsed_documents"]["Row"];
-type ReportSection = Database["public"]["Tables"]["parsed_red_number_report_sections"]["Row"];
-type Report = Database["public"]["Tables"]["parsed_red_number_reports"]["Row"];
-type ReportPdf = Database["public"]["Tables"]["red_number_reports"]["Row"];
+type Section = Database["public"]["Tables"]["processed_document_chunks"]["Row"];
+type RegisteredDocuments =
+	Database["public"]["Tables"]["registered_documents"]["Row"];
+type Doc = Database["public"]["Tables"]["processed_documents"]["Row"];
 
-export type Model = "gpt-4" | "gpt-3.5-turbo" | "gpt-3.5-turbo-16k";
+export type Model =
+	| "gpt-4"
+	| "gpt-3.5-turbo"
+	| "gpt-3.5-turbo-16k"
+	| "gpt-3.5-turbo-1106";
 
 export interface Question {
 	query: string;
@@ -40,7 +42,7 @@ interface Choice {
 		role: string;
 		content: string;
 	};
-	finish_reason: string;
+	finish_reason?: string;
 }
 
 interface Usage {
@@ -50,21 +52,14 @@ interface Usage {
 }
 
 export interface ResponseSectionDocument extends Partial<Section> {
-	parsed_documents?: Doc[];
+	processed_documents?: Doc[];
 	similarity?: number;
-	pdfs?: Pdf[];
-}
-
-export interface ResponseSectionReport extends Partial<ReportSection> {
-	parsed_red_number_reports?: Report[];
-	similarity?: number;
-	pdfs?: ReportPdf[];
+	registered_documents?: RegisteredDocuments[];
 }
 
 export interface ResponseDetail {
 	gpt: Gpt;
 	sections: ResponseSectionDocument[];
-	reportSections: ResponseSectionReport[];
 	requestBody: Body;
 	completionOptions: CreateChatCompletionRequest;
 }

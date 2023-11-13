@@ -50,7 +50,6 @@ export default function Home() {
 		if (formData.query?.length === 0) {
 			setIsLoading(false);
 			setErrors({ query: "Bitte geben Sie eine Anfrage ein." });
-			console.log(formData, "in empty query handler");
 			return;
 		}
 
@@ -199,17 +198,6 @@ export default function Home() {
 															<SearchResultSection
 																key={section.id}
 																sectionDocument={section}
-																sectionReport={undefined}
-															></SearchResultSection>
-														);
-													})}
-												{res.reportSections &&
-													res.reportSections.map((section) => {
-														return (
-															<SearchResultSection
-																key={section.id}
-																sectionDocument={undefined}
-																sectionReport={section}
 															></SearchResultSection>
 														);
 													})}
