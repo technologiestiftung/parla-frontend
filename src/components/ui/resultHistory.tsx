@@ -12,7 +12,7 @@ type ResultHistoryProps = {
 function ResultHistory(props: ResultHistoryProps) {
 	return props.resultHistory.map((history, i, arr) => {
 		return (
-			<React.Fragment key={history.gpt.id}>
+			<React.Fragment key={`${history.gpt?.id}-${i}`}>
 				<Button
 					className={cn(
 						"bg-white w-full text-left text-sm whitespace-normal h-auto text-blue-700",

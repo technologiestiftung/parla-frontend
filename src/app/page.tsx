@@ -21,15 +21,13 @@ export default function Home() {
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [showSplash, setShowSplash] = React.useState(false);
-	const [result, setResult] = useState<ResponseDetail[] | null>(null);
+	const [result, setResult] = useState<ResponseDetail | null>(null);
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(true);
 	const { resultHistory, setResultHistory } = useLocalStorage(
 		"ki-anfragen-history",
 		[],
 	);
-
-	const results = result || [];
 
 	useEffect(() => {
 		setSidebarIsOpen(!isMobile);
@@ -90,7 +88,7 @@ export default function Home() {
 		// filter an arroy ResponseDetail items by their gpt.id
 		const filtered = resultHistory.filter((item) => item.gpt?.id === id);
 		if (filtered.length > 0) {
-			setResult([filtered[0]]);
+			setResult(filtered[0]);
 			setTitle(filtered[0].requestBody?.query!);
 		}
 	}
@@ -124,7 +122,7 @@ export default function Home() {
 							<div className="px-10 py-7 space-y-4">
 								<PromptContent
 									title={title}
-									results={results}
+									result={result}
 									onsubmit={(text) =>
 										setFormData((s) => ({ ...s, query: text }))
 									}

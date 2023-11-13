@@ -6,13 +6,13 @@ import LoadingSkeletion from "./loadingSkeleton";
 
 type PromptContentProps = {
 	title?: string | null;
-	results: ResponseDetail[];
+	result: ResponseDetail | null;
 	onsubmit: (text: string) => void;
 	isLoading?: boolean;
 };
 
 function PromptContent(props: PromptContentProps) {
-	const { title, results, onsubmit, isLoading } = props;
+	const { title, result, onsubmit, isLoading } = props;
 	return (
 		<div className="space-y-2 pt-8 lg:pt-0">
 			{!title && (
@@ -30,8 +30,7 @@ function PromptContent(props: PromptContentProps) {
 						<p className="text-lg font-light">{title}</p>
 					</>
 				)}
-				{!isLoading &&
-					results.map((res) => <Answer key={res.gpt?.id} answer={res} />)}
+				{!isLoading && <Answer answer={result} />}
 				{isLoading && (
 					<>
 						<h3 className="text-lg font-bold">Antwort lädt...</h3>
@@ -39,7 +38,7 @@ function PromptContent(props: PromptContentProps) {
 					</>
 				)}
 			</div>
-			{results.length === 0 && !isLoading && (
+			{!result && !isLoading && (
 				<ExamplePrompts
 					examplePrompts={[
 						"Wie bewertet der Berliner Senat das private Engagement, bei dem Ehrenamtliche Berliner Gewässer von Müll und Schrott befreien?",
