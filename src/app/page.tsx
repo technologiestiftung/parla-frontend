@@ -48,7 +48,6 @@ export default function Home() {
 		if (formData.query?.length === 0) {
 			setIsLoading(false);
 			setErrors({ query: "Bitte geben Sie eine Anfrage ein." });
-			console.log(formData, "in empty query handler");
 			return;
 		}
 
