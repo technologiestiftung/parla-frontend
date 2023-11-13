@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 import { TableBody, TableCell, TableHead, TableRow } from "./ui/table";
 
 interface Pdf {
+interface Pdf {
 	id: number;
 	url: string;
 	desk: string | undefined;
