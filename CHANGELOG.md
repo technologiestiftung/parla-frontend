@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.6.2...v1.7.0) (2023-11-14)
+
+
+### Features
+
+* adapt to new API response ([#30](https://github.com/technologiestiftung/ki-anfragen-frontend/issues/30)) ([381dae6](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/381dae6f5636b0b746a79ccfd82a452aadd64224))
+
 ## [1.6.2](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.6.1...v1.6.2) (2023-11-06)
 
 
