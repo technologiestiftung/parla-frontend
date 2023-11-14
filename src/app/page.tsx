@@ -44,7 +44,7 @@ export default function Home() {
 		setIsLoading(true);
 		setResult(null);
 
-		if (formData.query?.length === 0) {
+		if (formData.query?.trim().length === 0) {
 			setIsLoading(false);
 			setErrors({ query: "Bitte geben Sie eine Anfrage ein." });
 			return;
