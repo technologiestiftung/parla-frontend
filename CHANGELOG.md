@@ -1,3 +1,16 @@
+# [1.8.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.7.0...v1.8.0) (2023-11-14)
+
+
+### Bug Fixes
+
+* build error ([bdf553f](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/bdf553fbdd65ebfdd6b771ba1080c091f763a6a1))
+
+
+### Features
+
+* adapt to new response schema ([939fee9](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/939fee93f3f85592e975c7ba0935083ac40d6cf1))
+* **SearchResultSection:** Add tags to the mix ([393cb65](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/393cb65b4327876c396c4a8c9b71f082618acdf6))
+
 # [1.7.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.6.2...v1.7.0) (2023-11-14)
 
 
