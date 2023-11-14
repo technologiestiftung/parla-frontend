@@ -23,7 +23,7 @@ export default function Home() {
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [showSplash, setShowSplash] = React.useState(false);
-	const [result, setResult] = useState<ResponseDetail[] | null>(null);
+	const [result, setResult] = useState<ResponseDetail | null>(null);
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(true);
 
@@ -98,7 +98,7 @@ export default function Home() {
 		// filter an arroy ResponseDetail items by their gpt.id
 		const filtered = resultHistory.filter((item) => item.gpt?.id === id);
 		if (filtered.length > 0) {
-			setResult([filtered[0]]);
+			setResult(filtered[0]);
 			setTitle(filtered[0].requestBody?.query!);
 		}
 	}
@@ -186,23 +186,28 @@ export default function Home() {
 											<p>{title}</p>
 										</>
 									)}
-									{result &&
-										result.length > 0 &&
-										result.map((res) => (
-											<div key={res.gpt?.id}>
-												<h3 className="text-lg font-bold">Antwort</h3>
-												<p>{res.gpt?.choices[0].message.content}</p>
-												{res.sections &&
-													res.sections.map((section) => {
+									{result && (
+										<div key={result.gpt?.id}>
+											<h3 className="text-lg font-bold">Antwort</h3>
+											<p>{result.gpt?.choices[0].message.content}</p>
+											{result.documentMatches &&
+												result.documentMatches
+													.sort((l, r) =>
+														l.processed_document_summary_match.similarity <
+														r.processed_document_summary_match.similarity
+															? 1
+															: -1,
+													)
+													.map((documentMatch) => {
 														return (
 															<SearchResultSection
-																key={section.id}
-																sectionDocument={section}
+																key={documentMatch.registered_document.id}
+																documentMatch={documentMatch}
 															></SearchResultSection>
 														);
 													})}
-											</div>
-										))}
+										</div>
+									)}
 								</div>
 								{!result && (
 									<>

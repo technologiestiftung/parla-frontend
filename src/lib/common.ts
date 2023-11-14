@@ -1,10 +1,14 @@
 import type { CreateChatCompletionRequest } from "openai";
 import type { Database } from "./database.js";
 
-type Section = Database["public"]["Tables"]["processed_document_chunks"]["Row"];
-type RegisteredDocuments =
+type ProcessedDocumentChunk =
+	Database["public"]["Tables"]["processed_document_chunks"]["Row"];
+type RegisteredDocument =
 	Database["public"]["Tables"]["registered_documents"]["Row"];
-type Doc = Database["public"]["Tables"]["processed_documents"]["Row"];
+type ProcessedDocument =
+	Database["public"]["Tables"]["processed_documents"]["Row"];
+type ProcessedDocumentSummary =
+	Database["public"]["Tables"]["processed_document_summaries"]["Row"];
 
 export type Model =
 	| "gpt-4"
@@ -51,15 +55,26 @@ interface Usage {
 	total_tokens: number;
 }
 
-export interface ResponseSectionDocument extends Partial<Section> {
-	processed_documents?: Doc[];
-	similarity?: number;
-	registered_documents?: RegisteredDocuments[];
+export interface ProcessedDocumentSummaryMatch {
+	processed_document_summary: ProcessedDocumentSummary;
+	similarity: number;
+}
+
+export interface ProcessedDocumentChunkMatch {
+	processed_document_chunk: ProcessedDocumentChunk;
+	similarity: number;
+}
+
+export interface ResponseDocumentMatch {
+	registered_document: RegisteredDocument;
+	processed_document: ProcessedDocument;
+	processed_document_summary_match: ProcessedDocumentSummaryMatch;
+	processed_document_chunk_matches: Array<ProcessedDocumentChunkMatch>;
 }
 
 export interface ResponseDetail {
 	gpt: Gpt;
-	sections: ResponseSectionDocument[];
+	documentMatches: ResponseDocumentMatch[];
 	requestBody: Body;
 	completionOptions: CreateChatCompletionRequest;
 }

@@ -1,6 +1,5 @@
-import type { ResponseSectionDocument } from "@/lib/common";
-import React, { useState } from "react";
-import { Link } from "./Link";
+import type { ResponseDocumentMatch } from "@/lib/common";
+import { useState } from "react";
 import { Table } from "./table";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { TableBody, TableCell, TableHead, TableRow } from "./ui/table";
@@ -11,6 +10,7 @@ interface Pdf {
 	desk: string | undefined;
 	title: string | undefined;
 	published_at: string | undefined;
+	summary: string;
 }
 
 interface CombinedSection {
@@ -24,7 +24,7 @@ interface CombinedSection {
 }
 
 interface SearchResultProps {
-	sectionDocument: ResponseSectionDocument | undefined;
+	documentMatch: ResponseDocumentMatch | undefined;
 }
 
 function ExpandableTableCell({ content }: { content: string }) {
@@ -51,75 +51,68 @@ function ExpandableTableCell({ content }: { content: string }) {
 }
 
 export default function SearchResultSection({
-	sectionDocument,
+	documentMatch,
 }: SearchResultProps) {
-	const combinedSection = {
-		id: sectionDocument?.id,
-		source: sectionDocument?.registered_documents?.[0]?.source_type,
-		page: sectionDocument?.page,
-		content: sectionDocument?.content,
-		similarity: sectionDocument?.similarity,
-		registered_documents: sectionDocument?.registered_documents?.map(
-			(reg_doc) => {
-				return {
-					id: reg_doc.id,
-					url: reg_doc.source_url,
+	const metadata = documentMatch?.registered_document.metadata;
 
-					title: reg_doc.source_type.toLowerCase().includes("schriftliche")
-						? //@ts-ignore
-						  reg_doc.metadata["Titel"]
-						: //@ts-ignore
-						  reg_doc.metadata["title"],
-					published_at: reg_doc.registered_at,
-				} as Pdf;
-			},
-		),
-	} as CombinedSection;
+	//@ts-ignore
+	const title: string | undefined = metadata["title"] ?? metadata["Titel"];
+
 	return (
-		<Card className="rounded-none mb-3" key={combinedSection.id}>
+		<Card
+			className="rounded-none mb-3"
+			key={documentMatch?.registered_document.id}
+		>
 			<CardHeader></CardHeader>
 			<CardContent>
 				<Table>
 					<TableBody>
-						{combinedSection.registered_documents &&
-							combinedSection.registered_documents.length > 0 &&
-							combinedSection.registered_documents.map((reg_doc) => {
-								return (
-									<React.Fragment key={reg_doc.id}>
-										{reg_doc.title && (
-											<TableRow>
-												<TableHead>Thema</TableHead>
-												<TableCell>{reg_doc.title}</TableCell>
-											</TableRow>
-										)}
-										{reg_doc.published_at && (
-											<TableRow>
-												<TableHead>Registriert</TableHead>
-												<TableCell>{reg_doc.published_at}</TableCell>
-											</TableRow>
-										)}
-										<TableRow>
-											<TableHead>Dokument</TableHead>
-											<TableCell>
-												{reg_doc.url && (
-													<Link href={reg_doc.url}>
-														{reg_doc.url
-															?.split("/")
-															.findLast((str) => str.endsWith(".pdf"))}
-													</Link>
-												)}
-												{", "}
-												{`Seite ${combinedSection.page}`}
-											</TableCell>
-										</TableRow>
-									</React.Fragment>
-								);
-							})}
+						<TableRow>
+							<TableHead>Titel</TableHead>
+							<TableCell>{title}</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableHead>Typ</TableHead>
+							<TableCell>
+								{documentMatch?.registered_document.source_type}
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableHead>Quelle</TableHead>
+							<TableCell>
+								<a href={documentMatch?.registered_document.source_url}>
+									{
+										documentMatch?.registered_document.source_url
+											.split("/")
+											.slice(-1)[0]
+									}
+								</a>
+							</TableCell>
+						</TableRow>
 						<TableRow className="border-none">
-							<TableHead>Kontext</TableHead>
+							<TableHead>Zusammenfassung</TableHead>
 							<ExpandableTableCell
-								content={combinedSection.content ? combinedSection.content : ""}
+								content={
+									documentMatch?.processed_document_summary_match
+										.processed_document_summary.summary ?? ""
+								}
 							></ExpandableTableCell>
+						</TableRow>
+						<TableRow>
+							<TableHead>Ähnlichkeit</TableHead>
+							<TableCell>
+								{documentMatch?.processed_document_summary_match.similarity}
+							</TableCell>
+						</TableRow>
+
+						<TableRow>
+							<TableHead>Seiten</TableHead>
+							<TableCell>
+								{documentMatch?.processed_document_chunk_matches
+									.map((c) => c.processed_document_chunk.page)
+									.sort()
+									.join(", ")}
+							</TableCell>
 						</TableRow>
 					</TableBody>
 				</Table>
