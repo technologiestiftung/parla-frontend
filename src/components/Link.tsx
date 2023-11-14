@@ -12,7 +12,7 @@ export function Link({ children, className, ...rest }: LinkProps) {
 			target="_blank"
 			rel="noreferrer"
 			className={cn(
-				"underline text-blue-900 hover:text-blue-900",
+				"underline text-blue-700 hover:text-blue-900",
 				"focus-visible:outline-none focus-visible:rounded-sm",
 				"focus-visible:ring-2 focus-visible:ring-blue-700",
 				"focus-visible:ring-offset-4 focus-visible:ring-offset-white",

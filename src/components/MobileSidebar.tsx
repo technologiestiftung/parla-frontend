@@ -3,7 +3,6 @@ import { ResponseDetail } from "@/lib/common";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { XIcon } from "lucide-react";
 import Sidebar from "./ui/sidebar";
-import { cva } from "class-variance-authority";
 import { Button } from "./ui/button";
 
 export default function MobileSidebar({

@@ -33,7 +33,7 @@ function PromptContent(props: PromptContentProps) {
 				{!isLoading && <Answer answer={result} />}
 				{isLoading && (
 					<>
-						<h3 className="text-lg font-bold">Antwort lädt...</h3>
+						<h4 className="text-lg font-bold mt-4">Antwort lädt...</h4>
 						<LoadingSkeletion />
 					</>
 				)}
