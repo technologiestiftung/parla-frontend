@@ -98,24 +98,8 @@ function SimilarityDisplay(props: SimilarityDisplayProps): ReactNode {
 export default function SearchResultSection({
 	documentMatch,
 }: SearchResultProps) {
-	const regDoc = documentMatch?.registered_document;
-	const proDoc = documentMatch?.processed_document_summary_match;
-	const metadata =
-		typeof regDoc?.metadata === "object" && regDoc.metadata !== null
-			? regDoc.metadata
-			: {};
-	const type = regDoc?.source_type;
-	const title =
-		"Titel" in metadata && Array.isArray(metadata.Titel)
-			? `${metadata.Titel[0]}`
-			: undefined;
-	const pdfUrl = regDoc?.source_url;
-	const pdfName = pdfUrl?.split("/").slice(-1)[0];
-	const pages = documentMatch?.processed_document_chunk_matches
-		.map((c) => c.processed_document_chunk.page)
-		.sort();
-	const similarity =
-		documentMatch?.processed_document_summary_match.similarity || 0;
+	const { title, pdfUrl, pdfName, pages, similarity, type } =
+		getCleanedMetadata(documentMatch);
 
 	return (
 		<div className="border-x border-t last-of-type:border-b first-of-type:rounded-t last-of-type:rounded-b p-4">
@@ -154,4 +138,42 @@ export default function SearchResultSection({
 			/>
 		</div>
 	);
+}
+
+function getCleanedMetadata(documentMatch: ResponseDocumentMatch | undefined) {
+	const regDoc = documentMatch?.registered_document;
+	const proDoc = documentMatch?.processed_document_summary_match;
+	const metadata =
+		typeof regDoc?.metadata === "object" && regDoc.metadata !== null
+			? regDoc.metadata
+			: {};
+	const type = regDoc?.source_type;
+	const schriftlicheAnfrageTitle =
+		"Titel" in metadata && Array.isArray(metadata.Titel)
+			? `${metadata.Titel[0]}`
+			: undefined;
+	const hauptAusschussProtokollTitle =
+		"title" in metadata && typeof metadata.title === "string"
+			? `${metadata.title}`
+			: undefined;
+	const title =
+		type === "Hauptausschussprotokoll"
+			? hauptAusschussProtokollTitle
+			: schriftlicheAnfrageTitle;
+
+	const pdfUrl = regDoc?.source_url;
+	const pdfName = pdfUrl?.split("/").slice(-1)[0];
+	const pages = documentMatch?.processed_document_chunk_matches
+		.map((c) => c.processed_document_chunk.page)
+		.sort();
+	const similarity = proDoc?.similarity || 0;
+
+	return {
+		title: title?.replace(/<\/?[^>]+(>|$)/g, " ∙ "),
+		pdfUrl,
+		pdfName,
+		pages,
+		similarity,
+		type,
+	};
 }
