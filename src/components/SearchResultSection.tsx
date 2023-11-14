@@ -55,6 +55,41 @@ function ExpandableTableCell({ content }: { content: string }) {
 	);
 }
 
+function TagsList(props: { tags: string[] }) {
+	const [isExpanded, setIsExpanded] = useState<boolean>(false);
+	const maxTags = 3;
+	const tags = isExpanded ? props.tags : props.tags.slice(0, maxTags);
+	return (
+		<div className="flex gap-x-2 gap-y-1 flex-wrap">
+			{tags.map((tag) => (
+				<span
+					className="px-2 py-0.5 bg-slate-100 text-slate-600 text-xs inline-block rounded-full"
+					key={tag}
+				>
+					{tag}
+				</span>
+			))}
+			{props.tags.length > maxTags && (
+				<button
+					className={cn(
+						"inline-block rounded-full transition-colors text-xs",
+						isExpanded
+							? "text-blue-700 underline"
+							: "bg-slate-100 text-slate-600 px-2 py-0.5 hover:bg-blue-900 hover:text-white",
+						"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700",
+						"focus-visible:ring-offset-4 focus-visible:ring-offset-white",
+					)}
+					onClick={() => setIsExpanded(!isExpanded)}
+				>
+					{!isExpanded
+						? `+${props.tags.length - maxTags}`
+						: `Schlagworte ausblenden`}
+				</button>
+			)}
+		</div>
+	);
+}
+
 type SimilarityDisplayProps = {
 	similarity: number;
 };
@@ -98,7 +133,7 @@ function SimilarityDisplay(props: SimilarityDisplayProps): ReactNode {
 export default function SearchResultSection({
 	documentMatch,
 }: SearchResultProps) {
-	const { title, pdfUrl, pdfName, pages, similarity, type } =
+	const { title, pdfUrl, pdfName, pages, similarity, type, tags } =
 		getCleanedMetadata(documentMatch);
 
 	return (
@@ -136,6 +171,8 @@ export default function SearchResultSection({
 						.processed_document_summary.summary ?? ""
 				}
 			/>
+
+			{tags.length > 0 && <TagsList tags={tags} />}
 		</div>
 	);
 }
@@ -160,6 +197,9 @@ function getCleanedMetadata(documentMatch: ResponseDocumentMatch | undefined) {
 		type === "Hauptausschussprotokoll"
 			? hauptAusschussProtokollTitle
 			: schriftlicheAnfrageTitle;
+	const tags = Array.from(
+		new Set(proDoc?.processed_document_summary?.tags ?? []).values(),
+	);
 
 	const pdfUrl = regDoc?.source_url;
 	const pdfName = pdfUrl?.split("/").slice(-1)[0];
@@ -175,5 +215,6 @@ function getCleanedMetadata(documentMatch: ResponseDocumentMatch | undefined) {
 		pages,
 		similarity,
 		type,
+		tags,
 	};
 }
