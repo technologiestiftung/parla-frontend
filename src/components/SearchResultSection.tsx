@@ -152,9 +152,11 @@ export default function SearchResultSection({
 						>
 							<AcrobatIcon />
 							<span>{pdfName}</span>{" "}
-							<span className="text-slate-600 ml-1">
-								(S. {pages?.join(", ")})
-							</span>
+							{pages && pages.length > 0 && (
+								<span className="text-slate-600 ml-1">
+									(S. {pages?.join(", ")})
+								</span>
+							)}
 						</Link>
 					)}
 				</span>
@@ -165,14 +167,14 @@ export default function SearchResultSection({
 				{title}
 			</h6>
 
-			<ExpandableTableCell
+			{/* <ExpandableTableCell
 				content={
 					documentMatch?.processed_document_summary_match
 						.processed_document_summary.summary ?? ""
 				}
-			/>
+			/> */}
 
-			{tags.length > 0 && <TagsList tags={tags} />}
+			{/* {tags.length > 0 && <TagsList tags={tags} />} */}
 		</div>
 	);
 }
@@ -204,9 +206,9 @@ function getCleanedMetadata(documentMatch: ResponseDocumentMatch | undefined) {
 	const pdfUrl = regDoc?.source_url;
 	const pdfName = pdfUrl?.split("/").slice(-1)[0];
 	const pages = documentMatch?.processed_document_chunk_matches
-		.map((c) => c.processed_document_chunk.page)
+		.map((c) => c.processed_document_chunk.page + 1) // page is 0-based
 		.sort();
-	const similarity = proDoc?.similarity || 0;
+	const similarity = documentMatch?.similarity ?? 0;
 
 	return {
 		title: title?.replace(/<\/?[^>]+(>|$)/g, " ∙ "),

@@ -16,6 +16,40 @@ const defaultFormdata: Body = {
 	query: "",
 };
 
+const chunkAndSummaryConfig = {
+	temperature: 0,
+	match_threshold: 0.85,
+	num_probes: 8,
+	openai_model: "gpt-3.5-turbo-16k",
+	chunk_limit: 128,
+	summary_limit: 16,
+	document_limit: 3,
+	search_algorithm: "chunks-and-summaries",
+	include_summary_in_response_generation: false,
+} as Body;
+
+const chunkOnlyConfig = {
+	temperature: 0,
+	match_threshold: 0.85,
+	num_probes: 8,
+	openai_model: "gpt-3.5-turbo-16k",
+	document_limit: 3,
+	search_algorithm: "chunks-only",
+	match_count: 64,
+	include_summary_in_response_generation: false,
+} as Body;
+
+const summariesThenChunksConfig = {
+	temperature: 0,
+	match_threshold: 0.85,
+	num_probes: 8,
+	openai_model: "gpt-3.5-turbo-16k",
+	document_limit: 3,
+	search_algorithm: "summaries-then-chunks",
+	match_count: 64,
+	include_summary_in_response_generation: false,
+} as Body;
+
 export default function Home() {
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
@@ -28,6 +62,7 @@ export default function Home() {
 		"ki-anfragen-history",
 		[],
 	);
+	const [searchConfig, setSearchConfig] = useState<Body>(chunkAndSummaryConfig);
 
 	useEffect(() => {
 		setSidebarIsOpen(!isMobile);
@@ -52,12 +87,12 @@ export default function Home() {
 
 		if (formData.query) {
 			setTitle(formData.query);
-			// If we want to mock loading, we can do it here
-			// setTimeout(() => {
-			// 	setIsLoading(false);
-			// }, 3000);
+
 			vectorSearch({
 				...formData,
+				...searchConfig,
+				// ...chunkAndSummaryConfig,
+				// ...summariesThenChunksConfig,
 				setErrors,
 				setLoading: setIsLoading,
 				setResult,
@@ -120,6 +155,33 @@ export default function Home() {
 					>
 						<div className="w-full flex flex-col justify-between">
 							<div className="px-10 py-7 space-y-4">
+								<div>
+									<button
+										onClick={() => {
+											setSearchConfig(chunkOnlyConfig);
+										}}
+									>
+										chunks-only
+									</button>
+									<br />
+									<button
+										onClick={() => {
+											setSearchConfig(chunkAndSummaryConfig);
+										}}
+									>
+										chunks-and-summaries
+									</button>
+									<br />
+									<button
+										onClick={() => {
+											setSearchConfig(summariesThenChunksConfig);
+										}}
+									>
+										summaries-then-chunks
+									</button>
+									<br />
+									<div>{JSON.stringify(searchConfig)}</div>
+								</div>
 								<PromptContent
 									title={title}
 									result={result}
