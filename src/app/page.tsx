@@ -2,7 +2,10 @@
 /* eslint-disable @next/next/no-img-element */
 import MobileSidebar from "@/components/MobileSidebar";
 import { SplashScreen } from "@/components/splash-screen";
-import { availableAlgorithms } from "@/components/ui/algorithm-selection";
+import {
+	AvailableAlgorithms,
+	availableAlgorithms,
+} from "@/components/ui/algorithm-selection";
 import PromptForm from "@/components/ui/promptForm";
 import PromptContent from "@/components/ui/promtContent";
 import ResultHistory from "@/components/ui/resultHistory";
@@ -14,9 +17,7 @@ import { vectorSearch } from "@/lib/vector-search";
 import React, { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 
-const defaultFormdata: Body = {
-	query: "",
-};
+const defaultFormdata: Body = availableAlgorithms[0];
 
 export default function Home() {
 	const [title, setTitle] = useState<string | null>(null);

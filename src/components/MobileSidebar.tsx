@@ -15,7 +15,7 @@ export default function MobileSidebar({
 	settingIsOpen,
 	children,
 }: {
-	ltHistory: ResponseDetail[];
+	resultHistory: ResponseDetail[];
 	restoreResultHistoryItem: (id: string) => void;
 	isHistoryOpen: boolean;
 	setSidebarisOpen: (isOpen: boolean) => void;
