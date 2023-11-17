@@ -2,15 +2,16 @@
 /* eslint-disable @next/next/no-img-element */
 import MobileSidebar from "@/components/MobileSidebar";
 import { SplashScreen } from "@/components/splash-screen";
-import {
-	AvailableAlgorithms,
-	availableAlgorithms,
-} from "@/components/ui/algorithm-selection";
 import PromptForm from "@/components/ui/promptForm";
 import PromptContent from "@/components/ui/promtContent";
 import ResultHistory from "@/components/ui/resultHistory";
 import Sidebar from "@/components/ui/sidebar";
-import { Body, ResponseDetail } from "@/lib/common";
+import {
+	Algorithms,
+	Body,
+	ResponseDetail,
+	availableAlgorithms,
+} from "@/lib/common";
 import { useLocalStorage } from "@/lib/hooks/localStorage";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
@@ -20,6 +21,10 @@ import { isMobile } from "react-device-detect";
 const defaultFormdata: Body = availableAlgorithms[0];
 
 export default function Home() {
+	const queryParameters = new URLSearchParams(window && window.location.search);
+	const selectedSearchAlgorithm =
+		queryParameters.get("search-algorithm") ?? Algorithms.ChunksOnly;
+
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [isLoading, setIsLoading] = React.useState(false);
@@ -31,9 +36,10 @@ export default function Home() {
 		"ki-anfragen-history",
 		[],
 	);
-	const [searchConfig, setSearchConfig] = useState<Body>(
-		availableAlgorithms[0],
-	);
+	const algorithm = availableAlgorithms.filter(
+		(alg) => alg.search_algorithm === selectedSearchAlgorithm,
+	)[0];
+	const [searchConfig, setSearchConfig] = useState<Body>(algorithm);
 	const [settingIsOpen, setSettingIsOpen] = useState(false);
 
 	useEffect(() => {
@@ -110,10 +116,6 @@ export default function Home() {
 							sidebarIsOpen={sidebarIsOpen}
 							onNewRequest={newRequestHandler}
 							onSidebarOpenChange={setSidebarIsOpen}
-							searchConfig={searchConfig}
-							setSearchConfig={setSearchConfig}
-							settingIsOpen={settingIsOpen}
-							setSettingIsOpen={setSettingIsOpen}
 						>
 							{resultHistory && (
 								<ResultHistory
@@ -154,10 +156,6 @@ export default function Home() {
 						isHistoryOpen={sidebarIsOpen}
 						setSidebarisOpen={setSidebarIsOpen}
 						newRequestHandler={newRequestHandler}
-						searchConfig={searchConfig}
-						setSearchConfig={setSearchConfig}
-						settingIsOpen={settingIsOpen}
-						setSettingIsOpen={setSettingIsOpen}
 					>
 						{resultHistory && (
 							<ResultHistory

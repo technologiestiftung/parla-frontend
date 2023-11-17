@@ -1,5 +1,4 @@
-import { AvailableAlgorithms } from "@/components/ui/algorithm-selection";
-import type { ResponseDetail } from "@/lib/common";
+import { Algorithms, ResponseDetail } from "@/lib/common";
 
 export const result: ResponseDetail = {
 	gpt: {
@@ -33,7 +32,7 @@ export const result: ResponseDetail = {
 		chunk_limit: 0,
 		summary_limit: 0,
 		document_limit: 3,
-		search_algorithm: AvailableAlgorithms.ChunksOnly,
+		search_algorithm: Algorithms.ChunksOnly,
 		openai_model: "gpt-3.5-turbo",
 		include_summary_in_response_generation: false,
 	},

@@ -1,6 +1,5 @@
 import type { CreateChatCompletionRequest } from "openai";
 import type { Database } from "./database.js";
-import { AvailableAlgorithms } from "@/components/ui/algorithm-selection.jsx";
 
 type ProcessedDocumentChunk =
 	Database["public"]["Tables"]["processed_document_chunks"]["Row"];
@@ -32,7 +31,7 @@ export interface Body {
 	chunk_limit: number;
 	summary_limit: number;
 	document_limit: number;
-	search_algorithm: AvailableAlgorithms;
+	search_algorithm: Algorithms;
 	include_summary_in_response_generation: boolean;
 }
 
@@ -84,3 +83,43 @@ export interface ResponseDetail {
 	requestBody: Body;
 	completionOptions: CreateChatCompletionRequest;
 }
+
+export enum Algorithms {
+	ChunksAndSummaries = "chunks-and-summaries",
+	ChunksOnly = "chunks-only",
+	SummariesThenChunks = "summaries-then-chunks",
+}
+
+export const availableAlgorithms = [
+	{
+		temperature: 0,
+		match_threshold: 0.85,
+		num_probes: 8,
+		openai_model: "gpt-3.5-turbo-16k",
+		document_limit: 3,
+		search_algorithm: Algorithms.ChunksOnly,
+		match_count: 64,
+		include_summary_in_response_generation: false,
+	} as Body,
+	{
+		temperature: 0,
+		match_threshold: 0.85,
+		num_probes: 8,
+		openai_model: "gpt-3.5-turbo-16k",
+		chunk_limit: 128,
+		summary_limit: 16,
+		document_limit: 3,
+		search_algorithm: Algorithms.ChunksAndSummaries,
+		include_summary_in_response_generation: false,
+	} as Body,
+	{
+		temperature: 0,
+		match_threshold: 0.85,
+		num_probes: 8,
+		openai_model: "gpt-3.5-turbo-16k",
+		document_limit: 3,
+		search_algorithm: Algorithms.SummariesThenChunks,
+		match_count: 64,
+		include_summary_in_response_generation: false,
+	} as Body,
+];
