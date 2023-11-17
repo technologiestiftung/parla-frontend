@@ -1,14 +1,20 @@
-import React, { MouseEventHandler, ReactNode } from "react";
-import { Button } from "./button";
-import { ChevronDownIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
-import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
+import { Body } from "@/lib/common";
 import { cn } from "@/lib/utils";
+import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
+import { ChevronDownIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
+import { MouseEventHandler, ReactNode } from "react";
+import AlgorithmSelection from "./algorithm-selection";
+import { Button } from "./button";
 
 type SidebarProps = {
 	onNewRequest: MouseEventHandler<HTMLButtonElement>;
 	onSidebarOpenChange: (open: boolean) => void;
 	sidebarIsOpen: boolean;
 	children: ReactNode;
+	searchConfig: Body;
+	setSearchConfig: (_: Body) => void;
+	settingIsOpen: boolean;
+	setSettingIsOpen: (_: boolean) => void;
 };
 
 function Sidebar(props: SidebarProps): JSX.Element {
@@ -59,6 +65,12 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					onOpenChange={props.onSidebarOpenChange}
 				>
 					<CollapsibleContent>{props.children}</CollapsibleContent>
+					<AlgorithmSelection
+						searchConfig={props.searchConfig}
+						setSearchConfig={props.setSearchConfig}
+						settingIsOpen={props.settingIsOpen}
+						setSettingIsOpen={props.setSettingIsOpen}
+					></AlgorithmSelection>
 				</Collapsible>
 			</div>
 		</>

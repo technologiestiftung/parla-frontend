@@ -1,21 +1,29 @@
-import React, { MouseEvent, ReactNode, useState } from "react";
-import { ResponseDetail } from "@/lib/common";
+import { Body, ResponseDetail } from "@/lib/common";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { XIcon } from "lucide-react";
-import Sidebar from "./ui/sidebar";
+import { MouseEvent, ReactNode, useState } from "react";
 import { Button } from "./ui/button";
+import Sidebar from "./ui/sidebar";
 
 export default function MobileSidebar({
 	isHistoryOpen,
 	setSidebarisOpen,
 	newRequestHandler,
+	searchConfig,
+	setSearchConfig,
+	setSettingIsOpen,
+	settingIsOpen,
 	children,
 }: {
-	resultHistory: ResponseDetail[];
+	ltHistory: ResponseDetail[];
 	restoreResultHistoryItem: (id: string) => void;
 	isHistoryOpen: boolean;
 	setSidebarisOpen: (isOpen: boolean) => void;
 	newRequestHandler: (event: MouseEvent<HTMLButtonElement>) => void;
+	searchConfig: Body;
+	setSearchConfig: (_: Body) => void;
+	settingIsOpen: boolean;
+	setSettingIsOpen: (_: boolean) => void;
 	children: ReactNode;
 }) {
 	const [isMobileSidebarVisible, setIsMobileSidebarVisible] = useState(false);
@@ -42,6 +50,10 @@ export default function MobileSidebar({
 								sidebarIsOpen={isHistoryOpen}
 								onNewRequest={newRequestHandler}
 								onSidebarOpenChange={setSidebarisOpen}
+								searchConfig={searchConfig}
+								setSearchConfig={setSearchConfig}
+								settingIsOpen={settingIsOpen}
+								setSettingIsOpen={setSettingIsOpen}
 							>
 								{children}
 							</Sidebar>

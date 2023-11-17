@@ -1,54 +1,22 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
-import { isMobile } from "react-device-detect";
+import MobileSidebar from "@/components/MobileSidebar";
 import { SplashScreen } from "@/components/splash-screen";
+import { availableAlgorithms } from "@/components/ui/algorithm-selection";
+import PromptForm from "@/components/ui/promptForm";
+import PromptContent from "@/components/ui/promtContent";
+import ResultHistory from "@/components/ui/resultHistory";
 import Sidebar from "@/components/ui/sidebar";
 import { Body, ResponseDetail } from "@/lib/common";
 import { useLocalStorage } from "@/lib/hooks/localStorage";
+import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
 import React, { useEffect, useState } from "react";
-import MobileSidebar from "@/components/MobileSidebar";
-import ResultHistory from "@/components/ui/resultHistory";
-import PromptContent from "@/components/ui/promtContent";
-import PromptForm from "@/components/ui/promptForm";
-import { cn } from "@/lib/utils";
+import { isMobile } from "react-device-detect";
+
 const defaultFormdata: Body = {
 	query: "",
 };
-
-const chunkAndSummaryConfig = {
-	temperature: 0,
-	match_threshold: 0.85,
-	num_probes: 8,
-	openai_model: "gpt-3.5-turbo-16k",
-	chunk_limit: 128,
-	summary_limit: 16,
-	document_limit: 3,
-	search_algorithm: "chunks-and-summaries",
-	include_summary_in_response_generation: false,
-} as Body;
-
-const chunkOnlyConfig = {
-	temperature: 0,
-	match_threshold: 0.85,
-	num_probes: 8,
-	openai_model: "gpt-3.5-turbo-16k",
-	document_limit: 3,
-	search_algorithm: "chunks-only",
-	match_count: 64,
-	include_summary_in_response_generation: false,
-} as Body;
-
-const summariesThenChunksConfig = {
-	temperature: 0,
-	match_threshold: 0.85,
-	num_probes: 8,
-	openai_model: "gpt-3.5-turbo-16k",
-	document_limit: 3,
-	search_algorithm: "summaries-then-chunks",
-	match_count: 64,
-	include_summary_in_response_generation: false,
-} as Body;
 
 export default function Home() {
 	const [title, setTitle] = useState<string | null>(null);
@@ -57,12 +25,15 @@ export default function Home() {
 	const [showSplash, setShowSplash] = React.useState(false);
 	const [result, setResult] = useState<ResponseDetail | null>(null);
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
-	const [sidebarIsOpen, setSidebarIsOpen] = useState(true);
+	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const { resultHistory, setResultHistory } = useLocalStorage(
 		"ki-anfragen-history",
 		[],
 	);
-	const [searchConfig, setSearchConfig] = useState<Body>(chunkAndSummaryConfig);
+	const [searchConfig, setSearchConfig] = useState<Body>(
+		availableAlgorithms[0],
+	);
+	const [settingIsOpen, setSettingIsOpen] = useState(false);
 
 	useEffect(() => {
 		setSidebarIsOpen(!isMobile);
@@ -138,6 +109,10 @@ export default function Home() {
 							sidebarIsOpen={sidebarIsOpen}
 							onNewRequest={newRequestHandler}
 							onSidebarOpenChange={setSidebarIsOpen}
+							searchConfig={searchConfig}
+							setSearchConfig={setSearchConfig}
+							settingIsOpen={settingIsOpen}
+							setSettingIsOpen={setSettingIsOpen}
 						>
 							{resultHistory && (
 								<ResultHistory
@@ -155,33 +130,6 @@ export default function Home() {
 					>
 						<div className="w-full flex flex-col justify-between">
 							<div className="px-10 py-7 space-y-4">
-								<div>
-									<button
-										onClick={() => {
-											setSearchConfig(chunkOnlyConfig);
-										}}
-									>
-										chunks-only
-									</button>
-									<br />
-									<button
-										onClick={() => {
-											setSearchConfig(chunkAndSummaryConfig);
-										}}
-									>
-										chunks-and-summaries
-									</button>
-									<br />
-									<button
-										onClick={() => {
-											setSearchConfig(summariesThenChunksConfig);
-										}}
-									>
-										summaries-then-chunks
-									</button>
-									<br />
-									<div>{JSON.stringify(searchConfig)}</div>
-								</div>
 								<PromptContent
 									title={title}
 									result={result}
@@ -205,6 +153,10 @@ export default function Home() {
 						isHistoryOpen={sidebarIsOpen}
 						setSidebarisOpen={setSidebarIsOpen}
 						newRequestHandler={newRequestHandler}
+						searchConfig={searchConfig}
+						setSearchConfig={setSearchConfig}
+						settingIsOpen={settingIsOpen}
+						setSettingIsOpen={setSettingIsOpen}
 					>
 						{resultHistory && (
 							<ResultHistory

@@ -1,5 +1,6 @@
 import type { CreateChatCompletionRequest } from "openai";
 import type { Database } from "./database.js";
+import { AvailableAlgorithms } from "@/components/ui/algorithm-selection.jsx";
 
 type ProcessedDocumentChunk =
 	Database["public"]["Tables"]["processed_document_chunks"]["Row"];
@@ -31,7 +32,7 @@ export interface Body {
 	chunk_limit: number;
 	summary_limit: number;
 	document_limit: number;
-	search_algorithm: string;
+	search_algorithm: AvailableAlgorithms;
 	include_summary_in_response_generation: boolean;
 }
 
