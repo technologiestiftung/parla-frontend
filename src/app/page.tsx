@@ -15,15 +15,16 @@ import {
 import { useLocalStorage } from "@/lib/hooks/localStorage";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 
 const defaultFormdata: Body = availableAlgorithms[0];
 
 export default function Home() {
-	const queryParameters = new URLSearchParams(window && window.location.search);
+	const searchParams = useSearchParams();
 	const selectedSearchAlgorithm =
-		queryParameters.get("search-algorithm") ?? Algorithms.ChunksOnly;
+		searchParams.get("search-algorithm") ?? Algorithms.ChunksOnly;
 
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
