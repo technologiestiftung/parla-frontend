@@ -1,7 +1,9 @@
 ![](https://img.shields.io/badge/Built%20with%20%E2%9D%A4%EF%B8%8F-at%20Technologiestiftung%20Berlin-blue)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # _>ki.anfragen (frontend)_
@@ -37,9 +39,8 @@ sequenceDiagram
 
 - vercel.com account
 - supabase.com account
-- running instance of the related API https://github.com/technologiestiftung/ki-anfragen-api
-- running supabase project. Source can be found here https://github.com/technologiestiftung/ki-anfragen-supabase
-- Populated database. Using these tools https://github.com/technologiestiftung/ki-anfragen-data-extractor
+- running instance of the related API and database https://github.com/technologiestiftung/ki-anfragen-api
+- Populated database. Using these tools https://github.com/technologiestiftung/ki-anfragen-document-processor
 
 ## Needed Environment Variables
 
