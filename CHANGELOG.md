@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.8.0...v1.9.0) (2023-11-20)
+
+
+### Features
+
+* toggle algorithms ([#31](https://github.com/technologiestiftung/ki-anfragen-frontend/issues/31)) ([50b0934](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/50b09349d8ff8e3d3c4b22b227f5a8deae0a65b9))
+
 # [1.8.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.7.0...v1.8.0) (2023-11-14)
 
 
