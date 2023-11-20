@@ -22,13 +22,17 @@ export interface Question {
 }
 
 export interface Body {
-	query?: string;
-	temperature?: number;
-	match_threshold?: number;
-	num_probes?: number;
-	match_count?: number;
-	min_content_length?: number;
-	openai_model?: Model;
+	query: string;
+	temperature: number;
+	match_threshold: number;
+	num_probes: number;
+	match_count: number;
+	openai_model: Model;
+	chunk_limit: number;
+	summary_limit: number;
+	document_limit: number;
+	search_algorithm: Algorithms;
+	include_summary_in_response_generation: boolean;
 }
 
 interface Gpt {
@@ -70,6 +74,7 @@ export interface ResponseDocumentMatch {
 	processed_document: ProcessedDocument;
 	processed_document_summary_match: ProcessedDocumentSummaryMatch;
 	processed_document_chunk_matches: Array<ProcessedDocumentChunkMatch>;
+	similarity: number;
 }
 
 export interface ResponseDetail {
@@ -78,3 +83,43 @@ export interface ResponseDetail {
 	requestBody: Body;
 	completionOptions: CreateChatCompletionRequest;
 }
+
+export enum Algorithms {
+	ChunksAndSummaries = "chunks-and-summaries",
+	ChunksOnly = "chunks-only",
+	SummariesThenChunks = "summaries-then-chunks",
+}
+
+export const availableAlgorithms = [
+	{
+		temperature: 0,
+		match_threshold: 0.85,
+		num_probes: 8,
+		openai_model: "gpt-3.5-turbo-16k",
+		document_limit: 3,
+		search_algorithm: Algorithms.ChunksOnly,
+		match_count: 64,
+		include_summary_in_response_generation: false,
+	} as Body,
+	{
+		temperature: 0,
+		match_threshold: 0.85,
+		num_probes: 8,
+		openai_model: "gpt-3.5-turbo-16k",
+		chunk_limit: 128,
+		summary_limit: 16,
+		document_limit: 3,
+		search_algorithm: Algorithms.ChunksAndSummaries,
+		include_summary_in_response_generation: false,
+	} as Body,
+	{
+		temperature: 0,
+		match_threshold: 0.85,
+		num_probes: 8,
+		openai_model: "gpt-3.5-turbo-16k",
+		document_limit: 3,
+		search_algorithm: Algorithms.SummariesThenChunks,
+		match_count: 64,
+		include_summary_in_response_generation: false,
+	} as Body,
+];

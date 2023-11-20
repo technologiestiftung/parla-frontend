@@ -9,6 +9,17 @@ type AnswerProps = {
 function Answer(props: AnswerProps): ReactNode {
 	const { answer } = props;
 	const content = answer?.gpt?.choices[0].message.content;
+
+	if (answer?.documentMatches.length === 0) {
+		return (
+			<>
+				<h4 className="text-lg font-bold mb-2">
+					Keine relevanten Dokumente gefunden
+				</h4>
+			</>
+		);
+	}
+
 	return (
 		<>
 			<div className="mb-4">

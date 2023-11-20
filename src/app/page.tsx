@@ -1,33 +1,47 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
-import { isMobile } from "react-device-detect";
-import { SplashScreen } from "@/components/splash-screen";
-import Sidebar from "@/components/ui/sidebar";
-import { Body, ResponseDetail } from "@/lib/common";
-import { useLocalStorage } from "@/lib/hooks/localStorage";
-import { vectorSearch } from "@/lib/vector-search";
-import React, { useEffect, useState } from "react";
 import MobileSidebar from "@/components/MobileSidebar";
-import ResultHistory from "@/components/ui/resultHistory";
-import PromptContent from "@/components/ui/promtContent";
+import { SplashScreen } from "@/components/splash-screen";
 import PromptForm from "@/components/ui/promptForm";
+import PromptContent from "@/components/ui/promtContent";
+import ResultHistory from "@/components/ui/resultHistory";
+import Sidebar from "@/components/ui/sidebar";
+import {
+	Algorithms,
+	Body,
+	ResponseDetail,
+	availableAlgorithms,
+} from "@/lib/common";
+import { useLocalStorage } from "@/lib/hooks/localStorage";
 import { cn } from "@/lib/utils";
-const defaultFormdata: Body = {
-	query: "",
-};
+import { vectorSearch } from "@/lib/vector-search";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
+
+const defaultFormdata: Body = availableAlgorithms[0];
 
 export default function Home() {
+	const searchParams = useSearchParams();
+	const selectedSearchAlgorithm =
+		searchParams.get("search-algorithm") ?? Algorithms.ChunksOnly;
+
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [showSplash, setShowSplash] = React.useState(false);
 	const [result, setResult] = useState<ResponseDetail | null>(null);
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
-	const [sidebarIsOpen, setSidebarIsOpen] = useState(true);
+	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const { resultHistory, setResultHistory } = useLocalStorage(
 		"ki-anfragen-history",
 		[],
 	);
+	const algorithm = availableAlgorithms.filter(
+		(alg) => alg.search_algorithm === selectedSearchAlgorithm,
+	)[0];
+	const [searchConfig, setSearchConfig] = useState<Body>(algorithm);
+	const [settingIsOpen, setSettingIsOpen] = useState(false);
 
 	useEffect(() => {
 		setSidebarIsOpen(!isMobile);
@@ -52,12 +66,12 @@ export default function Home() {
 
 		if (formData.query) {
 			setTitle(formData.query);
-			// If we want to mock loading, we can do it here
-			// setTimeout(() => {
-			// 	setIsLoading(false);
-			// }, 3000);
+
 			vectorSearch({
 				...formData,
+				...searchConfig,
+				// ...chunkAndSummaryConfig,
+				// ...summariesThenChunksConfig,
 				setErrors,
 				setLoading: setIsLoading,
 				setResult,

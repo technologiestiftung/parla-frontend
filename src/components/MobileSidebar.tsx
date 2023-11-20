@@ -1,9 +1,9 @@
-import React, { MouseEvent, ReactNode, useState } from "react";
 import { ResponseDetail } from "@/lib/common";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { XIcon } from "lucide-react";
-import Sidebar from "./ui/sidebar";
+import { MouseEvent, ReactNode, useState } from "react";
 import { Button } from "./ui/button";
+import Sidebar from "./ui/sidebar";
 
 export default function MobileSidebar({
 	isHistoryOpen,
