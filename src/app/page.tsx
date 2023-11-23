@@ -118,7 +118,7 @@ export default function Home() {
 							onNewRequest={newRequestHandler}
 							onSidebarOpenChange={setSidebarIsOpen}
 						>
-							{resultHistory && (
+							{resultHistory && resultHistory.length > 0 && (
 								<ResultHistory
 									resultHistory={resultHistory}
 									restoreResultHistoryItem={restoreResultHistoryItem}
