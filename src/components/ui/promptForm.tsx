@@ -29,7 +29,7 @@ function PromptForm(props: PromptFormProps): ReactNode {
 					name="query"
 					id="query"
 					className="pl-4 py-4 pr-12 resize-none"
-					placeholder="Stellen Sie hier ihre Anfrage"
+					placeholder="Stellen Sie hier Ihre Anfrage"
 					onChange={onChange}
 					disabled={isLoading}
 				/>
