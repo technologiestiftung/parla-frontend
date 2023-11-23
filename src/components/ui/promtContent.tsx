@@ -33,7 +33,9 @@ function PromptContent(props: PromptContentProps) {
 				{!isLoading && <Answer answer={result} />}
 				{isLoading && (
 					<>
-						<h4 className="text-lg font-bold mt-4">Antwort lädt...</h4>
+						<h4 className="text-lg font-bold mt-4">
+							Antwort wird generiert...
+						</h4>
 						<LoadingSkeletion />
 					</>
 				)}
@@ -43,7 +45,7 @@ function PromptContent(props: PromptContentProps) {
 					examplePrompts={[
 						"Wie bewertet der Berliner Senat das private Engagement, bei dem Ehrenamtliche Berliner Gewässer von Müll und Schrott befreien?",
 						"Wie ist der aktuelle Stand der Planungen der Fußgängerüberwege am Jacques-Offenbach-Platz in Mahlsdorf?",
-						"Wie begründet sich die deutlich ungleiche Besoldung von Ärtz:innen am Landesinstitut für gerichtliche und soziale Medizin Berlin sowie am Institut für Rechtsmedizin der Charité?",
+						"Wie begründet sich die deutlich ungleiche Besoldung von Ärzt:innen am Landesinstitut für gerichtliche und soziale Medizin Berlin sowie am Institut für Rechtsmedizin der Charité?",
 					]}
 					onClick={(text) => onsubmit(text)}
 				/>
