@@ -20,11 +20,8 @@ export function SplashScreen({
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
 	return (
-		<Dialog open={open}>
-			<DialogContent
-				onClick={() => setOpen(false)}
-				className=" bg-white dark:bg-gray-800 shadow-lg  max-w-xl mx-auto px-6 md:px-8 py-4 md:py-6 z-50 max-h-screen overflow-y-auto"
-			>
+		<Dialog open={open} onOpenChange={setOpen}>
+			<DialogContent className=" bg-white dark:bg-gray-800 shadow-lg  max-w-xl mx-auto px-6 md:px-8 py-4 md:py-6 z-50 max-h-screen overflow-y-auto">
 				<DialogHeader className="flex">
 					<DialogTitle className="py-3 text-left">
 						<span className="flex justify-between items-center text-lg font-bold rounded mb-4">
