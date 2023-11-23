@@ -6,7 +6,7 @@ export function useShowSplashScreenFromLocalStorage() {
 
 	useEffect(() => {
 		try {
-			const item = window.localStorage.getItem(showSplashScreenKey);
+			const item = window.sessionStorage.getItem(showSplashScreenKey);
 
 			const parsedItem = item ?  JSON.parse(item) : true;
 
@@ -15,11 +15,11 @@ export function useShowSplashScreenFromLocalStorage() {
 			}
 
 			showSplashScreenRef.current = parsedItem;
-			window.localStorage.setItem(showSplashScreenKey, JSON.stringify(false));
+			window.sessionStorage.setItem(showSplashScreenKey, JSON.stringify(false));
 		} catch (error) {
 			console.error(error);
 			showSplashScreenRef.current = true;
-			window.localStorage.setItem(showSplashScreenKey, JSON.stringify(false));
+			window.sessionStorage.setItem(showSplashScreenKey, JSON.stringify(false));
 		}
 	}, []);
 

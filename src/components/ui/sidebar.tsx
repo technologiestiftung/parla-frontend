@@ -19,6 +19,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					title="Startseite"
 					className={cn(
 						"py-3 px-4 flex justify-between items-center text-lg font-bold rounded",
+						"hover:text-slate-600",
 						"focus-visible:ring-2 focus-visible:ring-blue-700",
 						"focus-visible:outline-none",
 					)}
@@ -27,9 +28,9 @@ function Sidebar(props: SidebarProps): JSX.Element {
 				</a>
 				<button
 					className={cn(
-						"px-3",
-						"text-lg text-slate-400 hover:text-slate-500",
-						"border-2 rounded-full border-slate-400 hover:border-slate-500",
+						"px-2 hover:bg-blue-900",
+						"text-sm text-slate-400 hover:text-white",
+						"border-2 rounded-full border-slate-400 hover:border-blue-900",
 						"focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2",
 						"focus-visible:outline-none")
 					}
