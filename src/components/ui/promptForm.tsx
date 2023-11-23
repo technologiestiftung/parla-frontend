@@ -23,6 +23,7 @@ function PromptForm(props: PromptFormProps): ReactNode {
 			<form
 				onSubmit={onSubmit}
 				className="relative w-full max-w-xl mx-auto flex"
+				name="promptForm"
 			>
 				<Input
 					value={query || ""}

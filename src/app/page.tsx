@@ -40,8 +40,7 @@ export default function Home() {
 	const algorithm = availableAlgorithms.filter(
 		(alg) => alg.search_algorithm === selectedSearchAlgorithm,
 	)[0];
-	const [searchConfig, setSearchConfig] = useState<Body>(algorithm);
-	const [settingIsOpen, setSettingIsOpen] = useState(false);
+	const [searchConfig] = useState<Body>(algorithm);
 
 	useEffect(() => {
 		setSidebarIsOpen(!isMobile);
@@ -52,24 +51,23 @@ export default function Home() {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	}, [result]);
 
-	function onSubmit(event: React.SyntheticEvent) {
-		event.preventDefault();
+	function onSubmit(query?: string) {
 		setErrors(null);
 		setIsLoading(true);
 		setResult(null);
 
-		if (formData.query?.trim().length === 0) {
+		if (query?.trim().length === 0) {
 			setIsLoading(false);
 			setErrors({ query: "Bitte geben Sie eine Anfrage ein." });
 			return;
 		}
 
-		if (formData.query) {
-			setTitle(formData.query);
+		if (query) {
+			setTitle(query);
 
 			vectorSearch({
-				...formData,
 				...searchConfig,
+				query,
 				// ...chunkAndSummaryConfig,
 				// ...summariesThenChunksConfig,
 				setErrors,
@@ -137,16 +135,20 @@ export default function Home() {
 								<PromptContent
 									title={title}
 									result={result}
-									onsubmit={(text) =>
-										setFormData((s) => ({ ...s, query: text }))
-									}
+									onsubmit={(text) => {
+										setFormData((s) => ({ ...s, query: text }));
+										onSubmit(text);
+									}}
 									isLoading={isLoading}
 								/>
 							</div>
 							<PromptForm
 								query={formData.query}
 								onChange={onChange}
-								onSubmit={onSubmit}
+								onSubmit={(evt) => {
+									evt.preventDefault();
+									onSubmit(formData.query);
+								}}
 								isLoading={isLoading}
 							/>
 						</div>
