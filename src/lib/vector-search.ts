@@ -3,17 +3,22 @@ import { ResponseDetail, Body } from "./common";
 interface VectorSearchProps extends Body {
 	setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 	setErrors: React.Dispatch<React.SetStateAction<Record<string, any> | null>>;
-	setResult: React.Dispatch<React.SetStateAction<ResponseDetail[] | null>>;
+	setResult: React.Dispatch<React.SetStateAction<ResponseDetail | null>>;
 	setResultHistory: (value: ResponseDetail[]) => void;
 	resultHistory: ResponseDetail[];
 }
 export async function vectorSearch({
 	query,
-	openai_model,
 	temperature,
 	match_threshold,
 	num_probes,
 	match_count,
+	openai_model,
+	chunk_limit,
+	summary_limit,
+	document_limit,
+	search_algorithm,
+	include_summary_in_response_generation,
 	setLoading,
 	setErrors,
 	setResult,
@@ -38,6 +43,11 @@ export async function vectorSearch({
 				match_threshold,
 				num_probes,
 				match_count,
+				search_algorithm,
+				chunk_limit,
+				summary_limit,
+				document_limit,
+				include_summary_in_response_generation,
 			}),
 		},
 	);
@@ -48,8 +58,8 @@ export async function vectorSearch({
 		setErrors(error);
 		return;
 	}
-	const json = (await response.json()) as ResponseDetail[];
+	const json = (await response.json()) as ResponseDetail;
 	setResult(json);
-	setResultHistory([...json, ...resultHistory]);
+	setResultHistory([json, ...resultHistory]);
 	setLoading(false);
 }

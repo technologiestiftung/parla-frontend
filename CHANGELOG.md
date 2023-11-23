@@ -1,3 +1,30 @@
+# [1.9.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.8.0...v1.9.0) (2023-11-20)
+
+
+### Features
+
+* toggle algorithms ([#31](https://github.com/technologiestiftung/ki-anfragen-frontend/issues/31)) ([50b0934](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/50b09349d8ff8e3d3c4b22b227f5a8deae0a65b9))
+
+# [1.8.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.7.0...v1.8.0) (2023-11-14)
+
+
+### Bug Fixes
+
+* build error ([bdf553f](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/bdf553fbdd65ebfdd6b771ba1080c091f763a6a1))
+
+
+### Features
+
+* adapt to new response schema ([939fee9](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/939fee93f3f85592e975c7ba0935083ac40d6cf1))
+* **SearchResultSection:** Add tags to the mix ([393cb65](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/393cb65b4327876c396c4a8c9b71f082618acdf6))
+
+# [1.7.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.6.2...v1.7.0) (2023-11-14)
+
+
+### Features
+
+* adapt to new API response ([#30](https://github.com/technologiestiftung/ki-anfragen-frontend/issues/30)) ([381dae6](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/381dae6f5636b0b746a79ccfd82a452aadd64224))
+
 ## [1.6.2](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.6.1...v1.6.2) (2023-11-06)
 
 
