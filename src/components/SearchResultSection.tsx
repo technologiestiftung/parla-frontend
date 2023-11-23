@@ -167,6 +167,7 @@ export default function SearchResultSection({
 				{title}
 			</h6>
 
+			{/* INFO: Commented out because AI-generated summaries could contain hallucinations  */}
 			{/* <ExpandableTableCell
 				content={
 					documentMatch?.processed_document_summary_match
@@ -174,7 +175,7 @@ export default function SearchResultSection({
 				}
 			/> */}
 
-			{/* {tags.length > 0 && <TagsList tags={tags} />} */}
+			{tags.length > 0 && <TagsList tags={tags} />}
 		</div>
 	);
 }
