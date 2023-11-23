@@ -1,3 +1,12 @@
+## [1.9.1](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.9.0...v1.9.1) (2023-11-23)
+
+
+### Bug Fixes
+
+* **AcrobatIcon:** Fix attribute format in SVG ([eab8d08](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/eab8d08af0b9fbe664b386c6e6f3f096ac2af418))
+* Multiple fixes based on [@esshahn](https://github.com/esshahn) comments (see commit description) ([e8f88b0](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/e8f88b0e97138bd0c80bd311a4b0f9de5537be3f))
+* **splash-screen:** Click doesnt close modal ([59304e3](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/59304e39d87e6660741f4263e9866bdbce58a20a))
+
 # [1.9.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.8.0...v1.9.0) (2023-11-20)
 
 
