@@ -5,6 +5,7 @@ import { Button } from "./button";
 type SidebarProps = {
 	onNewRequest: MouseEventHandler<HTMLButtonElement>;
 	onSidebarOpenChange: (open: boolean) => void;
+	openSplashScreen: () => void;
 	sidebarIsOpen: boolean;
 	children: ReactNode;
 };
@@ -12,7 +13,7 @@ type SidebarProps = {
 function Sidebar(props: SidebarProps): JSX.Element {
 	return (
 		<>
-			<header className="px-1 py-2">
+			<header className="flex items-center justify-between px-1 py-2">
 				<a
 					href="/"
 					title="Startseite"
@@ -22,9 +23,20 @@ function Sidebar(props: SidebarProps): JSX.Element {
 						"focus-visible:outline-none",
 					)}
 				>
-					<span>ki.anfragen</span>
-					<span className="text-slate-400 text-xs">?</span>
+					ki.anfragen
 				</a>
+				<button
+					className={cn(
+						"px-3",
+						"text-lg text-slate-400 hover:text-slate-500",
+						"border-2 rounded-full border-slate-400 hover:border-slate-500",
+						"focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2",
+						"focus-visible:outline-none")
+					}
+					onClick={props.openSplashScreen}
+				>
+					i
+				</button>
 			</header>
 			<div className="px-1 py-2 border-y border-slate-200">
 				<Button
