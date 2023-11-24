@@ -18,7 +18,7 @@ function ExamplePrompts(props: ExamplePromptsProps): ReactNode {
 						onClick={(evt) => props.onClick(example)}
 						className={[
 							"block whitespace-normal h-auto px-4 py-3 text-base rounded-none",
-							"text-blue-700 hover:text-white text-left bg-white hover:bg-blue-900",
+							"text-blue-700 hover:text-white text-left bg-slate-50 hover:bg-blue-900",
 							"hover:rounded relative focus-visible:z-10 focus-visible:rounded-sm",
 							"first-of-type:rounded-t last-of-type:rounded-b",
 						]

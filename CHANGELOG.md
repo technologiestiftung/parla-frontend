@@ -1,3 +1,25 @@
+# [1.10.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.9.1...v1.10.0) (2023-11-23)
+
+
+### Bug Fixes
+
+* **examplePrompts:** Auto submit example prompts on click ([7448c46](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/7448c4627563ba000e5e0d3553048d4d0d05d2ab))
+* **Sidebar:** Reintroduce history in sidebar ([62eec6c](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/62eec6cfafd60667616d37a94eb4fa825aa1266c))
+
+
+### Features
+
+* **SearchResultSection:** reintroduce tags ([1ff5bbd](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/1ff5bbda1ad260eac76f0764250dd2d685a1e6e9))
+
+## [1.9.1](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.9.0...v1.9.1) (2023-11-23)
+
+
+### Bug Fixes
+
+* **AcrobatIcon:** Fix attribute format in SVG ([eab8d08](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/eab8d08af0b9fbe664b386c6e6f3f096ac2af418))
+* Multiple fixes based on [@esshahn](https://github.com/esshahn) comments (see commit description) ([e8f88b0](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/e8f88b0e97138bd0c80bd311a4b0f9de5537be3f))
+* **splash-screen:** Click doesnt close modal ([59304e3](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/59304e39d87e6660741f4263e9866bdbce58a20a))
+
 # [1.9.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.8.0...v1.9.0) (2023-11-20)
 
 
