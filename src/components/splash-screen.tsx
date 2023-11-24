@@ -47,9 +47,11 @@ export function SplashScreen({
 					<p>
 						Bitte beachten Sie, dass die generierten Antworten zwar aus
 						offiziellen Dokumenten erstellt wurden, aber keine verbindliche
-						Antwort darstellen.
+						Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen
+						Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten
+						Quellenangaben zu überprüfen.
 					</p>
-					<p>Viel Spaß!</p>
+					<p>Viel Spaß bei der Recherche!</p>
 				</div>
 				<div className="flex justify-start mt-4 gap-x-8 gap-y-4 flex-wrap">
 					<a
