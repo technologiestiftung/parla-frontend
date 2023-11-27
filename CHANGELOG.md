@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.10.0...v1.11.0) (2023-11-27)
+
+
+### Features
+
+* **Markdown:** Adds ReactMarkdown component ([0bce033](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/0bce0330f4b5d2d50f2e01c8d4e151e3916e65f7))
+
 # [1.10.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.9.1...v1.10.0) (2023-11-23)
 
 
