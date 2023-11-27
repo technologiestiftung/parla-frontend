@@ -1,3 +1,11 @@
+# [1.12.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.11.0...v1.12.0) (2023-11-27)
+
+
+### Features
+
+* added hook to show the splash screen only once, reworked info button ([32003e5](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/32003e5268dd5c546f6e9d2b6df5c6488e86710e))
+* adjusted info icon design, added hover on ki.anfrage anchor ([5c8dbdb](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/5c8dbdbcc8d2f3dde7ae75ee52188f7452581ccb))
+
 # [1.11.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.10.0...v1.11.0) (2023-11-27)
 
 
