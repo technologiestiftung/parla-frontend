@@ -1,7 +1,8 @@
 import { DocumentSearchResponse, GenerateAnswerResponse } from "@/lib/common";
 import React, { ReactNode, useEffect, useState } from "react";
 import SearchResultSection from "../SearchResultSection";
-import AnswerLoadingSkeletion from "./loadingSkeleton";
+import AnswerLoadingSkeleton from "./answerLoadingSkeleton";
+import DocumentLoadingSkeleton from "./documentLoadingSkeleton";
 import { getCleanedMetadata } from "@/lib/utils";
 import { getDocumentsCount } from "@/lib/get-documents-count";
 
@@ -44,7 +45,7 @@ function Answer(props: AnswerProps): ReactNode {
 					{answerIsLoading && "Antwort wird generiert..."}
 					{!answerIsLoading && content && "Antwort"}
 				</h4>
-				{answerIsLoading && <AnswerLoadingSkeletion />}
+				{answerIsLoading && <AnswerLoadingSkeleton />}
 				{!answerIsLoading && content && <p>{content}</p>}
 				<h5 className="font-bold mt-4">
 					{searchIsLoading &&
@@ -52,7 +53,7 @@ function Answer(props: AnswerProps): ReactNode {
 					{!searchIsLoading && searchResult && "Quellen"}
 				</h5>
 			</div>
-			{searchIsLoading && <AnswerLoadingSkeletion />}
+			{searchIsLoading && <DocumentLoadingSkeleton />}
 			{!searchIsLoading && matches.length > 0 && (
 				<div className="w-[calc(100%+2rem)] -ml-4">
 					{matches
