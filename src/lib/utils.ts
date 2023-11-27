@@ -49,3 +49,17 @@ export function getCleanedMetadata(
 		tags,
 	};
 }
+
+export function selectRandomItems<T>(arr: T[], numItems: number): T[] {
+	if (numItems >= arr.length) {
+		return arr;
+	}
+	const result: T[] = [];
+	const arrCopy = arr.slice();
+	for (let i = 0; i < numItems; i++) {
+		const randomIndex = Math.floor(Math.random() * arrCopy.length);
+		const selectedItem = arrCopy.splice(randomIndex, 1)[0];
+		result.push(selectedItem);
+	}
+	return result;
+}
