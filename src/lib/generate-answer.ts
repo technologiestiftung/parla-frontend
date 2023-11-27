@@ -1,7 +1,7 @@
 import { GenerateAnswerResponse, GenerateAnswerBody } from "./common";
 
-const API_URL = process.env.NEXT_PUBLIC_KI_ANFRAGEN_API_URL;
-if (!API_URL) throw new Error("NEXT_PUBLIC_KI_ANFRAGEN_API_URL not set");
+const API_URL =
+	process.env.NEXT_PUBLIC_KI_ANFRAGEN_API_URL || "http://localhost:8080";
 
 export async function generateAnswer({
 	query,
