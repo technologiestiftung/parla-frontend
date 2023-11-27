@@ -19,12 +19,13 @@ import { useLocalStorage } from "@/lib/hooks/localStorage";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
 export default function Home() {
+	const abortController = useRef<AbortController | null>(null);
 	const searchParams = useSearchParams();
 	const selectedSearchAlgorithm =
 		searchParams.get("search-algorithm") ?? Algorithms.ChunksAndSummaries;
@@ -74,16 +75,21 @@ export default function Home() {
 		setTitle(query);
 
 		try {
-			const searchResponse = await vectorSearch({ ...searchConfig, query });
-			if (title !== query) return;
+			abortController.current = new AbortController();
+			const searchResponse = await vectorSearch({
+				...searchConfig,
+				query,
+				signal: abortController.current.signal,
+			});
 			setSearchResult(searchResponse);
 			setSearchIsLoading(false);
 
+			abortController.current = new AbortController();
 			const answerResponse = await generateAnswer({
 				query,
 				documentMatches: searchResponse.documentMatches,
+				signal: abortController.current.signal,
 			});
-			if (title !== query) return;
 
 			setResultHistory((prev) => [
 				...prev,
@@ -118,6 +124,7 @@ export default function Home() {
 	}
 
 	function resetState(): void {
+		abortController.current?.abort();
 		setTitle(null);
 		setSearchResult(null);
 		setErrors(null);

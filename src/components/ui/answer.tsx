@@ -1,8 +1,9 @@
 import { DocumentSearchResponse, GenerateAnswerResponse } from "@/lib/common";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import SearchResultSection from "../SearchResultSection";
 import AnswerLoadingSkeletion from "./loadingSkeleton";
 import { getCleanedMetadata } from "@/lib/utils";
+import { getDocumentsCount } from "@/lib/get-documents-count";
 
 type AnswerProps = {
 	generatedAnswer: GenerateAnswerResponse | null;
@@ -11,11 +12,20 @@ type AnswerProps = {
 	answerIsLoading: boolean;
 };
 
+const formatter = new Intl.NumberFormat("de-DE");
+
 function Answer(props: AnswerProps): ReactNode {
+	const [documentsCount, setDocumentsCount] = useState("");
 	const { generatedAnswer, searchResult, searchIsLoading, answerIsLoading } =
 		props;
 	const content = generatedAnswer?.answer?.choices[0]?.message?.content;
 	const matches = searchResult?.documentMatches ?? [];
+
+	useEffect(() => {
+		getDocumentsCount().then((count) =>
+			setDocumentsCount(`${formatter.format(count)}`),
+		);
+	}, []);
 
 	if (!searchIsLoading && searchResult && matches.length === 0) {
 		return (
@@ -37,7 +47,8 @@ function Answer(props: AnswerProps): ReactNode {
 				{answerIsLoading && <AnswerLoadingSkeletion />}
 				{!answerIsLoading && content && <p>{content}</p>}
 				<h5 className="font-bold mt-4">
-					{searchIsLoading && "Quellen werden gesucht..."}
+					{searchIsLoading &&
+						`${documentsCount} Quellen werden gesucht...`.trim()}
 					{!searchIsLoading && searchResult && "Quellen"}
 				</h5>
 			</div>
