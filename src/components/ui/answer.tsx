@@ -3,6 +3,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import SearchResultSection from "../SearchResultSection";
 import AnswerLoadingSkeleton from "./answerLoadingSkeleton";
 import DocumentLoadingSkeleton from "./documentLoadingSkeleton";
+import ReactMarkdown from "react-markdown";
 import { getCleanedMetadata } from "@/lib/utils";
 import { getDocumentsCount } from "@/lib/get-documents-count";
 
@@ -46,7 +47,9 @@ function Answer(props: AnswerProps): ReactNode {
 					{!answerIsLoading && content && "Antwort"}
 				</h4>
 				{answerIsLoading && <AnswerLoadingSkeleton />}
-				{!answerIsLoading && content && <p>{content}</p>}
+				{!answerIsLoading && content && (
+					<ReactMarkdown className="prose">{content}</ReactMarkdown>
+				)}
 				<h5 className="font-bold mt-4">
 					{searchIsLoading &&
 						`${documentsCount} Quellen werden gesucht...`.trim()}
