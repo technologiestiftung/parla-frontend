@@ -1,18 +1,29 @@
-import { ResponseDetail } from "@/lib/common";
+import { DocumentSearchResponse, GenerateAnswerResponse } from "@/lib/common";
 import React from "react";
 import Answer from "./answer";
 import ExamplePrompts from "./examplePrompts";
-import LoadingSkeletion from "./loadingSkeleton";
 
 type PromptContentProps = {
 	title?: string | null;
-	result: ResponseDetail | null;
+	searchResult: DocumentSearchResponse | null;
+	generatedAnswer: GenerateAnswerResponse | null;
 	onsubmit: (text: string) => void;
-	isLoading?: boolean;
+	searchIsLoading: boolean;
+	answerIsLoading: boolean;
 };
 
 function PromptContent(props: PromptContentProps) {
-	const { title, result, onsubmit, isLoading } = props;
+	const {
+		title,
+		searchResult,
+		generatedAnswer,
+		onsubmit,
+		searchIsLoading,
+		answerIsLoading,
+	} = props;
+
+	const showExamplePrompts =
+		!searchResult && !searchIsLoading && !generatedAnswer && !answerIsLoading;
 	return (
 		<div className="space-y-2 pt-8 lg:pt-0">
 			{!title && (
@@ -30,17 +41,14 @@ function PromptContent(props: PromptContentProps) {
 						<p className="text-lg font-light">{title}</p>
 					</>
 				)}
-				{!isLoading && <Answer answer={result} />}
-				{isLoading && (
-					<>
-						<h4 className="text-lg font-bold mt-4">
-							Antwort wird generiert...
-						</h4>
-						<LoadingSkeletion />
-					</>
-				)}
+				<Answer
+					generatedAnswer={generatedAnswer}
+					answerIsLoading={answerIsLoading}
+					searchResult={searchResult}
+					searchIsLoading={searchIsLoading}
+				/>
 			</div>
-			{!result && !isLoading && (
+			{showExamplePrompts && (
 				<ExamplePrompts
 					examplePrompts={[
 						"Wie bewertet der Berliner Senat das private Engagement, bei dem Ehrenamtliche Berliner Gewässer von Müll und Schrott befreien?",

@@ -1,18 +1,23 @@
-import { ResponseDetail } from "@/lib/common";
+import { DocumentSearchResponse, GenerateAnswerResponse } from "@/lib/common";
 import React, { ReactNode } from "react";
 import SearchResultSection from "../SearchResultSection";
-import { get } from "http";
+import AnswerLoadingSkeletion from "./loadingSkeleton";
 import { getCleanedMetadata } from "@/lib/utils";
 
 type AnswerProps = {
-	answer: ResponseDetail | null;
+	generatedAnswer: GenerateAnswerResponse | null;
+	searchResult: DocumentSearchResponse | null;
+	searchIsLoading: boolean;
+	answerIsLoading: boolean;
 };
 
 function Answer(props: AnswerProps): ReactNode {
-	const { answer } = props;
-	const content = answer?.gpt?.choices[0].message.content;
+	const { generatedAnswer, searchResult, searchIsLoading, answerIsLoading } =
+		props;
+	const content = generatedAnswer?.answer?.choices[0]?.message?.content;
+	const matches = searchResult?.documentMatches ?? [];
 
-	if (answer?.documentMatches.length === 0) {
+	if (!searchIsLoading && searchResult && matches.length === 0) {
 		return (
 			<>
 				<h4 className="text-lg font-bold mb-2">
@@ -25,13 +30,21 @@ function Answer(props: AnswerProps): ReactNode {
 	return (
 		<>
 			<div className="mb-4">
-				{content && <h4 className="text-lg font-bold mb-2">Antwort</h4>}
-				{content && <p>{content}</p>}
-				{content && <h5 className="font-bold mt-4">Quellen</h5>}
+				<h4 className="text-lg font-bold mb-2">
+					{answerIsLoading && "Antwort wird generiert..."}
+					{!answerIsLoading && content && "Antwort"}
+				</h4>
+				{answerIsLoading && <AnswerLoadingSkeletion />}
+				{!answerIsLoading && content && <p>{content}</p>}
+				<h5 className="font-bold mt-4">
+					{searchIsLoading && "Quellen werden gesucht..."}
+					{!searchIsLoading && searchResult && "Quellen"}
+				</h5>
 			</div>
-			<div className="w-[calc(100%+2rem)] -ml-4">
-				{answer?.documentMatches &&
-					answer.documentMatches
+			{searchIsLoading && <AnswerLoadingSkeletion />}
+			{!searchIsLoading && matches.length > 0 && (
+				<div className="w-[calc(100%+2rem)] -ml-4">
+					{matches
 						.sort((l, r) => {
 							const lm = getCleanedMetadata(l);
 							const rm = getCleanedMetadata(r);
@@ -45,7 +58,8 @@ function Answer(props: AnswerProps): ReactNode {
 								></SearchResultSection>
 							);
 						})}
-			</div>
+				</div>
+			)}
 		</>
 	);
 }
