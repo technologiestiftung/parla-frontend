@@ -1,3 +1,23 @@
+# [1.11.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.10.0...v1.11.0) (2023-11-27)
+
+
+### Features
+
+* **Markdown:** Adds ReactMarkdown component ([0bce033](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/0bce0330f4b5d2d50f2e01c8d4e151e3916e65f7))
+
+# [1.10.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.9.1...v1.10.0) (2023-11-23)
+
+
+### Bug Fixes
+
+* **examplePrompts:** Auto submit example prompts on click ([7448c46](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/7448c4627563ba000e5e0d3553048d4d0d05d2ab))
+* **Sidebar:** Reintroduce history in sidebar ([62eec6c](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/62eec6cfafd60667616d37a94eb4fa825aa1266c))
+
+
+### Features
+
+* **SearchResultSection:** reintroduce tags ([1ff5bbd](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/1ff5bbda1ad260eac76f0764250dd2d685a1e6e9))
+
 ## [1.9.1](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.9.0...v1.9.1) (2023-11-23)
 
 
