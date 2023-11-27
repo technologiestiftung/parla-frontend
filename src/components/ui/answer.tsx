@@ -25,7 +25,7 @@ function Answer(props: AnswerProps): ReactNode {
 
 	useEffect(() => {
 		getDocumentsCount().then((count) =>
-			setDocumentsCount(`${formatter.format(count)}`),
+			setDocumentsCount(`${formatter.format(count) || ""}`),
 		);
 	}, []);
 
