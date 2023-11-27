@@ -43,7 +43,6 @@ function DocumentLoadingSkeletonItem({
 							key={idx}
 						/>
 					))}
-				T
 			</div>
 		</div>
 	);
