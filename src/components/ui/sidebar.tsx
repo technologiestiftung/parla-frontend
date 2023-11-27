@@ -34,8 +34,8 @@ function Sidebar(props: SidebarProps): JSX.Element {
 						"text-sm text-slate-400 hover:text-white",
 						"border-2 rounded-full border-slate-400 hover:border-blue-900",
 						"focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2",
-						"focus-visible:outline-none")
-					}
+						"focus-visible:outline-none",
+					)}
 					onClick={props.openSplashScreen}
 				>
 					i
@@ -46,7 +46,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					onClick={props.onNewRequest}
 					className="w-full text-white bg-blue-700 hover:bg-blue-900 font-bold py-2 px-4 flex justify-between"
 				>
-					<span>Neue Anfrage</span>
+					<span>Neue Frage</span>
 					<span>+</span>
 				</Button>
 			</div>
@@ -59,11 +59,11 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					)}
 					onClick={() => props.onSidebarOpenChange(!props.sidebarIsOpen)}
 				>
-					<strong className="block font-bold">Anfrageverlauf</strong>
+					<strong className="block font-bold">Vorherige Fragen</strong>
 					{props.sidebarIsOpen ? (
-						<ChevronDownIcon className="text-slate-400"></ChevronDownIcon>
+						<ChevronDownIcon className="text-slate-400" />
 					) : (
-						<ChevronLeftIcon className="text-slate-400"></ChevronLeftIcon>
+						<ChevronLeftIcon className="text-slate-400" />
 					)}
 				</button>
 
