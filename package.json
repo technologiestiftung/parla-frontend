@@ -27,6 +27,7 @@
 		"tailwindcss-animate": "1.0.7"
 	},
 	"devDependencies": {
+		"@tailwindcss/typography": "0.5.10",
 		"@technologiestiftung/semantic-release-config": "1.2.4",
 		"@types/node": "20.9.2",
 		"@types/react": "18.2.37",
