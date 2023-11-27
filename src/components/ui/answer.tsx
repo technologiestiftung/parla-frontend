@@ -52,7 +52,7 @@ function Answer(props: AnswerProps): ReactNode {
 				)}
 				<h5 className="font-bold mt-4">
 					{searchIsLoading &&
-						`${documentsCount} Dokumente werden gesucht...`.trim()}
+						`${documentsCount} Dokumente werden durchsucht...`.trim()}
 					{!searchIsLoading && searchResult && "Dokumente"}
 				</h5>
 			</div>
