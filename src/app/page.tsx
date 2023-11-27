@@ -162,6 +162,12 @@ export default function Home() {
 								<ResultHistory
 									resultHistory={resultHistory}
 									restoreResultHistoryItem={restoreResultHistoryItem}
+									clearResultHistory={() => setResultHistory([])}
+									removeResultHistoryItem={(id) => {
+										setResultHistory((prev) =>
+											prev.filter((entry) => entry.id !== id),
+										);
+									}}
 								/>
 							)}
 						</Sidebar>
@@ -206,6 +212,12 @@ export default function Home() {
 							<ResultHistory
 								resultHistory={resultHistory}
 								restoreResultHistoryItem={restoreResultHistoryItem}
+								clearResultHistory={() => setResultHistory([])}
+								removeResultHistoryItem={(id) => {
+									setResultHistory((prev) =>
+										prev.filter((entry) => entry.id !== id),
+									);
+								}}
 							/>
 						)}
 					</MobileSidebar>
