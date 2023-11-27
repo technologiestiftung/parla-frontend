@@ -150,13 +150,12 @@ export default function SearchResultSection({
 				{title}
 			</h6>
 
-			{/* INFO: Commented out because AI-generated summaries could contain hallucinations  */}
-			{/* <ExpandableTableCell
+			<ExpandableTableCell
 				content={
 					documentMatch?.processed_document_summary_match
 						.processed_document_summary.summary ?? ""
 				}
-			/> */}
+			/>
 
 			{tags.length > 0 && <TagsList tags={tags} />}
 		</div>
