@@ -26,7 +26,7 @@ function DocumentLoadingSkeletonItem({
 						(S. <span className="h-4 w-8 rounded bg-slate-200" />)
 					</span>
 				</span>
-				<span className="h-1.5 w-8 rounded-full bg-slate-200 inline-block relative" />
+				<span className="h-3 w-24 rounded bg-slate-200 inline-block" />
 			</div>
 
 			<span className="w-3/4 inline-block h-5 rounded bg-slate-200 mt-2 sm:mt-1 mb-3" />
