@@ -38,7 +38,7 @@ function PromptContent(props: PromptContentProps) {
 				{title && (
 					<>
 						<h3 className="text-xl font-bold mb-2">Ihre Frage</h3>
-						<p className="text-lg font-light">{title}</p>
+						<p className="text-lg font-light whitespace-pre-wrap">{title}</p>
 					</>
 				)}
 				<Answer

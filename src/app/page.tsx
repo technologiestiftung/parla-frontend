@@ -185,10 +185,7 @@ export default function Home() {
 							<PromptForm
 								query={formData.query}
 								onChange={onChange}
-								onSubmit={(evt) => {
-									evt.preventDefault();
-									onSubmit(formData.query);
-								}}
+								onSubmit={onSubmit}
 								isLoading={searchIsLoading}
 							/>
 						</div>
