@@ -1,7 +1,7 @@
 import { DocumentSearchResponse, GenerateAnswerResponse } from "@/lib/common";
 import React, { ReactNode, useEffect, useState } from "react";
 import SearchResultSection from "../SearchResultSection";
-import AnswerLoadingSkeleton from "./answerLoadingSkeleton";
+import AnswerLoadingSkeleton from "./textLoadingSkeleton";
 import DocumentLoadingSkeleton from "./documentLoadingSkeleton";
 import ReactMarkdown from "react-markdown";
 import { getCleanedMetadata } from "@/lib/utils";
@@ -25,7 +25,7 @@ function Answer(props: AnswerProps): ReactNode {
 
 	useEffect(() => {
 		getDocumentsCount().then((count) =>
-			setDocumentsCount(`${formatter.format(count)}`),
+			setDocumentsCount(`${formatter.format(count) || ""}`),
 		);
 	}, []);
 
@@ -52,8 +52,8 @@ function Answer(props: AnswerProps): ReactNode {
 				)}
 				<h5 className="font-bold mt-4">
 					{searchIsLoading &&
-						`${documentsCount} Quellen werden gesucht...`.trim()}
-					{!searchIsLoading && searchResult && "Quellen"}
+						`${documentsCount} Dokumente werden gesucht...`.trim()}
+					{!searchIsLoading && searchResult && "Dokumente"}
 				</h5>
 			</div>
 			{searchIsLoading && <DocumentLoadingSkeleton />}
@@ -70,7 +70,7 @@ function Answer(props: AnswerProps): ReactNode {
 								<SearchResultSection
 									key={documentMatch.registered_document.id}
 									documentMatch={documentMatch}
-								></SearchResultSection>
+								/>
 							);
 						})}
 				</div>

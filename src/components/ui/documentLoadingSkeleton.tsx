@@ -1,5 +1,6 @@
 import React from "react";
 import { AcrobatIcon } from "./acrobat-icon";
+import TextLoadingSkeleton from "./textLoadingSkeleton";
 
 function DocumentLoadingSkeletonItem({
 	delay,
@@ -31,7 +32,9 @@ function DocumentLoadingSkeletonItem({
 
 			<span className="w-3/4 inline-block h-5 rounded bg-slate-200 mt-2 sm:mt-1 mb-3" />
 
-			<div className="flex gap-x-2 gap-y-1 flex-wrap">
+			<TextLoadingSkeleton linesCount={4} animate={false} />
+
+			<div className="flex gap-x-2 gap-y-1 flex-wrap mt-3">
 				{Array(tagsCount)
 					.fill(0)
 					.map((_, idx) => (
