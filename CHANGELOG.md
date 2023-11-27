@@ -1,3 +1,26 @@
+# [1.13.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.12.0...v1.13.0) (2023-11-27)
+
+
+### Bug Fixes
+
+* **answer:** In case of NaN ignore count ([2926168](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/29261686bccfc667575b5af90a2bc970e38087fd))
+
+
+### Features
+
+* **Answer:** Reintroduce summaries ([71e45dd](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/71e45dd9befd72885ab8da806ecefa851b8bb9b0))
+* **DocumentLoadingSkeleton:** Add new skeletons for documents ([10bc23e](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/10bc23ec14688626cd54446c55f7f534156cc230))
+* **page:** Load search and answer separately ([9fe2361](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/9fe23614f8b44a0d7a12c02ee06ea88491ed9e42))
+* **PromptForm:** Add submit on enter ([6c26387](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/6c263872a693a6a53024ad4a63cae9983e93cff3))
+
+# [1.12.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.11.0...v1.12.0) (2023-11-27)
+
+
+### Features
+
+* added hook to show the splash screen only once, reworked info button ([32003e5](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/32003e5268dd5c546f6e9d2b6df5c6488e86710e))
+* adjusted info icon design, added hover on ki.anfrage anchor ([5c8dbdb](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/5c8dbdbcc8d2f3dde7ae75ee52188f7452581ccb))
+
 # [1.11.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.10.0...v1.11.0) (2023-11-27)
 
 

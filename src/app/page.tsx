@@ -8,81 +8,111 @@ import ResultHistory from "@/components/ui/resultHistory";
 import Sidebar from "@/components/ui/sidebar";
 import {
 	Algorithms,
-	Body,
-	ResponseDetail,
+	DocumentSearchBody,
+	DocumentSearchResponse,
+	GenerateAnswerResponse,
+	HistoryEntryType,
 	availableAlgorithms,
 } from "@/lib/common";
+import { generateAnswer } from "@/lib/generate-answer";
 import { useLocalStorage } from "@/lib/hooks/localStorage";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
 
-const defaultFormdata: Body = availableAlgorithms[0];
+const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
 export default function Home() {
+	const abortController = useRef<AbortController | null>(null);
 	const searchParams = useSearchParams();
 	const selectedSearchAlgorithm =
-		searchParams.get("search-algorithm") ?? Algorithms.ChunksOnly;
+		searchParams.get("search-algorithm") ?? Algorithms.ChunksAndSummaries;
 
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
-	const [isLoading, setIsLoading] = React.useState(false);
+	const [searchIsLoading, setSearchIsLoading] = useState(false);
+	const [answerIsLoading, setAnswerIsLoading] = useState(false);
 	const [showSplash, setShowSplash] = React.useState(false);
-	const [result, setResult] = useState<ResponseDetail | null>(null);
+	const [searchResult, setSearchResult] =
+		useState<DocumentSearchResponse | null>(null);
+	const [generatedAnswer, setGeneratedAnswer] =
+		useState<GenerateAnswerResponse | null>(null);
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-	const { resultHistory, setResultHistory } = useLocalStorage(
+	const [resultHistory, setResultHistory] = useLocalStorage<HistoryEntryType[]>(
 		"ki-anfragen-history",
 		[],
 	);
 	const { showSplashScreenRef } = useShowSplashScreenFromLocalStorage();
-
-	const algorithm = availableAlgorithms.filter(
+	const algorithm = availableAlgorithms.find(
 		(alg) => alg.search_algorithm === selectedSearchAlgorithm,
-	)[0];
-	const [searchConfig] = useState<Body>(algorithm);
+	) as DocumentSearchBody;
+	const [searchConfig] = useState<DocumentSearchBody>(algorithm);
 
 	useEffect(() => {
 		setSidebarIsOpen(!isMobile);
 		setShowSplash(showSplashScreenRef.current);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
-	}, [result]);
+	}, [searchResult, generatedAnswer]);
 
-	function onSubmit(query?: string) {
+	async function onSubmit(query?: string) {
 		setErrors(null);
-		setIsLoading(true);
-		setResult(null);
+		setSearchIsLoading(true);
+		setAnswerIsLoading(true);
+		setSearchResult(null);
 
-		if (query?.trim().length === 0) {
-			setIsLoading(false);
+		if (!query || query?.trim().length === 0) {
+			setSearchIsLoading(false);
+			setAnswerIsLoading(false);
 			setErrors({ query: "Bitte geben Sie eine Anfrage ein." });
 			return;
 		}
 
-		if (query) {
-			setTitle(query);
+		setTitle(query);
 
-			vectorSearch({
+		try {
+			abortController.current = new AbortController();
+			const searchResponse = await vectorSearch({
 				...searchConfig,
 				query,
-				// ...chunkAndSummaryConfig,
-				// ...summariesThenChunksConfig,
-				setErrors,
-				setLoading: setIsLoading,
-				setResult,
-				setResultHistory,
-				resultHistory,
-			}).catch((error) => {
-				setIsLoading(false);
-				setErrors(error);
-				console.error(error);
+				signal: abortController.current.signal,
 			});
+			setSearchResult(searchResponse);
+			setSearchIsLoading(false);
+
+			abortController.current = new AbortController();
+			const answerResponse = await generateAnswer({
+				query,
+				documentMatches: searchResponse.documentMatches,
+				signal: abortController.current.signal,
+			});
+
+			setResultHistory((prev) => [
+				...prev,
+				{
+					id: answerResponse.answer.id,
+					query,
+					searchResponse,
+					answerResponse,
+				},
+			]);
+
+			setAnswerIsLoading(false);
+			setGeneratedAnswer(answerResponse);
+		} catch (error) {
+			if (error instanceof Error) {
+				setErrors({ query: error.message });
+			}
+			console.error(error);
+			setSearchIsLoading(false);
+			setAnswerIsLoading(false);
 		}
 	}
 
@@ -93,19 +123,27 @@ export default function Home() {
 
 	function newRequestHandler(event: React.MouseEvent<HTMLButtonElement>): void {
 		event.preventDefault();
+		resetState();
+	}
+
+	function resetState(): void {
+		abortController.current?.abort();
 		setTitle(null);
-		setResult(null);
+		setSearchResult(null);
 		setErrors(null);
 		setFormData(defaultFormdata);
+		setAnswerIsLoading(false);
+		setGeneratedAnswer(null);
+		setSearchIsLoading(false);
 	}
 
 	function restoreResultHistoryItem(id: string): void {
-		// filter an arroy ResponseDetail items by their gpt.id
-		const filtered = resultHistory.filter((item) => item.gpt?.id === id);
-		if (filtered.length > 0) {
-			setResult(filtered[0]);
-			setTitle(filtered[0].requestBody?.query!);
-		}
+		const historyEntry = resultHistory.find((entry) => entry.id === id);
+		if (!historyEntry) return;
+		resetState();
+		setSearchResult(historyEntry.searchResponse);
+		setGeneratedAnswer(historyEntry.answerResponse);
+		setTitle(historyEntry.query);
 	}
 
 	return (
@@ -138,22 +176,21 @@ export default function Home() {
 							<div className="px-10 py-7 space-y-4">
 								<PromptContent
 									title={title}
-									result={result}
+									searchResult={searchResult}
+									generatedAnswer={generatedAnswer}
 									onsubmit={(text) => {
 										setFormData((s) => ({ ...s, query: text }));
 										onSubmit(text);
 									}}
-									isLoading={isLoading}
+									searchIsLoading={searchIsLoading}
+									answerIsLoading={answerIsLoading}
 								/>
 							</div>
 							<PromptForm
 								query={formData.query}
 								onChange={onChange}
-								onSubmit={(evt) => {
-									evt.preventDefault();
-									onSubmit(formData.query);
-								}}
-								isLoading={isLoading}
+								onSubmit={onSubmit}
+								isLoading={searchIsLoading}
 							/>
 						</div>
 					</main>
