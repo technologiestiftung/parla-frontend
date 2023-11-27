@@ -21,6 +21,7 @@ import { vectorSearch } from "@/lib/vector-search";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
+import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
@@ -45,6 +46,7 @@ export default function Home() {
 		"ki-anfragen-history",
 		[],
 	);
+	const { showSplashScreenRef } = useShowSplashScreenFromLocalStorage();
 	const algorithm = availableAlgorithms.find(
 		(alg) => alg.search_algorithm === selectedSearchAlgorithm,
 	) as DocumentSearchBody;
@@ -52,7 +54,8 @@ export default function Home() {
 
 	useEffect(() => {
 		setSidebarIsOpen(!isMobile);
-		setShowSplash(true);
+		setShowSplash(showSplashScreenRef.current);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -153,6 +156,7 @@ export default function Home() {
 							sidebarIsOpen={sidebarIsOpen}
 							onNewRequest={newRequestHandler}
 							onSidebarOpenChange={setSidebarIsOpen}
+							openSplashScreen={() => setShowSplash(true)}
 						>
 							{resultHistory && resultHistory.length > 0 && (
 								<ResultHistory
@@ -196,6 +200,7 @@ export default function Home() {
 						isHistoryOpen={sidebarIsOpen}
 						setSidebarisOpen={setSidebarIsOpen}
 						newRequestHandler={newRequestHandler}
+						openSplashScreen={() => setShowSplash(true)}
 					>
 						{resultHistory && (
 							<ResultHistory

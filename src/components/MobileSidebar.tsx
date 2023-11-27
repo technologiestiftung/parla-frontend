@@ -9,6 +9,7 @@ export default function MobileSidebar({
 	isHistoryOpen,
 	setSidebarisOpen,
 	newRequestHandler,
+	openSplashScreen,
 	children,
 }: {
 	resultHistory: HistoryEntryType[];
@@ -16,6 +17,7 @@ export default function MobileSidebar({
 	isHistoryOpen: boolean;
 	setSidebarisOpen: (isOpen: boolean) => void;
 	newRequestHandler: (event: MouseEvent<HTMLButtonElement>) => void;
+	openSplashScreen:() => void;
 	children: ReactNode;
 }) {
 	const [isMobileSidebarVisible, setIsMobileSidebarVisible] = useState(false);
@@ -42,6 +44,7 @@ export default function MobileSidebar({
 								sidebarIsOpen={isHistoryOpen}
 								onNewRequest={newRequestHandler}
 								onSidebarOpenChange={setSidebarisOpen}
+								openSplashScreen={openSplashScreen}
 							>
 								{children}
 							</Sidebar>
