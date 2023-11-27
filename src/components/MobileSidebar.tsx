@@ -1,9 +1,9 @@
-import { ResponseDetail } from "@/lib/common";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { XIcon } from "lucide-react";
 import { MouseEvent, ReactNode, useState } from "react";
 import { Button } from "./ui/button";
 import Sidebar from "./ui/sidebar";
+import { HistoryEntryType } from "@/lib/common";
 
 export default function MobileSidebar({
 	isHistoryOpen,
@@ -11,7 +11,7 @@ export default function MobileSidebar({
 	newRequestHandler,
 	children,
 }: {
-	resultHistory: ResponseDetail[];
+	resultHistory: HistoryEntryType[];
 	restoreResultHistoryItem: (id: string) => void;
 	isHistoryOpen: boolean;
 	setSidebarisOpen: (isOpen: boolean) => void;
