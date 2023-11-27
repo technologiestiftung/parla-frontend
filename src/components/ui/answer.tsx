@@ -1,7 +1,7 @@
 import { ResponseDetail } from "@/lib/common";
 import React, { ReactNode } from "react";
 import SearchResultSection from "../SearchResultSection";
-import { get } from "http";
+import ReactMarkdown from "react-markdown";
 import { getCleanedMetadata } from "@/lib/utils";
 
 type AnswerProps = {
@@ -26,7 +26,7 @@ function Answer(props: AnswerProps): ReactNode {
 		<>
 			<div className="mb-4">
 				{content && <h4 className="text-lg font-bold mb-2">Antwort</h4>}
-				{content && <p>{content}</p>}
+				{content && <ReactMarkdown className="prose">{content}</ReactMarkdown>}
 				{content && <h5 className="font-bold mt-4">Quellen</h5>}
 			</div>
 			<div className="w-[calc(100%+2rem)] -ml-4">
