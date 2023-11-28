@@ -28,7 +28,7 @@ function PromptContent(props: PromptContentProps) {
 		<div className="space-y-2 pt-8 lg:pt-0">
 			{!title && (
 				<div className="max-w-xl mx-auto">
-					<h3 className="text-xl font-bold py-3">
+					<h3 className="leading-snug text-xl font-bold py-3">
 						Schreiben Sie Ihre Frage in das Suchfeld oder klicken Sie auf auf
 						eines der Beispiele, um den KI-Assistenten zu starten.
 					</h3>
@@ -38,7 +38,9 @@ function PromptContent(props: PromptContentProps) {
 				{title && (
 					<>
 						<h3 className="text-xl font-bold mb-2">Ihre Frage</h3>
-						<p className="text-lg font-light whitespace-pre-wrap">{title}</p>
+						<p className="leading-7 text-lg font-light whitespace-pre-wrap mb-6">
+							{title}
+						</p>
 					</>
 				)}
 				<Answer
