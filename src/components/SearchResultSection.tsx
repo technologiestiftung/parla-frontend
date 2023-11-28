@@ -78,39 +78,8 @@ type SimilarityDisplayProps = {
 };
 
 function SimilarityDisplay(props: SimilarityDisplayProps): ReactNode {
-	const similarityRouded = Math.floor(props.similarity * 10) / 10;
-	return (
-		<Tooltip.Provider delayDuration={0}>
-			<Tooltip.Root>
-				<Tooltip.Trigger asChild className="group shrink-0">
-					<span className="h-1.5 w-8 rounded-full bg-slate-200 inline-block relative">
-						<span
-							className={cn(
-								"h-1.5 w-8 rounded-full absolute top-0 left-0",
-								"transition-colors cursor-pointer",
-								similarityRouded < 0.5 && "bg-red-500 group-hover:bg-red-700",
-								similarityRouded >= 0.5 &&
-									similarityRouded < 0.8 &&
-									"bg-orange-500 group-hover:bg-orange-700",
-								similarityRouded >= 0.8 &&
-									"bg-blue-700 group-hover:bg-blue-900",
-							)}
-							style={{ width: `${similarityRouded * 100}%` }}
-						/>
-					</span>
-				</Tooltip.Trigger>
-				<Tooltip.Portal>
-					<Tooltip.Content
-						className="px-3 py-2 bg-blue-700 text-white shadow-lg rounded animate-in"
-						sideOffset={5}
-					>
-						{Math.floor(props.similarity * 1000) / 10}% Relevanz
-						<Tooltip.Arrow className="fill-blue-700" />
-					</Tooltip.Content>
-				</Tooltip.Portal>
-			</Tooltip.Root>
-		</Tooltip.Provider>
-	);
+	const similarityRouded = Math.floor(props.similarity * 1000) / 10;
+	return <span className="text-xs">{similarityRouded}% Relevanz</span>;
 }
 
 export default function SearchResultSection({
