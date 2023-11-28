@@ -107,6 +107,9 @@ export function SplashScreen({
 					</a>
 				</div>
 				<div className="flex justify-start gap-x-6 gap-y-3 mt-4 flex-wrap">
+					<Link className="text-sm" href="/faq">
+						FAQ
+					</Link>
 					<Link className="text-sm" href="https://citylab-berlin.org/de/start/">
 						Kontakt
 					</Link>
