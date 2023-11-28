@@ -38,6 +38,7 @@ export interface DocumentSearchBody {
 export interface GenerateAnswerBody {
 	query: string;
 	documentMatches: Array<ResponseDocumentMatch>;
+	include_summary_in_response_generation: boolean;
 }
 
 export interface ProcessedDocumentSummaryMatch {
