@@ -10,6 +10,7 @@ type InputType = GenerateAnswerBody & {
 export async function generateAnswer({
 	query,
 	documentMatches,
+	include_summary_in_response_generation,
 	signal,
 }: InputType): Promise<GenerateAnswerResponse> {
 	if (!query) throw new Error("no query provided");
@@ -18,7 +19,11 @@ export async function generateAnswer({
 		signal,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ query, documentMatches }),
+		body: JSON.stringify({
+			include_summary_in_response_generation,
+			query,
+			documentMatches,
+		}),
 	});
 	if (!response.ok) {
 		const error = await response.json();
