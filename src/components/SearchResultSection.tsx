@@ -19,7 +19,7 @@ function ExpandableTableCell({ content }: { content: string }) {
 		: `${content?.slice(0, 200)}${content.length > 200 ? "..." : ""}`;
 
 	return (
-		<p className="text-sm sm:text-base">
+		<p className="text-sm sm:text-base mb-4">
 			{displayedContent}
 			<br />
 			<button
