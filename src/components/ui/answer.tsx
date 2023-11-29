@@ -4,8 +4,9 @@ import SearchResultSection from "../SearchResultSection";
 import AnswerLoadingSkeleton from "./textLoadingSkeleton";
 import DocumentLoadingSkeleton from "./documentLoadingSkeleton";
 import ReactMarkdown from "react-markdown";
-import { getCleanedMetadata } from "@/lib/utils";
+import { cn, getCleanedMetadata } from "@/lib/utils";
 import { getDocumentsCount } from "@/lib/get-documents-count";
+import { texts } from "@/lib/texts";
 
 type AnswerProps = {
 	generatedAnswer: GenerateAnswerResponse | null;
@@ -32,9 +33,7 @@ function Answer(props: AnswerProps): ReactNode {
 	if (!searchIsLoading && searchResult && matches.length === 0) {
 		return (
 			<>
-				<h4 className="text-lg font-bold mb-2">
-					Keine relevanten Dokumente gefunden
-				</h4>
+				<h4 className="text-lg font-bold mb-2">{texts.noResultsTitle}</h4>
 			</>
 		);
 	}
@@ -43,17 +42,29 @@ function Answer(props: AnswerProps): ReactNode {
 		<>
 			<div className="mb-4">
 				<h4 className="text-lg font-bold mb-2">
-					{answerIsLoading && "Antwort wird generiert..."}
-					{!answerIsLoading && content && "Antwort"}
+					{answerIsLoading && texts.answerIsLoading}
+					{!answerIsLoading && content && texts.answerTitle}
 				</h4>
 				{answerIsLoading && <AnswerLoadingSkeleton />}
 				{!answerIsLoading && content && (
-					<ReactMarkdown className="prose leading-6">{content}</ReactMarkdown>
+					<>
+						<ReactMarkdown className="prose leading-6">{content}</ReactMarkdown>
+						<ReactMarkdown
+							className={cn(
+								`prose leading-6 opacity-60 mt-4 transition-opacity hover:opacity-100`,
+								`pt-4 mt-4 border-t border-slate-200 mb-8 text-sm`,
+							)}
+						>
+							{`**${texts.disclaimerLabel}:**
+${texts.answerDisclaimer}
+`}
+						</ReactMarkdown>
+					</>
 				)}
 				<h5 className="font-bold mt-4">
 					{searchIsLoading &&
-						`${documentsCount} Dokumente werden durchsucht...`.trim()}
-					{!searchIsLoading && searchResult && "Dokumente"}
+						`${documentsCount} ${texts.documentsAreLoading}.`.trim()}
+					{!searchIsLoading && searchResult && texts.documentsTitle}
 				</h5>
 			</div>
 			{searchIsLoading && <DocumentLoadingSkeleton />}
