@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.15.0...v1.16.0) (2023-11-29)
+
+
+### Features
+
+* add include_summary_in_response_generation flag ([#48](https://github.com/technologiestiftung/ki-anfragen-frontend/issues/48)) ([6de9ec1](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/6de9ec1ab3b73e80674bfbdb291ea2952af348a4))
+
 # [1.15.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.14.0...v1.15.0) (2023-11-29)
 
 
