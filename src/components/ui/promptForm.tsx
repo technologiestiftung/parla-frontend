@@ -25,14 +25,16 @@ function PromptForm(props: PromptFormProps): ReactNode {
 			)}
 		>
 			{error && (
-				<ErrorHint
-					message={
-						"Fehler beim Generieren der Antwort. Bitte versuchen Sie es noch einmal."
-					}
-					reloadHandler={() => {
-						onSubmit(query);
-					}}
-				></ErrorHint>
+				<div className="relative w-full max-w-xl mx-auto">
+					<ErrorHint
+						message={
+							"Fehler beim Generieren der Antwort. Bitte versuchen Sie es noch einmal."
+						}
+						reloadHandler={() => {
+							onSubmit(query);
+						}}
+					></ErrorHint>
+				</div>
 			)}
 			<form
 				onSubmit={(evt) => {
