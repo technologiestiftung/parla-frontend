@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Link } from "./Link";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export function SplashScreen({
 	open,
@@ -65,10 +66,11 @@ export function SplashScreen({
 							`focus-visible:ring-offset-white`,
 						)}
 					>
-						<img
-							className="h-7"
+						<Image
 							alt="Logo CityLAB Berlin"
 							src="https://logos.citylab-berlin.org/logo-citylab-berlin-outline.svg"
+							width={131}
+							height={28}
 						/>
 					</a>
 					<a
@@ -82,10 +84,11 @@ export function SplashScreen({
 							`focus-visible:ring-offset-white`,
 						)}
 					>
-						<img
-							className="h-7"
+						<Image
 							alt="Logo der Technologiestiftung Berlin"
 							src="https://logos.citylab-berlin.org/logo-tsb-outline.svg"
+							width={92}
+							height={28}
 						/>
 					</a>
 					<a
@@ -99,10 +102,11 @@ export function SplashScreen({
 							`focus-visible:ring-offset-white`,
 						)}
 					>
-						<img
-							className="h-7"
+						<Image
 							alt="Logo des Regierenden Bürgermeisters von Berlin und der Senatskanzlei"
 							src="https://logos.citylab-berlin.org/logo-senatskanzlei-buergermeister-horizontal.svg"
+							width={168}
+							height={28}
 						/>
 					</a>
 				</div>
