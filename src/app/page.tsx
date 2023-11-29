@@ -1,73 +1,118 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
-import { isMobile } from "react-device-detect";
-import { SplashScreen } from "@/components/splash-screen";
-import Sidebar from "@/components/ui/sidebar";
-import { Body, ResponseDetail } from "@/lib/common";
-import { useLocalStorage } from "@/lib/hooks/localStorage";
-import { vectorSearch } from "@/lib/vector-search";
-import React, { useEffect, useState } from "react";
 import MobileSidebar from "@/components/MobileSidebar";
-import ResultHistory from "@/components/ui/resultHistory";
-import PromptContent from "@/components/ui/promtContent";
+import { SplashScreen } from "@/components/splash-screen";
 import PromptForm from "@/components/ui/promptForm";
+import PromptContent from "@/components/ui/promtContent";
+import ResultHistory from "@/components/ui/resultHistory";
+import Sidebar from "@/components/ui/sidebar";
+import {
+	Algorithms,
+	DocumentSearchBody,
+	DocumentSearchResponse,
+	GenerateAnswerResponse,
+	HistoryEntryType,
+	availableAlgorithms,
+} from "@/lib/common";
+import { generateAnswer } from "@/lib/generate-answer";
+import { useLocalStorage } from "@/lib/hooks/localStorage";
 import { cn } from "@/lib/utils";
-const defaultFormdata: Body = {
-	query: "",
-};
+import { vectorSearch } from "@/lib/vector-search";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
+import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
+
+const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
 export default function Home() {
+	const abortController = useRef<AbortController | null>(null);
+	const searchParams = useSearchParams();
+	const selectedSearchAlgorithm =
+		searchParams.get("search-algorithm") ?? Algorithms.ChunksAndSummaries;
+
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
-	const [isLoading, setIsLoading] = React.useState(false);
+	const [searchIsLoading, setSearchIsLoading] = useState(false);
+	const [answerIsLoading, setAnswerIsLoading] = useState(false);
 	const [showSplash, setShowSplash] = React.useState(false);
-	const [result, setResult] = useState<ResponseDetail | null>(null);
+	const [searchResult, setSearchResult] =
+		useState<DocumentSearchResponse | null>(null);
+	const [generatedAnswer, setGeneratedAnswer] =
+		useState<GenerateAnswerResponse | null>(null);
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
-	const [sidebarIsOpen, setSidebarIsOpen] = useState(true);
-	const { resultHistory, setResultHistory } = useLocalStorage(
+	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+	const [resultHistory, setResultHistory] = useLocalStorage<HistoryEntryType[]>(
 		"ki-anfragen-history",
 		[],
 	);
+	const { showSplashScreenRef } = useShowSplashScreenFromLocalStorage();
+	const algorithm = availableAlgorithms.find(
+		(alg) => alg.search_algorithm === selectedSearchAlgorithm,
+	) as DocumentSearchBody;
+	const [searchConfig] = useState<DocumentSearchBody>(algorithm);
 
 	useEffect(() => {
 		setSidebarIsOpen(!isMobile);
-		setShowSplash(true);
+		setShowSplash(showSplashScreenRef.current);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
-	}, [result]);
+	}, [searchResult, generatedAnswer]);
 
-	function onSubmit(event: React.SyntheticEvent) {
-		event.preventDefault();
+	async function onSubmit(query?: string) {
 		setErrors(null);
-		setIsLoading(true);
-		setResult(null);
+		setSearchIsLoading(true);
+		setAnswerIsLoading(true);
+		setSearchResult(null);
 
-		if (formData.query?.trim().length === 0) {
-			setIsLoading(false);
+		if (!query || query?.trim().length === 0) {
+			setSearchIsLoading(false);
+			setAnswerIsLoading(false);
 			setErrors({ query: "Bitte geben Sie eine Anfrage ein." });
 			return;
 		}
 
-		if (formData.query) {
-			setTitle(formData.query);
-			// If we want to mock loading, we can do it here
-			// setTimeout(() => {
-			// 	setIsLoading(false);
-			// }, 3000);
-			vectorSearch({
-				...formData,
-				setErrors,
-				setLoading: setIsLoading,
-				setResult,
-				setResultHistory,
-				resultHistory,
-			}).catch((error) => {
-				setIsLoading(false);
-				setErrors(error);
-				console.error(error);
+		setTitle(query);
+
+		try {
+			abortController.current = new AbortController();
+			const searchResponse = await vectorSearch({
+				...searchConfig,
+				query,
+				signal: abortController.current.signal,
 			});
+			setSearchResult(searchResponse);
+			setSearchIsLoading(false);
+
+			abortController.current = new AbortController();
+			const answerResponse = await generateAnswer({
+				query,
+				documentMatches: searchResponse.documentMatches,
+				signal: abortController.current.signal,
+			});
+
+			setResultHistory((prev) => [
+				...prev,
+				{
+					id: answerResponse.answer.id,
+					query,
+					searchResponse,
+					answerResponse,
+				},
+			]);
+
+			setAnswerIsLoading(false);
+			setGeneratedAnswer(answerResponse);
+		} catch (error) {
+			if (error instanceof Error) {
+				setErrors({ query: error.message });
+			}
+			console.error(error);
+			setSearchIsLoading(false);
+			setAnswerIsLoading(false);
 		}
 	}
 
@@ -78,19 +123,27 @@ export default function Home() {
 
 	function newRequestHandler(event: React.MouseEvent<HTMLButtonElement>): void {
 		event.preventDefault();
+		resetState();
+	}
+
+	function resetState(): void {
+		abortController.current?.abort();
 		setTitle(null);
-		setResult(null);
+		setSearchResult(null);
 		setErrors(null);
 		setFormData(defaultFormdata);
+		setAnswerIsLoading(false);
+		setGeneratedAnswer(null);
+		setSearchIsLoading(false);
 	}
 
 	function restoreResultHistoryItem(id: string): void {
-		// filter an arroy ResponseDetail items by their gpt.id
-		const filtered = resultHistory.filter((item) => item.gpt?.id === id);
-		if (filtered.length > 0) {
-			setResult(filtered[0]);
-			setTitle(filtered[0].requestBody?.query!);
-		}
+		const historyEntry = resultHistory.find((entry) => entry.id === id);
+		if (!historyEntry) return;
+		resetState();
+		setSearchResult(historyEntry.searchResponse);
+		setGeneratedAnswer(historyEntry.answerResponse);
+		setTitle(historyEntry.query);
 	}
 
 	return (
@@ -103,11 +156,18 @@ export default function Home() {
 							sidebarIsOpen={sidebarIsOpen}
 							onNewRequest={newRequestHandler}
 							onSidebarOpenChange={setSidebarIsOpen}
+							openSplashScreen={() => setShowSplash(true)}
 						>
-							{resultHistory && (
+							{resultHistory && resultHistory.length > 0 && (
 								<ResultHistory
 									resultHistory={resultHistory}
 									restoreResultHistoryItem={restoreResultHistoryItem}
+									clearResultHistory={() => setResultHistory([])}
+									removeResultHistoryItem={(id) => {
+										setResultHistory((prev) =>
+											prev.filter((entry) => entry.id !== id),
+										);
+									}}
 								/>
 							)}
 						</Sidebar>
@@ -122,18 +182,21 @@ export default function Home() {
 							<div className="px-10 py-7 space-y-4">
 								<PromptContent
 									title={title}
-									result={result}
-									onsubmit={(text) =>
-										setFormData((s) => ({ ...s, query: text }))
-									}
-									isLoading={isLoading}
+									searchResult={searchResult}
+									generatedAnswer={generatedAnswer}
+									onsubmit={(text) => {
+										setFormData((s) => ({ ...s, query: text }));
+										onSubmit(text);
+									}}
+									searchIsLoading={searchIsLoading}
+									answerIsLoading={answerIsLoading}
 								/>
 							</div>
 							<PromptForm
 								query={formData.query}
 								onChange={onChange}
 								onSubmit={onSubmit}
-								isLoading={isLoading}
+								isLoading={searchIsLoading}
 							/>
 						</div>
 					</main>
@@ -143,11 +206,18 @@ export default function Home() {
 						isHistoryOpen={sidebarIsOpen}
 						setSidebarisOpen={setSidebarIsOpen}
 						newRequestHandler={newRequestHandler}
+						openSplashScreen={() => setShowSplash(true)}
 					>
 						{resultHistory && (
 							<ResultHistory
 								resultHistory={resultHistory}
 								restoreResultHistoryItem={restoreResultHistoryItem}
+								clearResultHistory={() => setResultHistory([])}
+								removeResultHistoryItem={(id) => {
+									setResultHistory((prev) =>
+										prev.filter((entry) => entry.id !== id),
+									);
+								}}
 							/>
 						)}
 					</MobileSidebar>

@@ -11,6 +11,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Link } from "./Link";
+import { cn } from "@/lib/utils";
 
 export function SplashScreen({
 	open,
@@ -20,16 +21,10 @@ export function SplashScreen({
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
 	return (
-		<Dialog open={open}>
-			<DialogContent
-				onClick={() => setOpen(false)}
-				className=" bg-white dark:bg-gray-800 shadow-lg  max-w-xl mx-auto px-6 md:px-8 py-4 md:py-6 z-50 max-h-screen overflow-y-auto"
-			>
+		<Dialog open={open} onOpenChange={setOpen}>
+			<DialogContent className=" bg-white dark:bg-gray-800 shadow-lg  max-w-xl mx-auto px-6 md:px-8 py-4 md:py-6 z-50 max-h-screen overflow-y-auto">
 				<DialogHeader className="flex">
 					<DialogTitle className="py-3 text-left">
-						<span className="flex justify-between items-center text-lg font-bold rounded mb-4">
-							ki.anfragen
-						</span>
 						<span className="font-normal text-2xl">
 							KI-Assistent für Schriftliche Anfragen{" "}
 							<br className="hidden md:inline" />
@@ -52,28 +47,69 @@ export function SplashScreen({
 					<p>
 						Bitte beachten Sie, dass die generierten Antworten zwar aus
 						offiziellen Dokumenten erstellt wurden, aber keine verbindliche
-						Antwort darstellen.
+						Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen
+						Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten
+						Quellenangaben zu überprüfen.
 					</p>
-					<p>Viel Spaß!</p>
+					<p>Viel Spaß bei der Recherche!</p>
 				</div>
 				<div className="flex justify-start mt-4 gap-x-8 gap-y-4 flex-wrap">
-					<img
-						className="h-7"
-						alt="Logo CityLAB Berlin"
-						src="https://logos.citylab-berlin.org/logo-citylab-berlin-outline.svg"
-					/>
-					<img
-						className="h-7"
-						alt="Logo der Technologiestiftung Berlin"
-						src="https://logos.citylab-berlin.org/logo-tsb-outline.svg"
-					/>
-					<img
-						className="h-7"
-						alt="Logo des Regierenden Bürgermeisters von Berlin und der Senatskanzlei"
-						src="https://logos.citylab-berlin.org/logo-senatskanzlei-buergermeister-horizontal.svg"
-					/>
+					<a
+						href="https://citylab-berlin.org/de/start/"
+						target="_blank"
+						rel="noreferrer"
+						className={cn(
+							`opacity-100 transition-opacity hover:opacity-50`,
+							`focus:outline-none focus-visible:ring-2 focus-visible:rounded`,
+							`focus-visible:ring-blue-900 focus-visible:ring-offset-8`,
+							`focus-visible:ring-offset-white`,
+						)}
+					>
+						<img
+							className="h-7"
+							alt="Logo CityLAB Berlin"
+							src="https://logos.citylab-berlin.org/logo-citylab-berlin-outline.svg"
+						/>
+					</a>
+					<a
+						href="https://technologiestiftung-berlin.de/"
+						target="_blank"
+						rel="noreferrer"
+						className={cn(
+							`opacity-100 transition-opacity hover:opacity-50`,
+							`focus:outline-none focus-visible:ring-2 focus-visible:rounded`,
+							`focus-visible:ring-blue-900 focus-visible:ring-offset-8`,
+							`focus-visible:ring-offset-white`,
+						)}
+					>
+						<img
+							className="h-7"
+							alt="Logo der Technologiestiftung Berlin"
+							src="https://logos.citylab-berlin.org/logo-tsb-outline.svg"
+						/>
+					</a>
+					<a
+						href="https://www.berlin.de/senatskanzlei/"
+						target="_blank"
+						rel="noreferrer"
+						className={cn(
+							`opacity-100 transition-opacity hover:opacity-50`,
+							`focus:outline-none focus-visible:ring-2 focus-visible:rounded`,
+							`focus-visible:ring-blue-900 focus-visible:ring-offset-8`,
+							`focus-visible:ring-offset-white`,
+						)}
+					>
+						<img
+							className="h-7"
+							alt="Logo des Regierenden Bürgermeisters von Berlin und der Senatskanzlei"
+							src="https://logos.citylab-berlin.org/logo-senatskanzlei-buergermeister-horizontal.svg"
+						/>
+					</a>
 				</div>
 				<div className="flex justify-start gap-x-6 gap-y-3 mt-4 flex-wrap">
+					<Link className="text-sm" href="/faq">
+						FAQ
+					</Link>
 					<Link className="text-sm" href="https://citylab-berlin.org/de/start/">
 						Kontakt
 					</Link>

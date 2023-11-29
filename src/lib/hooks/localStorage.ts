@@ -1,18 +1,38 @@
+import { DocumentSearchResponse } from "./../common";
 import { useEffect, useState } from "react";
-import { ResponseDetail } from "../common";
 
-export function useLocalStorage(key: string, initialValue: ResponseDetail[]) {
+export function useLocalStorage<ValueType>(
+	key: string,
+	initialValue: ValueType,
+): [
+	ValueType,
+	(value: ValueType | ((oldValue: ValueType) => ValueType)) => void,
+] {
 	// State to store our value
 	// Pass initial state function to useState so logic is only executed once
-	const [storedValue, setStoredValue] =
-		useState<ResponseDetail[]>(initialValue);
+	const [storedValue, setStoredValue] = useState<ValueType>(initialValue);
 
 	useEffect(() => {
 		try {
-			// Get from local storage by key
 			const item = window.localStorage.getItem(key);
+			const parsedItem = item ? JSON.parse(item) : null;
+			const isValid =
+				typeof parsedItem === typeof initialValue &&
+				Array.isArray(parsedItem) &&
+				parsedItem.every(
+					(item) =>
+						"query" in item &&
+						"id" in item &&
+						"searchResponse" in item &&
+						"answerResponse" in item,
+				);
+
+			if (!isValid) {
+				window.localStorage.removeItem(key);
+				return;
+			}
 			// Parse stored json or if none return initialValue
-			setStoredValue(item ? JSON.parse(item) : initialValue);
+			setStoredValue(item ? (parsedItem as ValueType) : initialValue);
 		} catch (error) {
 			// If error also return initialValue
 			console.error(error);
@@ -22,7 +42,9 @@ export function useLocalStorage(key: string, initialValue: ResponseDetail[]) {
 
 	// Return a wrapped version of useState's setter function that ...
 	// ... persists the new value to localStorage.
-	const setValue = (value: ResponseDetail[]) => {
+	const setValue = (
+		value: ValueType | ((oldValue: ValueType) => ValueType),
+	) => {
 		try {
 			// Allow value to be a function so we have same API as useState
 			const valueToStore =
@@ -38,5 +60,5 @@ export function useLocalStorage(key: string, initialValue: ResponseDetail[]) {
 		}
 	};
 
-	return { resultHistory: storedValue, setResultHistory: setValue };
+	return [storedValue, setValue];
 }

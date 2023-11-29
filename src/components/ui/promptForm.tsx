@@ -5,7 +5,7 @@ import Envelope from "./envelopeIcon";
 import { cn } from "@/lib/utils";
 
 type PromptFormProps = {
-	onSubmit: FormEventHandler<HTMLFormElement>;
+	onSubmit: (query?: string) => void;
 	query?: string;
 	isLoading: boolean;
 	onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -21,17 +21,27 @@ function PromptForm(props: PromptFormProps): ReactNode {
 			)}
 		>
 			<form
-				onSubmit={onSubmit}
+				onSubmit={(evt) => {
+					evt.preventDefault();
+					onSubmit(query);
+				}}
 				className="relative w-full max-w-xl mx-auto flex"
+				name="promptForm"
 			>
 				<Input
 					value={query || ""}
 					name="query"
 					id="query"
 					className="pl-4 py-4 pr-12 resize-none"
-					placeholder="Stellen Sie hier ihre Anfrage"
+					placeholder="Stellen Sie hier Ihre Frage"
 					onChange={onChange}
 					disabled={isLoading}
+					onKeyDown={(event) => {
+						if (event.key === "Enter" && !event.shiftKey) {
+							event.preventDefault();
+							onSubmit(query);
+						}
+					}}
 				/>
 				<Button
 					className="absolute right-2 bottom-2 bg-blue-700 hover:bg-blue-900 text-white font-bold"

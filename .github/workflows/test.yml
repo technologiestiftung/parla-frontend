@@ -15,7 +15,6 @@ jobs:
       SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
       OPENAI_KEY: sk-abc...
       OPENAI_MODEL: gpt-3.5-turbo
-
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

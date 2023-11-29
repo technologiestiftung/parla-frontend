@@ -7,7 +7,10 @@ export interface InputProps
 	extends React.InputHTMLAttributes<HTMLTextAreaElement> {}
 
 const Input = React.forwardRef<HTMLTextAreaElement, InputProps>(
-	({ className, value, placeholder, disabled, name, id, onChange }, ref) => {
+	(
+		{ className, value, placeholder, disabled, name, id, onChange, onKeyDown },
+		ref,
+	) => {
 		return (
 			<TextareaAutosize
 				className={cn(
@@ -27,6 +30,7 @@ const Input = React.forwardRef<HTMLTextAreaElement, InputProps>(
 				name={name}
 				id={id}
 				onChange={onChange}
+				onKeyDown={onKeyDown}
 				disabled={disabled}
 			/>
 		);

@@ -1,3 +1,69 @@
+# [1.14.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.13.0...v1.14.0) (2023-11-28)
+
+
+### Features
+
+* randomly select 3 questions as example questions ([0f4236f](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/0f4236fd2bc783339b2f824f8636eafb6fbd4776))
+
+# [1.13.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.12.0...v1.13.0) (2023-11-27)
+
+
+### Bug Fixes
+
+* **answer:** In case of NaN ignore count ([2926168](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/29261686bccfc667575b5af90a2bc970e38087fd))
+
+
+### Features
+
+* **Answer:** Reintroduce summaries ([71e45dd](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/71e45dd9befd72885ab8da806ecefa851b8bb9b0))
+* **DocumentLoadingSkeleton:** Add new skeletons for documents ([10bc23e](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/10bc23ec14688626cd54446c55f7f534156cc230))
+* **page:** Load search and answer separately ([9fe2361](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/9fe23614f8b44a0d7a12c02ee06ea88491ed9e42))
+* **PromptForm:** Add submit on enter ([6c26387](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/6c263872a693a6a53024ad4a63cae9983e93cff3))
+
+# [1.12.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.11.0...v1.12.0) (2023-11-27)
+
+
+### Features
+
+* added hook to show the splash screen only once, reworked info button ([32003e5](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/32003e5268dd5c546f6e9d2b6df5c6488e86710e))
+* adjusted info icon design, added hover on ki.anfrage anchor ([5c8dbdb](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/5c8dbdbcc8d2f3dde7ae75ee52188f7452581ccb))
+
+# [1.11.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.10.0...v1.11.0) (2023-11-27)
+
+
+### Features
+
+* **Markdown:** Adds ReactMarkdown component ([0bce033](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/0bce0330f4b5d2d50f2e01c8d4e151e3916e65f7))
+
+# [1.10.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.9.1...v1.10.0) (2023-11-23)
+
+
+### Bug Fixes
+
+* **examplePrompts:** Auto submit example prompts on click ([7448c46](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/7448c4627563ba000e5e0d3553048d4d0d05d2ab))
+* **Sidebar:** Reintroduce history in sidebar ([62eec6c](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/62eec6cfafd60667616d37a94eb4fa825aa1266c))
+
+
+### Features
+
+* **SearchResultSection:** reintroduce tags ([1ff5bbd](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/1ff5bbda1ad260eac76f0764250dd2d685a1e6e9))
+
+## [1.9.1](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.9.0...v1.9.1) (2023-11-23)
+
+
+### Bug Fixes
+
+* **AcrobatIcon:** Fix attribute format in SVG ([eab8d08](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/eab8d08af0b9fbe664b386c6e6f3f096ac2af418))
+* Multiple fixes based on [@esshahn](https://github.com/esshahn) comments (see commit description) ([e8f88b0](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/e8f88b0e97138bd0c80bd311a4b0f9de5537be3f))
+* **splash-screen:** Click doesnt close modal ([59304e3](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/59304e39d87e6660741f4263e9866bdbce58a20a))
+
+# [1.9.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.8.0...v1.9.0) (2023-11-20)
+
+
+### Features
+
+* toggle algorithms ([#31](https://github.com/technologiestiftung/ki-anfragen-frontend/issues/31)) ([50b0934](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/50b09349d8ff8e3d3c4b22b227f5a8deae0a65b9))
+
 # [1.8.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.7.0...v1.8.0) (2023-11-14)
 
 

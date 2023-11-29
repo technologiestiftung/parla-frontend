@@ -1,4 +1,7 @@
-import type { CreateChatCompletionRequest } from "openai";
+import type {
+	CreateChatCompletionRequest,
+	CreateChatCompletionResponse,
+} from "openai";
 import type { Database } from "./database.js";
 
 type ProcessedDocumentChunk =
@@ -21,38 +24,20 @@ export interface Question {
 	pdf: string;
 }
 
-export interface Body {
-	query?: string;
-	temperature?: number;
-	match_threshold?: number;
-	num_probes?: number;
-	match_count?: number;
-	min_content_length?: number;
-	openai_model?: Model;
+export interface DocumentSearchBody {
+	query: string;
+	match_threshold: number;
+	num_probes: number;
+	match_count: number;
+	chunk_limit: number;
+	summary_limit: number;
+	document_limit: number;
+	search_algorithm: Algorithms;
 }
 
-interface Gpt {
-	id: string;
-	object: string;
-	created: number;
-	model: string;
-	choices: Choice[];
-	usage: Usage;
-}
-
-interface Choice {
-	index: number;
-	message: {
-		role: string;
-		content: string;
-	};
-	finish_reason?: string;
-}
-
-interface Usage {
-	prompt_tokens: number;
-	completion_tokens: number;
-	total_tokens: number;
+export interface GenerateAnswerBody {
+	query: string;
+	documentMatches: Array<ResponseDocumentMatch>;
 }
 
 export interface ProcessedDocumentSummaryMatch {
@@ -70,11 +55,51 @@ export interface ResponseDocumentMatch {
 	processed_document: ProcessedDocument;
 	processed_document_summary_match: ProcessedDocumentSummaryMatch;
 	processed_document_chunk_matches: Array<ProcessedDocumentChunkMatch>;
+	similarity: number;
 }
 
-export interface ResponseDetail {
-	gpt: Gpt;
+export interface DocumentSearchResponse {
 	documentMatches: ResponseDocumentMatch[];
-	requestBody: Body;
-	completionOptions: CreateChatCompletionRequest;
 }
+
+export interface GenerateAnswerResponse {
+	answer: CreateChatCompletionResponse;
+}
+
+export interface HistoryEntryType {
+	id: string;
+	query: string;
+	searchResponse: DocumentSearchResponse;
+	answerResponse: GenerateAnswerResponse;
+}
+
+export enum Algorithms {
+	ChunksAndSummaries = "chunks-and-summaries",
+	ChunksOnly = "chunks-only",
+	SummariesThenChunks = "summaries-then-chunks",
+}
+
+export const availableAlgorithms = [
+	{
+		match_threshold: 0.85,
+		num_probes: 8,
+		chunk_limit: 64,
+		document_limit: 3,
+		search_algorithm: Algorithms.ChunksOnly,
+	} as DocumentSearchBody,
+	{
+		match_threshold: 0.85,
+		num_probes: 8,
+		chunk_limit: 128,
+		summary_limit: 16,
+		document_limit: 3,
+		search_algorithm: Algorithms.ChunksAndSummaries,
+	} as DocumentSearchBody,
+	{
+		match_threshold: 0.85,
+		num_probes: 8,
+		summary_limit: 64,
+		document_limit: 3,
+		search_algorithm: Algorithms.SummariesThenChunks,
+	} as DocumentSearchBody,
+];

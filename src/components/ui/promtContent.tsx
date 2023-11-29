@@ -1,23 +1,49 @@
-import { ResponseDetail } from "@/lib/common";
-import React from "react";
+import { DocumentSearchResponse, GenerateAnswerResponse } from "@/lib/common";
+import React, { useEffect, useState } from "react";
 import Answer from "./answer";
 import ExamplePrompts from "./examplePrompts";
-import LoadingSkeletion from "./loadingSkeleton";
+import exampleQuestions from "@/fixtures/example-questions";
+import { selectRandomItems } from "@/lib/utils";
 
 type PromptContentProps = {
 	title?: string | null;
-	result: ResponseDetail | null;
+	searchResult: DocumentSearchResponse | null;
+	generatedAnswer: GenerateAnswerResponse | null;
 	onsubmit: (text: string) => void;
-	isLoading?: boolean;
+	searchIsLoading: boolean;
+	answerIsLoading: boolean;
 };
 
 function PromptContent(props: PromptContentProps) {
-	const { title, result, onsubmit, isLoading } = props;
+	const {
+		title,
+		searchResult,
+		generatedAnswer,
+		onsubmit,
+		searchIsLoading,
+		answerIsLoading,
+	} = props;
+
+	const [isClient, setIsClient] = useState(false);
+
+	const showExamplePrompts =
+		!searchResult && !searchIsLoading && !generatedAnswer && !answerIsLoading;
+
+	// Prevent hydration error when randomly selecting 3 example questions
+	// See: https://nextjs.org/docs/messages/react-hydration-error
+	const exampleQuestionsToShow = isClient
+		? selectRandomItems(exampleQuestions, 3)
+		: [];
+
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
+
 	return (
 		<div className="space-y-2 pt-8 lg:pt-0">
 			{!title && (
 				<div className="max-w-xl mx-auto">
-					<h3 className="text-xl font-bold py-3">
+					<h3 className="leading-snug text-xl font-bold py-3">
 						Schreiben Sie Ihre Frage in das Suchfeld oder klicken Sie auf auf
 						eines der Beispiele, um den KI-Assistenten zu starten.
 					</h3>
@@ -27,24 +53,21 @@ function PromptContent(props: PromptContentProps) {
 				{title && (
 					<>
 						<h3 className="text-xl font-bold mb-2">Ihre Frage</h3>
-						<p className="text-lg font-light">{title}</p>
+						<p className="leading-7 text-lg font-light whitespace-pre-wrap mb-6">
+							{title}
+						</p>
 					</>
 				)}
-				{!isLoading && <Answer answer={result} />}
-				{isLoading && (
-					<>
-						<h4 className="text-lg font-bold mt-4">Antwort lädt...</h4>
-						<LoadingSkeletion />
-					</>
-				)}
+				<Answer
+					generatedAnswer={generatedAnswer}
+					answerIsLoading={answerIsLoading}
+					searchResult={searchResult}
+					searchIsLoading={searchIsLoading}
+				/>
 			</div>
-			{!result && !isLoading && (
+			{showExamplePrompts && (
 				<ExamplePrompts
-					examplePrompts={[
-						"Wie bewertet der Berliner Senat das private Engagement, bei dem Ehrenamtliche Berliner Gewässer von Müll und Schrott befreien?",
-						"Wie ist der aktuelle Stand der Planungen der Fußgängerüberwege am Jacques-Offenbach-Platz in Mahlsdorf?",
-						"Wie begründet sich die deutlich ungleiche Besoldung von Ärtz:innen am Landesinstitut für gerichtliche und soziale Medizin Berlin sowie am Institut für Rechtsmedizin der Charité?",
-					]}
+					examplePrompts={exampleQuestionsToShow}
 					onClick={(text) => onsubmit(text)}
 				/>
 			)}

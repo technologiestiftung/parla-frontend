@@ -1,21 +1,23 @@
-import React, { MouseEvent, ReactNode, useState } from "react";
-import { ResponseDetail } from "@/lib/common";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { XIcon } from "lucide-react";
-import Sidebar from "./ui/sidebar";
+import { MouseEvent, ReactNode, useState } from "react";
 import { Button } from "./ui/button";
+import Sidebar from "./ui/sidebar";
+import { HistoryEntryType } from "@/lib/common";
 
 export default function MobileSidebar({
 	isHistoryOpen,
 	setSidebarisOpen,
 	newRequestHandler,
+	openSplashScreen,
 	children,
 }: {
-	resultHistory: ResponseDetail[];
+	resultHistory: HistoryEntryType[];
 	restoreResultHistoryItem: (id: string) => void;
 	isHistoryOpen: boolean;
 	setSidebarisOpen: (isOpen: boolean) => void;
 	newRequestHandler: (event: MouseEvent<HTMLButtonElement>) => void;
+	openSplashScreen:() => void;
 	children: ReactNode;
 }) {
 	const [isMobileSidebarVisible, setIsMobileSidebarVisible] = useState(false);
@@ -42,6 +44,7 @@ export default function MobileSidebar({
 								sidebarIsOpen={isHistoryOpen}
 								onNewRequest={newRequestHandler}
 								onSidebarOpenChange={setSidebarisOpen}
+								openSplashScreen={openSplashScreen}
 							>
 								{children}
 							</Sidebar>
