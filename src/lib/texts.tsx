@@ -1,6 +1,7 @@
 export const texts = {
 	backText: "Zurück",
 	disclaimerLabel: "Hinweis",
+	disclaimerAriaLabel: "Hinweis zur Verbindlichkeit der Antworten",
 	noResultsTitle: "Keine relevanten Dokumente gefunden",
 	answerIsLoading: "Antwort wird generiert...",
 	answerTitle: "Antwort",

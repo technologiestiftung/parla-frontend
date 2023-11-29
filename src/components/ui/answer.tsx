@@ -49,16 +49,26 @@ function Answer(props: AnswerProps): ReactNode {
 				{!answerIsLoading && content && (
 					<>
 						<ReactMarkdown className="prose leading-6">{content}</ReactMarkdown>
-						<ReactMarkdown
+						<div
+							tabIndex={0}
 							className={cn(
-								`prose leading-6 opacity-60 mt-4 transition-opacity hover:opacity-100`,
-								`pt-4 mt-4 border-t border-slate-200 mb-8 text-sm`,
+								`prose leading-6 focus:outline-none group`,
+								`mt-6 border-t border-slate-200 mb-8 text-sm`,
 							)}
 						>
-							{`**${texts.disclaimerLabel}:**
+							<ReactMarkdown
+								className={cn(
+									`text-slate-500 transition-colors group-hover:text-slate-900`,
+									`group-focus-visible:text-slate-900 prose-strong:text-inherit`,
+									`group-focus-visible:ring-2 group-focus-visible:rounded-sm`,
+									`group-focus-visible:ring-blue-500 group-focus-visible:ring-offset-8`,
+								)}
+							>
+								{`**${texts.disclaimerLabel}:**
 ${texts.answerDisclaimer}
 `}
-						</ReactMarkdown>
+							</ReactMarkdown>
+						</div>
 					</>
 				)}
 				<h5 className="font-bold mt-4">
