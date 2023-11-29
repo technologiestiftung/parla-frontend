@@ -27,7 +27,8 @@ export interface Question {
 export interface DocumentSearchBody {
 	query: string;
 	match_threshold: number;
-	num_probes: number;
+	num_probes_summaries: number;
+	num_probes_chunks: number;
 	match_count: number;
 	chunk_limit: number;
 	summary_limit: number;
@@ -38,6 +39,7 @@ export interface DocumentSearchBody {
 export interface GenerateAnswerBody {
 	query: string;
 	documentMatches: Array<ResponseDocumentMatch>;
+	include_summary_in_response_generation: boolean;
 }
 
 export interface ProcessedDocumentSummaryMatch {
@@ -82,14 +84,16 @@ export enum Algorithms {
 export const availableAlgorithms = [
 	{
 		match_threshold: 0.85,
-		num_probes: 8,
+		num_probes_summaries: 3,
+		num_probes_chunks: 9,
 		chunk_limit: 64,
 		document_limit: 3,
 		search_algorithm: Algorithms.ChunksOnly,
 	} as DocumentSearchBody,
 	{
 		match_threshold: 0.85,
-		num_probes: 8,
+		num_probes_summaries: 3,
+		num_probes_chunks: 9,
 		chunk_limit: 128,
 		summary_limit: 16,
 		document_limit: 3,
@@ -97,7 +101,8 @@ export const availableAlgorithms = [
 	} as DocumentSearchBody,
 	{
 		match_threshold: 0.85,
-		num_probes: 8,
+		num_probes_summaries: 3,
+		num_probes_chunks: 9,
 		summary_limit: 64,
 		document_limit: 3,
 		search_algorithm: Algorithms.SummariesThenChunks,
