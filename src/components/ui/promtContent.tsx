@@ -1,7 +1,9 @@
 import { DocumentSearchResponse, GenerateAnswerResponse } from "@/lib/common";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Answer from "./answer";
 import ExamplePrompts from "./examplePrompts";
+import exampleQuestions from "@/fixtures/example-questions";
+import { selectRandomItems } from "@/lib/utils";
 
 type PromptContentProps = {
 	title?: string | null;
@@ -22,13 +24,26 @@ function PromptContent(props: PromptContentProps) {
 		answerIsLoading,
 	} = props;
 
+	const [isClient, setIsClient] = useState(false);
+
 	const showExamplePrompts =
 		!searchResult && !searchIsLoading && !generatedAnswer && !answerIsLoading;
+
+	// Prevent hydration error when randomly selecting 3 example questions
+	// See: https://nextjs.org/docs/messages/react-hydration-error
+	const exampleQuestionsToShow = isClient
+		? selectRandomItems(exampleQuestions, 3)
+		: [];
+
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
+
 	return (
 		<div className="space-y-2 pt-8 lg:pt-0">
 			{!title && (
 				<div className="max-w-xl mx-auto">
-					<h3 className="text-xl font-bold py-3">
+					<h3 className="leading-snug text-xl font-bold py-3">
 						Schreiben Sie Ihre Frage in das Suchfeld oder klicken Sie auf auf
 						eines der Beispiele, um den KI-Assistenten zu starten.
 					</h3>
@@ -38,7 +53,9 @@ function PromptContent(props: PromptContentProps) {
 				{title && (
 					<>
 						<h3 className="text-xl font-bold mb-2">Ihre Frage</h3>
-						<p className="text-lg font-light whitespace-pre-wrap">{title}</p>
+						<p className="leading-7 text-lg font-light whitespace-pre-wrap mb-6">
+							{title}
+						</p>
 					</>
 				)}
 				<Answer
@@ -50,11 +67,7 @@ function PromptContent(props: PromptContentProps) {
 			</div>
 			{showExamplePrompts && (
 				<ExamplePrompts
-					examplePrompts={[
-						"Wie bewertet der Berliner Senat das private Engagement, bei dem Ehrenamtliche Berliner Gewässer von Müll und Schrott befreien?",
-						"Wie ist der aktuelle Stand der Planungen der Fußgängerüberwege am Jacques-Offenbach-Platz in Mahlsdorf?",
-						"Wie begründet sich die deutlich ungleiche Besoldung von Ärzt:innen am Landesinstitut für gerichtliche und soziale Medizin Berlin sowie am Institut für Rechtsmedizin der Charité?",
-					]}
+					examplePrompts={exampleQuestionsToShow}
 					onClick={(text) => onsubmit(text)}
 				/>
 			)}

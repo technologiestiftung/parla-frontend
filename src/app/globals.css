@@ -84,7 +84,3 @@
 :root {
 	--foreground-rgb: 0, 0, 0;
 }
-
-p {
-	padding-bottom: 1rem !important;
-}

@@ -48,11 +48,11 @@ function Answer(props: AnswerProps): ReactNode {
 				</h4>
 				{answerIsLoading && <AnswerLoadingSkeleton />}
 				{!answerIsLoading && content && (
-					<ReactMarkdown className="prose">{content}</ReactMarkdown>
+					<ReactMarkdown className="prose leading-6">{content}</ReactMarkdown>
 				)}
 				<h5 className="font-bold mt-4">
 					{searchIsLoading &&
-						`${documentsCount} Dokumente werden gesucht...`.trim()}
+						`${documentsCount} Dokumente werden durchsucht...`.trim()}
 					{!searchIsLoading && searchResult && "Dokumente"}
 				</h5>
 			</div>

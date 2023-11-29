@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.13.0...v1.14.0) (2023-11-28)
+
+
+### Features
+
+* randomly select 3 questions as example questions ([0f4236f](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/0f4236fd2bc783339b2f824f8636eafb6fbd4776))
+
 # [1.13.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.12.0...v1.13.0) (2023-11-27)
 
 
