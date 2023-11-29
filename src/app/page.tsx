@@ -198,6 +198,7 @@ export default function Home() {
 								onChange={onChange}
 								onSubmit={onSubmit}
 								isLoading={searchIsLoading}
+								error={_errors !== null}
 							/>
 						</div>
 					</main>

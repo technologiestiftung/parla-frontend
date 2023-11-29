@@ -3,16 +3,20 @@ import { Input } from "./input";
 import { Button } from "./button";
 import Envelope from "./envelopeIcon";
 import { cn } from "@/lib/utils";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import ErrorHint from "./error-hint";
 
 type PromptFormProps = {
 	onSubmit: (query?: string) => void;
 	query?: string;
 	isLoading: boolean;
 	onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	error: boolean;
 };
 
 function PromptForm(props: PromptFormProps): ReactNode {
-	const { onSubmit, query, isLoading, onChange } = props;
+	const { onSubmit, query, isLoading, onChange, error } = props;
 	return (
 		<div
 			className={cn(
@@ -20,6 +24,16 @@ function PromptForm(props: PromptFormProps): ReactNode {
 				"p-2 lg:px-0 bg-slate-50 border-t border-slate-200 shadow-lg",
 			)}
 		>
+			{error && (
+				<ErrorHint
+					message={
+						"Fehler beim Generieren der Antwort. Bitte versuchen Sie es noch einmal."
+					}
+					reloadHandler={() => {
+						onSubmit(query);
+					}}
+				></ErrorHint>
+			)}
 			<form
 				onSubmit={(evt) => {
 					evt.preventDefault();
