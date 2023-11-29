@@ -1,3 +1,17 @@
+# [1.15.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.14.0...v1.15.0) (2023-11-29)
+
+
+### Bug Fixes
+
+* prevent example questions to change on rerender ([42ef465](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/42ef465a070e5e3d40b2f7a1bf5f09e2014d6373))
+
+
+### Features
+
+* **faq:** Add FAQ page ([090176c](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/090176c700c6511706322e92466b288f06913261))
+* **ResultHistory:** Add functionality to clear history and remove entries ([a95354e](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/a95354e41bf4977862d38d6264853b623a2de717))
+* **SearchResultSection:** Show similarity as text ([6bd9963](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/6bd996342b1ed5d0e0cb047847a10cbee5b29b32))
+
 # [1.14.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.13.0...v1.14.0) (2023-11-28)
 
 
