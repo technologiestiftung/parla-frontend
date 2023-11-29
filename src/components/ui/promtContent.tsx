@@ -24,19 +24,17 @@ function PromptContent(props: PromptContentProps) {
 		answerIsLoading,
 	} = props;
 
-	const [isClient, setIsClient] = useState(false);
-
 	const showExamplePrompts =
 		!searchResult && !searchIsLoading && !generatedAnswer && !answerIsLoading;
 
 	// Prevent hydration error when randomly selecting 3 example questions
 	// See: https://nextjs.org/docs/messages/react-hydration-error
-	const exampleQuestionsToShow = isClient
-		? selectRandomItems(exampleQuestions, 3)
-		: [];
+	const [exampleQuestionsToShow, setExamplesQuestionsToShow] = useState<
+		string[]
+	>([]);
 
 	useEffect(() => {
-		setIsClient(true);
+		setExamplesQuestionsToShow(selectRandomItems(exampleQuestions, 3));
 	}, []);
 
 	return (
