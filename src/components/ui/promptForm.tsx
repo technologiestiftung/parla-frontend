@@ -1,11 +1,9 @@
-import React, { FormEventHandler, ReactNode } from "react";
-import { Input } from "./input";
+import { cn } from "@/lib/utils";
+import React, { ReactNode } from "react";
 import { Button } from "./button";
 import Envelope from "./envelopeIcon";
-import { cn } from "@/lib/utils";
-import { InfoCircledIcon } from "@radix-ui/react-icons";
-import { ReloadIcon } from "@radix-ui/react-icons";
 import ErrorHint from "./error-hint";
+import { Input } from "./input";
 
 type PromptFormProps = {
 	onSubmit: (query?: string) => void;
