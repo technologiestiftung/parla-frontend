@@ -89,6 +89,7 @@ export default function Home() {
 
 			abortController.current = new AbortController();
 			const answerResponse = await generateAnswer({
+				include_summary_in_response_generation: true,
 				query,
 				documentMatches: searchResponse.documentMatches,
 				signal: abortController.current.signal,

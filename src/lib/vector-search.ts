@@ -10,7 +10,8 @@ type InputType = DocumentSearchBody & {
 export async function vectorSearch({
 	query,
 	match_threshold,
-	num_probes,
+	num_probes_chunks,
+	num_probes_summaries,
 	chunk_limit,
 	summary_limit,
 	document_limit,
@@ -28,7 +29,8 @@ export async function vectorSearch({
 		body: JSON.stringify({
 			query,
 			match_threshold,
-			num_probes,
+			num_probes_chunks,
+			num_probes_summaries,
 			search_algorithm,
 			chunk_limit,
 			summary_limit,
