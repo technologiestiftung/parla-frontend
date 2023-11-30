@@ -1,5 +1,14 @@
 export const texts = {
 	backText: "Zurück",
+	disclaimerLabel: "Hinweis",
+	disclaimerAriaLabel: "Hinweis zur Verbindlichkeit der Antworten",
+	noResultsTitle: "Keine relevanten Dokumente gefunden",
+	answerIsLoading: "Antwort wird generiert...",
+	answerTitle: "Antwort",
+	answerDisclaimer:
+		"Bitte beachten Sie, dass die generierten Antworten zwar aus offiziellen Dokumenten erstellt wurden, aber keine verbindliche Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten Quellenangaben zu überprüfen.",
+	documentsAreLoading: "Dokumente werden durchsucht...",
+	documentsTitle: "Dokumente",
 	about: {
 		title: "Über ki.anfragen",
 		content:
