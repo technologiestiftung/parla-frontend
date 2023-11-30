@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.16.0...v1.17.0) (2023-11-30)
+
+
+### Features
+
+* **Answer:** Add disclaimer after answer ([382e8e2](https://github.com/technologiestiftung/ki-anfragen-frontend/commit/382e8e2d40a6cc9c0876a18d91db1b01b5aaf259))
+
 # [1.16.0](https://github.com/technologiestiftung/ki-anfragen-frontend/compare/v1.15.0...v1.16.0) (2023-11-29)
 
 
