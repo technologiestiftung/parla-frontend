@@ -10,7 +10,7 @@ export const texts = {
 	documentsAreLoading: "Dokumente werden durchsucht...",
 	documentsTitle: "Dokumente",
 	about: {
-		title: "Über ki.anfragen",
+		title: "Über Parla",
 		content:
 			'Dieser Prototyp durchsucht die Schriftlichen Anfragen und die Hauptausschussprotokolle ("Rote Nummern") der Wahlperiode 19 des Berliner Abgeordnetenhauses und erstellt anhand eines Large Language Models Vorlagen für die Beantwortung der gestellten Frage. Die Quellen sind auf parlament-berlin.de/dokumente zu finden.\n Bitte beachten Sie, dass die generierten Antworten zwar aus offiziellen Dokumenten erstellt wurden, aber keine verbindliche Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten Quellenangaben zu überprüfen.\n Viel Spaß bei der Recherche!',
 	},
@@ -18,19 +18,19 @@ export const texts = {
 		title: "FAQ",
 		questions: [
 			{
-				question: "Was ist ki.anfragen?",
+				question: "Was ist Parla?",
 				answer:
-					"ki.anfragen ist ein Prototyp, der die Schriftlichen Anfragen und die Hauptausschussprotokolle der Wahlperiode 19 des Berliner Abgeordnetenhauses durchsucht und anhand eines Large Language Models Vorlagen für die Beantwortung der gestellten Frage erstellt.",
+					"Parla ist ein Prototyp, der die Schriftlichen Anfragen und die Hauptausschussprotokolle der Wahlperiode 19 des Berliner Abgeordnetenhauses durchsucht und anhand eines Large Language Models Vorlagen für die Beantwortung der gestellten Frage erstellt.",
 			},
 			{
-				question: "Wie funktioniert ki.anfragen?",
+				question: "Wie funktioniert Parla?",
 				answer:
-					"ki.anfragen nutzt ein Large Language Model, um die Schriftlichen Anfragen und die Hauptausschussprotokolle der Wahlperiode 19 des Berliner Abgeordnetenhauses zu durchsuchen. Die Ergebnisse werden dann anhand eines weiteren Large Language Models in eine Antwort umgewandelt.",
+					"Parla nutzt ein Large Language Model, um die Schriftlichen Anfragen und die Hauptausschussprotokolle der Wahlperiode 19 des Berliner Abgeordnetenhauses zu durchsuchen. Die Ergebnisse werden dann anhand eines weiteren Large Language Models in eine Antwort umgewandelt.",
 			},
 			{
 				question: "Was ist ein Large Language Model?",
 				answer:
-					"Ein Large Language Model ist ein KI-Modell, das auf Basis von Texten trainiert wurde und in der Lage ist, Texte zu verstehen und zu generieren. ki.anfragen nutzt zwei verschiedene Large Language Models. Das erste Large Language Model wurde auf Basis von Texten aus dem Berliner Abgeordnetenhaus trainiert. Das zweite Large Language Model wurde auf Basis von Texten aus dem Internet trainiert.",
+					"Ein Large Language Model ist ein KI-Modell, das auf Basis von Texten trainiert wurde und in der Lage ist, Texte zu verstehen und zu generieren. Parla nutzt zwei verschiedene Large Language Models. Das erste Large Language Model wurde auf Basis von Texten aus dem Berliner Abgeordnetenhaus trainiert. Das zweite Large Language Model wurde auf Basis von Texten aus dem Internet trainiert.",
 			},
 			{
 				question: "Was ist eine Schriftliche Anfrage?",
