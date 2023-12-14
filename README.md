@@ -6,9 +6,9 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-# _>ki.anfragen (frontend)_
+# _>Parla (frontend)_
 
-This is a the frontend for the explorational project _>ki.anfragen_. This is not production ready. Currently we explore if we can make the parliamentary documentation provided by the "The Abgeordnetenhaus" of Berlin as open data https://www.parlament-berlin.de/dokumente/open-data more accessible by embedding all the data and do search it using vector similarity search. The project is heavily based on [this example](https://github.com/supabase-community/nextjs-openai-doc-search) from the supabase community. Built with [Next.js](https://nextjs.org/) deployed on vercel.com.
+This is a the frontend for the project _>Parla_. Currently we explore if we can make the parliamentary documentation provided by the "The Abgeordnetenhaus" of Berlin as open data https://www.parlament-berlin.de/dokumente/open-data more accessible by embedding all the data and do search it using vector similarity search. The project is heavily based on [this example](https://github.com/supabase-community/nextjs-openai-doc-search) from the supabase community. Built with [Next.js](https://nextjs.org/) deployed on vercel.com.
 
 ## How it works with retrieval-augmented generation (RAG)
 
