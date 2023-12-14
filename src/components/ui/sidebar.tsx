@@ -26,7 +26,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 						"focus-visible:outline-none",
 					)}
 				>
-					ki.anfragen
+					Parla
 				</a>
 				<button
 					className={cn(
