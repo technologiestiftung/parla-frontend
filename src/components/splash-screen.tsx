@@ -119,7 +119,7 @@ export function SplashScreen({
 					</Link>
 					<Link
 						className="text-sm"
-						href="https://github.com/technologiestiftung/ki-anfragen-frontend"
+						href="https://github.com/technologiestiftung/parla-frontend"
 					>
 						Quellcode
 					</Link>

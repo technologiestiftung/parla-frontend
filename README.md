@@ -39,13 +39,13 @@ sequenceDiagram
 
 - vercel.com account
 - supabase.com account
-- running instance of the related API and database https://github.com/technologiestiftung/ki-anfragen-api
-- Populated database. Using these tools https://github.com/technologiestiftung/ki-anfragen-document-processor
+- running instance of the related API and database https://github.com/technologiestiftung/parla-api
+- Populated database. Using these tools https://github.com/technologiestiftung/parla-document-processor
 
 ## Needed Environment Variables
 
 ```plain
-NEXT_PUBLIC_KI_ANFRAGEN_API_URL=https://domain-of-your-api-server.dev
+NEXT_PUBLIC_PARLA_API_URL=https://domain-of-your-api-server.dev
 ```
 
 ## Installation
@@ -62,7 +62,7 @@ Assuming you have a vercel.com account and you are logged in.
 # does the first deployment and project creation
 npx vercel
 # add your env variables (interactive)
-npx vercel env add NEXT_PUBLIC_KI_ANFRAGEN_API_URL
+npx vercel env add NEXT_PUBLIC_PARLA_API_URL
 # deploy again for production
 npx vercel --prod
 ```
@@ -99,11 +99,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://fabianmoronzirfas.me"><img src="https://avatars.githubusercontent.com/u/315106?v=4?s=64" width="64px;" alt="Fabian Morón Zirfas"/><br /><sub><b>Fabian Morón Zirfas</b></sub></a><br /><a href="https://github.com/technologiestiftung/ki-anfragen-frontend/commits?author=ff6347" title="Code">💻</a> <a href="#infra-ff6347" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#design-ff6347" title="Design">🎨</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="http://www.awsm.de"><img src="https://avatars.githubusercontent.com/u/434355?v=4?s=64" width="64px;" alt="Ingo Hinterding"/><br /><sub><b>Ingo Hinterding</b></sub></a><br /><a href="https://github.com/technologiestiftung/ki-anfragen-frontend/pulls?q=is%3Apr+reviewed-by%3AEsshahn" title="Reviewed Pull Requests">👀</a> <a href="#content-Esshahn" title="Content">🖋</a> <a href="#ideas-Esshahn" title="Ideas, Planning, & Feedback">🤔</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/raphael-arce"><img src="https://avatars.githubusercontent.com/u/8709861?v=4?s=64" width="64px;" alt="Raphael.A"/><br /><sub><b>Raphael.A</b></sub></a><br /><a href="https://github.com/technologiestiftung/ki-anfragen-frontend/commits?author=raphael-arce" title="Code">💻</a> <a href="https://github.com/technologiestiftung/ki-anfragen-frontend/pulls?q=is%3Apr+reviewed-by%3Araphael-arce" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/technologiestiftung/ki-anfragen-frontend/issues?q=author%3Araphael-arce" title="Bug reports">🐛</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="http://vogelino.com"><img src="https://avatars.githubusercontent.com/u/2759340?v=4?s=64" width="64px;" alt="Lucas Vogel"/><br /><sub><b>Lucas Vogel</b></sub></a><br /><a href="https://github.com/technologiestiftung/ki-anfragen-frontend/pulls?q=is%3Apr+reviewed-by%3Avogelino" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/technologiestiftung/ki-anfragen-frontend/commits?author=vogelino" title="Code">💻</a> <a href="https://github.com/technologiestiftung/ki-anfragen-frontend/issues?q=author%3Avogelino" title="Bug reports">🐛</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Jaszkowic"><img src="https://avatars.githubusercontent.com/u/10830180?v=4?s=64" width="64px;" alt="Jonas Jaszkowic"/><br /><sub><b>Jonas Jaszkowic</b></sub></a><br /><a href="https://github.com/technologiestiftung/ki-anfragen-frontend/commits?author=Jaszkowic" title="Code">💻</a> <a href="https://github.com/technologiestiftung/ki-anfragen-frontend/issues?q=author%3AJaszkowic" title="Bug reports">🐛</a> <a href="https://github.com/technologiestiftung/ki-anfragen-frontend/pulls?q=is%3Apr+reviewed-by%3AJaszkowic" title="Reviewed Pull Requests">👀</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://fabianmoronzirfas.me"><img src="https://avatars.githubusercontent.com/u/315106?v=4?s=64" width="64px;" alt="Fabian Morón Zirfas"/><br /><sub><b>Fabian Morón Zirfas</b></sub></a><br /><a href="https://github.com/technologiestiftung/parla-frontend/commits?author=ff6347" title="Code">💻</a> <a href="#infra-ff6347" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#design-ff6347" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.awsm.de"><img src="https://avatars.githubusercontent.com/u/434355?v=4?s=64" width="64px;" alt="Ingo Hinterding"/><br /><sub><b>Ingo Hinterding</b></sub></a><br /><a href="https://github.com/technologiestiftung/parla-frontend/pulls?q=is%3Apr+reviewed-by%3AEsshahn" title="Reviewed Pull Requests">👀</a> <a href="#content-Esshahn" title="Content">🖋</a> <a href="#ideas-Esshahn" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/raphael-arce"><img src="https://avatars.githubusercontent.com/u/8709861?v=4?s=64" width="64px;" alt="Raphael.A"/><br /><sub><b>Raphael.A</b></sub></a><br /><a href="https://github.com/technologiestiftung/parla-frontend/commits?author=raphael-arce" title="Code">💻</a> <a href="https://github.com/technologiestiftung/parla-frontend/pulls?q=is%3Apr+reviewed-by%3Araphael-arce" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/technologiestiftung/parla-frontend/issues?q=author%3Araphael-arce" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://vogelino.com"><img src="https://avatars.githubusercontent.com/u/2759340?v=4?s=64" width="64px;" alt="Lucas Vogel"/><br /><sub><b>Lucas Vogel</b></sub></a><br /><a href="https://github.com/technologiestiftung/parla-frontend/pulls?q=is%3Apr+reviewed-by%3Avogelino" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/technologiestiftung/parla-frontend/commits?author=vogelino" title="Code">💻</a> <a href="https://github.com/technologiestiftung/parla-frontend/issues?q=author%3Avogelino" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Jaszkowic"><img src="https://avatars.githubusercontent.com/u/10830180?v=4?s=64" width="64px;" alt="Jonas Jaszkowic"/><br /><sub><b>Jonas Jaszkowic</b></sub></a><br /><a href="https://github.com/technologiestiftung/parla-frontend/commits?author=Jaszkowic" title="Code">💻</a> <a href="https://github.com/technologiestiftung/parla-frontend/issues?q=author%3AJaszkowic" title="Bug reports">🐛</a> <a href="https://github.com/technologiestiftung/parla-frontend/pulls?q=is%3Apr+reviewed-by%3AJaszkowic" title="Reviewed Pull Requests">👀</a></td>
     </tr>
   </tbody>
 </table>
@@ -145,9 +145,9 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## Related Projects
 
-- https://github.com/technologiestiftung/ki-anfragen-api
-- https://github.com/technologiestiftung/ki-anfragen-data-extractor
-- https://github.com/technologiestiftung/ki-anfragen-supabase
+- https://github.com/technologiestiftung/parla-api
+- https://github.com/technologiestiftung/parla-data-extractor
+- https://github.com/technologiestiftung/parla-supabase
 - https://github.com/technologiestiftung/oeffentliches-gestalten-gpt-search
 - https://github.com/supabase-community/nextjs-openai-doc-search
 <!-- touch again -->

@@ -1,5 +1,5 @@
 const API_URL =
-	process.env.NEXT_PUBLIC_KI_ANFRAGEN_API_URL || "http://localhost:8080";
+	process.env.NEXT_PUBLIC_PARLA_API_URL || "http://localhost:8080";
 
 export const getDocumentsCount = async (): Promise<number> => {
 	const response = await fetch(`${API_URL}/processed_documents/count`);
