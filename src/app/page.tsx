@@ -43,7 +43,7 @@ export default function Home() {
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const [resultHistory, setResultHistory] = useLocalStorage<HistoryEntryType[]>(
-		"ki-anfragen-history",
+		"parla-history",
 		[],
 	);
 	const { showSplashScreenRef } = useShowSplashScreenFromLocalStorage();

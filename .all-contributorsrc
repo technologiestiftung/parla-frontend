@@ -1,72 +1,50 @@
 {
-  "projectName": "ki-anfragen-frontend",
-  "projectOwner": "technologiestiftung",
-  "repoType": "github",
-  "repoHost": "https://github.com",
-  "files": [
-    "README.md"
-  ],
-  "imageSize": 64,
-  "commit": true,
-  "commitConvention": "angular",
-  "contributors": [
-    {
-      "login": "ff6347",
-      "name": "Fabian Morón Zirfas",
-      "avatar_url": "https://avatars.githubusercontent.com/u/315106?v=4",
-      "profile": "https://fabianmoronzirfas.me",
-      "contributions": [
-        "code",
-        "infra",
-        "design"
-      ]
-    },
-    {
-      "login": "Esshahn",
-      "name": "Ingo Hinterding",
-      "avatar_url": "https://avatars.githubusercontent.com/u/434355?v=4",
-      "profile": "http://www.awsm.de",
-      "contributions": [
-        "review",
-        "content",
-        "ideas"
-      ]
-    },
-    {
-      "login": "raphael-arce",
-      "name": "Raphael.A",
-      "avatar_url": "https://avatars.githubusercontent.com/u/8709861?v=4",
-      "profile": "https://github.com/raphael-arce",
-      "contributions": [
-        "code",
-        "review",
-        "bug"
-      ]
-    },
-    {
-      "login": "vogelino",
-      "name": "Lucas Vogel",
-      "avatar_url": "https://avatars.githubusercontent.com/u/2759340?v=4",
-      "profile": "http://vogelino.com",
-      "contributions": [
-        "review",
-        "code",
-        "bug"
-      ]
-    },
-    {
-      "login": "Jaszkowic",
-      "name": "Jonas Jaszkowic",
-      "avatar_url": "https://avatars.githubusercontent.com/u/10830180?v=4",
-      "profile": "https://github.com/Jaszkowic",
-      "contributions": [
-        "code",
-        "bug",
-        "review"
-      ]
-    }
-  ],
-  "contributorsPerLine": 7,
-  "skipCi": true,
-  "commitType": "docs"
+	"projectName": "@technologiestiftung/parla-frontend",
+	"projectOwner": "technologiestiftung",
+	"repoType": "github",
+	"repoHost": "https://github.com",
+	"files": ["README.md"],
+	"imageSize": 64,
+	"commit": true,
+	"commitConvention": "angular",
+	"contributors": [
+		{
+			"login": "ff6347",
+			"name": "Fabian Morón Zirfas",
+			"avatar_url": "https://avatars.githubusercontent.com/u/315106?v=4",
+			"profile": "https://fabianmoronzirfas.me",
+			"contributions": ["code", "infra", "design"]
+		},
+		{
+			"login": "Esshahn",
+			"name": "Ingo Hinterding",
+			"avatar_url": "https://avatars.githubusercontent.com/u/434355?v=4",
+			"profile": "http://www.awsm.de",
+			"contributions": ["review", "content", "ideas"]
+		},
+		{
+			"login": "raphael-arce",
+			"name": "Raphael.A",
+			"avatar_url": "https://avatars.githubusercontent.com/u/8709861?v=4",
+			"profile": "https://github.com/raphael-arce",
+			"contributions": ["code", "review", "bug"]
+		},
+		{
+			"login": "vogelino",
+			"name": "Lucas Vogel",
+			"avatar_url": "https://avatars.githubusercontent.com/u/2759340?v=4",
+			"profile": "http://vogelino.com",
+			"contributions": ["review", "code", "bug"]
+		},
+		{
+			"login": "Jaszkowic",
+			"name": "Jonas Jaszkowic",
+			"avatar_url": "https://avatars.githubusercontent.com/u/10830180?v=4",
+			"profile": "https://github.com/Jaszkowic",
+			"contributions": ["code", "bug", "review"]
+		}
+	],
+	"contributorsPerLine": 7,
+	"skipCi": true,
+	"commitType": "docs"
 }

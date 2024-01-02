@@ -1,7 +1,7 @@
 import { DocumentSearchResponse, DocumentSearchBody } from "./common";
 
 const API_URL =
-	process.env.NEXT_PUBLIC_KI_ANFRAGEN_API_URL || "http://localhost:8080";
+	process.env.NEXT_PUBLIC_PARLA_API_URL || "http://localhost:8080";
 
 type InputType = DocumentSearchBody & {
 	signal?: AbortSignal;
