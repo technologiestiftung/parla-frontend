@@ -21,7 +21,7 @@ function Answer(props: AnswerProps): ReactNode {
 	const [documentsCount, setDocumentsCount] = useState("");
 	const { generatedAnswer, searchResult, searchIsLoading, answerIsLoading } =
 		props;
-	const content = generatedAnswer?.answer?.choices[0]?.message?.content;
+	const content = generatedAnswer?.answer;
 	const matches = searchResult?.documentMatches ?? [];
 
 	useEffect(() => {

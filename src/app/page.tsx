@@ -22,6 +22,7 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
+import { v4 as uuidv4 } from "uuid";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
@@ -93,12 +94,16 @@ export default function Home() {
 				query,
 				documentMatches: searchResponse.documentMatches,
 				signal: abortController.current.signal,
+				chunkCallback: (chunk) => {
+					setAnswerIsLoading(false);
+					setGeneratedAnswer(chunk);
+				},
 			});
 
 			setResultHistory((prev) => [
 				...prev,
 				{
-					id: answerResponse.answer.id,
+					id: uuidv4(),
 					query,
 					searchResponse,
 					answerResponse,

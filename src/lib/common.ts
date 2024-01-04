@@ -65,7 +65,7 @@ export interface DocumentSearchResponse {
 }
 
 export interface GenerateAnswerResponse {
-	answer: CreateChatCompletionResponse;
+	answer: string;
 }
 
 export interface HistoryEntryType {

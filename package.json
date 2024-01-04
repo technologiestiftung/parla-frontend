@@ -25,7 +25,8 @@
 		"react-markdown": "8.0.7",
 		"react-textarea-autosize": "8.5.3",
 		"tailwind-merge": "1.14.0",
-		"tailwindcss-animate": "1.0.7"
+		"tailwindcss-animate": "1.0.7",
+		"uuid": "9.0.1"
 	},
 	"devDependencies": {
 		"@tailwindcss/typography": "0.5.10",
@@ -33,6 +34,7 @@
 		"@types/node": "20.10.6",
 		"@types/react": "18.2.46",
 		"@types/react-dom": "18.2.18",
+		"@types/uuid": "9.0.7",
 		"@typescript-eslint/eslint-plugin": "6.16.0",
 		"@typescript-eslint/parser": "6.16.0",
 		"autoprefixer": "10.4.16",

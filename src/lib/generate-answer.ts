@@ -5,6 +5,7 @@ const API_URL =
 
 type InputType = GenerateAnswerBody & {
 	signal?: AbortSignal;
+	chunkCallback: (answer: GenerateAnswerResponse) => void;
 };
 
 export async function generateAnswer({
@@ -12,6 +13,7 @@ export async function generateAnswer({
 	documentMatches,
 	include_summary_in_response_generation,
 	signal,
+	chunkCallback,
 }: InputType): Promise<GenerateAnswerResponse> {
 	if (!query) throw new Error("no query provided");
 
@@ -25,11 +27,27 @@ export async function generateAnswer({
 			documentMatches,
 		}),
 	});
-	if (!response.ok) {
-		const error = await response.json();
-		console.error(error);
-		throw new Error(error);
+
+	if (!response.body) {
+		throw new Error("Could not generate answer");
 	}
-	const json = (await response.json()) as GenerateAnswerResponse;
-	return json;
+
+	const reader = response.body.getReader();
+	let chunks = [];
+
+	while (true) {
+		const { value, done } = await reader.read();
+		if (done) {
+			break;
+		}
+		const rawChunk = new TextDecoder().decode(value, { stream: true });
+		chunks.push(rawChunk);
+		chunkCallback({
+			answer: chunks.join(""),
+		});
+	}
+
+	return {
+		answer: chunks.join(""),
+	};
 }
