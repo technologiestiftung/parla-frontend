@@ -95,7 +95,6 @@ export default function Home() {
 				documentMatches: searchResponse.documentMatches,
 				signal: abortController.current.signal,
 				chunkCallback: (chunk) => {
-					setAnswerIsLoading(false);
 					setGeneratedAnswer(chunk);
 				},
 			});
