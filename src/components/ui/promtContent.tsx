@@ -50,7 +50,6 @@ function PromptContent(props: PromptContentProps) {
 			<div className="max-w-xl mx-auto">
 				{title && (
 					<>
-						<h3 className="text-xl font-bold mb-2">Ihre Frage</h3>
 						<p className="leading-7 text-lg font-light whitespace-pre-wrap mb-6">
 							{title}
 						</p>
