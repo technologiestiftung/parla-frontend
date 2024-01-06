@@ -8,7 +8,7 @@ export const texts = {
 	answerDisclaimer:
 		"Bitte beachten Sie, dass die generierten Antworten zwar aus offiziellen Dokumenten erstellt wurden, aber keine verbindliche Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten Quellenangaben zu überprüfen.",
 	documentsAreLoading: "Dokumente werden durchsucht...",
-	documentsTitle: "Beste Treffer",
+	documentsTitle: "Beste Treffer in diesen Dokumenten:",
 	about: {
 		title: "Über Parla",
 		content:

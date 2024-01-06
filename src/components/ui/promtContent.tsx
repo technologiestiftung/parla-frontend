@@ -41,7 +41,7 @@ function PromptContent(props: PromptContentProps) {
 		<div className="space-y-2 pt-8 lg:pt-0">
 			{!title && (
 				<div className="max-w-xl mx-auto">
-					<h3 className="leading-snug text-xl font-bold py-3">
+					<h3 className="leading-snug text-xl py-3">
 						Schreiben Sie Ihre Frage in das Suchfeld oder klicken Sie auf auf
 						eines der Beispiele, um den KI-Assistenten zu starten.
 					</h3>
