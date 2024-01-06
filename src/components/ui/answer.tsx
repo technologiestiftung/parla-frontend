@@ -41,10 +41,10 @@ function Answer(props: AnswerProps): ReactNode {
 	return (
 		<>
 			<div className="mb-4">
-				<h4 className="text-lg font-bold mb-2">
+				<h5 className="text-lg font-bold mb-2">
 					{answerIsLoading && texts.answerIsLoading}
 					{!answerIsLoading && content && texts.answerTitle}
-				</h4>
+				</h5>
 				{answerIsLoading && <AnswerLoadingSkeleton />}
 				{!answerIsLoading && content && (
 					<>
