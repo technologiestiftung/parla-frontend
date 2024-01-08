@@ -1,4 +1,4 @@
-import { DocumentSearchResponse, GenerateAnswerResponse } from "@/lib/common";
+import { DocumentSearchResponse } from "@/lib/common";
 import React, { ReactNode, useEffect, useState } from "react";
 import SearchResultSection from "../SearchResultSection";
 import AnswerLoadingSkeleton from "./textLoadingSkeleton";
@@ -9,7 +9,7 @@ import { getDocumentsCount } from "@/lib/get-documents-count";
 import { texts } from "@/lib/texts";
 
 type AnswerProps = {
-	generatedAnswer: GenerateAnswerResponse | null;
+	generatedAnswer: string | null;
 	searchResult: DocumentSearchResponse | null;
 	searchIsLoading: boolean;
 	answerIsLoading: boolean;
@@ -21,7 +21,6 @@ function Answer(props: AnswerProps): ReactNode {
 	const [documentsCount, setDocumentsCount] = useState("");
 	const { generatedAnswer, searchResult, searchIsLoading, answerIsLoading } =
 		props;
-	const content = generatedAnswer?.answer;
 	const matches = searchResult?.documentMatches ?? [];
 
 	useEffect(() => {
@@ -43,12 +42,14 @@ function Answer(props: AnswerProps): ReactNode {
 			<div className="mb-4">
 				<h4 className="text-lg font-bold mb-2">
 					{answerIsLoading && texts.answerIsLoading}
-					{!answerIsLoading && content && texts.answerTitle}
+					{!answerIsLoading && generatedAnswer && texts.answerTitle}
 				</h4>
-				{answerIsLoading && !content && <AnswerLoadingSkeleton />}
-				{content && (
+				{answerIsLoading && !generatedAnswer && <AnswerLoadingSkeleton />}
+				{generatedAnswer && (
 					<>
-						<ReactMarkdown className="prose leading-6">{content}</ReactMarkdown>
+						<ReactMarkdown className="prose leading-6">
+							{generatedAnswer}
+						</ReactMarkdown>
 						<div
 							tabIndex={0}
 							className={cn(

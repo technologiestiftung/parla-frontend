@@ -1,11 +1,11 @@
-import { GenerateAnswerResponse, GenerateAnswerBody } from "./common";
+import { GenerateAnswerBody } from "./common";
 
 const API_URL =
 	process.env.NEXT_PUBLIC_PARLA_API_URL || "http://localhost:8080";
 
 type InputType = GenerateAnswerBody & {
 	signal?: AbortSignal;
-	chunkCallback: (answer: GenerateAnswerResponse) => void;
+	chunkCallback: (answer: string) => void;
 };
 
 export async function generateAnswer({
@@ -14,7 +14,7 @@ export async function generateAnswer({
 	include_summary_in_response_generation,
 	signal,
 	chunkCallback,
-}: InputType): Promise<GenerateAnswerResponse> {
+}: InputType): Promise<string> {
 	if (!query) throw new Error("no query provided");
 
 	const response = await fetch(`${API_URL}/generate-answer`, {
@@ -42,12 +42,8 @@ export async function generateAnswer({
 		}
 		const rawChunk = new TextDecoder().decode(value, { stream: true });
 		chunks.push(rawChunk);
-		chunkCallback({
-			answer: chunks.join(""),
-		});
+		chunkCallback(chunks.join(""));
 	}
 
-	return {
-		answer: chunks.join(""),
-	};
+	return chunks.join("");
 }

@@ -1,4 +1,4 @@
-import { DocumentSearchResponse, GenerateAnswerResponse } from "@/lib/common";
+import { DocumentSearchResponse } from "@/lib/common";
 import React, { useEffect, useState } from "react";
 import Answer from "./answer";
 import ExamplePrompts from "./examplePrompts";
@@ -8,7 +8,7 @@ import { selectRandomItems } from "@/lib/utils";
 type PromptContentProps = {
 	title?: string | null;
 	searchResult: DocumentSearchResponse | null;
-	generatedAnswer: GenerateAnswerResponse | null;
+	generatedAnswer: string | null;
 	onsubmit: (text: string) => void;
 	searchIsLoading: boolean;
 	answerIsLoading: boolean;

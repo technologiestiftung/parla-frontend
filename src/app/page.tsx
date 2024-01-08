@@ -10,7 +10,6 @@ import {
 	Algorithms,
 	DocumentSearchBody,
 	DocumentSearchResponse,
-	GenerateAnswerResponse,
 	HistoryEntryType,
 	availableAlgorithms,
 } from "@/lib/common";
@@ -39,8 +38,7 @@ export default function Home() {
 	const [showSplash, setShowSplash] = React.useState(false);
 	const [searchResult, setSearchResult] =
 		useState<DocumentSearchResponse | null>(null);
-	const [generatedAnswer, setGeneratedAnswer] =
-		useState<GenerateAnswerResponse | null>(null);
+	const [generatedAnswer, setGeneratedAnswer] = useState<string | null>(null);
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const [resultHistory, setResultHistory] = useLocalStorage<HistoryEntryType[]>(
