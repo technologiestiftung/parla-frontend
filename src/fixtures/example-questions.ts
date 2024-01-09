@@ -1,5 +1,5 @@
 export default [
-	"Was beinhaltet die Digitalisierungsstrategie Gemeinsam Digital:Berlin?",
+	"Was beinhaltet die Digitalisierungsstrategie Gemeinsam Digital Berlin?",
 	"Welche Nachhaltigkeitsziele verfolgt der Berliner Senat mit Blick auf die Reduzierung des CO2-Ausstoßes?",
 	"Welche Strategien und Maßnahmen verfolgt der Senat zum Erhalt der Biodiversität in der Stadt?",
 	"In welchen Projekten der Berliner Verwaltung wird aktuell Künstliche Intelligenz eingesetzt?",
