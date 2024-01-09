@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.17.0...v1.18.0) (2024-01-09)
+
+
+### Features
+
+* streaming support ([#59](https://github.com/technologiestiftung/parla-frontend/issues/59)) ([78a0812](https://github.com/technologiestiftung/parla-frontend/commit/78a08128511bf4fa0ed084f973791bab3f585f98))
+
 # [1.17.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.16.0...v1.17.0) (2023-11-30)
 
 
