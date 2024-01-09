@@ -38,7 +38,7 @@ function PromptContent(props: PromptContentProps) {
 	}, []);
 
 	return (
-		<div className="pt-8 lg:pt-0">
+		<div className="">
 			<div className="max-w-3xl mx-auto">
 				<Answer
 					generatedAnswer={generatedAnswer}

@@ -1,6 +1,5 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useRef } from "react";
 import { Button } from "./button";
-import { Input } from "./input";
 
 type PromptFormProps = {
 	onSubmit: (query?: string) => void;
@@ -11,6 +10,21 @@ type PromptFormProps = {
 
 function PromptForm(props: PromptFormProps): ReactNode {
 	const { onSubmit, query, isLoading, onChange } = props;
+	const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+	useEffect(() => {
+		handleInputChange();
+	}, [query]);
+
+	// See https://stackoverflow.com/questions/2803880/is-there-a-way-to-get-a-textarea-to-stretch-to-fit-its-content-without-using-php for reference
+	const handleInputChange = () => {
+		const textArea = textAreaRef.current;
+		if (textArea) {
+			textArea.style.height = ""; // Reset the height to recalculate the scroll height
+			textArea.style.height = `${textArea.scrollHeight}px`; // Set the height based on scrollHeight
+		}
+	};
+
 	return (
 		<div>
 			<form
@@ -21,19 +35,24 @@ function PromptForm(props: PromptFormProps): ReactNode {
 				className="relative w-full max-w-3xl mx-auto flex"
 				name="promptForm"
 			>
-				<Input
+				<textarea
+					ref={textAreaRef}
+					rows={1}
 					value={query || ""}
 					name="query"
 					id="query"
-					className="pl-4 py-4 pr-[100px] resize-none shadow-md"
+					className="pl-4 py-4 pr-[100px] resize-none shadow-md w-full rounded-md border border-input overflow-hidden"
 					placeholder="Stellen Sie hier Ihre Frage"
-					onChange={onChange}
 					disabled={isLoading}
 					onKeyDown={(event) => {
 						if (event.key === "Enter" && !event.shiftKey) {
 							event.preventDefault();
 							onSubmit(query);
 						}
+					}}
+					onChange={(e) => {
+						handleInputChange();
+						onChange(e);
 					}}
 				/>
 				<Button
