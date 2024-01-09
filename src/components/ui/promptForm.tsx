@@ -42,7 +42,7 @@ function PromptForm(props: PromptFormProps): ReactNode {
 					name="query"
 					id="query"
 					className="pl-4 py-4 pr-[100px] resize-none shadow-md w-full rounded-md border border-input overflow-hidden"
-					placeholder="Stellen Sie hier Ihre Frage"
+					placeholder="Stellen Sie hier Ihre Frage oder wählen Sie eines der Beispiele aus"
 					disabled={isLoading}
 					onKeyDown={(event) => {
 						if (event.key === "Enter" && !event.shiftKey) {
