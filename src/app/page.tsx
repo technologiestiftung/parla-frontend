@@ -32,7 +32,7 @@ export default function Home() {
 	const selectedSearchAlgorithm =
 		searchParams.get("search-algorithm") ?? Algorithms.ChunksAndSummaries;
 
-	const [title, setTitle] = useState<string | null>(null);
+	const [title, setTitle] = useState<string | undefined>(undefined);
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [searchIsLoading, setSearchIsLoading] = useState(false);
 	const [answerIsLoading, setAnswerIsLoading] = useState(false);
@@ -132,7 +132,7 @@ export default function Home() {
 
 	function resetState(): void {
 		abortController.current?.abort();
-		setTitle(null);
+		setTitle(undefined);
 		setSearchResult(null);
 		setErrors(null);
 		setFormData(defaultFormdata);
