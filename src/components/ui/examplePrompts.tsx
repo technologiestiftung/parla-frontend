@@ -1,5 +1,4 @@
-import React, { MouseEvent, ReactNode } from "react";
-import { Button } from "./button";
+import { ReactNode } from "react";
 
 type ExamplePromptsProps = {
 	examplePrompts: string[];
@@ -9,24 +8,23 @@ type ExamplePromptsProps = {
 function ExamplePrompts(props: ExamplePromptsProps): ReactNode {
 	const examples = props.examplePrompts || [];
 	return (
-		<div className="max-w-2xl mx-auto pt-3">
-			<h4 className="font-bold mb-3">Beispiele</h4>
-			<div className="flex flex-col gap-px bg-slate-200 border border-slate-200 relative rounded w-100">
+		<div className="max-w-3xl mx-auto">
+			<h4 className="font-large mb-3 pl-4">Beispiele</h4>
+			<div className="space-y-2">
 				{examples.map((example) => (
-					<Button
+					<div
 						key={example}
 						onClick={(evt) => props.onClick(example)}
 						className={[
-							"block whitespace-normal h-auto px-4 py-3 text-base rounded-none",
-							"text-blue-700 hover:text-white text-left bg-slate-50 hover:bg-blue-900",
-							"hover:rounded relative focus-visible:z-10 focus-visible:rounded-sm",
-							"first-of-type:rounded-t last-of-type:rounded-b",
+							"bg-white shadow-md rounded-md block whitespace-normal h-auto px-4 py-3 text-base",
+							"hover:text-white hover:bg-blue-900 hover:cursor-pointer",
+							"relative focus-visible:z-10 focus-visible:rounded-sm",
 						]
 							.filter(Boolean)
 							.join(" ")}
 					>
 						{example}
-					</Button>
+					</div>
 				))}
 			</div>
 		</div>

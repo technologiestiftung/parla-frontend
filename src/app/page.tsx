@@ -185,7 +185,7 @@ export default function Home() {
 						<div className="w-full flex flex-col justify-between">
 							<div className="px-10 py-7 space-y-10">
 								<PromptForm
-									query={formData.query}
+									query={formData.query || title}
 									onChange={onChange}
 									onSubmit={onSubmit}
 									isLoading={searchIsLoading}

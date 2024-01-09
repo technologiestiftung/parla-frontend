@@ -1,8 +1,6 @@
-import React, { FormEventHandler, ReactNode } from "react";
-import { Input } from "./input";
+import React, { ReactNode } from "react";
 import { Button } from "./button";
-import Envelope from "./envelopeIcon";
-import { cn } from "@/lib/utils";
+import { Input } from "./input";
 
 type PromptFormProps = {
 	onSubmit: (query?: string) => void;
@@ -20,14 +18,14 @@ function PromptForm(props: PromptFormProps): ReactNode {
 					evt.preventDefault();
 					onSubmit(query);
 				}}
-				className="relative w-full max-w-2xl mx-auto flex"
+				className="relative w-full max-w-3xl mx-auto flex"
 				name="promptForm"
 			>
 				<Input
 					value={query || ""}
 					name="query"
 					id="query"
-					className="pl-4 py-4 pr-12 resize-none"
+					className="pl-4 py-4 pr-[100px] resize-none shadow-md"
 					placeholder="Stellen Sie hier Ihre Frage"
 					onChange={onChange}
 					disabled={isLoading}

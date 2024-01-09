@@ -1,12 +1,10 @@
 import { DocumentSearchResponse } from "@/lib/common";
-import React, { ReactNode, useEffect, useState } from "react";
-import SearchResultSection from "../SearchResultSection";
-import AnswerLoadingSkeleton from "./textLoadingSkeleton";
-import DocumentLoadingSkeleton from "./documentLoadingSkeleton";
-import ReactMarkdown from "react-markdown";
-import { cn, getCleanedMetadata } from "@/lib/utils";
 import { getDocumentsCount } from "@/lib/get-documents-count";
 import { texts } from "@/lib/texts";
+import { cn } from "@/lib/utils";
+import { ReactNode, useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import AnswerLoadingSkeleton from "./textLoadingSkeleton";
 
 type AnswerProps = {
 	generatedAnswer: string | null;
@@ -47,7 +45,7 @@ function Answer(props: AnswerProps): ReactNode {
 				{answerIsLoading && !generatedAnswer && <AnswerLoadingSkeleton />}
 				{generatedAnswer && (
 					<>
-						<ReactMarkdown className="prose leading-6 bg-white p-4 rounded-lg shadow-md">
+						<ReactMarkdown className="leading-6 bg-white p-4 rounded-lg shadow-md">
 							{generatedAnswer}
 						</ReactMarkdown>
 						<div

@@ -1,12 +1,10 @@
 import { DocumentSearchResponse } from "@/lib/common";
-import React, { ReactNode, useEffect, useState } from "react";
-import SearchResultSection from "../SearchResultSection";
-import AnswerLoadingSkeleton from "./textLoadingSkeleton";
-import DocumentLoadingSkeleton from "./documentLoadingSkeleton";
-import ReactMarkdown from "react-markdown";
-import { cn, getCleanedMetadata } from "@/lib/utils";
 import { getDocumentsCount } from "@/lib/get-documents-count";
 import { texts } from "@/lib/texts";
+import { getCleanedMetadata } from "@/lib/utils";
+import { ReactNode, useEffect, useState } from "react";
+import SearchResultSection from "../SearchResultSection";
+import DocumentLoadingSkeleton from "./documentLoadingSkeleton";
 
 type SourcesProps = {
 	searchResult: DocumentSearchResponse | null;
@@ -35,7 +33,7 @@ function Sources(props: SourcesProps): ReactNode {
 	}
 
 	return (
-		<div className="max-w-2xl mx-auto space-y-4">
+		<div className="max-w-3xl mx-auto space-y-4">
 			<h5 className="text-lg mt-4 ml-4">
 				{searchIsLoading &&
 					`${documentsCount} ${texts.documentsAreLoading}.`.trim()}
@@ -43,7 +41,7 @@ function Sources(props: SourcesProps): ReactNode {
 			</h5>
 			{searchIsLoading && <DocumentLoadingSkeleton />}
 			{!searchIsLoading && matches.length > 0 && (
-				<div className="space-y-3">
+				<div className="space-y-4">
 					{matches
 						.sort((l, r) => {
 							const lm = getCleanedMetadata(l);
