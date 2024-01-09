@@ -22,6 +22,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
 import { v4 as uuidv4 } from "uuid";
+import Sources from "@/components/ui/sources";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
@@ -178,11 +179,17 @@ export default function Home() {
 					<main
 						className={cn(
 							"flex h-screen lg:h-[calc(100vh-2rem)] overflow-y-auto justify-center",
-							"bg-white  lg:rounded-md border border-slate-200 relative",
+							"bg-[#F8FAFC] lg:rounded-md border border-slate-200 relative",
 						)}
 					>
 						<div className="w-full flex flex-col justify-between">
-							<div className="px-10 py-7 space-y-4">
+							<div className="px-10 py-7 space-y-10">
+								<PromptForm
+									query={formData.query}
+									onChange={onChange}
+									onSubmit={onSubmit}
+									isLoading={searchIsLoading}
+								/>
 								<PromptContent
 									title={title}
 									searchResult={searchResult}
@@ -194,13 +201,11 @@ export default function Home() {
 									searchIsLoading={searchIsLoading}
 									answerIsLoading={answerIsLoading}
 								/>
+								<Sources
+									searchIsLoading={searchIsLoading}
+									searchResult={searchResult}
+								/>
 							</div>
-							<PromptForm
-								query={formData.query}
-								onChange={onChange}
-								onSubmit={onSubmit}
-								isLoading={searchIsLoading}
-							/>
 						</div>
 					</main>
 					<MobileSidebar

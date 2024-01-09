@@ -9,9 +9,9 @@ type ExamplePromptsProps = {
 function ExamplePrompts(props: ExamplePromptsProps): ReactNode {
 	const examples = props.examplePrompts || [];
 	return (
-		<div className="max-w-xl mx-auto pt-3">
+		<div className="max-w-2xl mx-auto pt-3">
 			<h4 className="font-bold mb-3">Beispiele</h4>
-			<div className="flex flex-col gap-px bg-slate-200 border border-slate-200 relative rounded w-[calc(100%+2rem)] -ml-4">
+			<div className="flex flex-col gap-px bg-slate-200 border border-slate-200 relative rounded w-100">
 				{examples.map((example) => (
 					<Button
 						key={example}

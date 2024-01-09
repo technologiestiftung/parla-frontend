@@ -14,18 +14,13 @@ type PromptFormProps = {
 function PromptForm(props: PromptFormProps): ReactNode {
 	const { onSubmit, query, isLoading, onChange } = props;
 	return (
-		<div
-			className={cn(
-				"w-full sticky bottom-0",
-				"p-2 lg:px-0 bg-slate-50 border-t border-slate-200 shadow-lg",
-			)}
-		>
+		<div>
 			<form
 				onSubmit={(evt) => {
 					evt.preventDefault();
 					onSubmit(query);
 				}}
-				className="relative w-full max-w-xl mx-auto flex"
+				className="relative w-full max-w-2xl mx-auto flex"
 				name="promptForm"
 			>
 				<Input
@@ -46,10 +41,9 @@ function PromptForm(props: PromptFormProps): ReactNode {
 				<Button
 					className="absolute right-2 bottom-2 bg-blue-700 hover:bg-blue-900 text-white font-bold"
 					type="submit"
-					size="icon"
 					disabled={isLoading}
 				>
-					{isLoading ? <Spinner /> : <Envelope />}
+					{isLoading ? <Spinner /> : <div>SUCHE</div>}
 				</Button>
 			</form>
 		</div>

@@ -40,21 +40,14 @@ function PromptContent(props: PromptContentProps) {
 	return (
 		<div className="space-y-2 pt-8 lg:pt-0">
 			{!title && (
-				<div className="max-w-xl mx-auto">
+				<div className="max-w-2xl mx-auto">
 					<h3 className="leading-snug text-xl py-3">
 						Schreiben Sie Ihre Frage in das Suchfeld oder klicken Sie auf auf
 						eines der Beispiele, um den KI-Assistenten zu starten.
 					</h3>
 				</div>
 			)}
-			<div className="max-w-xl mx-auto">
-				{title && (
-					<>
-						<p className="leading-7 text-lg font-light whitespace-pre-wrap mb-6">
-							{title}
-						</p>
-					</>
-				)}
+			<div className="max-w-2xl mx-auto">
 				<Answer
 					generatedAnswer={generatedAnswer}
 					answerIsLoading={answerIsLoading}

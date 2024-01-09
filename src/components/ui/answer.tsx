@@ -40,22 +40,19 @@ function Answer(props: AnswerProps): ReactNode {
 	return (
 		<>
 			<div className="mb-4">
-				<h5 className="text-lg font-bold mb-2">
+				<h5 className="text-lg mb-2 ml-4">
 					{answerIsLoading && texts.answerIsLoading}
 					{!answerIsLoading && generatedAnswer && texts.answerTitle}
 				</h5>
 				{answerIsLoading && !generatedAnswer && <AnswerLoadingSkeleton />}
 				{generatedAnswer && (
 					<>
-						<ReactMarkdown className="prose leading-6">
+						<ReactMarkdown className="prose leading-6 bg-white p-4 rounded-lg shadow-md">
 							{generatedAnswer}
 						</ReactMarkdown>
 						<div
 							tabIndex={0}
-							className={cn(
-								`prose leading-6 focus:outline-none group`,
-								`mt-6 border-t border-slate-200 mb-8 text-sm`,
-							)}
+							className={cn(`leading-6 p-4 rounded-lg text-sm w-full`)}
 						>
 							<ReactMarkdown
 								className={cn(
@@ -72,31 +69,7 @@ ${texts.answerDisclaimer}
 						</div>
 					</>
 				)}
-				<h5 className="font-bold mt-4">
-					{searchIsLoading &&
-						`${documentsCount} ${texts.documentsAreLoading}.`.trim()}
-					{!searchIsLoading && searchResult && texts.documentsTitle}
-				</h5>
 			</div>
-			{searchIsLoading && <DocumentLoadingSkeleton />}
-			{!searchIsLoading && matches.length > 0 && (
-				<div className="w-[calc(100%+2rem)] -ml-4">
-					{matches
-						.sort((l, r) => {
-							const lm = getCleanedMetadata(l);
-							const rm = getCleanedMetadata(r);
-							return lm.similarity < rm.similarity ? 1 : -1;
-						})
-						.map((documentMatch) => {
-							return (
-								<SearchResultSection
-									key={documentMatch.registered_document.id}
-									documentMatch={documentMatch}
-								/>
-							);
-						})}
-				</div>
-			)}
 		</>
 	);
 }

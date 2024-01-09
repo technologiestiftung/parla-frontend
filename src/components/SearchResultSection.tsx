@@ -1,8 +1,7 @@
-import * as Tooltip from "@radix-ui/react-tooltip";
 import type { ResponseDocumentMatch } from "@/lib/common";
-import React, { ReactNode, useState } from "react";
-import { Link } from "./Link";
 import { cn, getCleanedMetadata } from "@/lib/utils";
+import { ReactNode, useState } from "react";
+import { Link } from "./Link";
 import { AcrobatIcon } from "./ui/acrobat-icon";
 
 interface SearchResultProps {
@@ -21,14 +20,13 @@ function ExpandableTableCell({ content }: { content: string }) {
 	return (
 		<p className="text-sm sm:text-base mb-4">
 			{displayedContent}
-			<br />
 			<button
 				className={cn(
 					"underline text-blue-700 hover:text-blue-900",
 					"bg-none focus-visible:outline-none",
 					"focus-visible:ring-2 focus-visible:ring-blue-700",
 					"focus-visible:ring-offset-4 focus-visible:ring-offset-white",
-					"focus-visible:rounded-sm",
+					"focus-visible:rounded-sm ml-2",
 				)}
 				onClick={handleClick}
 			>
@@ -39,12 +37,9 @@ function ExpandableTableCell({ content }: { content: string }) {
 }
 
 function TagsList(props: { tags: string[] }) {
-	const [isExpanded, setIsExpanded] = useState<boolean>(false);
-	const maxTags = 3;
-	const tags = isExpanded ? props.tags : props.tags.slice(0, maxTags);
 	return (
 		<div className="flex gap-x-2 gap-y-1 flex-wrap">
-			{tags.map((tag) => (
+			{props.tags.map((tag) => (
 				<span
 					className="px-2 py-0.5 bg-slate-100 text-slate-600 text-xs inline-block rounded-full"
 					key={tag}
@@ -52,23 +47,6 @@ function TagsList(props: { tags: string[] }) {
 					{tag}
 				</span>
 			))}
-			{props.tags.length > maxTags && (
-				<button
-					className={cn(
-						"inline-block rounded-full transition-colors text-xs",
-						isExpanded
-							? "text-blue-700 underline"
-							: "bg-slate-100 text-slate-600 px-2 py-0.5 hover:bg-blue-900 hover:text-white",
-						"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700",
-						"focus-visible:ring-offset-4 focus-visible:ring-offset-white",
-					)}
-					onClick={() => setIsExpanded(!isExpanded)}
-				>
-					{!isExpanded
-						? `+${props.tags.length - maxTags}`
-						: `Schlagworte ausblenden`}
-				</button>
-			)}
 		</div>
 	);
 }
@@ -89,7 +67,7 @@ export default function SearchResultSection({
 		getCleanedMetadata(documentMatch);
 
 	return (
-		<div className="border-x border-t last-of-type:border-b first-of-type:rounded-t last-of-type:rounded-b p-4">
+		<div className="bg-white p-4 rounded-lg shadow-md">
 			<div className="flex gap-2 justify-between items-center relative">
 				<span className="flex gap-x-2 flex-wrap items-center text-sm sm:text-base">
 					<span>{type}</span>
@@ -115,9 +93,7 @@ export default function SearchResultSection({
 				<SimilarityDisplay similarity={similarity} />
 			</div>
 
-			<h6 className="font-bold text-lg mt-2 sm:mt-1 mb-3 leading-snug">
-				{title}
-			</h6>
+			<h6 className="text-lg mt-2 sm:mt-1 mb-3 leading-snug">{title}</h6>
 
 			<ExpandableTableCell
 				content={
