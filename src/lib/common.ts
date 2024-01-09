@@ -64,15 +64,11 @@ export interface DocumentSearchResponse {
 	documentMatches: ResponseDocumentMatch[];
 }
 
-export interface GenerateAnswerResponse {
-	answer: CreateChatCompletionResponse;
-}
-
 export interface HistoryEntryType {
 	id: string;
 	query: string;
 	searchResponse: DocumentSearchResponse;
-	answerResponse: GenerateAnswerResponse;
+	answerResponse: string;
 }
 
 export enum Algorithms {

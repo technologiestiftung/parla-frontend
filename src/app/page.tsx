@@ -10,7 +10,6 @@ import {
 	Algorithms,
 	DocumentSearchBody,
 	DocumentSearchResponse,
-	GenerateAnswerResponse,
 	HistoryEntryType,
 	availableAlgorithms,
 } from "@/lib/common";
@@ -22,6 +21,7 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
+import { v4 as uuidv4 } from "uuid";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
@@ -38,8 +38,7 @@ export default function Home() {
 	const [showSplash, setShowSplash] = React.useState(false);
 	const [searchResult, setSearchResult] =
 		useState<DocumentSearchResponse | null>(null);
-	const [generatedAnswer, setGeneratedAnswer] =
-		useState<GenerateAnswerResponse | null>(null);
+	const [generatedAnswer, setGeneratedAnswer] = useState<string | null>(null);
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const [resultHistory, setResultHistory] = useLocalStorage<HistoryEntryType[]>(
@@ -93,12 +92,15 @@ export default function Home() {
 				query,
 				documentMatches: searchResponse.documentMatches,
 				signal: abortController.current.signal,
+				chunkCallback: (chunk) => {
+					setGeneratedAnswer(chunk);
+				},
 			});
 
 			setResultHistory((prev) => [
 				...prev,
 				{
-					id: answerResponse.answer.id,
+					id: uuidv4(),
 					query,
 					searchResponse,
 					answerResponse,
