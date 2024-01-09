@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button } from "./button";
 
 type PromptFormProps = {
@@ -8,7 +8,7 @@ type PromptFormProps = {
 	onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
-function PromptForm(props: PromptFormProps): ReactNode {
+function PromptForm(props: PromptFormProps): JSX.Element {
 	const { onSubmit, query, isLoading, onChange } = props;
 	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 

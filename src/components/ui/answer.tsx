@@ -15,7 +15,7 @@ type AnswerProps = {
 
 const formatter = new Intl.NumberFormat("de-DE");
 
-function Answer(props: AnswerProps): ReactNode {
+function Answer(props: AnswerProps): JSX.Element {
 	const [documentsCount, setDocumentsCount] = useState("");
 	const { generatedAnswer, searchResult, searchIsLoading, answerIsLoading } =
 		props;

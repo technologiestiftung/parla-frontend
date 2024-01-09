@@ -1,6 +1,6 @@
 import type { ResponseDocumentMatch } from "@/lib/common";
 import { cn, getCleanedMetadata } from "@/lib/utils";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { Link } from "./Link";
 import { AcrobatIcon } from "./ui/acrobat-icon";
 
@@ -55,7 +55,7 @@ type SimilarityDisplayProps = {
 	similarity: number;
 };
 
-function SimilarityDisplay(props: SimilarityDisplayProps): ReactNode {
+function SimilarityDisplay(props: SimilarityDisplayProps): JSX.Element {
 	const similarityRouded = Math.floor(props.similarity * 1000) / 10;
 	return <span className="text-xs">{similarityRouded}% Relevanz</span>;
 }

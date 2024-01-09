@@ -2,7 +2,7 @@ import { DocumentSearchResponse } from "@/lib/common";
 import { getDocumentsCount } from "@/lib/get-documents-count";
 import { texts } from "@/lib/texts";
 import { getCleanedMetadata } from "@/lib/utils";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SearchResultSection from "../SearchResultSection";
 import DocumentLoadingSkeleton from "./documentLoadingSkeleton";
 
@@ -13,7 +13,7 @@ type SourcesProps = {
 
 const formatter = new Intl.NumberFormat("de-DE");
 
-function Sources(props: SourcesProps): ReactNode {
+function Sources(props: SourcesProps): JSX.Element {
 	const [documentsCount, setDocumentsCount] = useState("");
 	const { searchResult, searchIsLoading } = props;
 	const matches = searchResult?.documentMatches ?? [];

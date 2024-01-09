@@ -1,11 +1,9 @@
-import { ReactNode } from "react";
-
 type ExamplePromptsProps = {
 	examplePrompts: string[];
 	onClick: (prompt: string) => void;
 };
 
-function ExamplePrompts(props: ExamplePromptsProps): ReactNode {
+function ExamplePrompts(props: ExamplePromptsProps): JSX.Element {
 	const examples = props.examplePrompts || [];
 	return (
 		<div className="max-w-3xl mx-auto">
