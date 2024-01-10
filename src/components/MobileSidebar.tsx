@@ -4,6 +4,7 @@ import { MouseEvent, ReactNode, useState } from "react";
 import { Button } from "./ui/button";
 import Sidebar from "./ui/sidebar";
 import { HistoryEntryType } from "@/lib/common";
+import { cn } from "@/lib/utils";
 
 export default function MobileSidebar({
 	isHistoryOpen,
@@ -17,7 +18,7 @@ export default function MobileSidebar({
 	isHistoryOpen: boolean;
 	setSidebarisOpen: (isOpen: boolean) => void;
 	newRequestHandler: (event: MouseEvent<HTMLButtonElement>) => void;
-	openSplashScreen:() => void;
+	openSplashScreen: () => void;
 	children: ReactNode;
 }) {
 	const [isMobileSidebarVisible, setIsMobileSidebarVisible] = useState(false);
@@ -70,14 +71,31 @@ export default function MobileSidebar({
 					></div>
 				</div>
 			</div>
-			<div className="absolute top-0 lg:hidden z-60 p-3">
-				<Button
-					onClick={() => setIsMobileSidebarVisible(!isMobileSidebarVisible)}
-					className="p3"
-					size="icon"
-				>
-					<HamburgerMenuIcon width={20} height={20} />
-				</Button>
+			<div className="absolute top-0 lg:hidden z-60 p-3 w-full border-y">
+				<div className="flex flex-row justify-between items-center">
+					<button
+						onClick={() => setIsMobileSidebarVisible(!isMobileSidebarVisible)}
+					>
+						<HamburgerMenuIcon className="w-[20px] h-[20px]"></HamburgerMenuIcon>
+					</button>
+					<div className="italic font-bold">Parla</div>
+					<div>
+						<button
+							onClick={() => {
+								openSplashScreen();
+							}}
+							className={cn(
+								"px-2 hover:bg-blue-900",
+								"text-sm text-slate-400 hover:text-white",
+								"border-2 rounded-full border-slate-400 hover:border-blue-900",
+								"focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2",
+								"focus-visible:outline-none",
+							)}
+						>
+							i
+						</button>
+					</div>
+				</div>
 			</div>
 		</>
 	);

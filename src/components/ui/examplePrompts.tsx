@@ -10,7 +10,7 @@ function ExamplePrompts(props: ExamplePromptsProps): JSX.Element {
 	}
 	return (
 		<div className="max-w-3xl mx-auto pb-12">
-			<h4 className="font-large mb-3 pl-4">Beispiele</h4>
+			<h5 className="text-lg ml-4 mb-2">Beispiele</h5>
 			<div className="space-y-2">
 				{examples.map((example) => (
 					<div

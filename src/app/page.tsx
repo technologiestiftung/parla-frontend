@@ -6,6 +6,7 @@ import PromptForm from "@/components/ui/promptForm";
 import PromptContent from "@/components/ui/promtContent";
 import ResultHistory from "@/components/ui/resultHistory";
 import Sidebar from "@/components/ui/sidebar";
+import Sources from "@/components/ui/sources";
 import {
 	Algorithms,
 	DocumentSearchBody,
@@ -15,14 +16,13 @@ import {
 } from "@/lib/common";
 import { generateAnswer } from "@/lib/generate-answer";
 import { useLocalStorage } from "@/lib/hooks/localStorage";
+import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
-import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
 import { v4 as uuidv4 } from "uuid";
-import Sources from "@/components/ui/sources";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
