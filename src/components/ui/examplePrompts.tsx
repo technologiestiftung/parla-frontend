@@ -18,7 +18,7 @@ function ExamplePrompts(props: ExamplePromptsProps): JSX.Element {
 						onClick={(evt) => props.onClick(example)}
 						className={[
 							"bg-white shadow-md rounded-md block whitespace-normal h-auto px-4 py-3 text-base",
-							"hover:text-white hover:bg-blue-900 hover:cursor-pointer",
+							"sm:hover:text-white sm:hover:bg-blue-900 sm:hover:cursor-pointer",
 							"relative focus-visible:z-10 focus-visible:rounded-sm",
 						]
 							.filter(Boolean)
