@@ -178,7 +178,7 @@ export default function Home() {
 					</aside>
 					<main
 						className={cn(
-							"flex h-screen lg:h-[calc(100vh-2rem)] overflow-y-auto justify-center",
+							"flex h-full lg:h-[calc(100vh-2rem)] overflow-y-auto justify-center",
 							"bg-[#F8FAFC] lg:rounded-md border border-slate-200 relative",
 						)}
 					>
