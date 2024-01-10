@@ -21,7 +21,6 @@ import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
-import { isMobile } from "react-device-detect";
 import { v4 as uuidv4 } from "uuid";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
@@ -54,7 +53,7 @@ export default function Home() {
 	const [searchConfig] = useState<DocumentSearchBody>(algorithm);
 
 	useEffect(() => {
-		setSidebarIsOpen(!isMobile);
+		setSidebarIsOpen(false);
 		setShowSplash(showSplashScreenRef.current);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -155,8 +154,8 @@ export default function Home() {
 		<>
 			<SplashScreen open={showSplash} setOpen={setShowSplash} />
 			<div className="min-h-screen w-full z-50">
-				<div className="flex flex-col min-h-screen lg:grid lg:grid-cols-[280px_1fr] lg:gap-4 bg-slate-100 lg:p-4">
-					<aside className="hidden h-[calc(100vh-2rem)] lg:block sidebar overflow-y-auto">
+				<div className="flex flex-col min-h-screen md:grid md:grid-cols-[280px_1fr] md:gap-2 md:p-2 lg:grid lg:grid-cols-[320px_1fr] lg:gap-4 bg-slate-100 lg:p-4">
+					<aside className="hidden h-[calc(100vh-2rem)] md:block sidebar overflow-y-auto">
 						<Sidebar
 							sidebarIsOpen={sidebarIsOpen}
 							onNewRequest={newRequestHandler}
@@ -189,7 +188,7 @@ export default function Home() {
 						)}
 					>
 						<div className="w-full flex flex-col justify-between">
-							<div className="px-2 pt-[60px] space-y-6 md:px-10 md:pt-6 md:space-y-6">
+							<div className="px-2 pt-[60px] space-y-6 md:px-2 md:pt-6 md:space-y-6 lg:px-10 lg:pt-6 lg:space-y-6">
 								<PromptForm
 									query={formData.query || title}
 									onChange={onChange}

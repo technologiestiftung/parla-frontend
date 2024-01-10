@@ -75,7 +75,7 @@ export default function MobileSidebar({
 					></div>
 				</div>
 			</div>
-			<div className="absolute top-0 lg:hidden z-60 p-3 w-full border-y">
+			<div className="absolute top-0 md:hidden z-60 p-3 w-full border-y">
 				<div className="flex flex-row justify-between items-center">
 					<button onClick={() => setSidebarisOpen(!sidebarIsOpen)}>
 						<HamburgerMenuIcon className="w-[20px] h-[20px]"></HamburgerMenuIcon>

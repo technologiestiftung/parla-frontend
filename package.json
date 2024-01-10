@@ -3,7 +3,7 @@
 	"version": "1.18.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev",
+		"dev": "next dev -H 0.0.0.0",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint"
@@ -20,7 +20,6 @@
 		"clsx": "2.0.0",
 		"lucide-react": "0.289.0",
 		"react": "18.2.0",
-		"react-device-detect": "2.2.3",
 		"react-dom": "18.2.0",
 		"react-markdown": "8.0.7",
 		"tailwind-merge": "1.14.0",
