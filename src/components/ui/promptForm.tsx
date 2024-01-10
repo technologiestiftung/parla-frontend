@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
+import { text } from "stream/consumers";
 
 type PromptFormProps = {
 	onSubmit: (query?: string) => void;
@@ -33,8 +34,16 @@ function PromptForm(props: PromptFormProps): JSX.Element {
 	const handleInputChange = () => {
 		const textArea = textAreaRef.current;
 		if (textArea) {
-			textArea.style.height = ""; // Reset the height to recalculate the scroll height
-			textArea.style.height = `${textArea.scrollHeight}px`; // Set the height based on scrollHeight
+			if (!textArea.value || textArea.value === "") {
+				textArea.value =
+					"Stellen Sie hier Ihre Frage oder wählen Sie eines der Beispiele aus";
+				textArea.style.height = ""; // Reset the height to recalculate the scroll height
+				textArea.style.height = `${textArea.scrollHeight}px`; // Set the height based on scrollHeight
+				textArea.value = "";
+			} else {
+				textArea.style.height = ""; // Reset the height to recalculate the scroll height
+				textArea.style.height = `${textArea.scrollHeight}px`; // Set the height based on scrollHeight
+			}
 		}
 	};
 
