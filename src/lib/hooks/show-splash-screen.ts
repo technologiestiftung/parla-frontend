@@ -15,11 +15,11 @@ export function useShowSplashScreenFromLocalStorage() {
 			}
 
 			showSplashScreenRef.current = parsedItem;
-			// window.sessionStorage.setItem(showSplashScreenKey, JSON.stringify(false));
+			window.sessionStorage.setItem(showSplashScreenKey, JSON.stringify(false));
 		} catch (error) {
 			console.error(error);
 			showSplashScreenRef.current = true;
-			// window.sessionStorage.setItem(showSplashScreenKey, JSON.stringify(false));
+			window.sessionStorage.setItem(showSplashScreenKey, JSON.stringify(false));
 		}
 	}, []);
 
