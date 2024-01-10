@@ -42,6 +42,7 @@ export default function Home() {
 	const [generatedAnswer, setGeneratedAnswer] = useState<string | null>(null);
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+	const [historyIsOpen, setHistoryIsOpen] = useState(false);
 	const [resultHistory, setResultHistory] = useLocalStorage<HistoryEntryType[]>(
 		"parla-history",
 		[],
@@ -161,11 +162,16 @@ export default function Home() {
 							onNewRequest={newRequestHandler}
 							onSidebarOpenChange={setSidebarIsOpen}
 							openSplashScreen={() => setShowSplash(true)}
+							onHistoryOpenChange={setHistoryIsOpen}
+							historyIsOpen={historyIsOpen}
 						>
 							{resultHistory && resultHistory.length > 0 && (
 								<ResultHistory
 									resultHistory={resultHistory}
-									restoreResultHistoryItem={restoreResultHistoryItem}
+									restoreResultHistoryItem={(id) => {
+										setSidebarIsOpen(false);
+										restoreResultHistoryItem(id);
+									}}
 									clearResultHistory={() => setResultHistory([])}
 									removeResultHistoryItem={(id) => {
 										setResultHistory((prev) =>
@@ -211,15 +217,20 @@ export default function Home() {
 					<MobileSidebar
 						resultHistory={resultHistory}
 						restoreResultHistoryItem={restoreResultHistoryItem}
-						isHistoryOpen={sidebarIsOpen}
+						isHistoryOpen={historyIsOpen}
+						sidebarIsOpen={sidebarIsOpen}
 						setSidebarisOpen={setSidebarIsOpen}
 						newRequestHandler={newRequestHandler}
 						openSplashScreen={() => setShowSplash(true)}
+						setHistoryOpen={setHistoryIsOpen}
 					>
 						{resultHistory && (
 							<ResultHistory
 								resultHistory={resultHistory}
-								restoreResultHistoryItem={restoreResultHistoryItem}
+								restoreResultHistoryItem={(id) => {
+									setSidebarIsOpen(false);
+									restoreResultHistoryItem(id);
+								}}
 								clearResultHistory={() => setResultHistory([])}
 								removeResultHistoryItem={(id) => {
 									setResultHistory((prev) =>

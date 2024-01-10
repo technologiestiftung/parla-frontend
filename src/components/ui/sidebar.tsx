@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { MouseEventHandler, ReactNode } from "react";
+import { MouseEventHandler, ReactNode, useEffect } from "react";
 import { Button } from "./button";
 import { ChevronDownIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
 import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
@@ -7,12 +7,18 @@ import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
 type SidebarProps = {
 	onNewRequest: MouseEventHandler<HTMLButtonElement>;
 	onSidebarOpenChange: (open: boolean) => void;
+	onHistoryOpenChange: (open: boolean) => void;
 	openSplashScreen: () => void;
 	sidebarIsOpen: boolean;
+	historyIsOpen: boolean;
 	children: ReactNode;
 };
 
 function Sidebar(props: SidebarProps): JSX.Element {
+	useEffect(() => {
+		console.log(props);
+	}, [props]);
+
 	return (
 		<>
 			<header className="flex items-center justify-between px-1 py-2">
@@ -57,10 +63,10 @@ function Sidebar(props: SidebarProps): JSX.Element {
 						"focus-visible:ring-2 focus-visible:ring-blue-700",
 						"focus-visible:outline-none focus-visible:rounded-sm my-2",
 					)}
-					onClick={() => props.onSidebarOpenChange(!props.sidebarIsOpen)}
+					onClick={() => props.onHistoryOpenChange(!props.historyIsOpen)}
 				>
 					<span className="block">Vorherige Fragen</span>
-					{props.sidebarIsOpen ? (
+					{props.historyIsOpen ? (
 						<ChevronDownIcon className="text-slate-400" />
 					) : (
 						<ChevronLeftIcon className="text-slate-400" />
@@ -68,8 +74,8 @@ function Sidebar(props: SidebarProps): JSX.Element {
 				</button>
 
 				<Collapsible
-					open={props.sidebarIsOpen}
-					onOpenChange={props.onSidebarOpenChange}
+					open={props.historyIsOpen}
+					onOpenChange={props.onHistoryOpenChange}
 				>
 					<CollapsibleContent>{props.children}</CollapsibleContent>
 				</Collapsible>
