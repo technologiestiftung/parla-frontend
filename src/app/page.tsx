@@ -99,13 +99,13 @@ export default function Home() {
 			});
 
 			setResultHistory((prev) => [
-				...prev,
 				{
 					id: uuidv4(),
 					query,
 					searchResponse,
 					answerResponse,
 				},
+				...prev,
 			]);
 
 			setAnswerIsLoading(false);

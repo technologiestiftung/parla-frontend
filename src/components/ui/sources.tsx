@@ -33,7 +33,7 @@ function Sources(props: SourcesProps): JSX.Element {
 	}
 
 	return (
-		<div className="max-w-3xl mx-auto space-y-4">
+		<div className="max-w-3xl mx-auto space-y-4 pb-12">
 			<h5 className="text-lg mt-4 ml-4">
 				{searchIsLoading &&
 					`${documentsCount} ${texts.documentsAreLoading}.`.trim()}

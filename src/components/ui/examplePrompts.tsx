@@ -9,7 +9,7 @@ function ExamplePrompts(props: ExamplePromptsProps): JSX.Element {
 		return <div></div>;
 	}
 	return (
-		<div className="max-w-3xl mx-auto">
+		<div className="max-w-3xl mx-auto pb-12">
 			<h4 className="font-large mb-3 pl-4">Beispiele</h4>
 			<div className="space-y-2">
 				{examples.map((example) => (

@@ -41,7 +41,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					i
 				</button>
 			</header>
-			<div className="px-1 py-2 border-y border-slate-200">
+			<div className="px-1 py-2 border-slate-200">
 				<Button
 					onClick={props.onNewRequest}
 					className="w-full text-white bg-blue-700 hover:bg-blue-900 font-bold py-2 px-4 flex justify-between"
@@ -50,16 +50,16 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					<span>+</span>
 				</Button>
 			</div>
-			<div className="px-1 py-2">
+			<div className="py-2">
 				<button
 					className={cn(
-						"flex bg-inherit justify-between w-full items-center hover:bg-none px-4 py-3",
+						"flex bg-inherit justify-between w-full items-center hover:bg-none px-4",
 						"focus-visible:ring-2 focus-visible:ring-blue-700",
 						"focus-visible:outline-none focus-visible:rounded-sm my-2",
 					)}
 					onClick={() => props.onSidebarOpenChange(!props.sidebarIsOpen)}
 				>
-					<strong className="block font-bold">Vorherige Fragen</strong>
+					<span className="block">Vorherige Fragen</span>
 					{props.sidebarIsOpen ? (
 						<ChevronDownIcon className="text-slate-400" />
 					) : (
