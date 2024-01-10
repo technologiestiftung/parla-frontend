@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 
 type PromptFormProps = {
@@ -11,6 +11,19 @@ type PromptFormProps = {
 function PromptForm(props: PromptFormProps): JSX.Element {
 	const { onSubmit, query, isLoading, onChange } = props;
 	const textAreaRef = useRef<HTMLTextAreaElement>(null);
+	const [uiInitializing, setUiInitializing] = useState(true);
+
+	useEffect(() => {
+		handleInputChange();
+		setUiInitializing(false);
+		window.addEventListener(
+			"resize",
+			() => {
+				handleInputChange();
+			},
+			false,
+		);
+	}, []);
 
 	useEffect(() => {
 		handleInputChange();
@@ -26,22 +39,22 @@ function PromptForm(props: PromptFormProps): JSX.Element {
 	};
 
 	return (
-		<div>
+		<div className={`${uiInitializing && "opacity-0"}`}>
 			<form
 				onSubmit={(evt) => {
 					evt.preventDefault();
 					onSubmit(query);
 				}}
-				className="relative w-full max-w-3xl mx-auto flex"
+				className={`relative w-full max-w-3xl mx-auto flex`}
 				name="promptForm"
 			>
 				<textarea
 					ref={textAreaRef}
-					rows={1}
 					value={query || ""}
+					rows={1}
 					name="query"
 					id="query"
-					className="pl-4 py-4 pr-[100px] resize-none shadow-md w-full rounded-md border border-input overflow-hidden"
+					className="w-full py-4 pl-4 pr-[100px] rounded-md shadow-md resize-none h-auto"
 					placeholder="Stellen Sie hier Ihre Frage oder wählen Sie eines der Beispiele aus"
 					disabled={isLoading}
 					onKeyDown={(event) => {
@@ -51,7 +64,7 @@ function PromptForm(props: PromptFormProps): JSX.Element {
 						}
 					}}
 					onChange={(e) => {
-						handleInputChange();
+						// handleInputChange();
 						onChange(e);
 					}}
 				/>

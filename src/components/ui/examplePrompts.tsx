@@ -5,6 +5,9 @@ type ExamplePromptsProps = {
 
 function ExamplePrompts(props: ExamplePromptsProps): JSX.Element {
 	const examples = props.examplePrompts || [];
+	if (examples.length === 0) {
+		return <div></div>;
+	}
 	return (
 		<div className="max-w-3xl mx-auto">
 			<h4 className="font-large mb-3 pl-4">Beispiele</h4>
