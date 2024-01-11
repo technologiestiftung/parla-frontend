@@ -22,10 +22,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
 import { v4 as uuidv4 } from "uuid";
+import { useMatomo } from "@/lib/hooks/useMatomo";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
 export default function Home() {
+	useMatomo();
+
 	const abortController = useRef<AbortController | null>(null);
 	const searchParams = useSearchParams();
 	const selectedSearchAlgorithm =
