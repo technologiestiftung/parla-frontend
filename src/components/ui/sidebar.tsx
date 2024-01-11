@@ -15,10 +15,6 @@ type SidebarProps = {
 };
 
 function Sidebar(props: SidebarProps): JSX.Element {
-	useEffect(() => {
-		console.log(props);
-	}, [props]);
-
 	return (
 		<>
 			<header className="flex items-center justify-between px-1 py-2">

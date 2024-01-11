@@ -68,7 +68,7 @@ export default function SearchResultSection({
 
 	return (
 		<div className="bg-white p-4 rounded-lg shadow-md">
-			<div className="flex gap-2 justify-between items-center relative">
+			<div className="flex gap-2 justify-between items-center">
 				<span className="flex gap-x-2 flex-wrap items-center text-sm sm:text-base">
 					<span>{type}</span>
 					<span className="text-slate-400 hidden sm:inline" aria-hidden="true">

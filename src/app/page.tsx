@@ -1,4 +1,5 @@
 "use client";
+import MobileHeader from "@/components/MobileHeader";
 /* eslint-disable @next/next/no-img-element */
 import MobileSidebar from "@/components/MobileSidebar";
 import { SplashScreen } from "@/components/splash-screen";
@@ -41,7 +42,7 @@ export default function Home() {
 	const [generatedAnswer, setGeneratedAnswer] = useState<string | null>(null);
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-	const [historyIsOpen, setHistoryIsOpen] = useState(false);
+	const [historyIsOpen, setHistoryIsOpen] = useState(true);
 	const [resultHistory, setResultHistory] = useLocalStorage<HistoryEntryType[]>(
 		"parla-history",
 		[],
@@ -153,7 +154,7 @@ export default function Home() {
 	return (
 		<>
 			<SplashScreen open={showSplash} setOpen={setShowSplash} />
-			<div className="min-h-screen w-full z-50">
+			<div className="min-h-screen w-full">
 				<div className="flex flex-col min-h-screen md:grid md:grid-cols-[280px_1fr] md:gap-2 md:p-2 lg:grid lg:grid-cols-[320px_1fr] lg:gap-4 bg-slate-100 lg:p-4">
 					<aside className="hidden h-[calc(100vh-2rem)] md:block sidebar overflow-y-auto">
 						<Sidebar
@@ -183,18 +184,28 @@ export default function Home() {
 					</aside>
 					<main
 						className={cn(
-							"flex h-full lg:h-[calc(100vh-2rem)] overflow-y-auto justify-center",
-							"bg-[#F8FAFC] lg:rounded-md border border-slate-200 relative",
+							"flex h-auto lg:h-[calc(100vh-2rem)] sm:overflow-y-auto justify-center",
+							"bg-[#F8FAFC] lg:rounded-md border border-slate-200",
 						)}
 					>
-						<div className="w-full flex flex-col justify-between">
-							<div className="px-2 pt-[60px] space-y-6 md:px-2 md:pt-6 md:space-y-6 lg:px-10 lg:pt-6 lg:space-y-6">
+						<div className="w-full space-y-10">
+							<div
+								className={`sticky top-0 w-full bg-[#F8FAFC] px-2 md:px-2 lg:px-10`}
+							>
+								<MobileHeader
+									sidebarIsOpen={sidebarIsOpen}
+									setSidebarisOpen={setSidebarIsOpen}
+									openSplashScreen={() => setShowSplash(true)}
+								></MobileHeader>
 								<PromptForm
 									query={formData.query || title}
 									onChange={onChange}
 									onSubmit={onSubmit}
 									isLoading={searchIsLoading}
 								/>
+							</div>
+
+							<div className="px-2 space-y-6 md:px-2 md:space-y-6 lg:px-10 lg:space-y-6">
 								<PromptContent
 									title={title}
 									searchResult={searchResult}

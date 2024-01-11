@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
-import { text } from "stream/consumers";
 
 type PromptFormProps = {
 	onSubmit: (query?: string) => void;
@@ -48,7 +47,8 @@ function PromptForm(props: PromptFormProps): JSX.Element {
 	};
 
 	return (
-		<div className={`${uiInitializing && "opacity-0"}`}>
+		<div className={`${uiInitializing ? "opacity-0" : ""}`}>
+			<div className="w-full h-0 sm:h-12 mt-2 sm:mt-0 sm:h-6 bg-[#F8FAFC]"></div>
 			<form
 				onSubmit={(evt) => {
 					evt.preventDefault();
