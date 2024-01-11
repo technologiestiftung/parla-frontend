@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 
 type PromptFormProps = {
-	onSubmit: (query?: string) => void;
-	query?: string;
+	onSubmit: (query: string | null) => void;
+	query: string | null;
 	isLoading: boolean;
 	onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };

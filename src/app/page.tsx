@@ -63,7 +63,7 @@ export default function Home() {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	}, [searchResult, generatedAnswer]);
 
-	async function onSubmit(query?: string) {
+	async function onSubmit(query: string | null) {
 		setErrors(null);
 		setSearchIsLoading(true);
 		setAnswerIsLoading(true);
@@ -136,7 +136,7 @@ export default function Home() {
 
 	function resetState(): void {
 		abortController.current?.abort();
-		setTitle(undefined);
+		setTitle(null);
 		setSearchResult(null);
 		setErrors(null);
 		setFormData(defaultFormdata);
