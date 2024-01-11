@@ -194,6 +194,7 @@ export default function Home() {
 						<div className="w-full space-y-10 sm:space-y-20">
 							<div
 								className={`sticky top-0 w-full bg-[#F8FAFC] px-2 md:px-2 lg:px-10`}
+								style={{ zIndex: 1 }}
 							>
 								<MobileHeader
 									sidebarIsOpen={sidebarIsOpen}
