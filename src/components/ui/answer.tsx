@@ -30,7 +30,9 @@ function Answer(props: AnswerProps): JSX.Element {
 	if (!searchIsLoading && searchResult && matches.length === 0) {
 		return (
 			<>
-				<h4 className="text-lg font-bold mb-2">{texts.noResultsTitle}</h4>
+				<h4 className="mb-2 leading-6 bg-white p-4 rounded-lg shadow-md">
+					{texts.noResultsTitle}
+				</h4>
 			</>
 		);
 	}

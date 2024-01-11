@@ -2,7 +2,8 @@ export const texts = {
 	backText: "Zurück",
 	disclaimerLabel: "Hinweis",
 	disclaimerAriaLabel: "Hinweis zur Verbindlichkeit der Antworten",
-	noResultsTitle: "Keine relevanten Dokumente gefunden",
+	noResultsTitle:
+		"Es konnten keine Informationen zu dieser Frage in den vorliegenden Dokumenten gefunden werden.",
 	answerIsLoading: "Antwort wird generiert...",
 	answerTitle: "Zusammenfassung von Parla:",
 	answerDisclaimer:

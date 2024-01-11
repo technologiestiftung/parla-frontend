@@ -24,20 +24,15 @@ function Sources(props: SourcesProps): JSX.Element {
 		);
 	}, []);
 
-	if (!searchIsLoading && searchResult && matches.length === 0) {
-		return (
-			<>
-				<h4 className="text-lg font-bold mb-2">{texts.noResultsTitle}</h4>
-			</>
-		);
-	}
-
 	return (
 		<div className="max-w-3xl mx-auto pb-12">
 			<h5 className="text-lg ml-4 mb-2">
 				{searchIsLoading &&
 					`${documentsCount} ${texts.documentsAreLoading}.`.trim()}
-				{!searchIsLoading && searchResult && texts.documentsTitle}
+				{!searchIsLoading &&
+					searchResult &&
+					searchResult.documentMatches.length > 0 &&
+					texts.documentsTitle}
 			</h5>
 			{searchIsLoading && <DocumentLoadingSkeleton />}
 			{!searchIsLoading && matches.length > 0 && (

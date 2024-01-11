@@ -68,6 +68,7 @@ export default function Home() {
 		setSearchIsLoading(true);
 		setAnswerIsLoading(true);
 		setSearchResult(null);
+		setGeneratedAnswer(null);
 
 		if (!query || query?.trim().length === 0) {
 			setSearchIsLoading(false);
@@ -88,16 +89,21 @@ export default function Home() {
 			setSearchResult(searchResponse);
 			setSearchIsLoading(false);
 
-			abortController.current = new AbortController();
-			const answerResponse = await generateAnswer({
-				include_summary_in_response_generation: true,
-				query,
-				documentMatches: searchResponse.documentMatches,
-				signal: abortController.current.signal,
-				chunkCallback: (chunk) => {
-					setGeneratedAnswer(chunk);
-				},
-			});
+			let answerResponse = "";
+			if (searchResponse.documentMatches.length > 0) {
+				abortController.current = new AbortController();
+				answerResponse = await generateAnswer({
+					include_summary_in_response_generation: true,
+					query,
+					documentMatches: searchResponse.documentMatches,
+					signal: abortController.current.signal,
+					chunkCallback: (chunk) => {
+						setGeneratedAnswer(chunk);
+					},
+				});
+				setGeneratedAnswer(answerResponse);
+			}
+			setAnswerIsLoading(false);
 
 			setResultHistory((prev) => [
 				{
@@ -108,9 +114,6 @@ export default function Home() {
 				},
 				...prev,
 			]);
-
-			setAnswerIsLoading(false);
-			setGeneratedAnswer(answerResponse);
 		} catch (error) {
 			if (error instanceof Error) {
 				setErrors({ query: error.message });
