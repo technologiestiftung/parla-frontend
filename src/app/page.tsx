@@ -188,7 +188,7 @@ export default function Home() {
 							"bg-[#F8FAFC] lg:rounded-md border border-slate-200",
 						)}
 					>
-						<div className="w-full space-y-10">
+						<div className="w-full space-y-10 sm:space-y-20">
 							<div
 								className={`sticky top-0 w-full bg-[#F8FAFC] px-2 md:px-2 lg:px-10`}
 							>
@@ -205,7 +205,7 @@ export default function Home() {
 								/>
 							</div>
 
-							<div className="px-2 space-y-6 md:px-2 md:space-y-6 lg:px-10 lg:space-y-6">
+							<div className="px-2 md:px-2 lg:px-10">
 								<PromptContent
 									title={title}
 									searchResult={searchResult}
@@ -217,6 +217,9 @@ export default function Home() {
 									searchIsLoading={searchIsLoading}
 									answerIsLoading={answerIsLoading}
 								/>
+							</div>
+
+							<div className="px-2 md:px-2 lg:px-10">
 								<Sources
 									searchIsLoading={searchIsLoading}
 									searchResult={searchResult}

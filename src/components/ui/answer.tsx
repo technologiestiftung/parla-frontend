@@ -37,7 +37,7 @@ function Answer(props: AnswerProps): JSX.Element {
 
 	return (
 		<>
-			<div className="mb-4">
+			<div>
 				<h5 className="text-lg mb-2 ml-4">
 					{answerIsLoading && texts.answerIsLoading}
 					{!answerIsLoading && generatedAnswer && texts.answerTitle}
@@ -50,7 +50,9 @@ function Answer(props: AnswerProps): JSX.Element {
 						</ReactMarkdown>
 						<div
 							tabIndex={0}
-							className={cn(`leading-6 p-4 rounded-lg text-sm w-full`)}
+							className={cn(
+								`leading-6 pt-4 pl-4 pr-4 pb-0 rounded-lg text-sm w-full`,
+							)}
 						>
 							<ReactMarkdown
 								className={cn(
