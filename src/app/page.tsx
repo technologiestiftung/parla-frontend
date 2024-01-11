@@ -126,6 +126,7 @@ export default function Home() {
 
 	function onChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
 		const { name, value } = event.target;
+		setTitle(null);
 		setFormData((prevValues) => ({ ...prevValues, [name]: value }));
 	}
 

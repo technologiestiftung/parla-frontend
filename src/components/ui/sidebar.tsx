@@ -43,7 +43,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					i
 				</button>
 			</header>
-			<div className="px-1 py-2 border-slate-200">
+			<div className="py-2 border-slate-200">
 				<Button
 					onClick={props.onNewRequest}
 					className="w-full text-white bg-blue-700 hover:bg-blue-900 font-bold py-2 px-4 flex justify-between"

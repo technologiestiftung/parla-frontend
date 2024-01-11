@@ -73,7 +73,7 @@ function PromptForm(props: PromptFormProps): JSX.Element {
 						}
 					}}
 					onChange={(e) => {
-						// handleInputChange();
+						handleInputChange();
 						onChange(e);
 					}}
 				/>
