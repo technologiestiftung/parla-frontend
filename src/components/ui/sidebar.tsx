@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
-import { MouseEventHandler, ReactNode, useEffect } from "react";
-import { Button } from "./button";
-import { ChevronDownIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
 import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
+import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
+import { MouseEventHandler, ReactNode } from "react";
+import { Button } from "./button";
 
 type SidebarProps = {
 	onNewRequest: MouseEventHandler<HTMLButtonElement>;
@@ -65,7 +65,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					{props.historyIsOpen ? (
 						<ChevronDownIcon className="text-slate-400" />
 					) : (
-						<ChevronLeftIcon className="text-slate-400" />
+						<ChevronRightIcon className="text-slate-400" />
 					)}
 				</button>
 
