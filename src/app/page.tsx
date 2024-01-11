@@ -32,7 +32,7 @@ export default function Home() {
 	const selectedSearchAlgorithm =
 		searchParams.get("search-algorithm") ?? Algorithms.ChunksAndSummaries;
 
-	const [title, setTitle] = useState<string | undefined>(undefined);
+	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [searchIsLoading, setSearchIsLoading] = useState(false);
 	const [answerIsLoading, setAnswerIsLoading] = useState(false);
@@ -162,11 +162,11 @@ export default function Home() {
 					<aside className="hidden h-[calc(100vh-2rem)] md:block sidebar overflow-y-auto">
 						<Sidebar
 							sidebarIsOpen={sidebarIsOpen}
-							onNewRequest={newRequestHandler}
-							onSidebarOpenChange={setSidebarIsOpen}
-							openSplashScreen={() => setShowSplash(true)}
-							onHistoryOpenChange={setHistoryIsOpen}
+							setSidebarIsOpen={setSidebarIsOpen}
 							historyIsOpen={historyIsOpen}
+							setHistoryIsOpen={setHistoryIsOpen}
+							onNewRequest={newRequestHandler}
+							openSplashScreen={() => setShowSplash(true)}
 						>
 							{resultHistory && resultHistory.length > 0 && (
 								<ResultHistory

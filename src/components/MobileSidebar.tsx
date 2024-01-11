@@ -46,9 +46,9 @@ export default function MobileSidebar({
 							<Sidebar
 								sidebarIsOpen={sidebarIsOpen}
 								onNewRequest={newRequestHandler}
-								onSidebarOpenChange={setSidebarisOpen}
+								setSidebarIsOpen={setSidebarisOpen}
 								openSplashScreen={openSplashScreen}
-								onHistoryOpenChange={setHistoryOpen}
+								setHistoryIsOpen={setHistoryOpen}
 								historyIsOpen={isHistoryOpen}
 							>
 								{children}

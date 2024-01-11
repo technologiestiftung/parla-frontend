@@ -36,10 +36,14 @@ function ExpandableTableCell({ content }: { content: string }) {
 	);
 }
 
-function TagsList(props: { tags: string[] }) {
+interface TagsListProps {
+	tags: string[];
+}
+
+function TagsList({ tags }: TagsListProps) {
 	return (
 		<div className="flex gap-x-2 gap-y-1 flex-wrap">
-			{props.tags.map((tag) => (
+			{tags.map((tag) => (
 				<span
 					className="px-2 py-0.5 bg-slate-100 text-slate-600 text-xs inline-block rounded-full"
 					key={tag}

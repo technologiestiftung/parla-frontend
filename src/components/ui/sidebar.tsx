@@ -5,12 +5,12 @@ import { MouseEventHandler, ReactNode } from "react";
 import { Button } from "./button";
 
 type SidebarProps = {
-	onNewRequest: MouseEventHandler<HTMLButtonElement>;
-	onSidebarOpenChange: (open: boolean) => void;
-	onHistoryOpenChange: (open: boolean) => void;
-	openSplashScreen: () => void;
 	sidebarIsOpen: boolean;
+	setSidebarIsOpen: (open: boolean) => void;
 	historyIsOpen: boolean;
+	setHistoryIsOpen: (open: boolean) => void;
+	onNewRequest: MouseEventHandler<HTMLButtonElement>;
+	openSplashScreen: () => void;
 	children: ReactNode;
 };
 
@@ -59,7 +59,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 						"focus-visible:ring-2 focus-visible:ring-blue-700",
 						"focus-visible:outline-none focus-visible:rounded-sm my-2",
 					)}
-					onClick={() => props.onHistoryOpenChange(!props.historyIsOpen)}
+					onClick={() => props.setHistoryIsOpen(!props.historyIsOpen)}
 				>
 					<span className="block">Vorherige Fragen</span>
 					{props.historyIsOpen ? (
@@ -71,7 +71,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 
 				<Collapsible
 					open={props.historyIsOpen}
-					onOpenChange={props.onHistoryOpenChange}
+					onOpenChange={props.setHistoryIsOpen}
 				>
 					<CollapsibleContent>{props.children}</CollapsibleContent>
 				</Collapsible>
