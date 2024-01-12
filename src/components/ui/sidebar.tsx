@@ -1,14 +1,16 @@
 import { cn } from "@/lib/utils";
+import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
+import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { MouseEventHandler, ReactNode } from "react";
 import { Button } from "./button";
-import { ChevronDownIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
-import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
 
 type SidebarProps = {
-	onNewRequest: MouseEventHandler<HTMLButtonElement>;
-	onSidebarOpenChange: (open: boolean) => void;
-	openSplashScreen: () => void;
 	sidebarIsOpen: boolean;
+	setSidebarIsOpen: (open: boolean) => void;
+	historyIsOpen: boolean;
+	setHistoryIsOpen: (open: boolean) => void;
+	onNewRequest: MouseEventHandler<HTMLButtonElement>;
+	openSplashScreen: () => void;
 	children: ReactNode;
 };
 
@@ -41,7 +43,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					i
 				</button>
 			</header>
-			<div className="px-1 py-2 border-y border-slate-200">
+			<div className="py-2 border-slate-200">
 				<Button
 					onClick={props.onNewRequest}
 					className="w-full text-white bg-blue-700 hover:bg-blue-900 font-bold py-2 px-4 flex justify-between"
@@ -50,26 +52,26 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					<span>+</span>
 				</Button>
 			</div>
-			<div className="px-1 py-2">
+			<div className="py-2">
 				<button
 					className={cn(
-						"flex bg-inherit justify-between w-full items-center hover:bg-none px-4 py-3",
+						"flex bg-inherit justify-between w-full items-center hover:bg-none px-4",
 						"focus-visible:ring-2 focus-visible:ring-blue-700",
 						"focus-visible:outline-none focus-visible:rounded-sm my-2",
 					)}
-					onClick={() => props.onSidebarOpenChange(!props.sidebarIsOpen)}
+					onClick={() => props.setHistoryIsOpen(!props.historyIsOpen)}
 				>
-					<strong className="block font-bold">Vorherige Fragen</strong>
-					{props.sidebarIsOpen ? (
+					<span className="block">Vorherige Fragen</span>
+					{props.historyIsOpen ? (
 						<ChevronDownIcon className="text-slate-400" />
 					) : (
-						<ChevronLeftIcon className="text-slate-400" />
+						<ChevronRightIcon className="text-slate-400" />
 					)}
 				</button>
 
 				<Collapsible
-					open={props.sidebarIsOpen}
-					onOpenChange={props.onSidebarOpenChange}
+					open={props.historyIsOpen}
+					onOpenChange={props.setHistoryIsOpen}
 				>
 					<CollapsibleContent>{props.children}</CollapsibleContent>
 				</Collapsible>
