@@ -23,9 +23,9 @@ export function SplashScreen({
 }) {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogContent className=" bg-white dark:bg-gray-800 shadow-lg  max-w-xl mx-auto px-6 md:px-8 py-4 md:py-6 z-50 max-h-screen overflow-y-auto">
+			<DialogContent className="bg-white dark:bg-gray-800 shadow-lg  max-w-xl mx-auto px-6 md:px-8 py-4 md:py-6 z-50 max-h-full overflow-y-auto rounded-md">
 				<DialogHeader className="flex">
-					<DialogTitle className="py-3 text-left">
+					<DialogTitle className="mr-7 py-3 text-left">
 						<span className="font-normal text-2xl">
 							KI-Assistent für Schriftliche Anfragen{" "}
 							<br className="hidden md:inline" />

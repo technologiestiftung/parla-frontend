@@ -11,7 +11,7 @@ function DocumentLoadingSkeletonItem({
 }) {
 	return (
 		<div
-			className="border-x border-t last-of-type:border-b first-of-type:rounded-t last-of-type:rounded-b p-4 text-slate-300 animate-pulse"
+			className="bg-white p-4 rounded-lg shadow-md animate-pulse"
 			aria-hidden="true"
 			style={{ animationDelay: delay }}
 		>
@@ -51,7 +51,7 @@ function DocumentLoadingSkeletonItem({
 function DocumentLoadingSkeleton() {
 	const tagsCounts = [3, 2, 5];
 	return (
-		<div className="w-[calc(100%+2rem)] -ml-4">
+		<div className="w-100 space-y-4">
 			{Array(3)
 				.fill(0)
 				.map((_item, idx) => (

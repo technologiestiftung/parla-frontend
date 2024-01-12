@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.18.0...v1.19.0) (2024-01-12)
+
+
+### Features
+
+* enable Matomo ([#64](https://github.com/technologiestiftung/parla-frontend/issues/64)) ([f81a427](https://github.com/technologiestiftung/parla-frontend/commit/f81a42712f955e0874b9a6d4b00e6976ca76e068))
+
 # [1.18.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.17.0...v1.18.0) (2024-01-09)
 
 
