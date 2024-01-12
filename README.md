@@ -48,6 +48,15 @@ sequenceDiagram
 NEXT_PUBLIC_PARLA_API_URL=https://domain-of-your-api-server.dev
 ```
 
+## Optional Environment Variables
+
+To enable [Matomo](https://matomo.org/) tracking, set the following environment variables:
+
+```plain
+NEXT_PUBLIC_MATOMO_URL=
+NEXT_PUBLIC_MATOMO_SITE_ID=
+```
+
 ## Installation
 
 ```bash
