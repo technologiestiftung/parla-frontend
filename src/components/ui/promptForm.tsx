@@ -54,7 +54,7 @@ function PromptForm(props: PromptFormProps): JSX.Element {
 					evt.preventDefault();
 					onSubmit(query);
 				}}
-				className={`relative w-full max-w-3xl mx-auto flex h-auto`}
+				className={`relative w-full max-w-3xl mx-auto h-auto`}
 				name="promptForm"
 			>
 				<textarea
