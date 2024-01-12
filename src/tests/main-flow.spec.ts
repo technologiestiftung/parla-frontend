@@ -4,7 +4,6 @@ import { expect } from "@playwright/test";
 test("main flow", async ({ page }) => {
 	await page.goto("http://localhost:3000");
 
-	// wait for initial request
 	await page.waitForResponse(
 		(resp) =>
 			resp.url().includes("processed_documents/count") && resp.status() === 200,
@@ -13,7 +12,6 @@ test("main flow", async ({ page }) => {
 		state: "attached",
 	});
 
-	// wait for and close dialog
 	expect(dialogElement).not.toBeNull();
 	const isDialogVisible = await dialogElement.isVisible();
 	expect(isDialogVisible).toBe(true);
