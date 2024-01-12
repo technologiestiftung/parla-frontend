@@ -2,6 +2,7 @@ import { HistoryEntryType } from "@/lib/common";
 import { cn } from "@/lib/utils";
 import { MessageIcon } from "./MessageIcon";
 import { Button } from "./button";
+import { TrashIcon } from "@radix-ui/react-icons";
 
 type ResultHistoryProps = {
 	resultHistory: HistoryEntryType[];
@@ -22,7 +23,10 @@ function ResultHistory(props: ResultHistoryProps) {
 				)}
 				onClick={() => props.clearResultHistory()}
 			>
-				Fragenverlauf löschen
+				<div className="flex justify-between items-center w-full">
+					<div>Fragenverlauf löschen</div>
+					<TrashIcon></TrashIcon>
+				</div>
 			</Button>
 			<div className="flex flex-col mt-2">
 				{props.resultHistory.map((history, i, arr) => {
