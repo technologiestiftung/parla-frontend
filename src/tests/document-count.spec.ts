@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { test } from "../mock/test";
 
 test("requests document count", async ({ page }) => {
 	await page.goto("http://localhost:3000");

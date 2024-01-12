@@ -1,4 +1,5 @@
-import { test, expect } from "@playwright/test";
+import { expect } from "@playwright/test";
+import { test } from "../mock/test";
 
 test("three examples should be available", async ({ page }) => {
 	await page.goto("http://localhost:3000/");
