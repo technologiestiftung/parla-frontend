@@ -12,8 +12,9 @@ function ExamplePrompts(props: ExamplePromptsProps): JSX.Element {
 		<div className="max-w-3xl mx-auto pb-12">
 			<h5 className="text-lg ml-4 mb-2">Beispiele</h5>
 			<div className="space-y-2">
-				{examples.map((example) => (
+				{examples.map((example, idx) => (
 					<div
+						data-test-id={`example-prompt-${idx}`}
 						key={example}
 						onClick={(evt) => props.onClick(example)}
 						className={[
