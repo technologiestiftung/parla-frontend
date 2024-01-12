@@ -1,5 +1,4 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests
-name: Node.js CI
+name: E2E Tests
 on:
   push:
     branches: [main]
@@ -7,10 +6,9 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  run-e2e-tests:
     env:
       CI: true
-      # This is production environment variables
       NEXT_PUBLIC_PARLA_API_URL: http://localhost:8080
     runs-on: ubuntu-latest
     steps:
@@ -22,5 +20,5 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm run start &
-      - run: npx playwright install
+      - run: npx playwright install --with-deps
       - run: npx playwright test
