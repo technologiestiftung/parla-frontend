@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.19.0...v1.20.0) (2024-01-12)
+
+
+### Features
+
+* redesign and refactoring ([#63](https://github.com/technologiestiftung/parla-frontend/issues/63)) ([2369077](https://github.com/technologiestiftung/parla-frontend/commit/236907705ac7f1a61a25365c02bb78a95209acb2))
+
 # [1.19.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.18.0...v1.19.0) (2024-01-12)
 
 
