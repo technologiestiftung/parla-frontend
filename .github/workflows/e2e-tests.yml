@@ -1,0 +1,28 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests
+name: Node.js CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    env:
+      CI: true
+      # This is production environment variables
+      SUPABASE_URL: http://localhost:54321
+      SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
+      OPENAI_KEY: sk-abc...
+      OPENAI_MODEL: gpt-3.5-turbo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js from .nvmrc
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run start &
+      - run: npx playwright test
