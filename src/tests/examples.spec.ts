@@ -10,7 +10,7 @@ test("three examples should be available", async ({ page }) => {
 
 	const countElementsWithPrefix = async (prefix: string) => {
 		const elementCount = await page.evaluate((prefix) => {
-			const elements = document.querySelectorAll(`[data-test-id^='${prefix}']`);
+			const elements = document.querySelectorAll(`[data-testid^='${prefix}']`);
 			return elements.length;
 		}, prefix);
 

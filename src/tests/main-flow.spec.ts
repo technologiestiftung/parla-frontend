@@ -22,43 +22,33 @@ test("main flow", async ({ page }) => {
 	const isDialogHidden = !(await dialogElement.isVisible());
 	expect(isDialogHidden).toBe(true);
 
-	await page.locator('[data-test-id="example-prompt-0"]').click();
+	await page.getByTestId("prompt-textarea").click();
+	await page
+		.locator('[data-testid="prompt-textarea"]')
+		.fill("Was macht das CityLab Berlin?");
+	await page.locator("[type=submit]").click();
 
-	await expect(
-		page.locator('[data-test-id="documents-loading-skeleton"]'),
-	).toBeVisible();
+	await expect(page.getByTestId("documents-loading-skeleton")).toBeVisible();
 
-	await expect(
-		page.locator('[data-test-id="answer-loading-skeleton"]'),
-	).toBeVisible();
+	await expect(page.getByTestId("answer-loading-skeleton")).toBeVisible();
 
 	await page.waitForResponse(async (resp) => {
 		return resp.url().includes("vector-search") && resp.status() === 200;
 	});
 
-	await expect(
-		page.locator('[data-test-id="documents-loading-skeleton"]'),
-	).toBeHidden();
+	await expect(page.getByTestId("documents-loading-skeleton")).toBeHidden();
 
-	await expect(
-		page.locator('[data-test-id="answer-loading-skeleton"]'),
-	).toBeVisible();
+	await expect(page.getByTestId("answer-loading-skeleton")).toBeVisible();
 
-	await expect(
-		page.locator('[data-test-id="document-references"]'),
-	).toBeVisible();
+	await expect(page.getByTestId("document-references")).toBeVisible();
 
 	await page.waitForResponse(async (resp) => {
 		return resp.url().includes("generate-answer") && resp.status() === 200;
 	});
 
-	await expect(
-		page.locator('[data-test-id="answer-loading-skeleton"]'),
-	).toBeHidden();
+	await expect(page.getByTestId("answer-loading-skeleton")).toBeHidden();
 
-	await expect(page.locator('[data-test-id="generated-answer"]')).toBeVisible();
+	await expect(page.getByTestId("generated-answer")).toBeVisible();
 
-	await expect(
-		page.locator('[data-test-id="generated-answer-disclaimer"]'),
-	).toBeVisible();
+	await expect(page.getByTestId("generated-answer-disclaimer")).toBeVisible();
 });

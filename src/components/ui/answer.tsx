@@ -45,13 +45,13 @@ function Answer(props: AnswerProps): JSX.Element {
 					{!answerIsLoading && generatedAnswer && texts.answerTitle}
 				</h5>
 				{answerIsLoading && !generatedAnswer && (
-					<div data-test-id="answer-loading-skeleton">
+					<div data-testid="answer-loading-skeleton">
 						<AnswerLoadingSkeleton />
 					</div>
 				)}
 				{generatedAnswer && (
 					<>
-						<div data-test-id="generated-answer">
+						<div data-testid="generated-answer">
 							<ReactMarkdown className="leading-6 bg-white p-4 rounded-lg shadow-md">
 								{generatedAnswer}
 							</ReactMarkdown>
@@ -62,7 +62,7 @@ function Answer(props: AnswerProps): JSX.Element {
 							className={cn(
 								`leading-6 pt-4 pl-4 pr-4 pb-0 rounded-lg text-sm w-full`,
 							)}
-							data-test-id="generated-answer-disclaimer"
+							data-testid="generated-answer-disclaimer"
 						>
 							<ReactMarkdown
 								className={cn(
