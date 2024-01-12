@@ -44,17 +44,25 @@ function Answer(props: AnswerProps): JSX.Element {
 					{answerIsLoading && texts.answerIsLoading}
 					{!answerIsLoading && generatedAnswer && texts.answerTitle}
 				</h5>
-				{answerIsLoading && !generatedAnswer && <AnswerLoadingSkeleton />}
+				{answerIsLoading && !generatedAnswer && (
+					<div data-test-id="answer-loading-skeleton">
+						<AnswerLoadingSkeleton />
+					</div>
+				)}
 				{generatedAnswer && (
 					<>
-						<ReactMarkdown className="leading-6 bg-white p-4 rounded-lg shadow-md">
-							{generatedAnswer}
-						</ReactMarkdown>
+						<div data-test-id="generated-answer">
+							<ReactMarkdown className="leading-6 bg-white p-4 rounded-lg shadow-md">
+								{generatedAnswer}
+							</ReactMarkdown>
+						</div>
+
 						<div
 							tabIndex={0}
 							className={cn(
 								`leading-6 pt-4 pl-4 pr-4 pb-0 rounded-lg text-sm w-full`,
 							)}
+							data-test-id="generated-answer-disclaimer"
 						>
 							<ReactMarkdown
 								className={cn(
