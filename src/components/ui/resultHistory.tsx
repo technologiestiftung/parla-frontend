@@ -24,11 +24,9 @@ function ResultHistory(props: ResultHistoryProps) {
 						<div className="group relative" key={`${history.id}-${i}`}>
 							<button
 								className={cn(
-									"bg-transparent w-full text-left text-sm whitespace-normal h-auto text-black",
-									"rounded-none group-first-of-type:rounded-t group-last-of-type:rounded-b",
-									"hover:text-blue-700 justify-start focus-visible:z-10",
-									"focus-visible:rounded pr-10",
-									"pl-4 pb-6",
+									"bg-transparent w-full text-left text-sm whitespace-normal text-black",
+									"hover:text-blue-700",
+									"pr-10 pl-4 pb-6",
 								)}
 								onClick={() => props.restoreResultHistoryItem(history.id)}
 							>
