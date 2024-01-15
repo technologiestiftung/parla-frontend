@@ -36,7 +36,7 @@ function Sources(props: SourcesProps): JSX.Element {
 			</h5>
 			{searchIsLoading && <DocumentLoadingSkeleton />}
 			{!searchIsLoading && matches.length > 0 && (
-				<div className="space-y-4">
+				<div data-testid="document-references" className="space-y-4">
 					{matches
 						.sort((l, r) => {
 							const lm = getCleanedMetadata(l);

@@ -58,6 +58,7 @@ function PromptForm(props: PromptFormProps): JSX.Element {
 				name="promptForm"
 			>
 				<textarea
+					data-testid="prompt-textarea"
 					ref={textAreaRef}
 					value={query || ""}
 					rows={1}
