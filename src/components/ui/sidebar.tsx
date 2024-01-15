@@ -40,7 +40,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 			</header>
 
 			<button
-				className="w-full flex items-center justify-between px-4 py-2 border rounded-md bg-blue-700 text-white font-bold hover:bg-blue-900 hover:cursor-pointer"
+				className="w-full flex items-center justify-between px-4 py-2 rounded-md bg-blue-700 text-white font-bold hover:bg-blue-900 hover:cursor-pointer"
 				onClick={props.onNewRequest}
 			>
 				<div>Neue Frage</div>
