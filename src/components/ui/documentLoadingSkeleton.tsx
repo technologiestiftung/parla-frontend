@@ -51,7 +51,7 @@ function DocumentLoadingSkeletonItem({
 function DocumentLoadingSkeleton() {
 	const tagsCounts = [3, 2, 5];
 	return (
-		<div className="w-100 space-y-4">
+		<div data-testid="documents-loading-skeleton" className="w-100 space-y-4">
 			{Array(3)
 				.fill(0)
 				.map((_item, idx) => (
