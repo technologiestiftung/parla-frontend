@@ -4,7 +4,6 @@ export default function MobileHeader({
 	setSidebarisOpen,
 	openSplashScreen,
 }: {
-	sidebarIsOpen: boolean;
 	setSidebarisOpen: (isOpen: boolean) => void;
 	openSplashScreen: () => void;
 }) {
