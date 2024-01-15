@@ -1,42 +1,47 @@
 import "./globals.css";
 import type { Metadata } from "next";
 
+const title = "Parla";
+const description = "KI-Assistent für Schriftliche Anfragen und Rote Nummern";
+const url = "https://parla.berlin";
+
 export const metadata: Metadata = {
+	title: title,
+	applicationName: title,
+	description: description,
+	keywords: [
+		"Parla",
+		"KI",
+		"Berliner Senat",
+		"Abgeordnetenhaus",
+		"Mitbeteiligung",
+		"Transparenz",
+		"Dokumentensuche",
+	],
+	authors: { url: "https://citylab-berlin.org/", name: "CityLab Berlin" },
 	openGraph: {
-		title: "Parla",
-		description: "KI-Assistent für Schriftliche Anfragen und Rote Nummern",
-		url: "https://parla.berlin",
-		siteName: "Parla",
+		title: title,
+		description: description,
+		url: url,
+		siteName: title,
 		images: [
 			{
 				url: "/images/logo.png",
-				width: 800,
-				height: 600,
-			},
-			{
-				url: "/images/logo.png",
-				width: 1800,
-				height: 1600,
-				alt: "Parla Logo",
+				width: 898,
+				height: 346,
 			},
 		],
-		locale: "en_US",
+		locale: "de_DE",
 		type: "website",
 	},
 	twitter: {
-		title: "Parla",
-		description: "KI-Assistent für Schriftliche Anfragen und Rote Nummern",
+		title: title,
+		description: description,
 		images: [
 			{
 				url: "/images/logo.png",
-				width: 800,
-				height: 600,
-			},
-			{
-				url: "/images/logo.png",
-				width: 1800,
-				height: 1600,
-				alt: "Parla Logo",
+				width: 898,
+				height: 346,
 			},
 		],
 	},
