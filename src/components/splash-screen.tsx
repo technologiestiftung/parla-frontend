@@ -25,6 +25,13 @@ export function SplashScreen({
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogContent className="bg-white dark:bg-gray-800 shadow-lg  max-w-xl mx-auto px-6 md:px-8 py-4 md:py-6 z-50 max-h-full overflow-y-auto rounded-md">
 				<DialogHeader className="flex">
+					<a href="/">
+						<img
+							alt="Parla Logo"
+							src="/images/parla-logo-v1.svg"
+							className="w-[35%] md:w-[30%] py-3"
+						/>
+					</a>
 					<DialogTitle className="mr-7 py-3 text-left">
 						<span className="font-normal text-2xl">
 							KI-Assistent für Schriftliche Anfragen{" "}

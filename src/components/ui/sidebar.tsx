@@ -21,18 +21,13 @@ type SidebarProps = {
 function Sidebar(props: SidebarProps): JSX.Element {
 	return (
 		<>
-			<header className="flex items-center justify-between px-4 py-2">
-				<a
-					href="/"
-					title="Startseite"
-					className={cn(
-						"py-3 flex justify-between items-center text-lg font-bold rounded",
-						"hover:text-slate-600",
-						"focus-visible:ring-2 focus-visible:ring-blue-700",
-						"focus-visible:outline-none",
-					)}
-				>
-					Parla
+			<header className="flex items-center justify-between px-4 pb-7 pt-3">
+				<a href="/">
+					<img
+						alt="Parla Logo"
+						src="/images/parla-logo-v1.svg"
+						className="w-[50%] py-3"
+					/>
 				</a>
 				<button onClick={props.openSplashScreen}>
 					<InfoCircledIcon className="w-6 h-6 text-slate-400"></InfoCircledIcon>
