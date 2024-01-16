@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 const title = "Parla";
 const description = "KI-Assistent für Schriftliche Anfragen und Rote Nummern";
 const url = "https://parla.berlin";
+const logoWidth = 1733;
+const logoHeight = 634;
 
 export const metadata: Metadata = {
 	title: title,
@@ -26,9 +28,9 @@ export const metadata: Metadata = {
 		siteName: title,
 		images: [
 			{
-				url: "/images/logo.png",
-				width: 898,
-				height: 346,
+				url: "/images/parla-logo-v1.png",
+				width: logoWidth,
+				height: logoHeight,
 			},
 		],
 		locale: "de_DE",
@@ -39,9 +41,9 @@ export const metadata: Metadata = {
 		description: description,
 		images: [
 			{
-				url: "/images/logo.png",
-				width: 898,
-				height: 346,
+				url: "/images/parla-logo-v1.png",
+				width: logoWidth,
+				height: logoHeight,
 			},
 		],
 	},
