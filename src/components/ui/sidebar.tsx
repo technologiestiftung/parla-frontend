@@ -26,12 +26,7 @@ function Sidebar(props: SidebarProps): JSX.Element {
 					<img
 						alt="Parla Logo"
 						src="/images/parla-logo-v1.svg"
-						className={cn(
-							"w-[50%] py-3 flex justify-between items-center text-lg font-bold rounded",
-							"hover:text-slate-600",
-							"focus-visible:ring-2 focus-visible:ring-blue-700",
-							"focus-visible:outline-none",
-						)}
+						className="w-[50%] py-3"
 					/>
 				</a>
 				<button onClick={props.openSplashScreen}>

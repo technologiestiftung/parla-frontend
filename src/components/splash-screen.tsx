@@ -29,12 +29,7 @@ export function SplashScreen({
 						<img
 							alt="Parla Logo"
 							src="/images/parla-logo-v1.svg"
-							className={cn(
-								"w-[35%] md:w-[30%] py-3 flex justify-between items-center text-lg font-bold rounded",
-								"hover:text-slate-600",
-								"focus-visible:ring-2 focus-visible:ring-blue-700",
-								"focus-visible:outline-none",
-							)}
+							className="w-[35%] md:w-[30%] py-3"
 						/>
 					</a>
 					<DialogTitle className="mr-7 py-3 text-left">
