@@ -1,3 +1,10 @@
+## [1.20.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.20.0...v1.20.1) (2024-01-16)
+
+
+### Bug Fixes
+
+* **sidebar:** button alignment ([#65](https://github.com/technologiestiftung/parla-frontend/issues/65)) ([10b97fe](https://github.com/technologiestiftung/parla-frontend/commit/10b97fea35639286396754a9fcb759cd4c412665))
+
 # [1.20.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.19.0...v1.20.0) (2024-01-12)
 
 
