@@ -3,6 +3,7 @@ import { cn, getCleanedMetadata } from "@/lib/utils";
 import { useState } from "react";
 import { Link } from "./Link";
 import { AcrobatIcon } from "./ui/acrobat-icon";
+import { GlobeIcon } from "@radix-ui/react-icons";
 
 interface SearchResultProps {
 	documentMatch: ResponseDocumentMatch | undefined;
@@ -67,9 +68,13 @@ function SimilarityDisplay(props: SimilarityDisplayProps): JSX.Element {
 export default function SearchResultSection({
 	documentMatch,
 }: SearchResultProps) {
-	const { title, pdfUrl, pdfName, pages, similarity, type, tags } =
+	const { title, pdfUrl, documentName, pages, similarity, type, tags } =
 		getCleanedMetadata(documentMatch);
 
+	const isWebSource = type === "Webseite";
+	const processedAt = new Date(
+		documentMatch?.processed_document.processing_finished_at!,
+	);
 	return (
 		<div className="bg-white p-4 rounded-lg shadow-md">
 			<div className="flex gap-2 justify-between items-center">
@@ -81,14 +86,23 @@ export default function SearchResultSection({
 					{pdfUrl && (
 						<Link
 							href={pdfUrl}
-							title={`PDF "${pdfName}" öffnen`}
+							title={`Dokument "${documentName}" öffnen`}
 							className="no-underline flex gap-1 items-center flex-wrap"
 						>
-							<AcrobatIcon />
-							<span>{pdfName}</span>{" "}
-							{pages && pages.length > 0 && (
+							{pdfUrl.endsWith(".pdf") ? (
+								<AcrobatIcon />
+							) : (
+								<GlobeIcon></GlobeIcon>
+							)}
+							<span>{documentName}</span>{" "}
+							{!isWebSource && pages && pages.length > 0 && (
 								<span className="text-slate-600 ml-1">
 									(S. {pages?.join(", ")})
+								</span>
+							)}
+							{isWebSource && (
+								<span className="text-slate-600 ml-1">
+									(Abgerufen am {processedAt.toLocaleDateString()})
 								</span>
 							)}
 						</Link>
