@@ -31,6 +31,7 @@ export const metadata: Metadata = {
 				url: "/images/parla-logo-v1.png",
 				width: logoWidth,
 				height: logoHeight,
+				alt: "Parla Logo",
 			},
 		],
 		locale: "de_DE",
@@ -39,11 +40,13 @@ export const metadata: Metadata = {
 	twitter: {
 		title: title,
 		description: description,
+		card: "summary_large_image",
 		images: [
 			{
 				url: "/images/parla-logo-v1.png",
 				width: logoWidth,
 				height: logoHeight,
+				alt: "Parla Logo",
 			},
 		],
 	},
