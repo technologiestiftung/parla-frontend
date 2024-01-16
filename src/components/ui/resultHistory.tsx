@@ -1,8 +1,6 @@
 import { HistoryEntryType } from "@/lib/common";
 import { cn } from "@/lib/utils";
 import { MessageIcon } from "./MessageIcon";
-import { Button } from "./button";
-import { TrashIcon } from "@radix-ui/react-icons";
 
 type ResultHistoryProps = {
 	resultHistory: HistoryEntryType[];
@@ -14,31 +12,21 @@ type ResultHistoryProps = {
 function ResultHistory(props: ResultHistoryProps) {
 	return (
 		<>
-			<Button
-				className={cn(
-					"bg-transparent w-full text-left text-sm whitespace-normal h-auto text-blue-700",
-					"rounded-none first-of-type:rounded-t last-of-type:rounded-b",
-					"hover:text-white justify-start hover:border-blue-900 relative focus-visible:z-10",
-					"focus-visible:rounded",
-				)}
+			<button
+				className="text-blue-700 flex items-center px-4 py-2 text-sm hover:bg-blue-900 hover:text-white rounded-md hover:cursor-pointer mb-4"
 				onClick={() => props.clearResultHistory()}
 			>
-				<div className="flex justify-between items-center w-full">
-					<div>Fragenverlauf löschen</div>
-					<TrashIcon></TrashIcon>
-				</div>
-			</Button>
+				<div>Fragenverlauf löschen</div>
+			</button>
 			<div className="flex flex-col mt-2">
 				{props.resultHistory.map((history, i, arr) => {
 					return (
 						<div className="group relative" key={`${history.id}-${i}`}>
 							<button
 								className={cn(
-									"bg-transparent w-full text-left text-sm whitespace-normal h-auto text-black",
-									"rounded-none group-first-of-type:rounded-t group-last-of-type:rounded-b",
-									"hover:text-blue-700 justify-start focus-visible:z-10",
-									"focus-visible:rounded pr-10",
-									"pl-4 pb-6",
+									"bg-transparent w-full text-left text-sm whitespace-normal text-black",
+									"hover:text-blue-700",
+									"pr-10 pl-4 pb-6",
 								)}
 								onClick={() => props.restoreResultHistoryItem(history.id)}
 							>

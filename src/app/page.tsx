@@ -201,7 +201,6 @@ export default function Home() {
 								style={{ zIndex: 1 }}
 							>
 								<MobileHeader
-									sidebarIsOpen={sidebarIsOpen}
 									setSidebarisOpen={setSidebarIsOpen}
 									openSplashScreen={() => setShowSplash(true)}
 								></MobileHeader>
