@@ -1,3 +1,10 @@
+# [1.25.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.24.0...v1.25.0) (2024-01-17)
+
+
+### Features
+
+* logo in mobile header ([#78](https://github.com/technologiestiftung/parla-frontend/issues/78)) ([3fd3dcb](https://github.com/technologiestiftung/parla-frontend/commit/3fd3dcba8a4961e5a6c5d974bfd06f50a1eb4711))
+
 # [1.24.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.23.1...v1.24.0) (2024-01-17)
 
 
