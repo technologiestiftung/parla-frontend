@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.23.1...v1.24.0) (2024-01-17)
+
+
+### Features
+
+* make sidebar sticky for long list of prev questions ([#75](https://github.com/technologiestiftung/parla-frontend/issues/75)) ([3b4f0ab](https://github.com/technologiestiftung/parla-frontend/commit/3b4f0ab9497b4515d817b35be8f858682a210faa))
+
 ## [1.23.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.23.0...v1.23.1) (2024-01-17)
 
 
