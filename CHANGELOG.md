@@ -1,3 +1,15 @@
+# [1.26.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.25.0...v1.26.0) (2024-01-17)
+
+
+### Bug Fixes
+
+* cutoff chevron on faq page ([#79](https://github.com/technologiestiftung/parla-frontend/issues/79)) ([28fa57c](https://github.com/technologiestiftung/parla-frontend/commit/28fa57c8b7f18cb246de09bec6b099a23feb774e))
+
+
+### Features
+
+* add favicons to generated metadata ([#80](https://github.com/technologiestiftung/parla-frontend/issues/80)) ([245d246](https://github.com/technologiestiftung/parla-frontend/commit/245d246b8ac3e0749c49907f7058316d3728034a))
+
 # [1.25.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.24.0...v1.25.0) (2024-01-17)
 
 
