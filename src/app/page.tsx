@@ -240,6 +240,7 @@ export default function Home() {
 						isHistoryOpen={historyIsOpen}
 						sidebarIsOpen={sidebarIsOpen}
 						setSidebarisOpen={setSidebarIsOpen}
+						clearResultHistory={() => setResultHistory([])}
 						newRequestHandler={newRequestHandler}
 						openSplashScreen={() => setShowSplash(true)}
 						setHistoryOpen={setHistoryIsOpen}
@@ -251,7 +252,6 @@ export default function Home() {
 									setSidebarIsOpen(false);
 									restoreResultHistoryItem(id);
 								}}
-								clearResultHistory={() => setResultHistory([])}
 								removeResultHistoryItem={(id) => {
 									setResultHistory((prev) =>
 										prev.filter((entry) => entry.id !== id),
