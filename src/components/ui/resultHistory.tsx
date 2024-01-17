@@ -5,23 +5,16 @@ import { MessageIcon } from "./MessageIcon";
 type ResultHistoryProps = {
 	resultHistory: HistoryEntryType[];
 	restoreResultHistoryItem: (id: string) => void;
-	clearResultHistory: () => void;
 	removeResultHistoryItem: (id: string) => void;
 };
 
 function ResultHistory(props: ResultHistoryProps) {
 	return (
 		<>
-			<button
-				className="text-blue-700 flex items-center px-4 py-2 text-sm hover:bg-blue-900 hover:text-white rounded-md hover:cursor-pointer mb-4"
-				onClick={() => props.clearResultHistory()}
-			>
-				<div>Fragenverlauf löschen</div>
-			</button>
 			<div className="flex flex-col mt-2">
 				{props.resultHistory.map((history, i, arr) => {
 					return (
-						<div className="group relative" key={`${history.id}-${i}`}>
+						<div key={`${history.id}-${i}`}>
 							<button
 								className={cn(
 									"bg-transparent w-full text-left text-sm whitespace-normal text-black",
