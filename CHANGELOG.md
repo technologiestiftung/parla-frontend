@@ -1,3 +1,10 @@
+# [1.23.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.22.1...v1.23.0) (2024-01-17)
+
+
+### Features
+
+* opengraph and twitter meta ([#66](https://github.com/technologiestiftung/parla-frontend/issues/66)) ([a2ab2ab](https://github.com/technologiestiftung/parla-frontend/commit/a2ab2ab2505ce703c67c942b606cdb99b4ba2d39))
+
 ## [1.22.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.22.0...v1.22.1) (2024-01-17)
 
 
