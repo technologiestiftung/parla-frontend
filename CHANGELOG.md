@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.23.0...v1.23.1) (2024-01-17)
+
+
+### Bug Fixes
+
+* less padding in input form ([#74](https://github.com/technologiestiftung/parla-frontend/issues/74)) ([72a23bf](https://github.com/technologiestiftung/parla-frontend/commit/72a23bfbf44eedd0a1d8ebe6112957317bb7fa65))
+
 # [1.23.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.22.1...v1.23.0) (2024-01-17)
 
 
