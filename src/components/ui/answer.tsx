@@ -45,7 +45,10 @@ function Answer(props: AnswerProps): JSX.Element {
 					{!answerIsLoading && generatedAnswer && texts.answerTitle}
 				</h5>
 				{answerIsLoading && !generatedAnswer && (
-					<div data-testid="answer-loading-skeleton">
+					<div
+						data-testid="answer-loading-skeleton"
+						className="rounded-lg shadow-md p-4 bg-white"
+					>
 						<AnswerLoadingSkeleton />
 					</div>
 				)}
