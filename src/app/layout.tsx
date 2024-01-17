@@ -4,12 +4,10 @@ import type { Metadata } from "next";
 const title = "Parla";
 const description = "KI-Assistent für Schriftliche Anfragen und Rote Nummern";
 const url = "https://parla.berlin";
-const logoWidth = 1733;
-const logoHeight = 634;
 
 export const metadata: Metadata = {
 	title: title,
-	applicationName: title,
+	applicationName: url,
 	description: description,
 	keywords: [
 		"Parla",
@@ -23,14 +21,14 @@ export const metadata: Metadata = {
 	authors: { url: "https://citylab-berlin.org/", name: "CityLab Berlin" },
 	openGraph: {
 		title: title,
+		siteName: url,
 		description: description,
 		url: url,
-		siteName: title,
 		images: [
 			{
-				url: "/images/parla-logo-v1.png",
-				width: logoWidth,
-				height: logoHeight,
+				url: "/images/parla-logo-og-image.png",
+				width: 1200,
+				height: 629,
 				alt: "Parla Logo",
 			},
 		],
@@ -43,9 +41,9 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		images: [
 			{
-				url: "/images/parla-logo-v1.png",
-				width: logoWidth,
-				height: logoHeight,
+				url: "/images/parla-logo-twitter-image.png",
+				width: 1200,
+				height: 1200,
 				alt: "Parla Logo",
 			},
 		],
