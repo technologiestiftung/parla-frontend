@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { test } from "../mock/test";
 
-test("three examples should be available", async ({ page }) => {
+test("five examples should be available", async ({ page }) => {
 	await page.goto("http://localhost:3000/");
 	await page.getByRole("button", { name: "Close" }).click();
 
@@ -19,5 +19,5 @@ test("three examples should be available", async ({ page }) => {
 
 	const prefixToCount = "example-prompt-";
 	const elementCount = await countElementsWithPrefix(prefixToCount);
-	expect(elementCount).toBe(3);
+	expect(elementCount).toBe(5);
 });
