@@ -7,7 +7,7 @@ export const texts = {
 	answerIsLoading: "Antwort wird generiert...",
 	answerTitle: "Zusammenfassung von Parla:",
 	answerDisclaimer:
-		"Bitte beachten Sie, dass die generierten Antworten zwar aus offiziellen Dokumenten erstellt wurden, aber keine verbindliche Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten Quellenangaben zu überprüfen.",
+		"Bitte beachten Sie, dass die generierten Antworten zwar aus offiziellen Dokumenten erstellt wurden, aber keine verbindliche Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten Quellenangaben zu überprüfen. Als Datengrundlage dienen ausschliesslich Schriftliche Anfragen und Hauptausschussprotokolle.",
 	documentsAreLoading: "Dokumente werden durchsucht...",
 	documentsTitle: "Beste Treffer in diesen Dokumenten:",
 	about: {
