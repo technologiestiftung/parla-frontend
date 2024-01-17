@@ -50,11 +50,11 @@ const Info = () => {
 													)}
 												>
 													{question}
-													<div>
+													<div className="text-blue-700 group-hover:text-white transition-colors">
 														{open ? (
-															<ChevronDownIcon className="w-6 h-6"></ChevronDownIcon>
+															<ChevronDownIcon className="w-8 h-8"></ChevronDownIcon>
 														) : (
-															<ChevronRightIcon className="w-6 h-6"></ChevronRightIcon>
+															<ChevronRightIcon className="w-8 h-8"></ChevronRightIcon>
 														)}
 													</div>
 												</Disclosure.Button>
