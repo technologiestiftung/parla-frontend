@@ -64,7 +64,7 @@ function PromptForm(props: PromptFormProps): JSX.Element {
 					rows={1}
 					name="query"
 					id="query"
-					className="w-full py-4 pl-4 pr-[100px] rounded-md shadow-md shadow-blue-200 resize-none h-auto"
+					className="w-full py-4 pl-4 pr-[45px] rounded-md shadow-md shadow-blue-200 resize-none h-auto"
 					placeholder="Stellen Sie hier Ihre Frage oder wählen Sie eines der Beispiele aus"
 					disabled={isLoading}
 					onKeyDown={(event) => {
