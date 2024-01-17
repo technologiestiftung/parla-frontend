@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.21.0...v1.22.0) (2024-01-17)
+
+
+### Features
+
+* display web pages as sources ([#70](https://github.com/technologiestiftung/parla-frontend/issues/70)) ([0a24cea](https://github.com/technologiestiftung/parla-frontend/commit/0a24cead5ae3a67bd213aba673c21b629229a906))
+
 # [1.21.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.20.1...v1.21.0) (2024-01-16)
 
 
