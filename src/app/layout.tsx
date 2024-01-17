@@ -6,6 +6,29 @@ const description = "KI-Assistent für Schriftliche Anfragen und Rote Nummern";
 const url = "https://parla.berlin";
 
 export const metadata: Metadata = {
+	icons: {
+		icon: "/images/favicons/favicon.ico",
+		shortcut: "/images/favicons/favicon-32x32.png",
+		apple: "/images/favicons/apple-touch-icon.png",
+		other: [
+			{
+				rel: "android-chrome-192x192",
+				url: "/images/favicons/android-chrome-192x192.png",
+			},
+			{
+				rel: "android-chrome-512x512",
+				url: "/images/favicons/android-chrome-512x512.png",
+			},
+			{
+				rel: "favicon-16x16",
+				url: "/images/favicons/favicon-16x16.png",
+			},
+			{
+				rel: "favicon-32x32",
+				url: "/images/favicons/favicon-32x32.png",
+			},
+		],
+	},
 	title: title,
 	applicationName: url,
 	description: description,
