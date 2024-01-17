@@ -34,7 +34,7 @@ function PromptContent(props: PromptContentProps) {
 	>([]);
 
 	useEffect(() => {
-		setExamplesQuestionsToShow(selectRandomItems(exampleQuestions, 3));
+		setExamplesQuestionsToShow(selectRandomItems(exampleQuestions, 5));
 	}, []);
 
 	return (
