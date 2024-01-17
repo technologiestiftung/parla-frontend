@@ -22,9 +22,7 @@ function DocumentLoadingSkeletonItem({
 						∙
 					</span>
 					<span className="no-underline flex gap-1 items-center flex-wrap">
-						<AcrobatIcon />
 						<span className="h-4 w-24 rounded bg-slate-200" />
-						(S. <span className="h-4 w-8 rounded bg-slate-200" />)
 					</span>
 				</span>
 				<span className="h-3 w-24 rounded bg-slate-200 inline-block" />

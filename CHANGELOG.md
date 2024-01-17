@@ -1,3 +1,10 @@
+## [1.22.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.22.0...v1.22.1) (2024-01-17)
+
+
+### Bug Fixes
+
+* remove unneeded elements from loading skeleton ([#72](https://github.com/technologiestiftung/parla-frontend/issues/72)) ([d0626c3](https://github.com/technologiestiftung/parla-frontend/commit/d0626c307191970402984057c19eb077a4a20a8d))
+
 # [1.22.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.21.0...v1.22.0) (2024-01-17)
 
 
