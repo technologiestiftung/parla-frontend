@@ -163,12 +163,13 @@ export default function Home() {
 			<SplashScreen open={showSplash} setOpen={setShowSplash} />
 			<div className="min-h-screen w-full">
 				<div className="flex flex-col min-h-screen md:grid md:grid-cols-[280px_1fr] md:gap-2 md:p-2 lg:grid lg:grid-cols-[320px_1fr] lg:gap-4 bg-slate-100 lg:p-4">
-					<aside className="hidden h-[calc(100vh-2rem)] md:block sidebar overflow-y-auto">
+					<aside className="hidden h-[calc(100vh-2rem)] md:block sidebar overflow-y-auto bg-slate-100">
 						<Sidebar
 							sidebarIsOpen={sidebarIsOpen}
 							setSidebarIsOpen={setSidebarIsOpen}
 							historyIsOpen={historyIsOpen}
 							setHistoryIsOpen={setHistoryIsOpen}
+							clearResultHistory={() => setResultHistory([])}
 							onNewRequest={newRequestHandler}
 							openSplashScreen={() => setShowSplash(true)}
 						>
@@ -179,7 +180,6 @@ export default function Home() {
 										setSidebarIsOpen(false);
 										restoreResultHistoryItem(id);
 									}}
-									clearResultHistory={() => setResultHistory([])}
 									removeResultHistoryItem={(id) => {
 										setResultHistory((prev) =>
 											prev.filter((entry) => entry.id !== id),
