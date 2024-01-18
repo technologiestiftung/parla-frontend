@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { texts } from "@/lib/texts";
 import TypeformLink from "./ui/TypeformLink";
-import { DialogHeader, Dialog, DialogContent, DialogTitle } from "./ui/dialog";
+import { DialogHeader, Dialog, DialogContent, DialogTitle } from "./ui/Dialog";
 
 export function SplashScreen({
 	open,

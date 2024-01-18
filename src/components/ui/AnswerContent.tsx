@@ -4,8 +4,8 @@ import exampleQuestions from "@/fixtures/example-questions";
 import { selectRandomItems } from "@/lib/utils";
 import TypeformLink from "./TypeformLink";
 import { texts } from "@/lib/texts";
-import ExamplePrompts from "./examplePrompts";
-import Answer from "./answer";
+import ExamplePrompts from "./ExamplePrompts";
+import Answer from "./Answer";
 
 type PromptContentProps = {
 	title?: string | null;

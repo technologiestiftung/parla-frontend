@@ -4,8 +4,8 @@ import MobileHeader from "@/components/MobileHeader";
 import MobileSidebar from "@/components/MobileSidebar";
 import { SplashScreen } from "@/components/SplashScreen";
 import AnswerContent from "@/components/ui/AnswerContent";
-import Sidebar from "@/components/ui/sidebar";
-import Sources from "@/components/ui/sources";
+import Sidebar from "@/components/ui/Sidebar";
+import Sources from "@/components/ui/Sources";
 import {
 	Algorithms,
 	DocumentSearchBody,
@@ -22,6 +22,8 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useMatomo } from "@/lib/hooks/useMatomo";
+import ResultHistory from "@/components/ui/ResultHistory";
+import PromptForm from "@/components/ui/PromptForm";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 

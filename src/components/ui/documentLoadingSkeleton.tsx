@@ -1,4 +1,4 @@
-import TextLoadingSkeleton from "./textLoadingSkeleton";
+import TextLoadingSkeleton from "./TextLoadingSkeleton";
 
 function DocumentLoadingSkeletonItem({
 	delay,
