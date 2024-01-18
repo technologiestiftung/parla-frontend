@@ -79,6 +79,26 @@
 	body {
 		@apply bg-background text-foreground font-sans;
 	}
+
+	ol {
+		@apply list-none space-y-2 my-4;
+	}
+
+	ul {
+		@apply list-none space-y-2 my-4;
+	}
+
+	li {
+		@apply relative pl-6;
+	}
+
+	li::before {
+		content: "\2022";
+		position: absolute;
+		left: 0;
+		margin-right: 8px;
+		padding: 2px;
+	}
 }
 
 :root {
