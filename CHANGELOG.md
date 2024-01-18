@@ -1,3 +1,10 @@
+## [1.27.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.27.0...v1.27.1) (2024-01-18)
+
+
+### Bug Fixes
+
+* product_id key in typeform link ([#84](https://github.com/technologiestiftung/parla-frontend/issues/84)) ([30b1abd](https://github.com/technologiestiftung/parla-frontend/commit/30b1abdad5ec544977e3565e52660f475b844423))
+
 # [1.27.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.26.1...v1.27.0) (2024-01-18)
 
 
