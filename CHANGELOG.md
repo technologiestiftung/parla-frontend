@@ -1,3 +1,10 @@
+## [1.26.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.26.0...v1.26.1) (2024-01-18)
+
+
+### Bug Fixes
+
+* markdown list css ([#81](https://github.com/technologiestiftung/parla-frontend/issues/81)) ([83c1f90](https://github.com/technologiestiftung/parla-frontend/commit/83c1f9034d16a461f026d777b3aa073051f5dc54))
+
 # [1.26.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.25.0...v1.26.0) (2024-01-17)
 
 
