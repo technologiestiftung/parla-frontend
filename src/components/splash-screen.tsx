@@ -13,6 +13,8 @@ import {
 import { Link } from "./Link";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { texts } from "@/lib/texts";
+import TypeformLink from "./ui/TypeformLink";
 
 export function SplashScreen({
 	open,
@@ -118,6 +120,10 @@ export function SplashScreen({
 					</a>
 				</div>
 				<div className="flex justify-start gap-x-6 gap-y-3 mt-4 flex-wrap">
+					<TypeformLink
+						question={undefined}
+						linkText={texts.feedback.short}
+					></TypeformLink>
 					<Link className="text-sm" href="/faq">
 						FAQ
 					</Link>

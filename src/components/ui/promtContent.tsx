@@ -4,6 +4,8 @@ import Answer from "./answer";
 import ExamplePrompts from "./examplePrompts";
 import exampleQuestions from "@/fixtures/example-questions";
 import { selectRandomItems } from "@/lib/utils";
+import TypeformLink from "./TypeformLink";
+import { texts } from "@/lib/texts";
 
 type PromptContentProps = {
 	title?: string | null;
@@ -47,11 +49,17 @@ function PromptContent(props: PromptContentProps) {
 					searchIsLoading={searchIsLoading}
 				/>
 			</div>
-			{showExamplePrompts && (
-				<ExamplePrompts
-					examplePrompts={exampleQuestionsToShow}
-					onClick={(text) => onsubmit(text)}
-				/>
+			{showExamplePrompts && exampleQuestionsToShow.length > 0 && (
+				<>
+					<ExamplePrompts
+						examplePrompts={exampleQuestionsToShow}
+						onClick={(text) => onsubmit(text)}
+					/>
+					<TypeformLink
+						question={texts.feedback.question}
+						linkText={texts.feedback.long}
+					></TypeformLink>
+				</>
 			)}
 		</div>
 	);
