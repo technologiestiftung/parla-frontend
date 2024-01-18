@@ -10,6 +10,11 @@ export const texts = {
 		"Bitte beachten Sie, dass die generierten Antworten zwar aus offiziellen Dokumenten erstellt wurden, aber keine verbindliche Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten Quellenangaben zu überprüfen. Als Datengrundlage dienen ausschliesslich Schriftliche Anfragen und Hauptausschussprotokolle.",
 	documentsAreLoading: "Dokumente werden durchsucht...",
 	documentsTitle: "Beste Treffer in diesen Dokumenten:",
+	feedback: {
+		short: "Feedback",
+		long: "Beantworte uns gerne 1-2 Fragen.",
+		question: "Wie gefällt dir Parla? ",
+	},
 	about: {
 		title: "Über Parla",
 		content:
