@@ -6,7 +6,7 @@ interface TypeformLinkProps {
 }
 
 function TypeformLink({ question, linkText }: TypeformLinkProps): JSX.Element {
-	const url = "https://citylabberlin.typeform.com/to/kCdnCgvC#product=parla";
+	const url = "https://citylabberlin.typeform.com/to/kCdnCgvC#product_id=parla";
 	return (
 		<div className="text-center text-sm">
 			{question}
