@@ -55,7 +55,7 @@ function Answer(props: AnswerProps): JSX.Element {
 				{generatedAnswer && (
 					<>
 						<div data-testid="generated-answer">
-							<ReactMarkdown className="leading-6 bg-white p-4 rounded-lg shadow-md space-y-4">
+							<ReactMarkdown className="markdown-container leading-6 bg-white p-4 rounded-lg shadow-md space-y-4">
 								{generatedAnswer}
 							</ReactMarkdown>
 						</div>
@@ -69,6 +69,7 @@ function Answer(props: AnswerProps): JSX.Element {
 						>
 							<ReactMarkdown
 								className={cn(
+									`markdown-container`,
 									`text-slate-500 transition-colors group-hover:text-slate-900`,
 									`group-focus-visible:text-slate-900 prose-strong:text-inherit`,
 									`group-focus-visible:ring-2 group-focus-visible:rounded-sm`,
