@@ -1,11 +1,11 @@
 import { DocumentSearchResponse } from "@/lib/common";
 import React, { useEffect, useState } from "react";
-import Answer from "./answer";
-import ExamplePrompts from "./examplePrompts";
 import exampleQuestions from "@/fixtures/example-questions";
 import { selectRandomItems } from "@/lib/utils";
 import TypeformLink from "./TypeformLink";
 import { texts } from "@/lib/texts";
+import ExamplePrompts from "./examplePrompts";
+import Answer from "./answer";
 
 type PromptContentProps = {
 	title?: string | null;
@@ -16,7 +16,7 @@ type PromptContentProps = {
 	answerIsLoading: boolean;
 };
 
-function PromptContent(props: PromptContentProps) {
+function AnswerContent(props: PromptContentProps) {
 	const {
 		title,
 		searchResult,
@@ -65,4 +65,4 @@ function PromptContent(props: PromptContentProps) {
 	);
 }
 
-export default PromptContent;
+export default AnswerContent;

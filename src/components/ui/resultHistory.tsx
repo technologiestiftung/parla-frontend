@@ -1,6 +1,6 @@
 import { HistoryEntryType } from "@/lib/common";
 import { cn } from "@/lib/utils";
-import { MessageIcon } from "./MessageIcon";
+import { MessageIcon } from "../icons/MessageIcon";
 
 type ResultHistoryProps = {
 	resultHistory: HistoryEntryType[];

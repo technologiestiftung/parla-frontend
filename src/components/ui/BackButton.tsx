@@ -2,7 +2,7 @@ import Link, { LinkProps } from "next/link";
 import { DOMAttributes, FC } from "react";
 import { cn } from "@/lib/utils";
 import { useTexts } from "@/lib/hooks/useTexts";
-import { Arrow } from "./Arrow";
+import { ArrowIcon } from "../icons/ArrowIcon";
 
 type BackButtonPropsType =
 	| {
@@ -16,7 +16,7 @@ export const BackButton: FC<BackButtonPropsType> = (props) => {
 	const texts = useTexts();
 	const content = (
 		<>
-			<Arrow orientation="left" className="scale-75" />
+			<ArrowIcon orientation="left" className="scale-75" />
 			<span className="font-bold text-lg">{texts?.backText}</span>
 		</>
 	);

@@ -2,10 +2,8 @@
 import MobileHeader from "@/components/MobileHeader";
 /* eslint-disable @next/next/no-img-element */
 import MobileSidebar from "@/components/MobileSidebar";
-import { SplashScreen } from "@/components/splash-screen";
-import PromptForm from "@/components/ui/promptForm";
-import PromptContent from "@/components/ui/promtContent";
-import ResultHistory from "@/components/ui/resultHistory";
+import { SplashScreen } from "@/components/SplashScreen";
+import AnswerContent from "@/components/ui/AnswerContent";
 import Sidebar from "@/components/ui/sidebar";
 import Sources from "@/components/ui/sources";
 import {
@@ -213,7 +211,7 @@ export default function Home() {
 							</div>
 
 							<div className="px-2 md:px-2 lg:px-10">
-								<PromptContent
+								<AnswerContent
 									title={title}
 									searchResult={searchResult}
 									generatedAnswer={generatedAnswer}

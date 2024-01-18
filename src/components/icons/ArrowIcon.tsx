@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { FC } from "react";
 
-export const Arrow: FC<{
+export const ArrowIcon: FC<{
 	className?: string;
 	orientation?: "right" | "down" | "left" | "up";
 }> = ({ className = "", orientation = "right" }) => {

@@ -1,7 +1,7 @@
 import { HistoryEntryType } from "@/lib/common";
 import { XIcon } from "lucide-react";
 import { MouseEvent, ReactNode } from "react";
-import { Button } from "./ui/button";
+import { Button } from "./ui/Button";
 import Sidebar from "./ui/sidebar";
 
 export default function MobileSidebar({
