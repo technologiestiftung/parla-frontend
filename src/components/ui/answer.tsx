@@ -2,7 +2,7 @@ import { DocumentSearchResponse } from "@/lib/common";
 import { getDocumentsCount } from "@/lib/get-documents-count";
 import { texts } from "@/lib/texts";
 import { cn } from "@/lib/utils";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import AnswerLoadingSkeleton from "./textLoadingSkeleton";
 
@@ -55,7 +55,7 @@ function Answer(props: AnswerProps): JSX.Element {
 				{generatedAnswer && (
 					<>
 						<div data-testid="generated-answer">
-							<ReactMarkdown className="leading-6 bg-white p-4 rounded-lg shadow-md">
+							<ReactMarkdown className="leading-6 bg-white p-4 rounded-lg shadow-md space-y-4">
 								{generatedAnswer}
 							</ReactMarkdown>
 						</div>
