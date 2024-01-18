@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.26.1...v1.27.0) (2024-01-18)
+
+
+### Features
+
+* add feedback link ([#82](https://github.com/technologiestiftung/parla-frontend/issues/82)) ([cc35c3a](https://github.com/technologiestiftung/parla-frontend/commit/cc35c3a880d75b98a85c3781e0cb572072c0ec59))
+
 ## [1.26.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.26.0...v1.26.1) (2024-01-18)
 
 
