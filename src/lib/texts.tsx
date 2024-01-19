@@ -12,7 +12,7 @@ export const texts = {
 	documentsTitle: "Beste Treffer in diesen Dokumenten:",
 	feedback: {
 		short: "Feedback",
-		long: "Beantworte&nsbp;uns&nsbp;gerne&nsbp;einige&nsbp;Fragen.",
+		long: "Beantworte&nbsp;uns&nbsp;gerne&nbsp;einige&nbsp;Fragen.",
 		question: "Wie gefällt Dir Parla? ",
 	},
 	about: {
