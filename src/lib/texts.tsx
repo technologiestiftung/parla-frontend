@@ -12,8 +12,8 @@ export const texts = {
 	documentsTitle: "Beste Treffer in diesen Dokumenten:",
 	feedback: {
 		short: "Feedback",
-		long: "Beantworte uns gerne 1-2 Fragen.",
-		question: "Wie gefällt dir Parla? ",
+		long: "Beantworte&nsbp;uns&nsbp;gerne&nsbp;einige&nsbp;Fragen.",
+		question: "Wie gefällt Dir Parla? ",
 	},
 	about: {
 		title: "Über Parla",
