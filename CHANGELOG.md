@@ -1,3 +1,10 @@
+## [1.27.2](https://github.com/technologiestiftung/parla-frontend/compare/v1.27.1...v1.27.2) (2024-01-19)
+
+
+### Bug Fixes
+
+* **TypeformLink:** Adjust break on small screens ([c9d1e19](https://github.com/technologiestiftung/parla-frontend/commit/c9d1e19ac6569be4712f3e3ad5a25b0e388db07a))
+
 ## [1.27.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.27.0...v1.27.1) (2024-01-18)
 
 
