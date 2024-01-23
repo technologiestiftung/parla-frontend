@@ -24,6 +24,7 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useMatomo } from "@/lib/hooks/useMatomo";
+import { ErrorAlert } from "@/components/ui/error-alert";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
@@ -210,6 +211,17 @@ export default function Home() {
 									onSubmit={onSubmit}
 									isLoading={searchIsLoading}
 								/>
+								{_errors && (
+									<ErrorAlert
+										callback={() => {
+											setErrors(null);
+											onSubmit(formData.query);
+										}}
+										error={
+											"Fehler beim Generieren der Antwort. Bitte versuchen Sie es erneut."
+										}
+									></ErrorAlert>
+								)}
 							</div>
 
 							<div className="px-2 md:px-2 lg:px-10">
