@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.27.2...v1.28.0) (2024-01-24)
+
+
+### Features
+
+* show error alert when requests fail ([#90](https://github.com/technologiestiftung/parla-frontend/issues/90)) ([6ba861a](https://github.com/technologiestiftung/parla-frontend/commit/6ba861a3aa53c6de34e223b59d8b9169d4cbbee6))
+
 ## [1.27.2](https://github.com/technologiestiftung/parla-frontend/compare/v1.27.1...v1.27.2) (2024-01-19)
 
 

@@ -1,6 +1,6 @@
 {
 	"name": "ki-anfragen-frontend",
-	"version": "1.27.2",
+	"version": "1.28.0",
 	"private": true,
 	"scripts": {
 		"dev": "next dev -H 0.0.0.0",
