@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.28.0...v1.29.0) (2024-01-25)
+
+
+### Features
+
+* simpler example questions ([#91](https://github.com/technologiestiftung/parla-frontend/issues/91)) ([35315d3](https://github.com/technologiestiftung/parla-frontend/commit/35315d37e0e18cdb08461544f80126b6b50bae62))
+
 # [1.28.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.27.2...v1.28.0) (2024-01-24)
 
 
