@@ -72,6 +72,12 @@ export default function SearchResultSection({
 		getCleanedMetadata(documentMatch);
 
 	const isWebSource = type === "Webseite";
+
+	// Hacky fix: "Hauptausschussprotokoll" documents in the database should be named "Hauptausschussvorgang"
+	// Ideally, this should be fixed in the database
+	const documenType =
+		type === "Hauptausschussprotokoll" ? "Hauptausschussvorgang" : type;
+
 	const processedAt = new Date(
 		documentMatch?.processed_document.processing_finished_at!,
 	);
@@ -79,7 +85,7 @@ export default function SearchResultSection({
 		<div className="bg-white p-4 rounded-lg shadow-md">
 			<div className="flex gap-2 justify-between items-center">
 				<span className="flex gap-x-2 flex-wrap items-center text-sm sm:text-base">
-					<span>{type}</span>
+					<span>{documenType}</span>
 					<span className="text-slate-400 hidden sm:inline" aria-hidden="true">
 						∙
 					</span>
