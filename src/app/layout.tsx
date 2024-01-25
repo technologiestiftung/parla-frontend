@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 		"Parla",
 		"Schriftliche Anfragen",
 		"Rote Nummern",
-		"Hauptausschussprotokolle",
+		"Hauptausschussvorgänge",
 		"Berlin",
 		"Politik",
 		"Verwaltung",
