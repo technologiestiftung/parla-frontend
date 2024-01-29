@@ -1,5 +1,8 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests
 name: Node.js CI
+permissions:
+  contents: write
+  packages: write
 on:
   push:
     branches: [main, staging]
