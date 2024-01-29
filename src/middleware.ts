@@ -5,6 +5,10 @@ export const config = {
 };
 
 export function middleware(req: NextRequest) {
+	const basicAuthDisabled = process.env.BASIC_AUTH_DISABLED;
+	if (basicAuthDisabled === "true") {
+		return NextResponse.next();
+	}
 	const url = req.nextUrl;
 	url.pathname = "/api/auth";
 	const credentials = process.env.BASIC_AUTH_CREDENTIALS;
