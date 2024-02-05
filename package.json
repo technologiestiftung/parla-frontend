@@ -27,6 +27,7 @@
 		"uuid": "9.0.1"
 	},
 	"devDependencies": {
+		"@saithodev/semantic-release-backmerge": "4.0.1",
 		"@tailwindcss/typography": "0.5.10",
 		"@technologiestiftung/semantic-release-config": "1.2.4",
 		"@types/node": "20.11.10",
