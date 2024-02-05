@@ -1,19 +1,19 @@
 "use client";
-import { LegalFooter } from "@/components/ui/LegalFooter";
-import { Disclosure } from "@headlessui/react";
-import { cn } from "@/lib/utils";
-import ReactMarkdown from "react-markdown";
-import { useTexts } from "@/lib/hooks/useTexts";
 import { BackButton } from "@/components/ui/BackButton";
 import { Footer } from "@/components/ui/Footer";
-import { Chevron } from "@/components/ui/Chevron";
+import { LegalFooter } from "@/components/ui/LegalFooter";
+import { useTexts } from "@/lib/hooks/useTexts";
+import { cn } from "@/lib/utils";
+import { Disclosure } from "@headlessui/react";
+import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
+import ReactMarkdown from "react-markdown";
 
 const Info = () => {
 	const texts = useTexts();
 
 	return (
 		<div>
-			<div className="min-h-screen mx-auto max-w-xl">
+			<div className="min-h-screen mx-auto max-w-3xl">
 				<BackButton href="/" />
 				<div className={cn("p-5 md:p-8 flex flex-col gap-8 md:pt-[5vmin]")}>
 					<h1 className={cn("text-2xl font-bold")}>
@@ -50,10 +50,13 @@ const Info = () => {
 													)}
 												>
 													{question}
-													<Chevron
-														orientation={open ? "up" : "down"}
-														className={`text-blue-700 group-hover:text-white transition-colors scale-90`}
-													/>
+													<div className="text-blue-700 group-hover:text-white transition-colors">
+														{open ? (
+															<ChevronDownIcon className="w-8 h-8"></ChevronDownIcon>
+														) : (
+															<ChevronRightIcon className="w-8 h-8"></ChevronRightIcon>
+														)}
+													</div>
 												</Disclosure.Button>
 												<Disclosure.Panel
 													aria-label="FAQ Answer"

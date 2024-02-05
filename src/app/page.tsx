@@ -1,4 +1,5 @@
 "use client";
+import MobileHeader from "@/components/MobileHeader";
 /* eslint-disable @next/next/no-img-element */
 import MobileSidebar from "@/components/MobileSidebar";
 import { SplashScreen } from "@/components/splash-screen";
@@ -6,26 +7,30 @@ import PromptForm from "@/components/ui/promptForm";
 import PromptContent from "@/components/ui/promtContent";
 import ResultHistory from "@/components/ui/resultHistory";
 import Sidebar from "@/components/ui/sidebar";
+import Sources from "@/components/ui/sources";
 import {
 	Algorithms,
 	DocumentSearchBody,
 	DocumentSearchResponse,
-	GenerateAnswerResponse,
 	HistoryEntryType,
 	availableAlgorithms,
 } from "@/lib/common";
 import { generateAnswer } from "@/lib/generate-answer";
 import { useLocalStorage } from "@/lib/hooks/localStorage";
+import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
-import { isMobile } from "react-device-detect";
-import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
+import { v4 as uuidv4 } from "uuid";
+import { useMatomo } from "@/lib/hooks/useMatomo";
+import { ErrorAlert } from "@/components/ui/error-alert";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
 export default function Home() {
+	useMatomo();
+
 	const abortController = useRef<AbortController | null>(null);
 	const searchParams = useSearchParams();
 	const selectedSearchAlgorithm =
@@ -38,12 +43,12 @@ export default function Home() {
 	const [showSplash, setShowSplash] = React.useState(false);
 	const [searchResult, setSearchResult] =
 		useState<DocumentSearchResponse | null>(null);
-	const [generatedAnswer, setGeneratedAnswer] =
-		useState<GenerateAnswerResponse | null>(null);
+	const [generatedAnswer, setGeneratedAnswer] = useState<string | null>(null);
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+	const [historyIsOpen, setHistoryIsOpen] = useState(true);
 	const [resultHistory, setResultHistory] = useLocalStorage<HistoryEntryType[]>(
-		"ki-anfragen-history",
+		"parla-history",
 		[],
 	);
 	const { showSplashScreenRef } = useShowSplashScreenFromLocalStorage();
@@ -53,7 +58,7 @@ export default function Home() {
 	const [searchConfig] = useState<DocumentSearchBody>(algorithm);
 
 	useEffect(() => {
-		setSidebarIsOpen(!isMobile);
+		setSidebarIsOpen(false);
 		setShowSplash(showSplashScreenRef.current);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -62,11 +67,12 @@ export default function Home() {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	}, [searchResult, generatedAnswer]);
 
-	async function onSubmit(query?: string) {
+	async function onSubmit(query: string | null) {
 		setErrors(null);
 		setSearchIsLoading(true);
 		setAnswerIsLoading(true);
 		setSearchResult(null);
+		setGeneratedAnswer(null);
 
 		if (!query || query?.trim().length === 0) {
 			setSearchIsLoading(false);
@@ -87,25 +93,31 @@ export default function Home() {
 			setSearchResult(searchResponse);
 			setSearchIsLoading(false);
 
-			abortController.current = new AbortController();
-			const answerResponse = await generateAnswer({
-				query,
-				documentMatches: searchResponse.documentMatches,
-				signal: abortController.current.signal,
-			});
+			let answerResponse = "";
+			if (searchResponse.documentMatches.length > 0) {
+				abortController.current = new AbortController();
+				answerResponse = await generateAnswer({
+					include_summary_in_response_generation: true,
+					query,
+					documentMatches: searchResponse.documentMatches,
+					signal: abortController.current.signal,
+					chunkCallback: (chunk) => {
+						setGeneratedAnswer(chunk);
+					},
+				});
+				setGeneratedAnswer(answerResponse);
+			}
+			setAnswerIsLoading(false);
 
 			setResultHistory((prev) => [
-				...prev,
 				{
-					id: answerResponse.answer.id,
+					id: uuidv4(),
 					query,
 					searchResponse,
 					answerResponse,
 				},
+				...prev,
 			]);
-
-			setAnswerIsLoading(false);
-			setGeneratedAnswer(answerResponse);
 		} catch (error) {
 			if (error instanceof Error) {
 				setErrors({ query: error.message });
@@ -118,6 +130,7 @@ export default function Home() {
 
 	function onChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
 		const { name, value } = event.target;
+		setTitle(null);
 		setFormData((prevValues) => ({ ...prevValues, [name]: value }));
 	}
 
@@ -149,20 +162,25 @@ export default function Home() {
 	return (
 		<>
 			<SplashScreen open={showSplash} setOpen={setShowSplash} />
-			<div className="min-h-screen w-full z-50">
-				<div className="flex flex-col min-h-screen lg:grid lg:grid-cols-[280px_1fr] lg:gap-4 bg-slate-100 lg:p-4">
-					<aside className="hidden h-[calc(100vh-2rem)] lg:block sidebar overflow-y-auto">
+			<div className="min-h-screen w-full">
+				<div className="flex flex-col min-h-screen md:grid md:grid-cols-[280px_1fr] md:gap-2 md:p-2 lg:grid lg:grid-cols-[320px_1fr] lg:gap-4 bg-slate-100 lg:p-4">
+					<aside className="hidden h-[calc(100vh-2rem)] md:block sidebar overflow-y-auto bg-slate-100">
 						<Sidebar
 							sidebarIsOpen={sidebarIsOpen}
+							setSidebarIsOpen={setSidebarIsOpen}
+							historyIsOpen={historyIsOpen}
+							setHistoryIsOpen={setHistoryIsOpen}
+							clearResultHistory={() => setResultHistory([])}
 							onNewRequest={newRequestHandler}
-							onSidebarOpenChange={setSidebarIsOpen}
 							openSplashScreen={() => setShowSplash(true)}
 						>
 							{resultHistory && resultHistory.length > 0 && (
 								<ResultHistory
 									resultHistory={resultHistory}
-									restoreResultHistoryItem={restoreResultHistoryItem}
-									clearResultHistory={() => setResultHistory([])}
+									restoreResultHistoryItem={(id) => {
+										setSidebarIsOpen(false);
+										restoreResultHistoryItem(id);
+									}}
 									removeResultHistoryItem={(id) => {
 										setResultHistory((prev) =>
 											prev.filter((entry) => entry.id !== id),
@@ -174,12 +192,39 @@ export default function Home() {
 					</aside>
 					<main
 						className={cn(
-							"flex h-screen lg:h-[calc(100vh-2rem)] overflow-y-auto justify-center",
-							"bg-white  lg:rounded-md border border-slate-200 relative",
+							"flex h-auto lg:h-[calc(100vh-2rem)] sm:overflow-y-auto justify-center",
+							"bg-[#F8FAFC] lg:rounded-md border border-slate-200",
 						)}
 					>
-						<div className="w-full flex flex-col justify-between">
-							<div className="px-10 py-7 space-y-4">
+						<div className="w-full space-y-10 sm:space-y-20">
+							<div
+								className={`sticky top-0 w-full bg-[#F8FAFC] px-2 md:px-2 lg:px-10`}
+								style={{ zIndex: 1 }}
+							>
+								<MobileHeader
+									setSidebarisOpen={setSidebarIsOpen}
+									openSplashScreen={() => setShowSplash(true)}
+								></MobileHeader>
+								<PromptForm
+									query={formData.query || title}
+									onChange={onChange}
+									onSubmit={onSubmit}
+									isLoading={searchIsLoading}
+								/>
+								{_errors && (
+									<ErrorAlert
+										callback={() => {
+											setErrors(null);
+											onSubmit(formData.query);
+										}}
+										error={
+											"Fehler beim Generieren der Antwort. Bitte versuchen Sie es erneut."
+										}
+									></ErrorAlert>
+								)}
+							</div>
+
+							<div className="px-2 md:px-2 lg:px-10">
 								<PromptContent
 									title={title}
 									searchResult={searchResult}
@@ -192,27 +237,33 @@ export default function Home() {
 									answerIsLoading={answerIsLoading}
 								/>
 							</div>
-							<PromptForm
-								query={formData.query}
-								onChange={onChange}
-								onSubmit={onSubmit}
-								isLoading={searchIsLoading}
-							/>
+
+							<div className="px-2 md:px-2 lg:px-10">
+								<Sources
+									searchIsLoading={searchIsLoading}
+									searchResult={searchResult}
+								/>
+							</div>
 						</div>
 					</main>
 					<MobileSidebar
 						resultHistory={resultHistory}
 						restoreResultHistoryItem={restoreResultHistoryItem}
-						isHistoryOpen={sidebarIsOpen}
+						isHistoryOpen={historyIsOpen}
+						sidebarIsOpen={sidebarIsOpen}
 						setSidebarisOpen={setSidebarIsOpen}
+						clearResultHistory={() => setResultHistory([])}
 						newRequestHandler={newRequestHandler}
 						openSplashScreen={() => setShowSplash(true)}
+						setHistoryOpen={setHistoryIsOpen}
 					>
 						{resultHistory && (
 							<ResultHistory
 								resultHistory={resultHistory}
-								restoreResultHistoryItem={restoreResultHistoryItem}
-								clearResultHistory={() => setResultHistory([])}
+								restoreResultHistoryItem={(id) => {
+									setSidebarIsOpen(false);
+									restoreResultHistoryItem(id);
+								}}
 								removeResultHistoryItem={(id) => {
 									setResultHistory((prev) =>
 										prev.filter((entry) => entry.id !== id),

@@ -79,6 +79,50 @@
 	body {
 		@apply bg-background text-foreground font-sans;
 	}
+
+	.markdown-container ol {
+		@apply list-none space-y-2 my-4;
+	}
+
+	.markdown-container ul {
+		@apply list-none space-y-2 my-4;
+	}
+
+	.markdown-container li {
+		@apply relative pl-6;
+	}
+
+	.markdown-container li::before {
+		content: "\2022";
+		position: absolute;
+		left: 0;
+		margin-right: 8px;
+		padding: 2px;
+	}
+
+	.markdown-container h1 {
+		@apply text-6xl;
+	}
+
+	.markdown-container h2 {
+		@apply text-5xl;
+	}
+
+	.markdown-container h3 {
+		@apply text-4xl;
+	}
+
+	.markdown-container h4 {
+		@apply text-3xl;
+	}
+
+	.markdown-container h5 {
+		@apply text-2xl;
+	}
+
+	.markdown-container h6 {
+		@apply text-xl;
+	}
 }
 
 :root {
