@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const MATOMO_URL =
@@ -45,12 +44,9 @@ const replaceNewScript = (newNoscript: HTMLElement): void => {
 };
 
 export const useMatomo = (): void => {
-	const { asPath } = useRouter();
-
 	useEffect(() => {
-		const parsedPath = asPath.split("?")[0];
-
+		const parsedPath = window.location.pathname;
 		const newScript = createImageNoscript(parsedPath);
 		newScript && replaceNewScript(newScript);
-	}, [asPath]);
+	}, []);
 };

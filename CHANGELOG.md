@@ -1,3 +1,127 @@
+# [1.29.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.28.0...v1.29.0) (2024-01-25)
+
+
+### Features
+
+* simpler example questions ([#91](https://github.com/technologiestiftung/parla-frontend/issues/91)) ([35315d3](https://github.com/technologiestiftung/parla-frontend/commit/35315d37e0e18cdb08461544f80126b6b50bae62))
+
+# [1.28.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.27.2...v1.28.0) (2024-01-24)
+
+
+### Features
+
+* show error alert when requests fail ([#90](https://github.com/technologiestiftung/parla-frontend/issues/90)) ([6ba861a](https://github.com/technologiestiftung/parla-frontend/commit/6ba861a3aa53c6de34e223b59d8b9169d4cbbee6))
+
+## [1.27.2](https://github.com/technologiestiftung/parla-frontend/compare/v1.27.1...v1.27.2) (2024-01-19)
+
+
+### Bug Fixes
+
+* **TypeformLink:** Adjust break on small screens ([c9d1e19](https://github.com/technologiestiftung/parla-frontend/commit/c9d1e19ac6569be4712f3e3ad5a25b0e388db07a))
+
+## [1.27.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.27.0...v1.27.1) (2024-01-18)
+
+
+### Bug Fixes
+
+* product_id key in typeform link ([#84](https://github.com/technologiestiftung/parla-frontend/issues/84)) ([30b1abd](https://github.com/technologiestiftung/parla-frontend/commit/30b1abdad5ec544977e3565e52660f475b844423))
+
+# [1.27.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.26.1...v1.27.0) (2024-01-18)
+
+
+### Features
+
+* add feedback link ([#82](https://github.com/technologiestiftung/parla-frontend/issues/82)) ([cc35c3a](https://github.com/technologiestiftung/parla-frontend/commit/cc35c3a880d75b98a85c3781e0cb572072c0ec59))
+
+## [1.26.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.26.0...v1.26.1) (2024-01-18)
+
+
+### Bug Fixes
+
+* markdown list css ([#81](https://github.com/technologiestiftung/parla-frontend/issues/81)) ([83c1f90](https://github.com/technologiestiftung/parla-frontend/commit/83c1f9034d16a461f026d777b3aa073051f5dc54))
+
+# [1.26.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.25.0...v1.26.0) (2024-01-17)
+
+
+### Bug Fixes
+
+* cutoff chevron on faq page ([#79](https://github.com/technologiestiftung/parla-frontend/issues/79)) ([28fa57c](https://github.com/technologiestiftung/parla-frontend/commit/28fa57c8b7f18cb246de09bec6b099a23feb774e))
+
+
+### Features
+
+* add favicons to generated metadata ([#80](https://github.com/technologiestiftung/parla-frontend/issues/80)) ([245d246](https://github.com/technologiestiftung/parla-frontend/commit/245d246b8ac3e0749c49907f7058316d3728034a))
+
+# [1.25.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.24.0...v1.25.0) (2024-01-17)
+
+
+### Features
+
+* logo in mobile header ([#78](https://github.com/technologiestiftung/parla-frontend/issues/78)) ([3fd3dcb](https://github.com/technologiestiftung/parla-frontend/commit/3fd3dcba8a4961e5a6c5d974bfd06f50a1eb4711))
+
+# [1.24.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.23.1...v1.24.0) (2024-01-17)
+
+
+### Features
+
+* make sidebar sticky for long list of prev questions ([#75](https://github.com/technologiestiftung/parla-frontend/issues/75)) ([3b4f0ab](https://github.com/technologiestiftung/parla-frontend/commit/3b4f0ab9497b4515d817b35be8f858682a210faa))
+
+## [1.23.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.23.0...v1.23.1) (2024-01-17)
+
+
+### Bug Fixes
+
+* less padding in input form ([#74](https://github.com/technologiestiftung/parla-frontend/issues/74)) ([72a23bf](https://github.com/technologiestiftung/parla-frontend/commit/72a23bfbf44eedd0a1d8ebe6112957317bb7fa65))
+
+# [1.23.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.22.1...v1.23.0) (2024-01-17)
+
+
+### Features
+
+* opengraph and twitter meta ([#66](https://github.com/technologiestiftung/parla-frontend/issues/66)) ([a2ab2ab](https://github.com/technologiestiftung/parla-frontend/commit/a2ab2ab2505ce703c67c942b606cdb99b4ba2d39))
+
+## [1.22.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.22.0...v1.22.1) (2024-01-17)
+
+
+### Bug Fixes
+
+* remove unneeded elements from loading skeleton ([#72](https://github.com/technologiestiftung/parla-frontend/issues/72)) ([d0626c3](https://github.com/technologiestiftung/parla-frontend/commit/d0626c307191970402984057c19eb077a4a20a8d))
+
+# [1.22.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.21.0...v1.22.0) (2024-01-17)
+
+
+### Features
+
+* display web pages as sources ([#70](https://github.com/technologiestiftung/parla-frontend/issues/70)) ([0a24cea](https://github.com/technologiestiftung/parla-frontend/commit/0a24cead5ae3a67bd213aba673c21b629229a906))
+
+# [1.21.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.20.1...v1.21.0) (2024-01-16)
+
+
+### Features
+
+* add logo on sidebar and splashscreen ([#67](https://github.com/technologiestiftung/parla-frontend/issues/67)) ([70bd7f4](https://github.com/technologiestiftung/parla-frontend/commit/70bd7f43aa510128eb718839d13eb47787f327c5))
+
+## [1.20.1](https://github.com/technologiestiftung/parla-frontend/compare/v1.20.0...v1.20.1) (2024-01-16)
+
+
+### Bug Fixes
+
+* **sidebar:** button alignment ([#65](https://github.com/technologiestiftung/parla-frontend/issues/65)) ([10b97fe](https://github.com/technologiestiftung/parla-frontend/commit/10b97fea35639286396754a9fcb759cd4c412665))
+
+# [1.20.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.19.0...v1.20.0) (2024-01-12)
+
+
+### Features
+
+* redesign and refactoring ([#63](https://github.com/technologiestiftung/parla-frontend/issues/63)) ([2369077](https://github.com/technologiestiftung/parla-frontend/commit/236907705ac7f1a61a25365c02bb78a95209acb2))
+
+# [1.19.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.18.0...v1.19.0) (2024-01-12)
+
+
+### Features
+
+* enable Matomo ([#64](https://github.com/technologiestiftung/parla-frontend/issues/64)) ([f81a427](https://github.com/technologiestiftung/parla-frontend/commit/f81a42712f955e0874b9a6d4b00e6976ca76e068))
+
 # [1.18.0](https://github.com/technologiestiftung/parla-frontend/compare/v1.17.0...v1.18.0) (2024-01-09)
 
 

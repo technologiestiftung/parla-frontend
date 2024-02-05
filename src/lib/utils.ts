@@ -33,7 +33,12 @@ export function getCleanedMetadata(
 	);
 
 	const pdfUrl = regDoc?.source_url;
-	const pdfName = pdfUrl?.split("/").slice(-1)[0];
+	const documentName =
+		type === "Webseite"
+			? "title" in metadata &&
+				typeof metadata.title === "string" &&
+				metadata.title
+			: pdfUrl?.split("/").slice(-1)[0];
 	const pages = documentMatch?.processed_document_chunk_matches
 		.map((c) => c.processed_document_chunk.page + 1) // page is 0-based
 		.sort();
@@ -42,7 +47,7 @@ export function getCleanedMetadata(
 	return {
 		title: title?.replace(/<\/?[^>]+(>|$)/g, " ∙ "),
 		pdfUrl,
-		pdfName,
+		documentName,
 		pages,
 		similarity,
 		type,

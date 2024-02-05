@@ -11,7 +11,7 @@ function DocumentLoadingSkeletonItem({
 }) {
 	return (
 		<div
-			className="border-x border-t last-of-type:border-b first-of-type:rounded-t last-of-type:rounded-b p-4 text-slate-300 animate-pulse"
+			className="bg-white p-4 rounded-lg shadow-md animate-pulse"
 			aria-hidden="true"
 			style={{ animationDelay: delay }}
 		>
@@ -22,9 +22,7 @@ function DocumentLoadingSkeletonItem({
 						∙
 					</span>
 					<span className="no-underline flex gap-1 items-center flex-wrap">
-						<AcrobatIcon />
 						<span className="h-4 w-24 rounded bg-slate-200" />
-						(S. <span className="h-4 w-8 rounded bg-slate-200" />)
 					</span>
 				</span>
 				<span className="h-3 w-24 rounded bg-slate-200 inline-block" />
@@ -51,7 +49,7 @@ function DocumentLoadingSkeletonItem({
 function DocumentLoadingSkeleton() {
 	const tagsCounts = [3, 2, 5];
 	return (
-		<div className="w-[calc(100%+2rem)] -ml-4">
+		<div data-testid="documents-loading-skeleton" className="w-100 space-y-4">
 			{Array(3)
 				.fill(0)
 				.map((_item, idx) => (

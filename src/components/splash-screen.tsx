@@ -13,6 +13,8 @@ import {
 import { Link } from "./Link";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { texts } from "@/lib/texts";
+import TypeformLink from "./ui/TypeformLink";
 
 export function SplashScreen({
 	open,
@@ -23,9 +25,16 @@ export function SplashScreen({
 }) {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogContent className=" bg-white dark:bg-gray-800 shadow-lg  max-w-xl mx-auto px-6 md:px-8 py-4 md:py-6 z-50 max-h-screen overflow-y-auto">
+			<DialogContent className="bg-white dark:bg-gray-800 shadow-lg  max-w-xl mx-auto px-6 md:px-8 py-4 md:py-6 z-50 max-h-full overflow-y-auto rounded-md">
 				<DialogHeader className="flex">
-					<DialogTitle className="py-3 text-left">
+					<a href="/">
+						<img
+							alt="Parla Logo"
+							src="/images/parla-logo-v1.svg"
+							className="w-[35%] md:w-[30%] py-3"
+						/>
+					</a>
+					<DialogTitle className="mr-7 py-3 text-left">
 						<span className="font-normal text-2xl">
 							KI-Assistent für Schriftliche Anfragen{" "}
 							<br className="hidden md:inline" />
@@ -36,8 +45,8 @@ export function SplashScreen({
 				<div className="space-y-3 text-base">
 					<p>
 						Dieser Prototyp durchsucht die Schriftlichen Anfragen und die
-						Hauptausschussprotokolle (&quot;Rote Nummern&quot;) der Wahlperiode
-						19 des Berliner Abgeordnetenhauses und erstellt anhand eines Large
+						Hauptausschussvorgänge (&quot;Rote Nummern&quot;) der Wahlperiode 19
+						des Berliner Abgeordnetenhauses und erstellt anhand eines Large
 						Language Models Vorlagen für die Beantwortung der gestellten Frage.
 						Die Quellen sind auf{" "}
 						<Link href="https://www.parlament-berlin.de/dokumente">
@@ -111,6 +120,10 @@ export function SplashScreen({
 					</a>
 				</div>
 				<div className="flex justify-start gap-x-6 gap-y-3 mt-4 flex-wrap">
+					<TypeformLink
+						question={undefined}
+						linkText={texts.feedback.short}
+					></TypeformLink>
 					<Link className="text-sm" href="/faq">
 						FAQ
 					</Link>

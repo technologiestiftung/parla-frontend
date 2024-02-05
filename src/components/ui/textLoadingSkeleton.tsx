@@ -3,7 +3,7 @@ import React from "react";
 function TextLoadingSkeleton({ linesCount = 10, animate = true }) {
 	const offsets = [30, 20, 40, 30, 50, 40, 20, 10, 30, 20];
 	return (
-		<div className="flex flex-col gap-2">
+		<div className="flex flex-col gap-2 bg-white">
 			{[...Array(linesCount)].map((_, i) => {
 				const offset = offsets[i % offsets.length];
 				return (
