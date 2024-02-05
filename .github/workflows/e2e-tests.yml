@@ -1,9 +1,9 @@
 name: E2E Tests
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
   pull_request:
-    branches: [main]
+    branches: [main, staging]
 
 jobs:
   run-e2e-tests:

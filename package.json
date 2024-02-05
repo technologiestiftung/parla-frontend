@@ -21,12 +21,13 @@
 		"lucide-react": "0.321.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"react-markdown": "8.0.7",
-		"tailwind-merge": "1.14.0",
+		"react-markdown": "9.0.1",
+		"tailwind-merge": "2.0.0",
 		"tailwindcss-animate": "1.0.7",
 		"uuid": "9.0.1"
 	},
 	"devDependencies": {
+		"@saithodev/semantic-release-backmerge": "4.0.1",
 		"@tailwindcss/typography": "0.5.10",
 		"@technologiestiftung/semantic-release-config": "1.2.4",
 		"@types/node": "20.11.10",
