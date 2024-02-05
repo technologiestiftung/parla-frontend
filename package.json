@@ -42,7 +42,6 @@
 		"eslint-config-next": "14.1.0",
 		"eslint-plugin-react": "7.33.2",
 		"next": "14.1.0",
-		"openai": "4.26.1",
 		"playwright-msw": "3.0.1",
 		"postcss": "8.4.33",
 		"prettier": "3.2.4",
