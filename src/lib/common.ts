@@ -1,7 +1,3 @@
-import type {
-	CreateChatCompletionRequest,
-	CreateChatCompletionResponse,
-} from "openai";
 import type { Database } from "./database.js";
 
 type ProcessedDocumentChunk =

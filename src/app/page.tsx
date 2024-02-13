@@ -21,14 +21,23 @@ import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-scr
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useMatomo } from "@/lib/hooks/useMatomo";
 import { ErrorAlert } from "@/components/ui/error-alert";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
+// https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
 export default function Home() {
+	return (
+		<Suspense>
+			<App></App>
+		</Suspense>
+	);
+}
+
+function App() {
 	useMatomo();
 
 	const abortController = useRef<AbortController | null>(null);
