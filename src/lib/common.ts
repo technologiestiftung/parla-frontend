@@ -75,7 +75,7 @@ export enum Algorithms {
 
 export const availableAlgorithms = [
 	{
-		match_threshold: 0.85,
+		match_threshold: 0.5,
 		num_probes_summaries: 3,
 		num_probes_chunks: 9,
 		chunk_limit: 64,
@@ -83,7 +83,7 @@ export const availableAlgorithms = [
 		search_algorithm: Algorithms.ChunksOnly,
 	} as DocumentSearchBody,
 	{
-		match_threshold: 0.85,
+		match_threshold: 0.5,
 		num_probes_summaries: 3,
 		num_probes_chunks: 9,
 		chunk_limit: 128,
@@ -92,7 +92,7 @@ export const availableAlgorithms = [
 		search_algorithm: Algorithms.ChunksAndSummaries,
 	} as DocumentSearchBody,
 	{
-		match_threshold: 0.85,
+		match_threshold: 0.5,
 		num_probes_summaries: 3,
 		num_probes_chunks: 9,
 		summary_limit: 64,
