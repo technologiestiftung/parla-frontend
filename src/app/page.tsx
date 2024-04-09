@@ -106,6 +106,7 @@ function App() {
 			if (searchResponse.documentMatches.length > 0) {
 				abortController.current = new AbortController();
 				answerResponse = await generateAnswer({
+					userRequestId: searchResponse.userRequestId,
 					include_summary_in_response_generation: true,
 					query,
 					documentMatches: searchResponse.documentMatches,

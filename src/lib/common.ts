@@ -33,6 +33,7 @@ export interface DocumentSearchBody {
 }
 
 export interface GenerateAnswerBody {
+	userRequestId: string;
 	query: string;
 	documentMatches: Array<ResponseDocumentMatch>;
 	include_summary_in_response_generation: boolean;
@@ -57,6 +58,7 @@ export interface ResponseDocumentMatch {
 }
 
 export interface DocumentSearchResponse {
+	userRequestId: string;
 	documentMatches: ResponseDocumentMatch[];
 }
 
