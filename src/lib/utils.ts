@@ -57,14 +57,18 @@ export function getCleanedMetadata(
 			? metadata.DokDat[0]
 			: "";
 
-	const formattedDate = parseDate(String(documentDate)).toLocaleString(
-		"de-DE",
-		{
-			year: "numeric",
-			month: "long",
-			day: "numeric",
-		},
-	);
+	const dateFromTitle =
+		type === "Hauptausschussprotokoll"
+			? title?.match(/\d{2}\.\d{2}\.\d{4}/)?.[0]
+			: "";
+
+	const formattedDate = parseDate(
+		String(documentDate ? documentDate : dateFromTitle),
+	).toLocaleString("de-DE", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	});
 
 	return {
 		title: title?.replace(/<\/?[^>]+(>|$)/g, " ∙ "),
