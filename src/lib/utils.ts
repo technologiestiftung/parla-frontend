@@ -6,6 +6,14 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
+function parseDate(input: string) {
+	var parts = input.match(/(\d+)/g);
+	if (parts === null) {
+		return "";
+	}
+	return new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0]));
+}
+
 export function getCleanedMetadata(
 	documentMatch: ResponseDocumentMatch | undefined,
 ) {
@@ -44,6 +52,20 @@ export function getCleanedMetadata(
 		.sort();
 	const similarity = documentMatch?.similarity ?? 0;
 
+	const documentDate =
+		"DokDat" in metadata && Array.isArray(metadata.DokDat)
+			? metadata.DokDat[0]
+			: "";
+
+	const formattedDate = parseDate(String(documentDate)).toLocaleString(
+		"de-DE",
+		{
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+		},
+	);
+
 	return {
 		title: title?.replace(/<\/?[^>]+(>|$)/g, " ∙ "),
 		pdfUrl,
@@ -52,6 +74,7 @@ export function getCleanedMetadata(
 		similarity,
 		type,
 		tags,
+		formattedDate,
 	};
 }
 
