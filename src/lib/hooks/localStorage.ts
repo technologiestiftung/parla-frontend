@@ -7,13 +7,17 @@ export function useLocalStorage<ValueType>(
 ): [
 	ValueType,
 	(value: ValueType | ((oldValue: ValueType) => ValueType)) => void,
+	boolean,
 ] {
+	const [stateIsLoading, setStateIsLoading] = useState(true);
+
 	// State to store our value
 	// Pass initial state function to useState so logic is only executed once
 	const [storedValue, setStoredValue] = useState<ValueType>(initialValue);
 
 	useEffect(() => {
 		try {
+			setStateIsLoading(true);
 			const item = window.localStorage.getItem(key);
 			const parsedItem = item ? JSON.parse(item) : null;
 			const isValid =
@@ -37,6 +41,8 @@ export function useLocalStorage<ValueType>(
 			// If error also return initialValue
 			console.error(error);
 			setStoredValue(storedValue);
+		} finally {
+			setStateIsLoading(false);
 		}
 	}, []);
 
@@ -60,5 +66,5 @@ export function useLocalStorage<ValueType>(
 		}
 	};
 
-	return [storedValue, setValue];
+	return [storedValue, setValue, stateIsLoading];
 }

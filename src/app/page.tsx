@@ -20,13 +20,12 @@ import { useLocalStorage } from "@/lib/hooks/localStorage";
 import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useRef, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { useMatomo } from "@/lib/hooks/useMatomo";
 import { ErrorAlert } from "@/components/ui/error-alert";
-
-const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
+import { useRouter } from "next/navigation";
+import { loadUserRequest } from "@/lib/load-user-request";
 
 // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
 export default function Home() {
@@ -38,17 +37,23 @@ export default function Home() {
 }
 
 function App() {
+	const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
+
 	useMatomo();
 
+	const router = useRouter();
 	const abortController = useRef<AbortController | null>(null);
 	const searchParams = useSearchParams();
 	const selectedSearchAlgorithm =
 		searchParams.get("search-algorithm") ?? Algorithms.ChunksAndSummaries;
 
+	const requestId = usePathname().split("/").slice(-1)[0];
+
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [searchIsLoading, setSearchIsLoading] = useState(false);
 	const [answerIsLoading, setAnswerIsLoading] = useState(false);
+	const [requestLoading, setRequestLoading] = useState(false);
 	const [showSplash, setShowSplash] = React.useState(false);
 	const [searchResult, setSearchResult] =
 		useState<DocumentSearchResponse | null>(null);
@@ -56,10 +61,9 @@ function App() {
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const [historyIsOpen, setHistoryIsOpen] = useState(true);
-	const [resultHistory, setResultHistory] = useLocalStorage<HistoryEntryType[]>(
-		"parla-history",
-		[],
-	);
+	const [resultHistory, setResultHistory, stateIsLoading] = useLocalStorage<
+		HistoryEntryType[]
+	>("parla-history", []);
 	const { showSplashScreenRef } = useShowSplashScreenFromLocalStorage();
 	const algorithm = availableAlgorithms.find(
 		(alg) => alg.search_algorithm === selectedSearchAlgorithm,
@@ -75,6 +79,15 @@ function App() {
 	useEffect(() => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	}, [searchResult, generatedAnswer]);
+
+	useEffect(() => {
+		if (stateIsLoading || answerIsLoading) {
+			return;
+		}
+		if (requestId) {
+			restoreResultHistoryItem(requestId);
+		}
+	}, [requestId, stateIsLoading]);
 
 	async function onSubmit(query: string | null) {
 		setErrors(null);
@@ -105,6 +118,7 @@ function App() {
 			let answerResponse = "";
 			if (searchResponse.documentMatches.length > 0) {
 				abortController.current = new AbortController();
+				window.history.pushState({}, "", `/${searchResponse.userRequestId}`);
 				answerResponse = await generateAnswer({
 					userRequestId: searchResponse.userRequestId,
 					include_summary_in_response_generation: true,
@@ -121,7 +135,7 @@ function App() {
 
 			setResultHistory((prev) => [
 				{
-					id: uuidv4(),
+					id: searchResponse.userRequestId,
 					query,
 					searchResponse,
 					answerResponse,
@@ -145,6 +159,7 @@ function App() {
 	}
 
 	function newRequestHandler(event: React.MouseEvent<HTMLButtonElement>): void {
+		router.push("/");
 		event.preventDefault();
 		resetState();
 	}
@@ -160,13 +175,32 @@ function App() {
 		setSearchIsLoading(false);
 	}
 
-	function restoreResultHistoryItem(id: string): void {
-		const historyEntry = resultHistory.find((entry) => entry.id === id);
-		if (!historyEntry) return;
-		resetState();
-		setSearchResult(historyEntry.searchResponse);
-		setGeneratedAnswer(historyEntry.answerResponse);
-		setTitle(historyEntry.query);
+	async function restoreResultHistoryItem(id: string) {
+		let historyEntry = resultHistory.find((entry) => entry.id === id);
+		if (!historyEntry) {
+			setRequestLoading(true);
+			console.log(`fetching ${id} from API`);
+			try {
+				const userRequest = await loadUserRequest(
+					id,
+					abortController.current?.signal,
+				);
+				if (userRequest) historyEntry = userRequest;
+				setResultHistory((prev) => [userRequest, ...prev]);
+			} catch (e) {
+				console.log(e);
+				router.push("/");
+			} finally {
+				setRequestLoading(false);
+			}
+		}
+		if (historyEntry) {
+			resetState();
+			setSearchResult(historyEntry.searchResponse);
+			setGeneratedAnswer(historyEntry.answerResponse);
+			setTitle(historyEntry.query);
+			window.history.pushState({}, "", `/${historyEntry.id}`);
+		}
 	}
 
 	return (
@@ -214,7 +248,7 @@ function App() {
 								<MobileHeader
 									setSidebarisOpen={setSidebarIsOpen}
 									openSplashScreen={() => setShowSplash(true)}
-								></MobileHeader>
+								/>
 								<PromptForm
 									query={formData.query || title}
 									onChange={onChange}
@@ -230,7 +264,7 @@ function App() {
 										error={
 											"Fehler beim Generieren der Antwort. Bitte versuchen Sie es erneut."
 										}
-									></ErrorAlert>
+									/>
 								)}
 							</div>
 
@@ -243,14 +277,14 @@ function App() {
 										setFormData((s) => ({ ...s, query: text }));
 										onSubmit(text);
 									}}
-									searchIsLoading={searchIsLoading}
-									answerIsLoading={answerIsLoading}
+									searchIsLoading={searchIsLoading || requestLoading}
+									answerIsLoading={answerIsLoading || requestLoading}
 								/>
 							</div>
 
 							<div className="px-2 md:px-2 lg:px-10">
 								<Sources
-									searchIsLoading={searchIsLoading}
+									searchIsLoading={searchIsLoading || requestLoading}
 									searchResult={searchResult}
 								/>
 							</div>
