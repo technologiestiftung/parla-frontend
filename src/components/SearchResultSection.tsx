@@ -59,7 +59,7 @@ function TagsList({ tags }: TagsListProps) {
 export default function SearchResultSection({
 	documentMatch,
 }: SearchResultProps) {
-	const { title, pdfUrl, documentName, pages, type, tags } =
+	const { title, pdfUrl, documentName, pages, type, tags, formattedDate } =
 		getCleanedMetadata(documentMatch);
 
 	const isWebSource = type === "Webseite";
@@ -105,6 +105,7 @@ export default function SearchResultSection({
 						</Link>
 					)}
 				</span>
+				<span className="text-slate-400 text-sm">{formattedDate}</span>
 			</div>
 
 			<h6 className="text-lg mt-2 sm:mt-1 mb-3 leading-snug">{title}</h6>
