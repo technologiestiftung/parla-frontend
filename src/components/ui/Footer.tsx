@@ -2,8 +2,9 @@ import { FC } from "react";
 import { useTexts } from "@/lib/hooks/useTexts";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-const tsbLogo = "/images/tsb_logo.svg";
-const cityLabLogo = "/images/citylab_logo.svg";
+
+const cityLabLogo = "https://logos.citylab-berlin.org/logo-citylab-color.svg";
+const tsbLogo = "https://logos.citylab-berlin.org/logo-tsb-outline.svg";
 const senatskanzleiLogo = "/images/senatskanzlei_logo.svg";
 
 export const Footer: FC = () => {
@@ -18,32 +19,8 @@ export const Footer: FC = () => {
 						`md:container md:max-w-7xl md:mx-auto md:px-8`,
 					)}
 				>
-					<div className="w-full sm:w-auto flex flex-wrap gap-x-3 gap-y-8 sm:gap-x-8 md:gap-x-12 justify-between">
-						<div className="flex flex-col gap-y-2 sm:gap-y-3">
-							<h4 className="text-sm">{texts?.footer.projectOwnerLabel}</h4>
-							<a
-								href={texts?.footer.tSBLogoLink}
-								target="_blank"
-								rel="noopener noreferrer"
-								className={cn(
-									`transition-opacity hover:opacity-50`,
-									`focus:outline-none focus:ring-2 focus:ring-primary`,
-									`focus:ring-offset-2 focus:ring-offset-white`,
-								)}
-							>
-								<Image
-									src={tsbLogo}
-									alt={texts?.footer.tSBLogoAltText || ""}
-									className="w-28 md:w-36"
-									height={34}
-									width={144}
-								/>
-							</a>
-						</div>
-						<div className="flex flex-col gap-y-2 sm:gap-y-3">
-							<h4 className="text-sm">
-								{texts?.footer.projectExecutionerLabel}
-							</h4>
+					<div className="w-full sm:w-auto flex gap-x-3 gap-y-8 sm:gap-x-8 md:gap-x-12 justify-between">
+						<div className="flex flex-col gap-y-4 w-[30%] pt-8">
 							<a
 								href={texts?.footer.cityLABLogoLink}
 								target="_blank"
@@ -63,8 +40,32 @@ export const Footer: FC = () => {
 								/>
 							</a>
 						</div>
-						<div className="flex flex-col gap-y-2 sm:gap-y-3">
-							<h4 className="text-sm">{texts?.footer.projectSponsorLabel}</h4>
+						<div className="flex flex-col gap-y-4 w-[30%]">
+							<h4 className="text-xs sm:text-sm">
+								{texts?.footer.projectOwnerLabel}
+							</h4>
+							<a
+								href={texts?.footer.tSBLogoLink}
+								target="_blank"
+								rel="noopener noreferrer"
+								className={cn(
+									`transition-opacity hover:opacity-50`,
+									`focus:outline-none focus:ring-2 focus:ring-primary`,
+									`focus:ring-offset-2 focus:ring-offset-white`,
+								)}
+							>
+								<Image
+									alt={texts?.footer.tSBLogoAltText || ""}
+									src={tsbLogo}
+									height={34}
+									width={144}
+								/>
+							</a>
+						</div>
+						<div className="flex flex-col gap-y-4 w-[30%]">
+							<h4 className="text-xs sm:text-sm">
+								{texts?.footer.projectSponsorLabel}
+							</h4>
 							<a
 								href={texts?.footer.sentatskanzleiLogoLink}
 								target="_blank"

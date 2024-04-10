@@ -77,7 +77,7 @@ export function SplashScreen({
 					>
 						<Image
 							alt="Logo CityLAB Berlin"
-							src="https://logos.citylab-berlin.org/logo-citylab-berlin-outline.svg"
+							src="https://logos.citylab-berlin.org/logo-citylab-color.svg"
 							width={131}
 							height={28}
 						/>
