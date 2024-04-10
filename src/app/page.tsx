@@ -22,9 +22,10 @@ import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
 import { useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useRef, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { useMatomo } from "@/lib/hooks/useMatomo";
 import { ErrorAlert } from "@/components/ui/error-alert";
+import { useRouter } from "next/navigation";
+import { loadUserRequest } from "@/lib/load-user-request";
 
 const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
@@ -40,10 +41,12 @@ export default function Home() {
 function App() {
 	useMatomo();
 
+	const router = useRouter();
 	const abortController = useRef<AbortController | null>(null);
 	const searchParams = useSearchParams();
 	const selectedSearchAlgorithm =
 		searchParams.get("search-algorithm") ?? Algorithms.ChunksAndSummaries;
+	const requestId = searchParams.get("userRequestId");
 
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
@@ -56,10 +59,9 @@ function App() {
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const [historyIsOpen, setHistoryIsOpen] = useState(true);
-	const [resultHistory, setResultHistory] = useLocalStorage<HistoryEntryType[]>(
-		"parla-history",
-		[],
-	);
+	const [resultHistory, setResultHistory, stateIsLoading] = useLocalStorage<
+		HistoryEntryType[]
+	>("parla-history", []);
 	const { showSplashScreenRef } = useShowSplashScreenFromLocalStorage();
 	const algorithm = availableAlgorithms.find(
 		(alg) => alg.search_algorithm === selectedSearchAlgorithm,
@@ -75,6 +77,17 @@ function App() {
 	useEffect(() => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	}, [searchResult, generatedAnswer]);
+
+	useEffect(() => {
+		console.log(requestId, resultHistory, stateIsLoading);
+		if (stateIsLoading) {
+			console.log("do not restore history while loading");
+			return;
+		}
+		if (requestId) {
+			restoreResultHistoryItem(requestId);
+		}
+	}, [requestId, resultHistory, stateIsLoading]);
 
 	async function onSubmit(query: string | null) {
 		setErrors(null);
@@ -105,6 +118,7 @@ function App() {
 			let answerResponse = "";
 			if (searchResponse.documentMatches.length > 0) {
 				abortController.current = new AbortController();
+				router.push(`/?userRequestId=${searchResponse.userRequestId}`);
 				answerResponse = await generateAnswer({
 					userRequestId: searchResponse.userRequestId,
 					include_summary_in_response_generation: true,
@@ -121,7 +135,7 @@ function App() {
 
 			setResultHistory((prev) => [
 				{
-					id: uuidv4(),
+					id: searchResponse.userRequestId,
 					query,
 					searchResponse,
 					answerResponse,
@@ -160,13 +174,23 @@ function App() {
 		setSearchIsLoading(false);
 	}
 
-	function restoreResultHistoryItem(id: string): void {
-		const historyEntry = resultHistory.find((entry) => entry.id === id);
-		if (!historyEntry) return;
-		resetState();
-		setSearchResult(historyEntry.searchResponse);
-		setGeneratedAnswer(historyEntry.answerResponse);
-		setTitle(historyEntry.query);
+	async function restoreResultHistoryItem(id: string) {
+		let historyEntry = resultHistory.find((entry) => entry.id === id);
+		if (!historyEntry) {
+			const userRequest = await loadUserRequest(
+				id,
+				abortController.current?.signal,
+			);
+			historyEntry = userRequest;
+			setResultHistory((prev) => [userRequest, ...prev]);
+		}
+		if (historyEntry) {
+			resetState();
+			setSearchResult(historyEntry.searchResponse);
+			setGeneratedAnswer(historyEntry.answerResponse);
+			setTitle(historyEntry.query);
+			router.push(`/?userRequestId=${historyEntry.id}`);
+		}
 	}
 
 	return (
