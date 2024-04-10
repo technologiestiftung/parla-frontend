@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 function parseDate(input: string) {
-	var parts = input.match(/(\d+)/g);
+	const parts = input.match(/(\d+)/g);
 	if (parts === null) {
 		return "";
 	}
@@ -55,7 +55,7 @@ export function getCleanedMetadata(
 	const documentDate =
 		"DokDat" in metadata && Array.isArray(metadata.DokDat)
 			? metadata.DokDat[0]
-			: "";
+			: undefined;
 
 	const dateFromTitle =
 		type === "Hauptausschussprotokoll"
@@ -63,7 +63,7 @@ export function getCleanedMetadata(
 			: "";
 
 	const formattedDate = parseDate(
-		String(documentDate ? documentDate : dateFromTitle),
+		String(documentDate ?? dateFromTitle),
 	).toLocaleString("de-DE", {
 		year: "numeric",
 		month: "long",
