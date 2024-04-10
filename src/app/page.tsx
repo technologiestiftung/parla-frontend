@@ -20,14 +20,12 @@ import { useLocalStorage } from "@/lib/hooks/localStorage";
 import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useMatomo } from "@/lib/hooks/useMatomo";
 import { ErrorAlert } from "@/components/ui/error-alert";
 import { useRouter } from "next/navigation";
 import { loadUserRequest } from "@/lib/load-user-request";
-
-const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
 // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
 export default function Home() {
@@ -39,6 +37,8 @@ export default function Home() {
 }
 
 function App() {
+	const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
+
 	useMatomo();
 
 	const router = useRouter();
@@ -46,7 +46,8 @@ function App() {
 	const searchParams = useSearchParams();
 	const selectedSearchAlgorithm =
 		searchParams.get("search-algorithm") ?? Algorithms.ChunksAndSummaries;
-	const requestId = searchParams.get("userRequestId");
+
+	const requestId = usePathname().split("/").slice(-1)[0];
 
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
@@ -117,7 +118,7 @@ function App() {
 			let answerResponse = "";
 			if (searchResponse.documentMatches.length > 0) {
 				abortController.current = new AbortController();
-				router.push(`/?userRequestId=${searchResponse.userRequestId}`);
+				window.history.pushState({}, "", `/${searchResponse.userRequestId}`);
 				answerResponse = await generateAnswer({
 					userRequestId: searchResponse.userRequestId,
 					include_summary_in_response_generation: true,
@@ -191,7 +192,7 @@ function App() {
 			setSearchResult(historyEntry.searchResponse);
 			setGeneratedAnswer(historyEntry.answerResponse);
 			setTitle(historyEntry.query);
-			router.push(`/?userRequestId=${historyEntry.id}`);
+			window.history.pushState({}, "", `/${historyEntry.id}`);
 		}
 	}
 
