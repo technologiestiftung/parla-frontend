@@ -52,6 +52,7 @@ function App() {
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [searchIsLoading, setSearchIsLoading] = useState(false);
 	const [answerIsLoading, setAnswerIsLoading] = useState(false);
+	const [requestLoading, setRequestLoading] = useState(false);
 	const [showSplash, setShowSplash] = React.useState(false);
 	const [searchResult, setSearchResult] =
 		useState<DocumentSearchResponse | null>(null);
@@ -79,9 +80,7 @@ function App() {
 	}, [searchResult, generatedAnswer]);
 
 	useEffect(() => {
-		console.log(requestId, resultHistory, stateIsLoading);
-		if (stateIsLoading) {
-			console.log("do not restore history while loading");
+		if (stateIsLoading || answerIsLoading) {
 			return;
 		}
 		if (requestId) {
@@ -159,6 +158,7 @@ function App() {
 	}
 
 	function newRequestHandler(event: React.MouseEvent<HTMLButtonElement>): void {
+		router.push("/");
 		event.preventDefault();
 		resetState();
 	}
@@ -177,10 +177,12 @@ function App() {
 	async function restoreResultHistoryItem(id: string) {
 		let historyEntry = resultHistory.find((entry) => entry.id === id);
 		if (!historyEntry) {
+			setRequestLoading(true);
 			const userRequest = await loadUserRequest(
 				id,
 				abortController.current?.signal,
 			);
+			setRequestLoading(false);
 			historyEntry = userRequest;
 			setResultHistory((prev) => [userRequest, ...prev]);
 		}
@@ -238,7 +240,7 @@ function App() {
 								<MobileHeader
 									setSidebarisOpen={setSidebarIsOpen}
 									openSplashScreen={() => setShowSplash(true)}
-								></MobileHeader>
+								/>
 								<PromptForm
 									query={formData.query || title}
 									onChange={onChange}
@@ -254,7 +256,7 @@ function App() {
 										error={
 											"Fehler beim Generieren der Antwort. Bitte versuchen Sie es erneut."
 										}
-									></ErrorAlert>
+									/>
 								)}
 							</div>
 
@@ -267,14 +269,14 @@ function App() {
 										setFormData((s) => ({ ...s, query: text }));
 										onSubmit(text);
 									}}
-									searchIsLoading={searchIsLoading}
-									answerIsLoading={answerIsLoading}
+									searchIsLoading={searchIsLoading || requestLoading}
+									answerIsLoading={answerIsLoading || requestLoading}
 								/>
 							</div>
 
 							<div className="px-2 md:px-2 lg:px-10">
 								<Sources
-									searchIsLoading={searchIsLoading}
+									searchIsLoading={searchIsLoading || requestLoading}
 									searchResult={searchResult}
 								/>
 							</div>
