@@ -11,7 +11,7 @@ export async function loadUserRequest(
 		headers: { "Content-Type": "application/json" },
 	});
 
-	if (!response.body) {
+	if (!response.body || response.status !== 200) {
 		throw new Error("Could not load user request from API");
 	}
 

@@ -87,7 +87,7 @@ function App() {
 		if (requestId) {
 			restoreResultHistoryItem(requestId);
 		}
-	}, [requestId, resultHistory, stateIsLoading]);
+	}, [requestId, stateIsLoading]);
 
 	async function onSubmit(query: string | null) {
 		setErrors(null);
@@ -179,13 +179,20 @@ function App() {
 		let historyEntry = resultHistory.find((entry) => entry.id === id);
 		if (!historyEntry) {
 			setRequestLoading(true);
-			const userRequest = await loadUserRequest(
-				id,
-				abortController.current?.signal,
-			);
-			setRequestLoading(false);
-			historyEntry = userRequest;
-			setResultHistory((prev) => [userRequest, ...prev]);
+			console.log(`fetching ${id} from API`);
+			try {
+				const userRequest = await loadUserRequest(
+					id,
+					abortController.current?.signal,
+				);
+				if (userRequest) historyEntry = userRequest;
+				setResultHistory((prev) => [userRequest, ...prev]);
+			} catch (e) {
+				console.log(e);
+				router.push("/");
+			} finally {
+				setRequestLoading(false);
+			}
 		}
 		if (historyEntry) {
 			resetState();
