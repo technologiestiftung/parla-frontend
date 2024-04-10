@@ -10,7 +10,7 @@ export const texts = {
 		"Bitte beachten Sie, dass die generierten Antworten zwar aus offiziellen Dokumenten erstellt wurden, aber keine verbindliche Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten Quellenangaben zu überprüfen. Als Datengrundlage dienen ausschliesslich Schriftliche Anfragen und Hauptausschussvorgänge.",
 	documentsAreLoading: "Dokumente werden durchsucht...",
 	documentsTitle: "Dokumente sortiert nach Relevanz:",
-	showMoreDocuments: "Mehr Dokumente anzeigen...",
+	showMoreDocuments: "Weitere Dokumente anzeigen...",
 	feedback: {
 		short: "Feedback",
 		long: "Beantworte uns gerne einige Fragen.",
