@@ -1,5 +1,5 @@
 import React from "react";
-import { AcrobatIcon } from "./acrobat-icon";
+import { AcrobatIcon } from "./icons/acrobat-icon";
 import TextLoadingSkeleton from "./textLoadingSkeleton";
 
 function DocumentLoadingSkeletonItem({

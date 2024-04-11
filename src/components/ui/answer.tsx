@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import AnswerLoadingSkeleton from "./textLoadingSkeleton";
+import PromptFeedback from "./promptFeedback";
 
 type AnswerProps = {
 	generatedAnswer: string | null;
@@ -59,7 +60,7 @@ function Answer(props: AnswerProps): JSX.Element {
 								{generatedAnswer}
 							</ReactMarkdown>
 						</div>
-
+						<PromptFeedback />
 						<div
 							tabIndex={0}
 							className={cn(

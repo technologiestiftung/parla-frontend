@@ -267,7 +267,6 @@ function App() {
 									/>
 								)}
 							</div>
-
 							<div className="px-2 md:px-2 lg:px-10">
 								<PromptContent
 									title={title}
@@ -281,7 +280,6 @@ function App() {
 									answerIsLoading={answerIsLoading || requestLoading}
 								/>
 							</div>
-
 							<div className="px-2 md:px-2 lg:px-10">
 								<Sources
 									searchIsLoading={searchIsLoading || requestLoading}
