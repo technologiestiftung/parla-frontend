@@ -7,9 +7,12 @@ import { cn } from "@/lib/utils";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import ReactMarkdown from "react-markdown";
+import { useSearchParams } from "next/navigation";
 
 const Info = () => {
 	const texts = useTexts();
+	const searchParams = useSearchParams();
+	const isExpanded = searchParams.get("expand") === "all";
 
 	return (
 		<div>
@@ -36,6 +39,7 @@ const Info = () => {
 										key={question}
 										aria-label="FAQ Question"
 										className="w-full"
+										defaultOpen={isExpanded}
 									>
 										{({ open }) => (
 											<>
