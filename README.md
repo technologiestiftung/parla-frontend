@@ -27,7 +27,9 @@ Despite its potential, Parla remains a work in progress, with ongoing efforts to
 ## Further information and contact
 
 About the Parla project: https://citylab-berlin.org/en/projects/parla/
+
 Blog article about Parla: https://citylab-berlin.org/en/blog/parla-intelligent-knowledge-management-for-administrative-documents/
+
 Technical Deep Dive (german): https://citylab-berlin.org/de/blog/parla-technische-entwicklung-des-neuen-ki-tools/ 
 
 For further information contact us at CityLAB Berlin: info@citylab-berlin.org
