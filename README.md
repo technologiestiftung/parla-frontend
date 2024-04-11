@@ -10,9 +10,31 @@
 <img src="public/images/parla-logo-v1.png" width="50%">
 </div>
 
+# _Parla - AI-driven Information Retrieval System_
+
+Parla is an AI-driven prototype designed to streamline the retrieval of information from the vast amount of documents managed by public administrations. It leverages artificial intelligence to simplify access to over 11,000 public documents, including answers to parliamentary inquiries and main committee procedures.
+
+## Why did we develop Parla?
+
+The initiative for Parla emerged from the need to improve efficiency in public administration's handling of information. Traditional methods involve cumbersome manual searches through scattered and non-standardized data sources. Parla addresses this by providing a centralized, AI-supported platform for rapid and reliable information retrieval, benefiting not just the administration but also the public, companies, and various stakeholders.
+
+## How does Parla work?
+
+Parla operates by scanning through a wide array of public documents available on the parliamentary documentation system, PARDOK. Users can query Parla, which then processes these inquiries using its AI to generate responses, ensuring each answer is accompanied by references to the source documents for transparency. This system not only aids in day-to-day administrative tasks but also supports broader access to governmental information.
+
+Despite its potential, Parla remains a work in progress, with ongoing efforts to mitigate AI inaccuracies and expand its document base, mindful of data security and privacy constraints. As an experiment in AI application within public administration, Parla exemplifies the need for well-structured data and highlights the path toward more sophisticated, secure AI implementations in government processes.
+
+## Further information and contact
+
+About the Parla project: https://citylab-berlin.org/en/projects/parla/
+Blog article about Parla: https://citylab-berlin.org/en/blog/parla-intelligent-knowledge-management-for-administrative-documents/
+Technical Deep Dive (german): https://citylab-berlin.org/de/blog/parla-technische-entwicklung-des-neuen-ki-tools/ 
+
+For further information contact us at CityLAB Berlin: info@citylab-berlin.org
+
 # _Parla (frontend)_
 
-This is a the frontend for the project _Parla_. Currently we explore if we can make the parliamentary documentation provided by the "The Abgeordnetenhaus" of Berlin as open data https://www.parlament-berlin.de/dokumente/open-data more accessible by embedding all the data and do search it using vector similarity search. The project is heavily based on [this example](https://github.com/supabase-community/nextjs-openai-doc-search) from the supabase community. Built with [Next.js](https://nextjs.org/) deployed on vercel.com.
+This is a the frontend for the project _Parla_. Currently we explore if we can make the parliamentary documentation provided by the Berlin House of Representatives as open data https://www.parlament-berlin.de/dokumente/open-data more accessible by embedding all the data and do search it using vector similarity search. The project is heavily based on [this example](https://github.com/supabase-community/nextjs-openai-doc-search) from the supabase community. Built with [Next.js](https://nextjs.org/) deployed on vercel.com.
 
 ## How it works with retrieval-augmented generation (RAG)
 
@@ -160,6 +182,4 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 - https://github.com/technologiestiftung/parla-api
 - https://github.com/technologiestiftung/parla-document-processor
-- https://github.com/technologiestiftung/oeffentliches-gestalten-gpt-search
-- https://github.com/supabase-community/nextjs-openai-doc-search
 <!-- touch again -->
