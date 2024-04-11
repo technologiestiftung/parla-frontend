@@ -60,6 +60,11 @@ export const texts = {
 				answer:
 					"Parla ist ein Prototyp des [CityLAB Berlin](https://www.citylab-berlin.org). Das CityLAB ist Berlins öffentliches Innovationslabor. An der Schnittstelle von Zivilgesellschaft, Verwaltung, Wissenschaft und Wirtschaft nutzen wir die Potenziale der Digitalisierung für eine gemeinwohlorientierte Stadtentwicklung – praxisnah und wirkungsorientiert. Das CityLAB Berlin ist ein Projekt der [Technologiestiftung Berlin](https://www.ts.berlin) und gefördert durch die Berliner Senatskanzlei.\n\nWeitere Informationen zur Entwicklung von Parla finden Sie hier:\n\n[Blog-Artikel zu Parla](https://citylab-berlin.org/de/blog/parla-intelligentes-wissensmanagement-fuer-verwaltungsdokumente/)\n\n[Technischer Überblick zu Parla](https://citylab-berlin.org/de/blog/parla-technische-entwicklung-des-neuen-ki-tools/)",
 			},
+			{
+				question: "Datenschutz und Umgang mit Drittanbietern",
+				answer:
+					'Parla nutzt das kommerzielle Sprachmodell "GPT-3.5-turbo" von OpenAI. Die Server, auf denen diese Dienstleistung betrieben wird, befinden sich in den Vereinigten Staaten. Im Hinblick auf den Datenschutz, insbesondere unter Berücksichtigung der europäischen Datenschutzverordnungen, raten wir davon ab, persönliche Informationen in Suchanfragen einzugeben. Es ist wichtig, sich der geografischen Lokalisierung der Server und der damit verbundenen Datenschutzbestimmungen bewusst zu sein.',
+			},
 		],
 	},
 	footer: {
