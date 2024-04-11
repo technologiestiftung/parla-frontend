@@ -36,7 +36,7 @@ For further information contact us at CityLAB Berlin: info@citylab-berlin.org
 
 # _Parla (frontend)_
 
-This is a the frontend for the project _Parla_. Currently we explore if we can make the parliamentary documentation provided by the Berlin House of Representatives as open data https://www.parlament-berlin.de/dokumente/open-data more accessible by embedding all the data and do search it using vector similarity search. The project is heavily based on [this example](https://github.com/supabase-community/nextjs-openai-doc-search) from the supabase community. Built with [Next.js](https://nextjs.org/) deployed on vercel.com.
+This is the frontend for the project _Parla_. Currently we explore if we can make the parliamentary documentation provided by the Berlin House of Representatives as open data https://www.parlament-berlin.de/dokumente/open-data more accessible by embedding all the data and do search it using vector similarity search. The project is heavily based on [this example](https://github.com/supabase-community/nextjs-openai-doc-search) from the supabase community. Built with [Next.js](https://nextjs.org/) deployed on vercel.com.
 
 ## How it works with retrieval-augmented generation (RAG)
 
