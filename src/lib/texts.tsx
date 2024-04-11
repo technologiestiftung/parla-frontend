@@ -73,8 +73,6 @@ export const texts = {
 		projectExecutionerLabel: "Durchgeführt vom",
 		cityLABLogoAltText: "Logo des CityLAB Berlin, Berlin's Innovationslabor",
 		cityLABLogoLink: "https://citylab-berlin.org/",
-		cooperationLabel:
-			"Unterstützt durch die Senatsverwaltung für Wissenschaft, Gesundheit und Pflege (SenWGP).",
 		projectSponsorLabel: "Gefördert durch",
 		sentatskanzleiLogoAltText: "Logo der Senatskanzlei Berlin",
 		sentatskanzleiLogoLink: "https://www.berlin.de/rbmskzl/",
