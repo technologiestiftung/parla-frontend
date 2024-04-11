@@ -6,6 +6,7 @@ import { ThumbsDownIcon } from "./icons/thumbs-down";
 import { ThumbsDownSolidIcon } from "./icons/thumbs-down-solid";
 import { ThumbsUpSolidIcon } from "./icons/thumbs-up-solid";
 import { Transition } from "@headlessui/react";
+import { XIcon } from "lucide-react";
 
 const PromptFeedback: React.FC = () => {
 	const [isThumbsUpClicked, setIsThumbsUpClicked] = useState(false);
@@ -41,7 +42,7 @@ const PromptFeedback: React.FC = () => {
 					`leading-6 mx-4 rounded-lg text-md w-full text-slate-500 flex justify-start`,
 				)}
 			>
-				{texts.answerFeedback}
+				<div className="flex flex-row">{texts.answerFeedback} </div>
 				<div className="flex ml-2">
 					<button
 						onClick={onThumbsUpClick}
@@ -65,12 +66,17 @@ const PromptFeedback: React.FC = () => {
 				enter="transition-opacity duration-500"
 				enterFrom="opacity-0"
 				enterTo="opacity-100"
-				leave="transition-opacity duration-150"
+				leave="transition-opacity duration-100"
 				leaveFrom="opacity-100"
 				leaveTo="opacity-0"
 				className={`flex flex-col self-center rounded-lg shadow-md p-4 bg-white w-full`}
 			>
-				<span className="">{texts.answerTellUsMore}</span>
+				<span className="flex flex-row justify-between">
+					{texts.answerTellUsMore}{" "}
+					<button onClick={() => setAreTagsVisible(false)}>
+						<XIcon className="text-slate-500 hover:text-slate-700 w-5" />
+					</button>
+				</span>
 				<div className="flex flex-wrap gap-x-6 gap-y-4 py-4">
 					{texts?.answerTags.map((tag, idx) => (
 						<button
