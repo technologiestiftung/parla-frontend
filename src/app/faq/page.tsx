@@ -10,14 +10,22 @@ import ReactMarkdown from "react-markdown";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
+// https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+export default function Faq() {
+	return (
+		<Suspense>
+			<Info />
+		</Suspense>
+	);
+}
+
 const Info = () => {
 	const texts = useTexts();
 	const searchParams = useSearchParams();
 	const isExpanded = searchParams.get("expand") === "all";
 
 	return (
-		// https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
-		<Suspense>
+		<>
 			<div className="min-h-screen mx-auto max-w-3xl">
 				<BackButton href="/" />
 				<div className={cn("p-5 md:p-8 flex flex-col gap-8 md:pt-[5vmin]")}>
@@ -86,8 +94,6 @@ const Info = () => {
 			</div>
 			<Footer />
 			<LegalFooter />
-		</Suspense>
+		</>
 	);
 };
-
-export default Info;
