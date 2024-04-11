@@ -8,6 +8,7 @@ import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import ReactMarkdown from "react-markdown";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 const Info = () => {
 	const texts = useTexts();
@@ -15,7 +16,8 @@ const Info = () => {
 	const isExpanded = searchParams.get("expand") === "all";
 
 	return (
-		<div>
+		// https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+		<Suspense>
 			<div className="min-h-screen mx-auto max-w-3xl">
 				<BackButton href="/" />
 				<div className={cn("p-5 md:p-8 flex flex-col gap-8 md:pt-[5vmin]")}>
@@ -84,7 +86,7 @@ const Info = () => {
 			</div>
 			<Footer />
 			<LegalFooter />
-		</div>
+		</Suspense>
 	);
 };
 
