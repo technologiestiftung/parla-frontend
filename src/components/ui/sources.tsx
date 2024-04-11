@@ -14,6 +14,8 @@ type SourcesProps = {
 const formatter = new Intl.NumberFormat("de-DE");
 
 function Sources(props: SourcesProps): JSX.Element {
+	const [numVisibleMatches, setNumVisibleMatches] = useState(3);
+
 	const [documentsCount, setDocumentsCount] = useState("");
 	const { searchResult, searchIsLoading } = props;
 	const matches = searchResult?.documentMatches ?? [];
@@ -36,21 +38,38 @@ function Sources(props: SourcesProps): JSX.Element {
 			</h5>
 			{searchIsLoading && <DocumentLoadingSkeleton />}
 			{!searchIsLoading && matches.length > 0 && (
-				<div data-testid="document-references" className="space-y-4">
-					{matches
-						.sort((l, r) => {
-							const lm = getCleanedMetadata(l);
-							const rm = getCleanedMetadata(r);
-							return lm.similarity < rm.similarity ? 1 : -1;
-						})
-						.map((documentMatch) => {
-							return (
-								<SearchResultSection
-									key={documentMatch.registered_document.id}
-									documentMatch={documentMatch}
-								/>
-							);
-						})}
+				<div>
+					<div data-testid="document-references" className="space-y-4">
+						{matches
+							.sort((l, r) => {
+								const lm = getCleanedMetadata(l);
+								const rm = getCleanedMetadata(r);
+								return lm.similarity < rm.similarity ? 1 : -1;
+							})
+							.slice(0, numVisibleMatches)
+							.map((documentMatch) => {
+								return (
+									<SearchResultSection
+										key={documentMatch.registered_document.id}
+										documentMatch={documentMatch}
+									/>
+								);
+							})}
+					</div>
+					{numVisibleMatches < matches.length && (
+						<div className="flex flex-row justify-center w-full p-4">
+							<button
+								onClick={() =>
+									setNumVisibleMatches(
+										Math.min(numVisibleMatches + 5, matches.length),
+									)
+								}
+								className="underline text-blue-500 hover:text-blue-700"
+							>
+								{texts.showMoreDocuments}
+							</button>
+						</div>
+					)}
 				</div>
 			)}
 		</div>
