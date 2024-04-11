@@ -10,6 +10,7 @@ export const texts = {
 		"Bitte beachten Sie, dass die generierten Antworten zwar aus offiziellen Dokumenten erstellt wurden, aber keine verbindliche Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten Quellenangaben zu überprüfen. Als Datengrundlage dienen ausschliesslich Schriftliche Anfragen und Hauptausschussvorgänge.",
 	documentsAreLoading: "Dokumente werden durchsucht...",
 	documentsTitle: "Dokumente sortiert nach Relevanz:",
+	showMoreDocuments: "Weitere Dokumente anzeigen...",
 	feedback: {
 		short: "Feedback",
 		long: "Beantworte uns gerne einige Fragen.",
@@ -73,8 +74,6 @@ export const texts = {
 		projectExecutionerLabel: "Durchgeführt vom",
 		cityLABLogoAltText: "Logo des CityLAB Berlin, Berlin's Innovationslabor",
 		cityLABLogoLink: "https://citylab-berlin.org/",
-		cooperationLabel:
-			"Unterstützt durch die Senatsverwaltung für Wissenschaft, Gesundheit und Pflege (SenWGP).",
 		projectSponsorLabel: "Gefördert durch",
 		sentatskanzleiLogoAltText: "Logo der Senatskanzlei Berlin",
 		sentatskanzleiLogoLink: "https://www.berlin.de/rbmskzl/",

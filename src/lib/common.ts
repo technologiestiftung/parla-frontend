@@ -77,28 +77,28 @@ export enum Algorithms {
 
 export const availableAlgorithms = [
 	{
-		match_threshold: 0.5,
+		match_threshold: 0.85,
 		num_probes_summaries: 3,
 		num_probes_chunks: 9,
 		chunk_limit: 64,
-		document_limit: 3,
+		document_limit: 20,
 		search_algorithm: Algorithms.ChunksOnly,
 	} as DocumentSearchBody,
 	{
-		match_threshold: 0.5,
+		match_threshold: 0.85,
 		num_probes_summaries: 3,
 		num_probes_chunks: 9,
 		chunk_limit: 128,
 		summary_limit: 16,
-		document_limit: 3,
+		document_limit: 20,
 		search_algorithm: Algorithms.ChunksAndSummaries,
 	} as DocumentSearchBody,
 	{
-		match_threshold: 0.5,
+		match_threshold: 0.85,
 		num_probes_summaries: 3,
 		num_probes_chunks: 9,
 		summary_limit: 64,
-		document_limit: 3,
+		document_limit: 20,
 		search_algorithm: Algorithms.SummariesThenChunks,
 	} as DocumentSearchBody,
 ];
