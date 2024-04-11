@@ -6,6 +6,8 @@ export const texts = {
 		"Es konnten keine Informationen zu dieser Frage in den vorliegenden Dokumenten gefunden werden.",
 	answerIsLoading: "Antwort wird generiert...",
 	answerTitle: "Zusammenfassung von Parla:",
+	copy: "Kopieren",
+	copied: "Kopiert!",
 	answerDisclaimer:
 		"Bitte beachten Sie, dass die generierten Antworten zwar aus offiziellen Dokumenten erstellt wurden, aber keine verbindliche Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten Quellenangaben zu überprüfen. Als Datengrundlage dienen ausschliesslich Schriftliche Anfragen und Hauptausschussvorgänge.",
 	documentsAreLoading: "Dokumente werden durchsucht...",
