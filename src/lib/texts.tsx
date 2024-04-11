@@ -7,6 +7,13 @@ export const texts = {
 	answerIsLoading: "Antwort wird generiert...",
 	answerTitle: "Zusammenfassung von Parla:",
 	answerFeedback: "War diese Zusammenfassung hilfreich?",
+	answerTellUsMore: "Erzählen Sie uns mehr:",
+	answerTags: [
+		"Antwort inhaltlich falsch oder missverständlich",
+		"Es gab einen Fehler",
+		"Antwort nicht ausführlich genug",
+		"Dokumente unpassend",
+	],
 	answerThankYou: "Danke für Ihr Feedback!",
 	answerDisclaimer:
 		"Bitte beachten Sie, dass die generierten Antworten zwar aus offiziellen Dokumenten erstellt wurden, aber keine verbindliche Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten Quellenangaben zu überprüfen. Als Datengrundlage dienen ausschliesslich Schriftliche Anfragen und Hauptausschussvorgänge.",
