@@ -15,6 +15,8 @@ export const texts = {
 		"Dokumente unpassend",
 	],
 	answerThankYou: "Danke für Ihr Feedback!",
+	copy: "Kopieren",
+	copied: "Kopiert!",
 	answerDisclaimer:
 		"Bitte beachten Sie, dass die generierten Antworten zwar aus offiziellen Dokumenten erstellt wurden, aber keine verbindliche Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten Quellenangaben zu überprüfen. Als Datengrundlage dienen ausschliesslich Schriftliche Anfragen und Hauptausschussvorgänge.",
 	documentsAreLoading: "Dokumente werden durchsucht...",
