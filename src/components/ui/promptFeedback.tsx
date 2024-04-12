@@ -14,7 +14,8 @@ const PromptFeedback: React.FC = () => {
 	const [isThankYouMessageVisible, setIsThankYouMessageVisible] =
 		useState(false);
 	const [areTagsVisible, setAreTagsVisible] = useState(false);
-	let [selectedTag, setSelectedTag] = useState(null as number | null);
+	const [selectedTag, setSelectedTag] = useState(null);
+	const [isTagDisabled, setIsTagDisabled] = useState(false);
 
 	const onThumbsDownClick = () => {
 		setIsThumbsDownClicked(true);
@@ -26,8 +27,9 @@ const PromptFeedback: React.FC = () => {
 		setIsThankYouMessageVisible(true);
 	};
 
-	const onTagClick = (idx: number) => {
-		setSelectedTag(idx);
+	const onTagClick = (e: any) => {
+		setSelectedTag(e.target.value);
+		setIsTagDisabled(true);
 		setTimeout(() => {
 			setAreTagsVisible(false);
 			setIsThankYouMessageVisible(true);
@@ -79,15 +81,22 @@ const PromptFeedback: React.FC = () => {
 				</span>
 				<div className="flex flex-wrap gap-x-6 gap-y-4 py-4">
 					{texts?.answerTags.map((tag, idx) => (
-						<button
-							onClick={() => onTagClick(idx)}
+						<label
 							key={idx}
-							className={`rounded-lg border border-slate-300 p-2  active:bg-parla-blue active:text-white
-                            ${selectedTag === idx ? "bg-parla-blue hover:bg-parla-blue text-white" : "hover:bg-slate-50"}`}
-							disabled={!areTagsVisible}
+							className={`rounded-lg border border-slate-300 p-2 
+                        ${selectedTag === tag ? "bg-parla-blue hover:bg-parla-blue text-white" : "hover:bg-slate-50"}`}
 						>
+							<input
+								type="radio"
+								name="tag"
+								onChange={onTagClick}
+								key={idx}
+								value={tag}
+								className="hidden peer"
+								disabled={isTagDisabled}
+							/>
 							{tag}
-						</button>
+						</label>
 					))}
 				</div>
 			</Transition>
