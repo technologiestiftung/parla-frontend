@@ -82,8 +82,8 @@ const PromptFeedback: React.FC = () => {
 						<button
 							onClick={() => onTagClick(idx)}
 							key={idx}
-							className={`rounded-lg border border-slate-300 p-2 hover:bg-slate-50
-                            ${selectedTag === idx ? "bg-parla-blue hover:bg-parla-blue text-white" : ""}`}
+							className={`rounded-lg border border-slate-300 p-2  active:bg-parla-blue active:text-white
+                            ${selectedTag === idx ? "bg-parla-blue hover:bg-parla-blue text-white" : "hover:bg-slate-50"}`}
 							disabled={!areTagsVisible}
 						>
 							{tag}
