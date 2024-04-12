@@ -15,7 +15,6 @@ module.exports = {
 				sans: ["Open Sauce Sans", "sans-serif"],
 			},
 			colors: {
-				"parla-blue": "#2652D0",
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
