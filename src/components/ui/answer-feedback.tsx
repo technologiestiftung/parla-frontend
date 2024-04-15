@@ -58,8 +58,6 @@ export function AnswerFeedback({
 		}, 1000);
 	};
 
-	console.log(allFeedbacks);
-
 	return (
 		<div className="flex justify-between w-full pt-4 flex-col gap-4">
 			<div
