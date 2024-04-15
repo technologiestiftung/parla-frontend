@@ -244,4 +244,5 @@ export const vectorSearchResponse = {
 			similarity: 0.884143859148026,
 		},
 	],
+	userRequestId: "XYZ",
 };

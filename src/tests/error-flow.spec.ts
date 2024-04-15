@@ -1,7 +1,8 @@
-import { testWithErrors } from "../mock/test";
+import { test, testWithErrors } from "../mock/test";
 import { expect } from "@playwright/test";
+import { delay } from "msw";
 
-testWithErrors("error flow", async ({ page }) => {
+testWithErrors("error flow when all API calls fail", async ({ page }) => {
 	await page.goto("http://localhost:3000");
 
 	await page.waitForResponse(
@@ -48,4 +49,61 @@ testWithErrors("error flow", async ({ page }) => {
 
 	await expect(page.getByTestId("error-alert")).toBeVisible();
 	await expect(page.getByTestId("reload-icon")).toBeVisible();
+});
+
+test("error flow when vector-search API call succeeds but generate-answer API call fails", async ({
+	page,
+}) => {
+	await page.goto("http://localhost:3000/");
+	await page.getByRole("button", { name: "Close" }).click();
+
+	// Mock the generate-answer API call to fail
+	await page.route("http://localhost:8080/generate-answer", async (route) => {
+		await delay(2000);
+		await route.fulfill({ status: 500 });
+	});
+
+	// Click on the first example
+	await page.getByTestId("example-prompt-0").click();
+
+	// Should show loading skeletons
+	await expect(page.getByTestId("documents-loading-skeleton")).toBeVisible();
+	await expect(page.getByTestId("answer-loading-skeleton")).toBeVisible();
+
+	// Wait for the API call to finish
+	await page.waitForResponse(async (resp) => {
+		return resp.url().includes("vector-search") && resp.status() === 200;
+	});
+
+	// Wait for the API call to finish
+	await page.waitForResponse(async (resp) => {
+		return resp.url().includes("generate-answer") && resp.status() === 500;
+	});
+
+	// Should show error alert + found documents
+	await expect(page.getByTestId("error-alert")).toBeVisible();
+	await expect(page.getByTestId("document-references")).toBeVisible();
+
+	// Remove mocked generate-answer API call
+	await page.unroute("http://localhost:8080/generate-answer");
+
+	// Retry to generate the answer
+	await page.getByTestId("reload-icon").click();
+
+	// Should hide error alert and reload icon
+	await expect(page.getByTestId("error-alert")).toBeHidden();
+	await expect(page.getByTestId("reload-icon")).toBeHidden();
+
+	// Wait for the API call to finish
+	await page.waitForResponse(async (resp) => {
+		return resp.url().includes("vector-search") && resp.status() === 200;
+	});
+
+	// Wait for the API call to finish
+	await page.waitForResponse(async (resp) => {
+		return resp.url().includes("generate-answer") && resp.status() === 200;
+	});
+
+	// Should show the generated answer
+	await expect(page.getByTestId("generated-answer")).toBeVisible();
 });
