@@ -299,3 +299,6 @@ next-env.d.ts
 .vscode/extensions.json
 .vscode/launch.json
 .vscode/settings.json
+
+# Jetbrains IDE
+.idea

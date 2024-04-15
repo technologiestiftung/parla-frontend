@@ -30,7 +30,7 @@ export async function generateAnswer({
 		}),
 	});
 
-	if (!response.body) {
+	if (!response.ok || !response.body) {
 		throw new Error("Could not generate answer");
 	}
 
