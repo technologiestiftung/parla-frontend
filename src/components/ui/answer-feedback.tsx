@@ -1,6 +1,6 @@
 import { texts } from "@/lib/texts";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ThumbsUpIcon } from "./icons/thumbs-up";
 import { ThumbsDownIcon } from "./icons/thumbs-down";
 import { ThumbsDownSolidIcon } from "./icons/thumbs-down-solid";
@@ -8,6 +8,10 @@ import { ThumbsUpSolidIcon } from "./icons/thumbs-up-solid";
 import { Transition } from "@headlessui/react";
 import { XIcon } from "lucide-react";
 import { CopyToClipboardButton } from "./copy-to-clipboard-button";
+import { usePathname } from "next/navigation";
+import { saveUserFeedback } from "@/lib/save-user-feedback";
+import { getAllFeedbacks } from "@/lib/get-all-feedbacks";
+import { FeedbackType } from "@/lib/common";
 
 export function AnswerFeedback({
 	generatedAnswer,
@@ -22,24 +26,39 @@ export function AnswerFeedback({
 	const [selectedTag, setSelectedTag] = useState(null);
 	const [isTagDisabled, setIsTagDisabled] = useState(false);
 
+	const requestId = usePathname().split("/").slice(-1)[0];
+
+	const [allFeedbacks, setAllFeedbacks] = useState(Array<FeedbackType>);
+
+	useEffect(() => {
+		const loadData = async () => {
+			setAllFeedbacks(await getAllFeedbacks());
+		};
+		loadData();
+	}, []);
+
 	const onThumbsDownClick = () => {
 		setIsThumbsDownClicked(true);
 		setAreTagsVisible(true);
 	};
 
 	const onThumbsUpClick = () => {
+		saveUserFeedback({ userRequestId: requestId, feedbackId: 1 });
 		setIsThumbsUpClicked(true);
 		setIsThankYouMessageVisible(true);
 	};
 
-	const onTagClick = (e: any) => {
+	const onTagClick = (e: any, id: number) => {
 		setSelectedTag(e.target.value);
-		setIsTagDisabled(true);
+		saveUserFeedback({ userRequestId: requestId, feedbackId: id });
 		setTimeout(() => {
 			setAreTagsVisible(false);
 			setIsThankYouMessageVisible(true);
+			setIsTagDisabled(true);
 		}, 1000);
 	};
+
+	console.log(allFeedbacks);
 
 	return (
 		<div className="flex justify-between w-full pt-4 flex-col gap-4">
@@ -61,7 +80,9 @@ export function AnswerFeedback({
 						</button>
 						<button
 							onClick={onThumbsDownClick}
-							className={`px-1 text-slate-500 hover:text-parla-blue ${isThumbsDownClicked ? "disabled:text-parla-blue" : "disabled:text-slate-500"}  `}
+							className={`px-1 text-slate-500 hover:text-parla-blue 
+							${isThumbsDownClicked ? "disabled:text-parla-blue" : "disabled:text-slate-500"} 
+							${isThumbsDownClicked && isTagDisabled ? "disabled:text-slate-500" : ""} `}
 							disabled={isThumbsDownClicked || isThumbsUpClicked}
 						>
 							{isThumbsDownClicked ? (
@@ -93,23 +114,23 @@ export function AnswerFeedback({
 						<XIcon className="text-slate-500 hover:text-slate-700 w-5" />
 					</button>
 				</span>
-				<div className="flex flex-wrap gap-x-6 gap-y-4 py-4">
-					{texts?.answerTags.map((tag, idx) => (
+				<div className="flex flex-wrap gap-x-6 gap-y-4 py-4 pointer-events-">
+					{allFeedbacks.slice(1).map((feedback) => (
 						<label
-							key={idx}
+							key={feedback.id}
 							className={`rounded-lg border border-slate-300 p-2 
-                        ${selectedTag === tag ? "bg-parla-blue hover:bg-parla-blue text-white" : "hover:bg-slate-50"}`}
+							${selectedTag === feedback.tag ? "bg-parla-blue hover:bg-parla-blue text-white" : "hover:bg-slate-50"}`}
 						>
 							<input
 								type="radio"
 								name="tag"
-								onChange={onTagClick}
-								key={idx}
-								value={tag}
+								onChange={(e) => onTagClick(e, feedback.id)}
+								key={feedback.id}
+								value={feedback.tag ?? ""}
 								className="hidden peer"
 								disabled={isTagDisabled}
 							/>
-							{tag}
+							{feedback.tag && feedback.tag}
 						</label>
 					))}
 				</div>

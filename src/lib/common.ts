@@ -102,3 +102,9 @@ export const availableAlgorithms = [
 		search_algorithm: Algorithms.SummariesThenChunks,
 	} as DocumentSearchBody,
 ];
+
+export interface FeedbackType {
+	id: number;
+	tag: string | null;
+	kind: "positive" | "negative";
+}
