@@ -65,6 +65,7 @@ export interface DocumentSearchResponse {
 export interface HistoryEntryType {
 	id: string;
 	query: string;
+	feedbackId: number | null;
 	searchResponse: DocumentSearchResponse;
 	answerResponse: string;
 }

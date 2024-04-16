@@ -27,6 +27,7 @@ export function useLocalStorage<ValueType>(
 					(item) =>
 						"query" in item &&
 						"id" in item &&
+						"feedbackId" in item &&
 						"searchResponse" in item &&
 						"answerResponse" in item,
 				);

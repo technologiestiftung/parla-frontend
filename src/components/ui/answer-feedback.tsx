@@ -11,7 +11,8 @@ import { CopyToClipboardButton } from "./copy-to-clipboard-button";
 import { usePathname } from "next/navigation";
 import { saveUserFeedback } from "@/lib/save-user-feedback";
 import { getAllFeedbacks } from "@/lib/get-all-feedbacks";
-import { FeedbackType } from "@/lib/common";
+import { FeedbackType, HistoryEntryType } from "@/lib/common";
+import { useLocalStorage } from "@/lib/hooks/localStorage";
 
 export function AnswerFeedback({
 	generatedAnswer,
@@ -25,17 +26,51 @@ export function AnswerFeedback({
 	const [areTagsVisible, setAreTagsVisible] = useState(false);
 	const [selectedTag, setSelectedTag] = useState(null);
 	const [isTagDisabled, setIsTagDisabled] = useState(false);
-
 	const requestId = usePathname().split("/").slice(-1)[0];
-
 	const [allFeedbacks, setAllFeedbacks] = useState(Array<FeedbackType>);
+
+	const [resultHistory, setResultHistory, stateIsLoading] = useLocalStorage<
+		HistoryEntryType[]
+	>("parla-history", []);
 
 	useEffect(() => {
 		const loadData = async () => {
 			setAllFeedbacks(await getAllFeedbacks());
 		};
 		loadData();
+
+		const userRequestHistory = resultHistory.find(
+			(entry) => entry.id === requestId,
+		);
+		const feedbackIdHistory = userRequestHistory?.feedbackId;
+
+		if (requestId) {
+			switch (feedbackIdHistory) {
+				case 1:
+					setIsThumbsUpClicked(true);
+					setIsThumbsDownClicked(false);
+					break;
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+					setIsThumbsDownClicked(true);
+					setIsThumbsUpClicked(false);
+					break;
+				default:
+					setIsThumbsUpClicked(false);
+					setIsThumbsDownClicked(false);
+					break;
+			}
+		}
 	}, []);
+
+	const showHideThankYouMessage = () => {
+		setIsThankYouMessageVisible(true);
+		setTimeout(() => {
+			setIsThankYouMessageVisible(false);
+		}, 2000);
+	};
 
 	const onThumbsDownClick = () => {
 		setIsThumbsDownClicked(true);
@@ -44,16 +79,36 @@ export function AnswerFeedback({
 
 	const onThumbsUpClick = () => {
 		saveUserFeedback({ userRequestId: requestId, feedbackId: 1 });
+
+		setResultHistory((prev) =>
+			prev.map((userRequest) => {
+				if (userRequest.id === requestId) {
+					return { ...userRequest, feedback: 3 };
+				}
+				return userRequest;
+			}),
+		);
+
 		setIsThumbsUpClicked(true);
-		setIsThankYouMessageVisible(true);
+		showHideThankYouMessage();
 	};
 
 	const onTagClick = (e: any, id: number) => {
 		setSelectedTag(e.target.value);
 		saveUserFeedback({ userRequestId: requestId, feedbackId: id });
+
+		setResultHistory((prev) =>
+			prev.map((userRequest) => {
+				if (userRequest.id === requestId) {
+					return { ...userRequest, feedbackId: id };
+				}
+				return userRequest;
+			}),
+		);
+
 		setTimeout(() => {
 			setAreTagsVisible(false);
-			setIsThankYouMessageVisible(true);
+			showHideThankYouMessage();
 			setIsTagDisabled(true);
 		}, 1000);
 	};
@@ -136,9 +191,12 @@ export function AnswerFeedback({
 
 			<Transition
 				show={isThankYouMessageVisible}
-				enter="transition-opacity duration-500"
+				enter="transition-opacity duration-700"
 				enterFrom="opacity-0"
 				enterTo="opacity-100"
+				leave="transition-opacity duration-500"
+				leaveFrom="opacity-100"
+				leaveTo="opacity-0"
 				className={`flex self-center rounded-lg shadow-md p-4 mx-4 bg-white w-fit`}
 			>
 				{texts.answerThankYou}

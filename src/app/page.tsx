@@ -137,6 +137,7 @@ function App() {
 				{
 					id: searchResponse.userRequestId,
 					query,
+					feedbackId: null,
 					searchResponse,
 					answerResponse,
 				},
