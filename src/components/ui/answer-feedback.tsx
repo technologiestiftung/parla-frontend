@@ -31,8 +31,9 @@ export function AnswerFeedback({
 	const { resultHistory, setResultHistory } = useHistoryStore();
 
 	useEffect(() => {
+		const abortController = new AbortController();
 		const loadData = async () => {
-			setAllFeedbacks(await getAllFeedbacks());
+			setAllFeedbacks(await getAllFeedbacks(abortController.signal));
 		};
 		loadData();
 
@@ -60,6 +61,8 @@ export function AnswerFeedback({
 					break;
 			}
 		}
+
+		return () => abortController.abort();
 	}, [resultHistory, requestId]);
 
 	const showThenHideThankYouMessage = () => {

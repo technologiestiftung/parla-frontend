@@ -246,3 +246,15 @@ export const vectorSearchResponse = {
 	],
 	userRequestId: "XYZ",
 };
+
+export const feedbacksResponse = [
+	{ id: 1, tag: null, kind: "positive" },
+	{
+		id: 2,
+		tag: "Antwort inhaltlich falsch oder missverständlich",
+		kind: "negative",
+	},
+	{ id: 3, tag: "Es gab einen Fehler", kind: "negative" },
+	{ id: 4, tag: "Antwort nicht ausführlich genug", kind: "negative" },
+	{ id: 5, tag: "Dokumente unpassend", kind: "negative" },
+];
