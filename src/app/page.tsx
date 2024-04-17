@@ -203,8 +203,13 @@ function App() {
 		if (historyEntry) {
 			resetState();
 			setSearchResult(historyEntry.searchResponse);
-			setGeneratedAnswer(historyEntry.answerResponse);
+			if (!historyEntry.answerResponse) {
+				setErrors({ query: "historyEntry does not have an answer response" });
+			} else {
+				setGeneratedAnswer(historyEntry.answerResponse);
+			}
 			setTitle(historyEntry.query);
+			setFormData((s) => ({ ...s, query: historyEntry!.query }));
 			window.history.pushState({}, "", `/${historyEntry.id}`);
 		}
 	}
