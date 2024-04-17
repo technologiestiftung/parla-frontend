@@ -11,9 +11,7 @@ export const useHistoryStore = create(
 	persist<HistoryStore>(
 		(set) => ({
 			// For backwards compatibility with old localStorage history, we initially load the parly-history
-			resultHistory: localStorage.getItem("parla-history")
-				? JSON.parse(localStorage.getItem("parla-history")!)
-				: [],
+			resultHistory: [],
 			setResultHistory: (resultHistory: HistoryEntryType[]) =>
 				set({ resultHistory }),
 		}),

@@ -72,6 +72,13 @@ function App() {
 		setSidebarIsOpen(false);
 		setShowSplash(showSplashScreenRef.current);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
+
+		// For backwards compatibility with old localStorage history, we initially load the parly-history
+		// save it in the new Zustand store and remove it from localStorage
+		if (localStorage.getItem("parla-history")) {
+			setResultHistory(JSON.parse(localStorage.getItem("parla-history")!));
+			localStorage.removeItem("parla-history");
+		}
 	}, []);
 
 	useEffect(() => {
