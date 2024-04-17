@@ -7,6 +7,7 @@ export function ThumbsDownIcon() {
 			strokeWidth={2}
 			stroke="currentColor"
 			className="w-[18px] h-[18px]"
+			data-testid="thumbs-down-icon"
 		>
 			<path
 				strokeLinecap="round"

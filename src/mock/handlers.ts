@@ -27,4 +27,9 @@ export const handlers = [
 		);
 		return res;
 	}),
+
+	http.post("http://localhost:8080/feedbacks", async () => {
+		await delay(100);
+		return HttpResponse.json({ message: "OK" }, { status: 200 });
+	}),
 ];

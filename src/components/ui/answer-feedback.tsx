@@ -25,7 +25,6 @@ export function AnswerFeedback({
 		useState(false);
 	const [areTagsVisible, setAreTagsVisible] = useState(false);
 	const [selectedTag, setSelectedTag] = useState(null);
-	const [isTagDisabled, setIsTagDisabled] = useState(false);
 	const requestId = usePathname().split("/").slice(-1)[0];
 	const [allFeedbacks, setAllFeedbacks] = useState(Array<FeedbackType>);
 
@@ -61,9 +60,9 @@ export function AnswerFeedback({
 					break;
 			}
 		}
-	}, []);
+	}, [resultHistory, requestId]);
 
-	const showHideThankYouMessage = () => {
+	const showThenHideThankYouMessage = () => {
 		setIsThankYouMessageVisible(true);
 		setTimeout(() => {
 			setIsThankYouMessageVisible(false);
@@ -71,11 +70,16 @@ export function AnswerFeedback({
 	};
 
 	const onThumbsDownClick = () => {
+		setIsThumbsUpClicked(false);
 		setIsThumbsDownClicked(true);
 		setAreTagsVisible(true);
 	};
 
 	const onThumbsUpClick = async () => {
+		setIsThumbsDownClicked(false);
+		setAreTagsVisible(false);
+		setIsThumbsUpClicked(true);
+
 		await saveUserFeedback({ userRequestId: requestId, feedbackId: 1 });
 		setResultHistory(
 			resultHistory.map((userRequest) => {
@@ -86,12 +90,13 @@ export function AnswerFeedback({
 				return userRequest;
 			}),
 		);
-		setIsThumbsUpClicked(true);
-		showHideThankYouMessage();
+
+		showThenHideThankYouMessage();
 	};
 
 	const onTagClick = async (e: any, id: number) => {
 		setSelectedTag(e.target.value);
+
 		await saveUserFeedback({ userRequestId: requestId, feedbackId: id });
 
 		setResultHistory(
@@ -105,8 +110,7 @@ export function AnswerFeedback({
 
 		setTimeout(() => {
 			setAreTagsVisible(false);
-			showHideThankYouMessage();
-			setIsTagDisabled(true);
+			showThenHideThankYouMessage();
 		}, 1000);
 	};
 
@@ -124,7 +128,6 @@ export function AnswerFeedback({
 						<button
 							onClick={onThumbsUpClick}
 							className={`px-1 text-slate-500 hover:text-parla-blue disabled:hover:text-slate-500`}
-							disabled={isThumbsUpClicked || isThumbsDownClicked}
 						>
 							{isThumbsUpClicked ? <ThumbsUpSolidIcon /> : <ThumbsUpIcon />}
 						</button>
@@ -132,8 +135,7 @@ export function AnswerFeedback({
 							onClick={onThumbsDownClick}
 							className={`px-1 text-slate-500 hover:text-parla-blue 
 							${isThumbsDownClicked ? "disabled:text-parla-blue" : "disabled:text-slate-500"} 
-							${isThumbsDownClicked && isTagDisabled ? "disabled:text-slate-500" : ""} `}
-							disabled={isThumbsDownClicked || isThumbsUpClicked}
+							${isThumbsDownClicked /*&& isTagDisabled*/ ? "disabled:text-slate-500" : ""} `}
 						>
 							{isThumbsDownClicked ? (
 								<ThumbsDownSolidIcon />
@@ -168,7 +170,7 @@ export function AnswerFeedback({
 					{allFeedbacks.slice(1).map((feedback) => (
 						<label
 							key={feedback.id}
-							className={`rounded-lg border border-slate-300 p-2 
+							className={`rounded-lg border border-slate-300 p-2 cursor-pointer 
 							${selectedTag === feedback.tag ? "bg-parla-blue hover:bg-parla-blue text-white" : "hover:bg-slate-50"}`}
 						>
 							<input
@@ -178,7 +180,6 @@ export function AnswerFeedback({
 								key={feedback.id}
 								value={feedback.tag ?? ""}
 								className="hidden peer"
-								disabled={isTagDisabled}
 							/>
 							{feedback.tag && feedback.tag}
 						</label>

@@ -25,8 +25,4 @@ export async function saveUserFeedback({
 	if (!response.ok) {
 		throw new Error("Could not post feedback");
 	}
-
-	const json = await response.json();
-
-	return json;
 }
