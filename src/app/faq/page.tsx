@@ -7,12 +7,25 @@ import { cn } from "@/lib/utils";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import ReactMarkdown from "react-markdown";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+
+// https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+export default function Faq() {
+	return (
+		<Suspense>
+			<Info />
+		</Suspense>
+	);
+}
 
 const Info = () => {
 	const texts = useTexts();
+	const searchParams = useSearchParams();
+	const isExpanded = searchParams.get("expand") === "all";
 
 	return (
-		<div>
+		<>
 			<div className="min-h-screen mx-auto max-w-3xl">
 				<BackButton href="/" />
 				<div className={cn("p-5 md:p-8 flex flex-col gap-8 md:pt-[5vmin]")}>
@@ -36,6 +49,7 @@ const Info = () => {
 										key={question}
 										aria-label="FAQ Question"
 										className="w-full"
+										defaultOpen={isExpanded}
 									>
 										{({ open }) => (
 											<>
@@ -80,8 +94,6 @@ const Info = () => {
 			</div>
 			<Footer />
 			<LegalFooter />
-		</div>
+		</>
 	);
 };
-
-export default Info;
