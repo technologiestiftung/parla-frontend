@@ -1,18 +1,18 @@
+import { FeedbackType } from "@/lib/common";
+import { getAllFeedbacks } from "@/lib/get-all-feedbacks";
+import { useHistoryStore } from "@/lib/hooks/localStorage";
+import { saveUserFeedback } from "@/lib/save-user-feedback";
 import { texts } from "@/lib/texts";
 import { cn } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
-import { ThumbsUpIcon } from "./icons/thumbs-up";
-import { ThumbsDownIcon } from "./icons/thumbs-down";
-import { ThumbsDownSolidIcon } from "./icons/thumbs-down-solid";
-import { ThumbsUpSolidIcon } from "./icons/thumbs-up-solid";
 import { Transition } from "@headlessui/react";
 import { XIcon } from "lucide-react";
-import { CopyToClipboardButton } from "./copy-to-clipboard-button";
 import { usePathname } from "next/navigation";
-import { saveUserFeedback } from "@/lib/save-user-feedback";
-import { getAllFeedbacks } from "@/lib/get-all-feedbacks";
-import { FeedbackType, HistoryEntryType } from "@/lib/common";
-import { useLocalStorage } from "@/lib/hooks/localStorage";
+import { useEffect, useState } from "react";
+import { CopyToClipboardButton } from "./copy-to-clipboard-button";
+import { ThumbsDownIcon } from "./icons/thumbs-down";
+import { ThumbsDownSolidIcon } from "./icons/thumbs-down-solid";
+import { ThumbsUpIcon } from "./icons/thumbs-up";
+import { ThumbsUpSolidIcon } from "./icons/thumbs-up-solid";
 
 export function AnswerFeedback({
 	generatedAnswer,
@@ -29,9 +29,7 @@ export function AnswerFeedback({
 	const requestId = usePathname().split("/").slice(-1)[0];
 	const [allFeedbacks, setAllFeedbacks] = useState(Array<FeedbackType>);
 
-	const [resultHistory, setResultHistory, stateIsLoading] = useLocalStorage<
-		HistoryEntryType[]
-	>("parla-history", []);
+	const { resultHistory, setResultHistory } = useHistoryStore();
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -77,28 +75,27 @@ export function AnswerFeedback({
 		setAreTagsVisible(true);
 	};
 
-	const onThumbsUpClick = () => {
-		saveUserFeedback({ userRequestId: requestId, feedbackId: 1 });
-
-		setResultHistory((prev) =>
-			prev.map((userRequest) => {
+	const onThumbsUpClick = async () => {
+		await saveUserFeedback({ userRequestId: requestId, feedbackId: 1 });
+		setResultHistory(
+			resultHistory.map((userRequest) => {
 				if (userRequest.id === requestId) {
-					return { ...userRequest, feedback: 3 };
+					const updated = { ...userRequest, feedbackId: 1 };
+					return updated;
 				}
 				return userRequest;
 			}),
 		);
-
 		setIsThumbsUpClicked(true);
 		showHideThankYouMessage();
 	};
 
-	const onTagClick = (e: any, id: number) => {
+	const onTagClick = async (e: any, id: number) => {
 		setSelectedTag(e.target.value);
-		saveUserFeedback({ userRequestId: requestId, feedbackId: id });
+		await saveUserFeedback({ userRequestId: requestId, feedbackId: id });
 
-		setResultHistory((prev) =>
-			prev.map((userRequest) => {
+		setResultHistory(
+			resultHistory.map((userRequest) => {
 				if (userRequest.id === requestId) {
 					return { ...userRequest, feedbackId: id };
 				}
