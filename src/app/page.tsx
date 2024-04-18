@@ -189,16 +189,12 @@ function App() {
 			.resultHistory.find((entry) => entry.id === id);
 		if (!historyEntry) {
 			setRequestLoading(true);
-			console.log(`fetching ${id} from API`);
 			try {
 				const userRequest = await loadUserRequest(
 					id,
 					abortController.current?.signal,
 				);
 				if (userRequest) historyEntry = userRequest;
-
-				console.log("resultHistory", resultHistory);
-				console.log("userRequest", userRequest);
 				setResultHistory([
 					userRequest,
 					...useHistoryStore.getState().resultHistory,

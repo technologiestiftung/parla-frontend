@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Transition } from "@headlessui/react";
 import { XIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CopyToClipboardButton } from "./copy-to-clipboard-button";
 import { ThumbsDownIcon } from "./icons/thumbs-down";
 import { ThumbsDownSolidIcon } from "./icons/thumbs-down-solid";
@@ -30,6 +30,16 @@ export function AnswerFeedback({
 	const [allFeedbacks, setAllFeedbacks] = useState(Array<FeedbackType>);
 
 	const { resultHistory, setResultHistory } = useHistoryStore();
+
+	const canResultReceiveFeedback = useMemo(() => {
+		const foundRequest = resultHistory.find((entry) => entry.id === requestId);
+		if (!foundRequest) {
+			return false;
+		}
+
+		const hasFeedbackArray = Array.isArray(foundRequest.feedbacks);
+		return hasFeedbackArray;
+	}, [resultHistory, requestId]);
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -141,27 +151,31 @@ export function AnswerFeedback({
 				)}
 			>
 				<div className="flex flex-row flex-wrap justify-start">
-					{texts.answerFeedback}
-					<div className="flex sm:mx-2 my-2 sm:my-0">
-						<button
-							onClick={onThumbsUpClick}
-							className={`px-1 text-slate-500 hover:text-parla-blue disabled:hover:text-slate-500`}
-						>
-							{isThumbsUpClicked ? <ThumbsUpSolidIcon /> : <ThumbsUpIcon />}
-						</button>
-						<button
-							onClick={onThumbsDownClick}
-							className={`px-1 text-slate-500 hover:text-parla-blue 
+					{canResultReceiveFeedback && (
+						<>
+							{texts.answerFeedback}
+							<div className="flex sm:mx-2 my-2 sm:my-0">
+								<button
+									onClick={onThumbsUpClick}
+									className={`px-1 text-slate-500 hover:text-parla-blue disabled:hover:text-slate-500`}
+								>
+									{isThumbsUpClicked ? <ThumbsUpSolidIcon /> : <ThumbsUpIcon />}
+								</button>
+								<button
+									onClick={onThumbsDownClick}
+									className={`px-1 text-slate-500 hover:text-parla-blue 
 							${isThumbsDownClicked ? "disabled:text-parla-blue" : "disabled:text-slate-500"} 
-							${isThumbsDownClicked /*&& isTagDisabled*/ ? "disabled:text-slate-500" : ""} `}
-						>
-							{isThumbsDownClicked ? (
-								<ThumbsDownSolidIcon />
-							) : (
-								<ThumbsDownIcon />
-							)}
-						</button>
-					</div>
+							${isThumbsDownClicked ? "disabled:text-slate-500" : ""} `}
+								>
+									{isThumbsDownClicked ? (
+										<ThumbsDownSolidIcon />
+									) : (
+										<ThumbsDownIcon />
+									)}
+								</button>
+							</div>
+						</>
+					)}
 				</div>
 				<div className="self-start pt-1 sm:pt-0">
 					<CopyToClipboardButton generatedAnswer={generatedAnswer} />
