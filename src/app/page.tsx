@@ -3,6 +3,7 @@ import MobileHeader from "@/components/MobileHeader";
 /* eslint-disable @next/next/no-img-element */
 import MobileSidebar from "@/components/MobileSidebar";
 import { SplashScreen } from "@/components/splash-screen";
+import { ErrorAlert } from "@/components/ui/error-alert";
 import PromptForm from "@/components/ui/promptForm";
 import PromptContent from "@/components/ui/promtContent";
 import ResultHistory from "@/components/ui/resultHistory";
@@ -12,20 +13,18 @@ import {
 	Algorithms,
 	DocumentSearchBody,
 	DocumentSearchResponse,
-	HistoryEntryType,
 	availableAlgorithms,
 } from "@/lib/common";
 import { generateAnswer } from "@/lib/generate-answer";
-import { useLocalStorage } from "@/lib/hooks/localStorage";
+import { useHistoryStore } from "@/lib/hooks/localStorage";
 import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
+import { useMatomo } from "@/lib/hooks/useMatomo";
+import { loadUserRequest } from "@/lib/load-user-request";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useRef, useState } from "react";
-import { useMatomo } from "@/lib/hooks/useMatomo";
-import { ErrorAlert } from "@/components/ui/error-alert";
-import { useRouter } from "next/navigation";
-import { loadUserRequest } from "@/lib/load-user-request";
+import { useInitializeSessionId } from "@/lib/hooks/use-initialize-session-id";
 
 // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
 export default function Home() {
@@ -40,6 +39,7 @@ function App() {
 	const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
 	useMatomo();
+	useInitializeSessionId();
 
 	const router = useRouter();
 	const abortController = useRef<AbortController | null>(null);
@@ -61,9 +61,9 @@ function App() {
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const [historyIsOpen, setHistoryIsOpen] = useState(true);
-	const [resultHistory, setResultHistory, stateIsLoading] = useLocalStorage<
-		HistoryEntryType[]
-	>("parla-history", []);
+
+	const { resultHistory, setResultHistory } = useHistoryStore();
+
 	const { showSplashScreenRef } = useShowSplashScreenFromLocalStorage();
 	const algorithm = availableAlgorithms.find(
 		(alg) => alg.search_algorithm === selectedSearchAlgorithm,
@@ -74,6 +74,13 @@ function App() {
 		setSidebarIsOpen(false);
 		setShowSplash(showSplashScreenRef.current);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
+
+		// For backwards compatibility with old localStorage history, we initially load the parly-history
+		// save it in the new Zustand store and remove it from localStorage
+		if (localStorage.getItem("parla-history")) {
+			setResultHistory(JSON.parse(localStorage.getItem("parla-history")!));
+			localStorage.removeItem("parla-history");
+		}
 	}, []);
 
 	useEffect(() => {
@@ -81,13 +88,13 @@ function App() {
 	}, [searchResult, generatedAnswer]);
 
 	useEffect(() => {
-		if (stateIsLoading || answerIsLoading) {
+		if (answerIsLoading) {
 			return;
 		}
 		if (requestId) {
 			restoreResultHistoryItem(requestId);
 		}
-	}, [requestId, stateIsLoading, answerIsLoading]);
+	}, [requestId]);
 
 	async function onSubmit(query: string | null) {
 		setErrors(null);
@@ -133,14 +140,15 @@ function App() {
 			}
 			setAnswerIsLoading(false);
 
-			setResultHistory((prev) => [
+			setResultHistory([
 				{
 					id: searchResponse.userRequestId,
 					query,
+					feedbacks: [],
 					searchResponse,
 					answerResponse,
 				},
-				...prev,
+				...resultHistory,
 			]);
 		} catch (error) {
 			if (error instanceof Error) {
@@ -176,17 +184,21 @@ function App() {
 	}
 
 	async function restoreResultHistoryItem(id: string) {
-		let historyEntry = resultHistory.find((entry) => entry.id === id);
+		let historyEntry = useHistoryStore
+			.getState()
+			.resultHistory.find((entry) => entry.id === id);
 		if (!historyEntry) {
 			setRequestLoading(true);
-			console.log(`fetching ${id} from API`);
 			try {
 				const userRequest = await loadUserRequest(
 					id,
 					abortController.current?.signal,
 				);
 				if (userRequest) historyEntry = userRequest;
-				setResultHistory((prev) => [userRequest, ...prev]);
+				setResultHistory([
+					userRequest,
+					...useHistoryStore.getState().resultHistory,
+				]);
 			} catch (e) {
 				console.log(e);
 				router.push("/");
@@ -231,8 +243,8 @@ function App() {
 										restoreResultHistoryItem(id);
 									}}
 									removeResultHistoryItem={(id) => {
-										setResultHistory((prev) =>
-											prev.filter((entry) => entry.id !== id),
+										setResultHistory(
+											resultHistory.filter((entry) => entry.id !== id),
 										);
 									}}
 								/>
@@ -272,7 +284,6 @@ function App() {
 									/>
 								)}
 							</div>
-
 							<div className="px-2 md:px-2 lg:px-10">
 								<PromptContent
 									title={title}
@@ -286,7 +297,6 @@ function App() {
 									answerIsLoading={answerIsLoading || requestLoading}
 								/>
 							</div>
-
 							<div className="px-2 md:px-2 lg:px-10">
 								<Sources
 									searchIsLoading={searchIsLoading || requestLoading}
@@ -314,8 +324,8 @@ function App() {
 									restoreResultHistoryItem(id);
 								}}
 								removeResultHistoryItem={(id) => {
-									setResultHistory((prev) =>
-										prev.filter((entry) => entry.id !== id),
+									setResultHistory(
+										resultHistory.filter((entry) => entry.id !== id),
 									);
 								}}
 							/>

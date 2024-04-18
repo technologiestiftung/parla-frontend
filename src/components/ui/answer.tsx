@@ -61,7 +61,7 @@ function Answer(props: AnswerProps): JSX.Element {
 							</ReactMarkdown>
 						</div>
 
-						<AnswerFeedback generatedAnswer={generatedAnswer}  />
+						<AnswerFeedback generatedAnswer={generatedAnswer} />
 
 						<div
 							tabIndex={0}

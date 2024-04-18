@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { CheckIcon } from "@/components/ui/check-icon";
-import { ClipboardIcon } from "@/components/ui/clipboard-icon";
+import { CheckIcon } from "@/components/ui/icons/check-icon";
+import { ClipboardIcon } from "@/components/ui/icons/clipboard-icon";
 import { cn } from "@/lib/utils";
 import { texts } from "@/lib/texts";
 

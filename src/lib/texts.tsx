@@ -6,6 +6,15 @@ export const texts = {
 		"Es konnten keine Informationen zu dieser Frage in den vorliegenden Dokumenten gefunden werden.",
 	answerIsLoading: "Antwort wird generiert...",
 	answerTitle: "Zusammenfassung von Parla:",
+	answerFeedback: "War diese Zusammenfassung hilfreich?",
+	answerTellUsMore: "Erzählen Sie uns mehr:",
+	answerTags: [
+		"Antwort inhaltlich falsch oder missverständlich",
+		"Es gab einen Fehler",
+		"Antwort nicht ausführlich genug",
+		"Dokumente unpassend",
+	],
+	answerThankYou: "Danke für Ihr Feedback!",
 	copy: "Kopieren",
 	copied: "Kopiert!",
 	answerDisclaimer:
