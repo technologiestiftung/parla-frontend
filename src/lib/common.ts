@@ -66,7 +66,6 @@ export interface Feedback {
 	id?: number;
 	created_at?: string;
 	feedback_id: number;
-	request_id: number;
 	session_id: string;
 }
 

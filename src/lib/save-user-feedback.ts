@@ -14,6 +14,7 @@ export async function saveUserFeedback({
 	signal,
 	sessionId,
 }: PostFeedbackProps): Promise<any> {
+	console.log("saveUserFeedback", userRequestId, feedbackId, sessionId);
 	const response = await fetch(`${API_URL}/feedbacks`, {
 		signal,
 		method: "POST",

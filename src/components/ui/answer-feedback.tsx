@@ -42,6 +42,9 @@ export function AnswerFeedback({
 	}, [resultHistory, requestId]);
 
 	useEffect(() => {
+		setIsThumbsUpClicked(false);
+		setIsThumbsDownClicked(false);
+
 		const loadData = async () => {
 			setAllFeedbacks(await getAllFeedbacks());
 		};
@@ -50,10 +53,12 @@ export function AnswerFeedback({
 		const userRequestHistory = resultHistory.find(
 			(entry) => entry.id === requestId,
 		);
+
 		const feedbacks = userRequestHistory?.feedbacks;
 		const feedbackFromSameSession = feedbacks?.find(
 			(feedback) => feedback.session_id === getSessionId(),
 		);
+
 		if (requestId) {
 			switch (feedbackFromSameSession?.feedback_id) {
 				case 1:
@@ -88,13 +93,16 @@ export function AnswerFeedback({
 		});
 		setResultHistory(
 			resultHistory.map((userRequest) => {
+				if (userRequest.id !== requestId) {
+					return { ...userRequest };
+				}
+
 				let feedbackIndex = userRequest.feedbacks.findIndex(
 					(feedback) => feedback.session_id === getSessionId(),
 				);
 
 				if (feedbackIndex === -1) {
 					userRequest.feedbacks.push({
-						request_id: Number(requestId),
 						feedback_id: feedbackId,
 						session_id: getSessionId(),
 					});
