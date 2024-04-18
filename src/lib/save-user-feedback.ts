@@ -5,12 +5,14 @@ type PostFeedbackProps = {
 	feedbackId: number;
 	userRequestId: string;
 	signal?: AbortSignal;
+	sessionId: string;
 };
 
 export async function saveUserFeedback({
 	userRequestId,
 	feedbackId,
 	signal,
+	sessionId,
 }: PostFeedbackProps): Promise<any> {
 	const response = await fetch(`${API_URL}/feedbacks`, {
 		signal,
@@ -19,6 +21,7 @@ export async function saveUserFeedback({
 		body: JSON.stringify({
 			feedback_id: feedbackId,
 			user_request_id: userRequestId,
+			session_id: sessionId,
 		}),
 	});
 

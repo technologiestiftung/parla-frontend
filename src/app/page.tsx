@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useRef, useState } from "react";
+import { useInitializeSessionId } from "@/lib/hooks/use-initialize-session-id";
 
 // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
 export default function Home() {
@@ -38,6 +39,7 @@ function App() {
 	const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
 	useMatomo();
+	useInitializeSessionId();
 
 	const router = useRouter();
 	const abortController = useRef<AbortController | null>(null);
@@ -142,7 +144,7 @@ function App() {
 				{
 					id: searchResponse.userRequestId,
 					query,
-					feedbackId: null,
+					feedbacks: [],
 					searchResponse,
 					answerResponse,
 				},
@@ -182,7 +184,9 @@ function App() {
 	}
 
 	async function restoreResultHistoryItem(id: string) {
-		let historyEntry = resultHistory.find((entry) => entry.id === id);
+		let historyEntry = useHistoryStore
+			.getState()
+			.resultHistory.find((entry) => entry.id === id);
 		if (!historyEntry) {
 			setRequestLoading(true);
 			console.log(`fetching ${id} from API`);
@@ -192,7 +196,13 @@ function App() {
 					abortController.current?.signal,
 				);
 				if (userRequest) historyEntry = userRequest;
-				setResultHistory([userRequest, ...resultHistory]);
+
+				console.log("resultHistory", resultHistory);
+				console.log("userRequest", userRequest);
+				setResultHistory([
+					userRequest,
+					...useHistoryStore.getState().resultHistory,
+				]);
 			} catch (e) {
 				console.log(e);
 				router.push("/");

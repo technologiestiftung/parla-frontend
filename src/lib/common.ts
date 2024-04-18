@@ -62,10 +62,18 @@ export interface DocumentSearchResponse {
 	documentMatches: ResponseDocumentMatch[];
 }
 
+export interface Feedback {
+	id?: number;
+	created_at?: string;
+	feedback_id: number;
+	request_id: number;
+	session_id: string;
+}
+
 export interface HistoryEntryType {
 	id: string;
 	query: string;
-	feedbackId: number | null;
+	feedbacks: Feedback[];
 	searchResponse: DocumentSearchResponse;
 	answerResponse: string;
 }

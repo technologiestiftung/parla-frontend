@@ -13,6 +13,7 @@ import { ThumbsDownIcon } from "./icons/thumbs-down";
 import { ThumbsDownSolidIcon } from "./icons/thumbs-down-solid";
 import { ThumbsUpIcon } from "./icons/thumbs-up";
 import { ThumbsUpSolidIcon } from "./icons/thumbs-up-solid";
+import { getSessionId } from "@/lib/get-session-id";
 
 export function AnswerFeedback({
 	generatedAnswer,
@@ -39,10 +40,12 @@ export function AnswerFeedback({
 		const userRequestHistory = resultHistory.find(
 			(entry) => entry.id === requestId,
 		);
-		const feedbackIdHistory = userRequestHistory?.feedbackId;
-
+		const feedbacks = userRequestHistory?.feedbacks;
+		const feedbackFromSameSession = feedbacks?.find(
+			(feedback) => feedback.session_id === getSessionId(),
+		);
 		if (requestId) {
-			switch (feedbackIdHistory) {
+			switch (feedbackFromSameSession?.feedback_id) {
 				case 1:
 					setIsThumbsUpClicked(true);
 					setIsThumbsDownClicked(false);
@@ -51,6 +54,7 @@ export function AnswerFeedback({
 				case 3:
 				case 4:
 				case 5:
+				case 6:
 					setIsThumbsDownClicked(true);
 					setIsThumbsUpClicked(false);
 					break;
@@ -62,6 +66,37 @@ export function AnswerFeedback({
 		}
 	}, [resultHistory, requestId]);
 
+	const handleFeedback = async (
+		feedbackId: number,
+		requestId: string,
+		sessionId: string,
+	) => {
+		await saveUserFeedback({
+			userRequestId: requestId,
+			feedbackId: feedbackId,
+			sessionId: sessionId,
+		});
+		setResultHistory(
+			resultHistory.map((userRequest) => {
+				let feedbackIndex = userRequest.feedbacks.findIndex(
+					(feedback) => feedback.session_id === getSessionId(),
+				);
+
+				if (feedbackIndex === -1) {
+					userRequest.feedbacks.push({
+						request_id: Number(requestId),
+						feedback_id: feedbackId,
+						session_id: getSessionId(),
+					});
+				} else {
+					userRequest.feedbacks[feedbackIndex].feedback_id = feedbackId;
+				}
+
+				return { ...userRequest };
+			}),
+		);
+	};
+
 	const showThenHideThankYouMessage = () => {
 		setIsThankYouMessageVisible(true);
 		setTimeout(() => {
@@ -69,10 +104,11 @@ export function AnswerFeedback({
 		}, 2000);
 	};
 
-	const onThumbsDownClick = () => {
+	const onThumbsDownClick = async () => {
 		setIsThumbsUpClicked(false);
 		setIsThumbsDownClicked(true);
 		setAreTagsVisible(true);
+		await handleFeedback(6, requestId, getSessionId());
 	};
 
 	const onThumbsUpClick = async () => {
@@ -80,16 +116,7 @@ export function AnswerFeedback({
 		setAreTagsVisible(false);
 		setIsThumbsUpClicked(true);
 
-		await saveUserFeedback({ userRequestId: requestId, feedbackId: 1 });
-		setResultHistory(
-			resultHistory.map((userRequest) => {
-				if (userRequest.id === requestId) {
-					const updated = { ...userRequest, feedbackId: 1 };
-					return updated;
-				}
-				return userRequest;
-			}),
-		);
+		await handleFeedback(1, requestId, getSessionId());
 
 		showThenHideThankYouMessage();
 	};
@@ -97,16 +124,7 @@ export function AnswerFeedback({
 	const onTagClick = async (e: any, id: number) => {
 		setSelectedTag(e.target.value);
 
-		await saveUserFeedback({ userRequestId: requestId, feedbackId: id });
-
-		setResultHistory(
-			resultHistory.map((userRequest) => {
-				if (userRequest.id === requestId) {
-					return { ...userRequest, feedbackId: id };
-				}
-				return userRequest;
-			}),
-		);
+		await handleFeedback(id, requestId, getSessionId());
 
 		setTimeout(() => {
 			setAreTagsVisible(false);
@@ -167,23 +185,25 @@ export function AnswerFeedback({
 					</button>
 				</span>
 				<div className="flex flex-wrap gap-x-6 gap-y-4 py-4 pointer-events-">
-					{allFeedbacks.slice(1).map((feedback) => (
-						<label
-							key={feedback.id}
-							className={`rounded-lg border border-slate-300 p-2 cursor-pointer 
-							${selectedTag === feedback.tag ? "bg-parla-blue hover:bg-parla-blue text-white" : "hover:bg-slate-50"}`}
-						>
-							<input
-								type="radio"
-								name="tag"
-								onChange={(e) => onTagClick(e, feedback.id)}
+					{allFeedbacks
+						.filter((feedback) => feedback.tag)
+						.map((feedback) => (
+							<label
 								key={feedback.id}
-								value={feedback.tag ?? ""}
-								className="hidden peer"
-							/>
-							{feedback.tag && feedback.tag}
-						</label>
-					))}
+								className={`rounded-lg border border-slate-300 p-2 cursor-pointer 
+							${selectedTag === feedback.tag ? "bg-parla-blue hover:bg-parla-blue text-white" : "hover:bg-slate-50"}`}
+							>
+								<input
+									type="radio"
+									name="tag"
+									onChange={(e) => onTagClick(e, feedback.id)}
+									key={feedback.id}
+									value={feedback.tag ?? ""}
+									className="hidden peer"
+								/>
+								{feedback.tag && feedback.tag}
+							</label>
+						))}
 				</div>
 			</Transition>
 
