@@ -81,6 +81,13 @@ export function AnswerFeedback({
 		}
 	}, [resultHistory, requestId]);
 
+	useEffect(() => {
+		// reset tags when the requestId changes,
+		// not when result history changes
+		setSelectedTag(null);
+		setAreTagsVisible(false);
+	}, [requestId]);
+
 	const handleFeedback = async (
 		feedbackId: number,
 		requestId: string,
@@ -126,6 +133,7 @@ export function AnswerFeedback({
 		setIsThumbsUpClicked(false);
 		setIsThumbsDownClicked(true);
 		setAreTagsVisible(true);
+		setSelectedTag(null);
 		await handleFeedback(6, requestId, getSessionId());
 	};
 
