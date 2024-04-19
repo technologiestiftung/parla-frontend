@@ -28,7 +28,7 @@ export default function MobileSidebar({
 	return (
 		<>
 			<div
-				className={`fixed lg:hidden top-0 left-0 w-screen h-full bg-grey-300 bg-slate-400 bg-opacity-40 z-40 ${
+				className={`fixed lg:hidden top-0 left-0 w-screen h-dvh bg-grey-300 bg-slate-400 bg-opacity-40 z-40 ${
 					sidebarIsOpen ? "visible" : "invisible"
 				}`}
 				style={{
@@ -36,9 +36,9 @@ export default function MobileSidebar({
 					maxWidth: "-webkit-fill-available",
 				}}
 			>
-				<div className="flex w-full h-full">
+				<div className="flex w-full h-dvh">
 					<div
-						className={`flex items-start w-80 h-full ease-in-out duration-300 ${
+						className={`flex items-start w-80 h-dvh ease-in-out duration-300 ${
 							sidebarIsOpen ? "translate-x-0" : "-translate-x-80"
 						}`}
 					>
