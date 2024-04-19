@@ -28,7 +28,7 @@ export default function MobileSidebar({
 	return (
 		<>
 			<div
-				className={`fixed lg:hidden top-0 left-0 w-screen h-full bg-grey-300 bg-slate-400 bg-opacity-40 z-40 ${
+				className={`fixed lg:hidden top-0 left-0 w-screen h-dvh bg-grey-300 bg-slate-400 bg-opacity-40 z-40 ${
 					sidebarIsOpen ? "visible" : "invisible"
 				}`}
 				style={{
@@ -42,7 +42,7 @@ export default function MobileSidebar({
 							sidebarIsOpen ? "translate-x-0" : "-translate-x-80"
 						}`}
 					>
-						<aside className="w-80 h-full border-r overflow-auto bg-white px-4 shadow-lg pb-4">
+						<aside className="w-80 h-dvh border-r overflow-auto bg-white px-4 shadow-lg pb-4">
 							<Sidebar
 								sidebarIsOpen={sidebarIsOpen}
 								onNewRequest={newRequestHandler}
