@@ -42,7 +42,7 @@ export default function MobileSidebar({
 							sidebarIsOpen ? "translate-x-0" : "-translate-x-80"
 						}`}
 					>
-						<aside className="w-80 h-screen border-r overflow-auto bg-white px-4 shadow-lg pb-4">
+						<aside className="w-80 h-svh border-r overflow-auto bg-white px-4 shadow-lg pb-4">
 							<Sidebar
 								sidebarIsOpen={sidebarIsOpen}
 								onNewRequest={newRequestHandler}
