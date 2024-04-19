@@ -28,7 +28,7 @@ export default function MobileSidebar({
 	return (
 		<>
 			<div
-				className={`fixed lg:hidden top-0 left-0 w-screen h-screen bg-grey-300 bg-slate-400 bg-opacity-40 z-40 ${
+				className={`fixed lg:hidden top-0 left-0 w-screen h-full bg-grey-300 bg-slate-400 bg-opacity-40 z-40 ${
 					sidebarIsOpen ? "visible" : "invisible"
 				}`}
 				style={{
