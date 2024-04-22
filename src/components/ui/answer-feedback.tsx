@@ -14,6 +14,7 @@ import { ThumbsDownSolidIcon } from "./icons/thumbs-down-solid";
 import { ThumbsUpIcon } from "./icons/thumbs-up";
 import { ThumbsUpSolidIcon } from "./icons/thumbs-up-solid";
 import { getSessionId } from "@/lib/get-session-id";
+import { ThankYouMessage } from "@/components/ui/thank-you-message";
 
 export function AnswerFeedback({
 	generatedAnswer,
@@ -152,10 +153,8 @@ export function AnswerFeedback({
 
 		await handleFeedback(id, requestId, getSessionId());
 
-		setTimeout(() => {
-			setAreTagsVisible(false);
-			showThenHideThankYouMessage();
-		}, 1000);
+		setTimeout(() => setAreTagsVisible(false), 1000);
+		setTimeout(() => showThenHideThankYouMessage(), 1100);
 	};
 
 	return (
@@ -237,18 +236,7 @@ export function AnswerFeedback({
 				</div>
 			</Transition>
 
-			<Transition
-				show={isThankYouMessageVisible}
-				enter="transition-opacity duration-700"
-				enterFrom="opacity-0"
-				enterTo="opacity-100"
-				leave="transition-opacity duration-500"
-				leaveFrom="opacity-100"
-				leaveTo="opacity-0"
-				className={`flex self-center rounded-lg shadow-md p-4 mx-4 bg-white w-fit`}
-			>
-				{texts.answerThankYou}
-			</Transition>
+			<ThankYouMessage isThankYouMessageVisible={isThankYouMessageVisible} />
 		</div>
 	);
 }
