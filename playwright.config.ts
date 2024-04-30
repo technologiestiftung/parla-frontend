@@ -20,7 +20,7 @@ export default defineConfig({
 	/* Opt out of parallel tests on CI. */
 	workers: process.env.CI ? 1 : undefined,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: "html",
+	reporter: "list",
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
@@ -34,12 +34,28 @@ export default defineConfig({
 	projects: [
 		{
 			name: "chromium",
-			use: { ...devices["Desktop Chrome"], video: "on" },
+			use: {
+				...devices["Desktop Chrome"],
+				video: "on",
+				contextOptions: {
+					// chromium-specific permissions
+					permissions: ["clipboard-read", "clipboard-write"],
+				},
+			},
 		},
 
 		{
 			name: "firefox",
-			use: { ...devices["Desktop Firefox"] },
+			use: {
+				...devices["Desktop Firefox"],
+				launchOptions: {
+					// firefox-specific permissions
+					firefoxUserPrefs: {
+						"dom.events.asyncClipboard.readText": true,
+						"dom.events.testing.asyncClipboard": true,
+					},
+				},
+			},
 		},
 
 		{
@@ -50,7 +66,13 @@ export default defineConfig({
 		/* Test against mobile viewports. */
 		{
 			name: "Mobile Chrome",
-			use: { ...devices["Pixel 5"] },
+			use: {
+				...devices["Pixel 5"],
+				contextOptions: {
+					// chromium-specific permissions
+					permissions: ["clipboard-read", "clipboard-write"],
+				},
+			},
 		},
 		{
 			name: "Mobile Safari",
@@ -60,11 +82,25 @@ export default defineConfig({
 		/* Test against branded browsers. */
 		{
 			name: "Microsoft Edge",
-			use: { ...devices["Desktop Edge"], channel: "msedge" },
+			use: {
+				...devices["Desktop Edge"],
+				channel: "msedge",
+				contextOptions: {
+					// chromium-specific permissions
+					permissions: ["clipboard-read", "clipboard-write"],
+				},
+			},
 		},
 		{
 			name: "Google Chrome",
-			use: { ...devices["Desktop Chrome"], channel: "chrome" },
+			use: {
+				...devices["Desktop Chrome"],
+				channel: "chrome",
+				contextOptions: {
+					// chromium-specific permissions
+					permissions: ["clipboard-read", "clipboard-write"],
+				},
+			},
 		},
 	],
 

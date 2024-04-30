@@ -48,6 +48,9 @@ module.exports = {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))",
 				},
+				"parla-grey": "#64748B",
+				"parla-blue": "#2652D0",
+				"parla-black": "#0A0A0A",
 			},
 			borderRadius: {
 				lg: "var(--radius)",

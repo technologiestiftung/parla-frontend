@@ -6,14 +6,26 @@ export const texts = {
 		"Es konnten keine Informationen zu dieser Frage in den vorliegenden Dokumenten gefunden werden.",
 	answerIsLoading: "Antwort wird generiert...",
 	answerTitle: "Zusammenfassung von Parla:",
+	answerFeedback: "War diese Zusammenfassung hilfreich?",
+	answerTellUsMore: "Erzählen Sie uns mehr:",
+	answerTags: [
+		"Antwort inhaltlich falsch oder missverständlich",
+		"Es gab einen Fehler",
+		"Antwort nicht ausführlich genug",
+		"Dokumente unpassend",
+	],
+	answerThankYou: "Danke für Ihr Feedback!",
+	copy: "Kopieren",
+	copied: "Kopiert!",
 	answerDisclaimer:
 		"Bitte beachten Sie, dass die generierten Antworten zwar aus offiziellen Dokumenten erstellt wurden, aber keine verbindliche Antwort darstellen. Aktuelle KI-Sprachmodelle können zuweilen Informationen inkorrekt aufbereiten. Wir empfehlen, die verlinkten Quellenangaben zu überprüfen. Als Datengrundlage dienen ausschliesslich Schriftliche Anfragen und Hauptausschussvorgänge.",
 	documentsAreLoading: "Dokumente werden durchsucht...",
-	documentsTitle: "Beste Treffer in diesen Dokumenten:",
+	documentsTitle: "Dokumente sortiert nach Relevanz:",
+	showMoreDocuments: "Weitere Dokumente anzeigen...",
 	feedback: {
 		short: "Feedback",
-		long: "Beantworte uns gerne einige Fragen.",
-		question: "Wie gefällt Dir Parla? ",
+		long: "Beantworten Sie uns gerne einige Fragen.",
+		question: "Wie gefällt Ihnen Parla? ",
 	},
 	about: {
 		title: "Über Parla",
@@ -26,7 +38,7 @@ export const texts = {
 			{
 				question: "Was ist Parla?",
 				answer:
-					"*Welche Nachhaltigkeitsziele verfolgt der Berliner Senat mit Blick auf die Reduzierung des CO2-Ausstoßes? Wie wirkt sich der Mangel an Lehrkräften aus? Welche Initiativen gibt es, um den kulturellen Sektor in Berlin zu unterstützen?* Auf Fragen wie diese liegen bereits konkrete Antworten vor – in Form der sogenannten Schriftlichen Anfragen, die das KI-Tool Parla durchsuchbar und damit die Verwaltung effizienter machen will.\n\nParla hat Zugriff auf mehr als 10.000 öffentlich verfügbare Dokumente, die auf dem parlamentarischen Dokumentationssystem PARDOK in der laufenden Wahlperiode publiziert wurden. In der aktuellen Version umfasst der Textkorpus neben sämtlichen Antworten auf Schriftliche Anfragen von Abgeordneten auch die wichtigen Hauptausschussvorgänge (sogenannte „Rote Nummern“). Stellt man Parla eine Frage, formuliert das System auf dieser Textgrundlage einen Antwortvorschlag und referenziert die dafür genutzten Dokumente, sodass die Nachvollziehbarkeit gewährleistet bleibt.",
+					"*Welche Nachhaltigkeitsziele verfolgt der Berliner Senat mit Blick auf die Reduzierung des CO2-Ausstoßes? Wie wirkt sich der Mangel an Lehrkräften aus? Welche Initiativen gibt es, um den kulturellen Sektor in Berlin zu unterstützen?* Auf Fragen wie diese liegen bereits konkrete Antworten vor – in Form der sogenannten Schriftlichen Anfragen, die das KI-Tool Parla durchsuchbar und damit die Verwaltung effizienter machen will.\n\nParla hat Zugriff auf mehr als 11.000 öffentlich verfügbare Dokumente, die auf dem parlamentarischen Dokumentationssystem PARDOK in der laufenden Wahlperiode publiziert wurden. In der aktuellen Version umfasst der Textkorpus neben sämtlichen Antworten auf Schriftliche Anfragen von Abgeordneten auch die wichtigen Hauptausschussvorgänge (sogenannte „Rote Nummern“). Stellt man Parla eine Frage, formuliert das System auf dieser Textgrundlage einen Antwortvorschlag und referenziert die dafür genutzten Dokumente, sodass die Nachvollziehbarkeit gewährleistet bleibt.",
 			},
 			{
 				question: "Wie funktioniert Parla?",
@@ -57,7 +69,17 @@ export const texts = {
 			{
 				question: "Wer hat Parla entwickelt?",
 				answer:
-					"Parla ist ein Prototyp des [CityLAB Berlin](https://www.citylab-berlin.org). Das CityLAB ist Berlins öffentliches Innovationslabor. An der Schnittstelle von Zivilgesellschaft, Verwaltung, Wissenschaft und Wirtschaft nutzen wir die Potenziale der Digitalisierung für eine gemeinwohlorientierte Stadtentwicklung – praxisnah und wirkungsorientiert. Das CityLAB Berlin ist ein Projekt der [Technologiestiftung Berlin](https://www.ts.berlin) und gefördert durch die Berliner Senatskanzlei.",
+					"Parla ist ein Prototyp des [CityLAB Berlin](https://www.citylab-berlin.org). Das CityLAB ist Berlins öffentliches Innovationslabor. An der Schnittstelle von Zivilgesellschaft, Verwaltung, Wissenschaft und Wirtschaft nutzen wir die Potenziale der Digitalisierung für eine gemeinwohlorientierte Stadtentwicklung – praxisnah und wirkungsorientiert. Das CityLAB Berlin ist ein Projekt der [Technologiestiftung Berlin](https://www.ts.berlin) und gefördert durch die Berliner Senatskanzlei.\n\nWeitere Informationen zur Entwicklung von Parla finden Sie hier:\n[Blog-Artikel zu Parla](https://citylab-berlin.org/de/blog/parla-intelligentes-wissensmanagement-fuer-verwaltungsdokumente/)\n[Technischer Überblick zu Parla](https://citylab-berlin.org/de/blog/parla-technische-entwicklung-des-neuen-ki-tools/)",
+			},
+			{
+				question: "Kann Parla auch für andere Anwendungsfälle genutzt werden?",
+				answer:
+					"Parla ist ein Open Source-Projekt und kann für verschiedene Anwendungsfälle und Kontexte angepasst und weiterentwickelt werden. Die Technologie hinter Parla, ein Large Language Model, kann für die Analyse und Verarbeitung von Textdaten in unterschiedlichen Bereichen eingesetzt werden. Interessierte Organisationen oder Entwickler können [Parla auf GitHub](https://github.com/technologiestiftung/parla-frontend) einsehen und eigene Anpassungen vornehmen.\n\nDas CityLAB Berlin steht für Kooperationen und Projekte im Bereich der digitalen Innovation und Stadtentwicklung offen. Wenn Sie Interesse an einer Zusammenarbeit haben oder Parla für spezifische Anwendungsfälle nutzen möchten, kontaktieren Sie uns gerne.",
+			},
+			{
+				question: "Datenschutz und Umgang mit Drittanbietern",
+				answer:
+					'Parla nutzt das kommerzielle Sprachmodell "GPT-3.5-turbo" von OpenAI. Die Server, auf denen diese Dienstleistung betrieben wird, befinden sich in den Vereinigten Staaten. Im Hinblick auf den Datenschutz, insbesondere unter Berücksichtigung der europäischen Datenschutzverordnungen, raten wir davon ab, persönliche Informationen in Suchanfragen einzugeben. Es ist wichtig, sich der geografischen Lokalisierung der Server und der damit verbundenen Datenschutzbestimmungen bewusst zu sein.',
 			},
 		],
 	},
@@ -73,8 +95,6 @@ export const texts = {
 		projectExecutionerLabel: "Durchgeführt vom",
 		cityLABLogoAltText: "Logo des CityLAB Berlin, Berlin's Innovationslabor",
 		cityLABLogoLink: "https://citylab-berlin.org/",
-		cooperationLabel:
-			"Unterstützt durch die Senatsverwaltung für Wissenschaft, Gesundheit und Pflege (SenWGP).",
 		projectSponsorLabel: "Gefördert durch",
 		sentatskanzleiLogoAltText: "Logo der Senatskanzlei Berlin",
 		sentatskanzleiLogoLink: "https://www.berlin.de/rbmskzl/",

@@ -33,6 +33,7 @@ export interface DocumentSearchBody {
 }
 
 export interface GenerateAnswerBody {
+	userRequestId: string;
 	query: string;
 	documentMatches: Array<ResponseDocumentMatch>;
 	include_summary_in_response_generation: boolean;
@@ -57,12 +58,21 @@ export interface ResponseDocumentMatch {
 }
 
 export interface DocumentSearchResponse {
+	userRequestId: string;
 	documentMatches: ResponseDocumentMatch[];
+}
+
+export interface Feedback {
+	id?: number;
+	created_at?: string;
+	feedback_id: number;
+	session_id: string;
 }
 
 export interface HistoryEntryType {
 	id: string;
 	query: string;
+	feedbacks: Feedback[];
 	searchResponse: DocumentSearchResponse;
 	answerResponse: string;
 }
@@ -79,7 +89,7 @@ export const availableAlgorithms = [
 		num_probes_summaries: 3,
 		num_probes_chunks: 9,
 		chunk_limit: 64,
-		document_limit: 3,
+		document_limit: 20,
 		search_algorithm: Algorithms.ChunksOnly,
 	} as DocumentSearchBody,
 	{
@@ -88,7 +98,7 @@ export const availableAlgorithms = [
 		num_probes_chunks: 9,
 		chunk_limit: 128,
 		summary_limit: 16,
-		document_limit: 3,
+		document_limit: 20,
 		search_algorithm: Algorithms.ChunksAndSummaries,
 	} as DocumentSearchBody,
 	{
@@ -96,7 +106,13 @@ export const availableAlgorithms = [
 		num_probes_summaries: 3,
 		num_probes_chunks: 9,
 		summary_limit: 64,
-		document_limit: 3,
+		document_limit: 20,
 		search_algorithm: Algorithms.SummariesThenChunks,
 	} as DocumentSearchBody,
 ];
+
+export interface FeedbackType {
+	id: number;
+	tag: string | null;
+	kind: "positive" | "negative";
+}

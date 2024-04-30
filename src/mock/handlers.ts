@@ -1,5 +1,5 @@
 import { http, HttpResponse, delay } from "msw";
-import { vectorSearchResponse } from "./fixtures";
+import { vectorSearchResponse, feedbacksResponse } from "./fixtures";
 
 export const handlers = [
 	http.get("http://localhost:8080/processed_documents/count", async () => {
@@ -26,5 +26,15 @@ export const handlers = [
 			{ status: 200 },
 		);
 		return res;
+	}),
+
+	http.get("http://localhost:8080/feedbacks", async () => {
+		await delay(100);
+		return HttpResponse.json(feedbacksResponse, { status: 200 });
+	}),
+
+	http.post("http://localhost:8080/feedbacks", async () => {
+		await delay(100);
+		return HttpResponse.json({ message: "OK" }, { status: 200 });
 	}),
 ];

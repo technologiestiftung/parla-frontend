@@ -296,3 +296,9 @@ next-env.d.ts
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+.vscode/extensions.json
+.vscode/launch.json
+.vscode/settings.json
+
+# Jetbrains IDE
+.idea

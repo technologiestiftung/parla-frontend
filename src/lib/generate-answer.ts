@@ -9,6 +9,7 @@ type InputType = GenerateAnswerBody & {
 };
 
 export async function generateAnswer({
+	userRequestId,
 	query,
 	documentMatches,
 	include_summary_in_response_generation,
@@ -22,13 +23,14 @@ export async function generateAnswer({
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({
+			userRequestId: userRequestId,
 			include_summary_in_response_generation,
 			query,
 			documentMatches,
 		}),
 	});
 
-	if (!response.body) {
+	if (!response.ok || !response.body) {
 		throw new Error("Could not generate answer");
 	}
 

@@ -3,6 +3,7 @@ import MobileHeader from "@/components/MobileHeader";
 /* eslint-disable @next/next/no-img-element */
 import MobileSidebar from "@/components/MobileSidebar";
 import { SplashScreen } from "@/components/splash-screen";
+import { ErrorAlert } from "@/components/ui/error-alert";
 import PromptForm from "@/components/ui/promptForm";
 import PromptContent from "@/components/ui/promtContent";
 import ResultHistory from "@/components/ui/resultHistory";
@@ -12,21 +13,18 @@ import {
 	Algorithms,
 	DocumentSearchBody,
 	DocumentSearchResponse,
-	HistoryEntryType,
 	availableAlgorithms,
 } from "@/lib/common";
 import { generateAnswer } from "@/lib/generate-answer";
-import { useLocalStorage } from "@/lib/hooks/localStorage";
+import { useHistoryStore } from "@/lib/hooks/localStorage";
 import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
+import { useMatomo } from "@/lib/hooks/useMatomo";
+import { loadUserRequest } from "@/lib/load-user-request";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useRef, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { useMatomo } from "@/lib/hooks/useMatomo";
-import { ErrorAlert } from "@/components/ui/error-alert";
-
-const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
+import { useInitializeSessionId } from "@/lib/hooks/use-initialize-session-id";
 
 // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
 export default function Home() {
@@ -38,17 +36,24 @@ export default function Home() {
 }
 
 function App() {
-	useMatomo();
+	const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
 
+	useMatomo();
+	useInitializeSessionId();
+
+	const router = useRouter();
 	const abortController = useRef<AbortController | null>(null);
 	const searchParams = useSearchParams();
 	const selectedSearchAlgorithm =
 		searchParams.get("search-algorithm") ?? Algorithms.ChunksAndSummaries;
 
+	const requestId = usePathname().split("/").slice(-1)[0];
+
 	const [title, setTitle] = useState<string | null>(null);
 	const [formData, setFormData] = useState(defaultFormdata);
 	const [searchIsLoading, setSearchIsLoading] = useState(false);
 	const [answerIsLoading, setAnswerIsLoading] = useState(false);
+	const [requestLoading, setRequestLoading] = useState(false);
 	const [showSplash, setShowSplash] = React.useState(false);
 	const [searchResult, setSearchResult] =
 		useState<DocumentSearchResponse | null>(null);
@@ -56,10 +61,9 @@ function App() {
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const [historyIsOpen, setHistoryIsOpen] = useState(true);
-	const [resultHistory, setResultHistory] = useLocalStorage<HistoryEntryType[]>(
-		"parla-history",
-		[],
-	);
+
+	const { resultHistory, setResultHistory } = useHistoryStore();
+
 	const { showSplashScreenRef } = useShowSplashScreenFromLocalStorage();
 	const algorithm = availableAlgorithms.find(
 		(alg) => alg.search_algorithm === selectedSearchAlgorithm,
@@ -70,11 +74,27 @@ function App() {
 		setSidebarIsOpen(false);
 		setShowSplash(showSplashScreenRef.current);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
+
+		// For backwards compatibility with old localStorage history, we initially load the parly-history
+		// save it in the new Zustand store and remove it from localStorage
+		if (localStorage.getItem("parla-history")) {
+			setResultHistory(JSON.parse(localStorage.getItem("parla-history")!));
+			localStorage.removeItem("parla-history");
+		}
 	}, []);
 
 	useEffect(() => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	}, [searchResult, generatedAnswer]);
+
+	useEffect(() => {
+		if (answerIsLoading) {
+			return;
+		}
+		if (requestId) {
+			restoreResultHistoryItem(requestId);
+		}
+	}, [requestId]);
 
 	async function onSubmit(query: string | null) {
 		setErrors(null);
@@ -105,7 +125,9 @@ function App() {
 			let answerResponse = "";
 			if (searchResponse.documentMatches.length > 0) {
 				abortController.current = new AbortController();
+				window.history.pushState({}, "", `/${searchResponse.userRequestId}`);
 				answerResponse = await generateAnswer({
+					userRequestId: searchResponse.userRequestId,
 					include_summary_in_response_generation: true,
 					query,
 					documentMatches: searchResponse.documentMatches,
@@ -118,14 +140,15 @@ function App() {
 			}
 			setAnswerIsLoading(false);
 
-			setResultHistory((prev) => [
+			setResultHistory([
 				{
-					id: uuidv4(),
+					id: searchResponse.userRequestId,
 					query,
+					feedbacks: [],
 					searchResponse,
 					answerResponse,
 				},
-				...prev,
+				...resultHistory,
 			]);
 		} catch (error) {
 			if (error instanceof Error) {
@@ -144,6 +167,7 @@ function App() {
 	}
 
 	function newRequestHandler(event: React.MouseEvent<HTMLButtonElement>): void {
+		router.push("/");
 		event.preventDefault();
 		resetState();
 	}
@@ -159,13 +183,41 @@ function App() {
 		setSearchIsLoading(false);
 	}
 
-	function restoreResultHistoryItem(id: string): void {
-		const historyEntry = resultHistory.find((entry) => entry.id === id);
-		if (!historyEntry) return;
-		resetState();
-		setSearchResult(historyEntry.searchResponse);
-		setGeneratedAnswer(historyEntry.answerResponse);
-		setTitle(historyEntry.query);
+	async function restoreResultHistoryItem(id: string) {
+		let historyEntry = useHistoryStore
+			.getState()
+			.resultHistory.find((entry) => entry.id === id);
+		if (!historyEntry) {
+			setRequestLoading(true);
+			try {
+				const userRequest = await loadUserRequest(
+					id,
+					abortController.current?.signal,
+				);
+				if (userRequest) historyEntry = userRequest;
+				setResultHistory([
+					userRequest,
+					...useHistoryStore.getState().resultHistory,
+				]);
+			} catch (e) {
+				console.log(e);
+				router.push("/");
+			} finally {
+				setRequestLoading(false);
+			}
+		}
+		if (historyEntry) {
+			resetState();
+			setSearchResult(historyEntry.searchResponse);
+			if (!historyEntry.answerResponse) {
+				setErrors({ query: "historyEntry does not have an answer response" });
+			} else {
+				setGeneratedAnswer(historyEntry.answerResponse);
+			}
+			setTitle(historyEntry.query);
+			setFormData((s) => ({ ...s, query: historyEntry!.query }));
+			window.history.pushState({}, "", `/${historyEntry.id}`);
+		}
 	}
 
 	return (
@@ -191,8 +243,8 @@ function App() {
 										restoreResultHistoryItem(id);
 									}}
 									removeResultHistoryItem={(id) => {
-										setResultHistory((prev) =>
-											prev.filter((entry) => entry.id !== id),
+										setResultHistory(
+											resultHistory.filter((entry) => entry.id !== id),
 										);
 									}}
 								/>
@@ -213,7 +265,7 @@ function App() {
 								<MobileHeader
 									setSidebarisOpen={setSidebarIsOpen}
 									openSplashScreen={() => setShowSplash(true)}
-								></MobileHeader>
+								/>
 								<PromptForm
 									query={formData.query || title}
 									onChange={onChange}
@@ -229,10 +281,9 @@ function App() {
 										error={
 											"Fehler beim Generieren der Antwort. Bitte versuchen Sie es erneut."
 										}
-									></ErrorAlert>
+									/>
 								)}
 							</div>
-
 							<div className="px-2 md:px-2 lg:px-10">
 								<PromptContent
 									title={title}
@@ -242,14 +293,13 @@ function App() {
 										setFormData((s) => ({ ...s, query: text }));
 										onSubmit(text);
 									}}
-									searchIsLoading={searchIsLoading}
-									answerIsLoading={answerIsLoading}
+									searchIsLoading={searchIsLoading || requestLoading}
+									answerIsLoading={answerIsLoading || requestLoading}
 								/>
 							</div>
-
 							<div className="px-2 md:px-2 lg:px-10">
 								<Sources
-									searchIsLoading={searchIsLoading}
+									searchIsLoading={searchIsLoading || requestLoading}
 									searchResult={searchResult}
 								/>
 							</div>
@@ -274,8 +324,8 @@ function App() {
 									restoreResultHistoryItem(id);
 								}}
 								removeResultHistoryItem={(id) => {
-									setResultHistory((prev) =>
-										prev.filter((entry) => entry.id !== id),
+									setResultHistory(
+										resultHistory.filter((entry) => entry.id !== id),
 									);
 								}}
 							/>
