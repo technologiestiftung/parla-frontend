@@ -24,8 +24,8 @@ export const texts = {
 	showMoreDocuments: "Weitere Dokumente anzeigen...",
 	feedback: {
 		short: "Feedback",
-		long: "Beantworte uns gerne einige Fragen.",
-		question: "Wie gefällt Dir Parla? ",
+		long: "Beantworten Sie uns gerne einige Fragen.",
+		question: "Wie gefällt Ihnen Parla? ",
 	},
 	about: {
 		title: "Über Parla",
