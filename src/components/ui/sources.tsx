@@ -3,7 +3,7 @@ import { getDocumentsCount } from "@/lib/get-documents-count";
 import { texts } from "@/lib/texts";
 import { getCleanedMetadata } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import SearchResultSection from "../SearchResultSection";
+import SearchResultSection from "../search-result-section";
 import DocumentLoadingSkeleton from "./document-loading-skeleton";
 
 type SourcesProps = {
