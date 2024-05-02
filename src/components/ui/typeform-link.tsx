@@ -1,11 +1,14 @@
-import { Link } from "../Link";
+import { Link } from "../link";
 
 interface TypeformLinkProps {
 	question: string | undefined;
 	linkText: string;
 }
 
-function TypeformLink({ question, linkText }: TypeformLinkProps): JSX.Element {
+export function TypeformLink({
+	question,
+	linkText,
+}: TypeformLinkProps): JSX.Element {
 	const url = "https://citylabberlin.typeform.com/to/kCdnCgvC#product_id=parla";
 
 	if (!question) {
@@ -25,5 +28,3 @@ function TypeformLink({ question, linkText }: TypeformLinkProps): JSX.Element {
 		</div>
 	);
 }
-
-export default TypeformLink;

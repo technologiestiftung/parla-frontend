@@ -2,9 +2,9 @@ import { HistoryEntryType } from "@/lib/common";
 import { XIcon } from "lucide-react";
 import { MouseEvent, ReactNode } from "react";
 import { Button } from "./ui/button";
-import Sidebar from "./ui/sidebar";
+import { Sidebar } from "./ui/sidebar";
 
-export default function MobileSidebar({
+export function MobileSidebar({
 	isHistoryOpen,
 	setHistoryOpen,
 	sidebarIsOpen,

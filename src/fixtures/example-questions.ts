@@ -1,4 +1,4 @@
-export default [
+export const exampleQuestions = [
 	"Was ist in der Digitalisierungsstrategie Gemeinsam Digital Berlin enthalten?",
 	"Welche Ziele hat der Berliner Senat, um den CO2-Ausstoß zu reduzieren?",
 	"Was tut der Senat, um die Vielfalt der Natur in der Stadt zu schützen?",

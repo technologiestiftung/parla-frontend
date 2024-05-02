@@ -4,7 +4,7 @@ import { texts } from "@/lib/texts";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import AnswerLoadingSkeleton from "./textLoadingSkeleton";
+import { TextLoadingSkeleton } from "./text-loading-skeleton";
 import { AnswerFeedback } from "@/components/ui/answer-feedback";
 
 type AnswerProps = {
@@ -16,7 +16,7 @@ type AnswerProps = {
 
 const formatter = new Intl.NumberFormat("de-DE");
 
-function Answer(props: AnswerProps): JSX.Element {
+export function Answer(props: AnswerProps): JSX.Element {
 	const [documentsCount, setDocumentsCount] = useState("");
 	const { generatedAnswer, searchResult, searchIsLoading, answerIsLoading } =
 		props;
@@ -50,7 +50,7 @@ function Answer(props: AnswerProps): JSX.Element {
 						data-testid="answer-loading-skeleton"
 						className="rounded-lg shadow-md p-4 bg-white"
 					>
-						<AnswerLoadingSkeleton />
+						<TextLoadingSkeleton />
 					</div>
 				)}
 				{generatedAnswer && (
@@ -90,5 +90,3 @@ ${texts.answerDisclaimer}
 		</>
 	);
 }
-
-export default Answer;

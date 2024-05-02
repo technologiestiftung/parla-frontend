@@ -18,7 +18,7 @@ type SidebarProps = {
 	children: ReactNode;
 };
 
-function Sidebar(props: SidebarProps): JSX.Element {
+export function Sidebar(props: SidebarProps): JSX.Element {
 	return (
 		<>
 			<div className="sticky top-0 left-0 bg-inherit">
@@ -76,5 +76,3 @@ function Sidebar(props: SidebarProps): JSX.Element {
 		</>
 	);
 }
-
-export default Sidebar;

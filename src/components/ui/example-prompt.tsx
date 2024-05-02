@@ -3,7 +3,7 @@ type ExamplePromptsProps = {
 	onClick: (prompt: string) => void;
 };
 
-function ExamplePrompts(props: ExamplePromptsProps): JSX.Element {
+export function ExamplePrompts(props: ExamplePromptsProps): JSX.Element {
 	const examples = props.examplePrompts || [];
 	if (examples.length === 0) {
 		return <div></div>;
@@ -32,5 +32,3 @@ function ExamplePrompts(props: ExamplePromptsProps): JSX.Element {
 		</div>
 	);
 }
-
-export default ExamplePrompts;

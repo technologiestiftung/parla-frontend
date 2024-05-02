@@ -1,6 +1,6 @@
 import { HamburgerMenuIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 
-export default function MobileHeader({
+export function MobileHeader({
 	setSidebarisOpen,
 	openSplashScreen,
 }: {

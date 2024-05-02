@@ -1,14 +1,14 @@
 "use client";
-import MobileHeader from "@/components/MobileHeader";
+import { MobileHeader } from "@/components/mobile-header";
 /* eslint-disable @next/next/no-img-element */
-import MobileSidebar from "@/components/MobileSidebar";
+import { MobileSidebar } from "@/components/mobile-sidebar";
 import { SplashScreen } from "@/components/splash-screen";
 import { ErrorAlert } from "@/components/ui/error-alert";
-import PromptForm from "@/components/ui/promptForm";
-import PromptContent from "@/components/ui/promtContent";
-import ResultHistory from "@/components/ui/resultHistory";
-import Sidebar from "@/components/ui/sidebar";
-import Sources from "@/components/ui/sources";
+import { PromptForm } from "@/components/ui/prompt-form";
+import { PromptContent } from "@/components/ui/prompt-content";
+import { ResultHistory } from "@/components/ui/result-history";
+import { Sidebar } from "@/components/ui/sidebar";
+import { Sources } from "@/components/ui/sources";
 import {
 	Algorithms,
 	DocumentSearchBody,
@@ -16,9 +16,9 @@ import {
 	availableAlgorithms,
 } from "@/lib/common";
 import { generateAnswer } from "@/lib/generate-answer";
-import { useHistoryStore } from "@/lib/hooks/localStorage";
+import { useHistoryStore } from "@/lib/hooks/local-storage";
 import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
-import { useMatomo } from "@/lib/hooks/useMatomo";
+import { useMatomo } from "@/lib/hooks/use-matomo";
 import { loadUserRequest } from "@/lib/load-user-request";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
@@ -27,6 +27,7 @@ import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useInitializeSessionId } from "@/lib/hooks/use-initialize-session-id";
 
 // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+// Using default export to satisfy Next.js to use this component to render the page
 export default function Home() {
 	return (
 		<Suspense>
