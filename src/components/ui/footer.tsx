@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useTexts } from "@/lib/hooks/useTexts";
+import { useTexts } from "@/lib/hooks/use-texts";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 

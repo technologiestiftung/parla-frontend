@@ -1,14 +1,14 @@
 "use client";
-import MobileHeader from "@/components/mobile-header";
+import { MobileHeader } from "@/components/mobile-header";
 /* eslint-disable @next/next/no-img-element */
-import MobileSidebar from "@/components/mobile-sidebar";
+import { MobileSidebar } from "@/components/mobile-sidebar";
 import { SplashScreen } from "@/components/splash-screen";
 import { ErrorAlert } from "@/components/ui/error-alert";
-import PromptForm from "@/components/ui/prompt-form";
-import PromptContent from "@/components/ui/prompt-content";
-import ResultHistory from "@/components/ui/result-history";
-import Sidebar from "@/components/ui/sidebar";
-import Sources from "@/components/ui/sources";
+import { PromptForm } from "@/components/ui/prompt-form";
+import { PromptContent } from "@/components/ui/prompt-content";
+import { ResultHistory } from "@/components/ui/result-history";
+import { Sidebar } from "@/components/ui/sidebar";
+import { Sources } from "@/components/ui/sources";
 import {
 	Algorithms,
 	DocumentSearchBody,
@@ -27,6 +27,7 @@ import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useInitializeSessionId } from "@/lib/hooks/use-initialize-session-id";
 
 // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+// Using default export to satisfy Next.js to use this component to render the page
 export default function Home() {
 	return (
 		<Suspense>

@@ -1,8 +1,8 @@
 "use client";
 import { BackButton } from "@/components/ui/back-button";
-import { Footer } from "@/components/ui/Footer";
-import { LegalFooter } from "@/components/ui/LegalFooter";
-import { useTexts } from "@/lib/hooks/useTexts";
+import { Footer } from "@/components/ui/footer";
+import { LegalFooter } from "@/components/ui/legal-footer";
+import { useTexts } from "@/lib/hooks/use-texts";
 import { cn } from "@/lib/utils";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
@@ -11,6 +11,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+// Using default export to satisfy Next.js to use this component to render the page
 export default function Faq() {
 	return (
 		<Suspense>

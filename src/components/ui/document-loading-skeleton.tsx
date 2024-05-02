@@ -44,7 +44,7 @@ function DocumentLoadingSkeletonItem({
 	);
 }
 
-function DocumentLoadingSkeleton() {
+export function DocumentLoadingSkeleton() {
 	const tagsCounts = [3, 2, 5];
 	return (
 		<div data-testid="documents-loading-skeleton" className="w-100 space-y-4">
@@ -60,5 +60,3 @@ function DocumentLoadingSkeleton() {
 		</div>
 	);
 }
-
-export default DocumentLoadingSkeleton;

@@ -1,10 +1,10 @@
 import { DocumentSearchResponse } from "@/lib/common";
 import React, { useEffect, useState } from "react";
-import Answer from "./answer";
-import ExamplePrompts from "./example-prompt";
-import exampleQuestions from "@/fixtures/example-questions";
+import { Answer } from "./answer";
+import { ExamplePrompts } from "./example-prompt";
+import { exampleQuestions } from "@/fixtures/example-questions";
 import { selectRandomItems } from "@/lib/utils";
-import TypeformLink from "./typeform-link";
+import { TypeformLink } from "./typeform-link";
 import { texts } from "@/lib/texts";
 
 type PromptContentProps = {
@@ -16,7 +16,7 @@ type PromptContentProps = {
 	answerIsLoading: boolean;
 };
 
-function PromptContent(props: PromptContentProps) {
+export function PromptContent(props: PromptContentProps) {
 	const {
 		title,
 		searchResult,
@@ -53,7 +53,7 @@ function PromptContent(props: PromptContentProps) {
 				<>
 					<ExamplePrompts
 						examplePrompts={exampleQuestionsToShow}
-						onClick={(text) => onsubmit(text)}
+						onClick={(text: string) => onsubmit(text)}
 					/>
 					<TypeformLink
 						question={texts.feedback.question}
@@ -64,5 +64,3 @@ function PromptContent(props: PromptContentProps) {
 		</div>
 	);
 }
-
-export default PromptContent;

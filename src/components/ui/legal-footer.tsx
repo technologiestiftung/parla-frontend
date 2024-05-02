@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { cn } from "@/lib/utils";
-import { useTexts } from "@/lib/hooks/useTexts";
+import { useTexts } from "@/lib/hooks/use-texts";
 
 export const LegalFooter: FC = () => {
 	const texts = useTexts();

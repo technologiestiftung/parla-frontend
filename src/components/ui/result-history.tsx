@@ -8,7 +8,7 @@ type ResultHistoryProps = {
 	removeResultHistoryItem: (id: string) => void;
 };
 
-function ResultHistory(props: ResultHistoryProps) {
+export function ResultHistory(props: ResultHistoryProps) {
 	return (
 		<>
 			<div className="flex flex-col mt-2">
@@ -50,5 +50,3 @@ function ResultHistory(props: ResultHistoryProps) {
 		</>
 	);
 }
-
-export default ResultHistory;

@@ -1,7 +1,7 @@
 import Link, { LinkProps } from "next/link";
 import { DOMAttributes, FC } from "react";
 import { cn } from "@/lib/utils";
-import { useTexts } from "@/lib/hooks/useTexts";
+import { useTexts } from "@/lib/hooks/use-texts";
 import { Arrow } from "./icons/arrow";
 
 type BackButtonPropsType =

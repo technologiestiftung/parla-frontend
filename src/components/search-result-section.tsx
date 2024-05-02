@@ -56,9 +56,7 @@ function TagsList({ tags }: TagsListProps) {
 	);
 }
 
-export default function SearchResultSection({
-	documentMatch,
-}: SearchResultProps) {
+export function SearchResultSection({ documentMatch }: SearchResultProps) {
 	const { title, pdfUrl, documentName, pages, type, tags, formattedDate } =
 		getCleanedMetadata(documentMatch);
 
