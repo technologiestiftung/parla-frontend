@@ -1,5 +1,5 @@
 "use client";
-import { BackButton } from "@/components/ui/BackButton";
+import { BackButton } from "@/components/ui/back-button";
 import { Footer } from "@/components/ui/Footer";
 import { LegalFooter } from "@/components/ui/LegalFooter";
 import { useTexts } from "@/lib/hooks/useTexts";

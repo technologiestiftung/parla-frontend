@@ -4,7 +4,7 @@ import { texts } from "@/lib/texts";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import AnswerLoadingSkeleton from "./textLoadingSkeleton";
+import AnswerLoadingSkeleton from "./text-loading-skeleton";
 import { AnswerFeedback } from "@/components/ui/answer-feedback";
 
 type AnswerProps = {

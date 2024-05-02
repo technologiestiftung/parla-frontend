@@ -1,10 +1,10 @@
 import { DocumentSearchResponse } from "@/lib/common";
 import React, { useEffect, useState } from "react";
 import Answer from "./answer";
-import ExamplePrompts from "./examplePrompts";
+import ExamplePrompts from "./example-prompt";
 import exampleQuestions from "@/fixtures/example-questions";
 import { selectRandomItems } from "@/lib/utils";
-import TypeformLink from "./TypeformLink";
+import TypeformLink from "./typeform-link";
 import { texts } from "@/lib/texts";
 
 type PromptContentProps = {

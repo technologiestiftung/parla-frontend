@@ -4,7 +4,7 @@ import { texts } from "@/lib/texts";
 import { getCleanedMetadata } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import SearchResultSection from "../SearchResultSection";
-import DocumentLoadingSkeleton from "./documentLoadingSkeleton";
+import DocumentLoadingSkeleton from "./document-loading-skeleton";
 
 type SourcesProps = {
 	searchResult: DocumentSearchResponse | null;

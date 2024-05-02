@@ -14,7 +14,7 @@ import { Link } from "./Link";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { texts } from "@/lib/texts";
-import TypeformLink from "./ui/TypeformLink";
+import TypeformLink from "./ui/typeform-link";
 
 export function SplashScreen({
 	open,

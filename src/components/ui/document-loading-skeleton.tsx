@@ -1,6 +1,4 @@
-import React from "react";
-import { AcrobatIcon } from "./icons/acrobat-icon";
-import TextLoadingSkeleton from "./textLoadingSkeleton";
+import TextLoadingSkeleton from "./text-loading-skeleton";
 
 function DocumentLoadingSkeletonItem({
 	delay,

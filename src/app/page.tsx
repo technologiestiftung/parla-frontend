@@ -4,9 +4,9 @@ import MobileHeader from "@/components/MobileHeader";
 import MobileSidebar from "@/components/MobileSidebar";
 import { SplashScreen } from "@/components/splash-screen";
 import { ErrorAlert } from "@/components/ui/error-alert";
-import PromptForm from "@/components/ui/promptForm";
-import PromptContent from "@/components/ui/promtContent";
-import ResultHistory from "@/components/ui/resultHistory";
+import PromptForm from "@/components/ui/prompt-form";
+import PromptContent from "@/components/ui/prompt-content";
+import ResultHistory from "@/components/ui/result-history";
 import Sidebar from "@/components/ui/sidebar";
 import Sources from "@/components/ui/sources";
 import {
