@@ -10,11 +10,11 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { Link } from "./Link";
+import { Link } from "./link";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { texts } from "@/lib/texts";
-import TypeformLink from "./ui/typeform-link";
+import { TypeformLink } from "./ui/typeform-link";
 
 export function SplashScreen({
 	open,

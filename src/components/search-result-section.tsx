@@ -1,7 +1,7 @@
 import type { ResponseDocumentMatch } from "@/lib/common";
 import { cn, getCleanedMetadata } from "@/lib/utils";
 import { useState } from "react";
-import { Link } from "./Link";
+import { Link } from "./link";
 import { AcrobatIcon } from "./ui/icons/acrobat-icon";
 import { GlobeIcon } from "@radix-ui/react-icons";
 

@@ -1,4 +1,4 @@
-import { Link } from "../Link";
+import { Link } from "../link";
 
 interface TypeformLinkProps {
 	question: string | undefined;

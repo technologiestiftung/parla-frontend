@@ -4,7 +4,7 @@ import { texts } from "@/lib/texts";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import AnswerLoadingSkeleton from "./text-loading-skeleton";
+import { TextLoadingSkeleton } from "./text-loading-skeleton";
 import { AnswerFeedback } from "@/components/ui/answer-feedback";
 
 type AnswerProps = {
@@ -50,7 +50,7 @@ export function Answer(props: AnswerProps): JSX.Element {
 						data-testid="answer-loading-skeleton"
 						className="rounded-lg shadow-md p-4 bg-white"
 					>
-						<AnswerLoadingSkeleton />
+						<TextLoadingSkeleton />
 					</div>
 				)}
 				{generatedAnswer && (
