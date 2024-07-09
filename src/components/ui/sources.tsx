@@ -3,8 +3,8 @@ import { getDocumentsCount } from "@/lib/get-documents-count";
 import { texts } from "@/lib/texts";
 import { getCleanedMetadata } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import SearchResultSection from "../SearchResultSection";
-import DocumentLoadingSkeleton from "./documentLoadingSkeleton";
+import { SearchResultSection } from "../search-result-section";
+import { DocumentLoadingSkeleton } from "./document-loading-skeleton";
 
 type SourcesProps = {
 	searchResult: DocumentSearchResponse | null;
@@ -13,7 +13,7 @@ type SourcesProps = {
 
 const formatter = new Intl.NumberFormat("de-DE");
 
-function Sources(props: SourcesProps): JSX.Element {
+export function Sources(props: SourcesProps): JSX.Element {
 	const [numVisibleMatches, setNumVisibleMatches] = useState(3);
 
 	const [documentsCount, setDocumentsCount] = useState("");
@@ -75,5 +75,3 @@ function Sources(props: SourcesProps): JSX.Element {
 		</div>
 	);
 }
-
-export default Sources;

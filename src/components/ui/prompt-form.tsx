@@ -8,7 +8,7 @@ type PromptFormProps = {
 	onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
-function PromptForm(props: PromptFormProps): JSX.Element {
+export function PromptForm(props: PromptFormProps): JSX.Element {
 	const { onSubmit, query, isLoading, onChange } = props;
 	const textAreaRef = useRef<HTMLTextAreaElement>(null);
 	const [uiInitializing, setUiInitializing] = useState(true);
@@ -120,5 +120,3 @@ function Spinner() {
 		</svg>
 	);
 }
-
-export default PromptForm;
