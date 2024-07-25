@@ -1,6 +1,6 @@
 import { FeedbackType } from "@/lib/common";
 import { getAllFeedbacks } from "@/lib/get-all-feedbacks";
-import { useHistoryStore } from "@/lib/hooks/localStorage";
+import { useHistoryStore } from "@/lib/hooks/local-storage";
 import { saveUserFeedback } from "@/lib/save-user-feedback";
 import { texts } from "@/lib/texts";
 import { cn } from "@/lib/utils";

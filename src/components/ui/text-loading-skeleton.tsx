@@ -1,6 +1,6 @@
 import React from "react";
 
-function TextLoadingSkeleton({ linesCount = 10, animate = true }) {
+export function TextLoadingSkeleton({ linesCount = 10, animate = true }) {
 	const offsets = [30, 20, 40, 30, 50, 40, 20, 10, 30, 20];
 	return (
 		<div className="flex flex-col gap-2 bg-white">
@@ -22,5 +22,3 @@ function TextLoadingSkeleton({ linesCount = 10, animate = true }) {
 		</div>
 	);
 }
-
-export default TextLoadingSkeleton;

@@ -1,6 +1,6 @@
 import { HistoryEntryType } from "@/lib/common";
 import { cn } from "@/lib/utils";
-import { MessageIcon } from "./MessageIcon";
+import { MessageIcon } from "./message-icon";
 
 type ResultHistoryProps = {
 	resultHistory: HistoryEntryType[];
@@ -8,7 +8,7 @@ type ResultHistoryProps = {
 	removeResultHistoryItem: (id: string) => void;
 };
 
-function ResultHistory(props: ResultHistoryProps) {
+export function ResultHistory(props: ResultHistoryProps) {
 	return (
 		<>
 			<div className="flex flex-col mt-2">
@@ -50,5 +50,3 @@ function ResultHistory(props: ResultHistoryProps) {
 		</>
 	);
 }
-
-export default ResultHistory;

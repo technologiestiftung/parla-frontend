@@ -2,6 +2,7 @@
 
 import Home from "../page";
 
-export default function Test() {
+// Using default export to satisfy Next.js to use this component to render the page
+export default function UserRequestPage() {
 	return Home();
 }
