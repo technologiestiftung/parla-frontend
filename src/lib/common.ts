@@ -83,19 +83,24 @@ export enum Algorithms {
 	SummariesThenChunks = "summaries-then-chunks",
 }
 
+// num_probes should be set to sqrt(num_rows_of_table / 1000)
+// for reference, see https://github.com/pgvector/pgvector
+const NUM_PROBES_SUMMARY = process.env.NEXT_PUBLIC_NUM_PROBES_SUMMARY || 4;
+const NUM_PROBES_CHUNKS = process.env.NEXT_PUBLIC_NUM_PROBES_CHUNKS || 12;
+
 export const availableAlgorithms = [
 	{
 		match_threshold: 0.85,
-		num_probes_summaries: 3,
-		num_probes_chunks: 9,
+		num_probes_summaries: NUM_PROBES_SUMMARY,
+		num_probes_chunks: NUM_PROBES_CHUNKS,
 		chunk_limit: 64,
 		document_limit: 20,
 		search_algorithm: Algorithms.ChunksOnly,
 	} as DocumentSearchBody,
 	{
 		match_threshold: 0.85,
-		num_probes_summaries: 3,
-		num_probes_chunks: 9,
+		num_probes_summaries: NUM_PROBES_SUMMARY,
+		num_probes_chunks: NUM_PROBES_CHUNKS,
 		chunk_limit: 128,
 		summary_limit: 16,
 		document_limit: 20,
@@ -103,8 +108,8 @@ export const availableAlgorithms = [
 	} as DocumentSearchBody,
 	{
 		match_threshold: 0.85,
-		num_probes_summaries: 3,
-		num_probes_chunks: 9,
+		num_probes_summaries: NUM_PROBES_SUMMARY,
+		num_probes_chunks: NUM_PROBES_CHUNKS,
 		summary_limit: 64,
 		document_limit: 20,
 		search_algorithm: Algorithms.SummariesThenChunks,
