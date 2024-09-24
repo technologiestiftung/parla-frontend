@@ -123,6 +123,14 @@
 	.markdown-container h6 {
 		@apply text-xl;
 	}
+
+	.markdown-container pre {
+		@apply whitespace-pre-wrap w-full font-sans;
+	}
+
+	.markdown-container code {
+		@apply font-sans;
+	}
 }
 
 :root {
