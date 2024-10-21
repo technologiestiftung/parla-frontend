@@ -205,34 +205,37 @@ export function AnswerFeedback({
 				leave="transition-opacity duration-100"
 				leaveFrom="opacity-100"
 				leaveTo="opacity-0"
-				className={`flex flex-col self-center rounded-lg shadow-md p-4 bg-white w-full`}
 			>
-				<span className="flex flex-row justify-between">
-					{texts.answerTellUsMore}{" "}
-					<button onClick={() => setAreTagsVisible(false)}>
-						<XIcon className="text-slate-500 hover:text-slate-700 w-5" />
-					</button>
-				</span>
-				<div className="flex flex-wrap gap-x-6 gap-y-4 py-4 pointer-events-">
-					{allFeedbacks
-						.filter((feedback) => feedback.tag)
-						.map((feedback) => (
-							<label
-								key={feedback.id}
-								className={`rounded-lg border border-slate-300 p-2 cursor-pointer 
-							${selectedTag === feedback.tag ? "bg-parla-blue hover:bg-parla-blue text-white" : "hover:bg-slate-50"}`}
-							>
-								<input
-									type="radio"
-									name="tag"
-									onChange={(e) => onTagClick(e, feedback.id)}
+				<div
+					className={`flex flex-col self-center rounded-lg shadow-md p-4 bg-white w-full`}
+				>
+					<span className="flex flex-row justify-between">
+						{texts.answerTellUsMore}{" "}
+						<button onClick={() => setAreTagsVisible(false)}>
+							<XIcon className="text-slate-500 hover:text-slate-700 w-5" />
+						</button>
+					</span>
+					<div className="flex flex-wrap gap-x-6 gap-y-4 py-4 pointer-events-">
+						{allFeedbacks
+							.filter((feedback) => feedback.tag)
+							.map((feedback) => (
+								<label
 									key={feedback.id}
-									value={feedback.tag ?? ""}
-									className="hidden peer"
-								/>
-								{feedback.tag && feedback.tag}
-							</label>
-						))}
+									className={`rounded-lg border border-slate-300 p-2 cursor-pointer 
+							${selectedTag === feedback.tag ? "bg-parla-blue hover:bg-parla-blue text-white" : "hover:bg-slate-50"}`}
+								>
+									<input
+										type="radio"
+										name="tag"
+										onChange={(e) => onTagClick(e, feedback.id)}
+										key={feedback.id}
+										value={feedback.tag ?? ""}
+										className="hidden peer"
+									/>
+									{feedback.tag && feedback.tag}
+								</label>
+							))}
+					</div>
 				</div>
 			</Transition>
 
