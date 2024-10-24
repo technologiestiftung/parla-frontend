@@ -4,8 +4,8 @@ import { MobileHeader } from "@/components/mobile-header";
 import { MobileSidebar } from "@/components/mobile-sidebar";
 import { SplashScreen } from "@/components/splash-screen";
 import { ErrorAlert } from "@/components/ui/error-alert";
-import { PromptForm } from "@/components/ui/prompt-form";
 import { PromptContent } from "@/components/ui/prompt-content";
+import { PromptForm } from "@/components/ui/prompt-form";
 import { ResultHistory } from "@/components/ui/result-history";
 import { Sidebar } from "@/components/ui/sidebar";
 import { Sources } from "@/components/ui/sources";
@@ -13,18 +13,18 @@ import {
 	Algorithms,
 	DocumentSearchBody,
 	DocumentSearchResponse,
-	availableAlgorithms,
+	documentSearchBody,
 } from "@/lib/common";
 import { generateAnswer } from "@/lib/generate-answer";
 import { useHistoryStore } from "@/lib/hooks/local-storage";
 import { useShowSplashScreenFromLocalStorage } from "@/lib/hooks/show-splash-screen";
+import { useInitializeSessionId } from "@/lib/hooks/use-initialize-session-id";
 import { useMatomo } from "@/lib/hooks/use-matomo";
 import { loadUserRequest } from "@/lib/load-user-request";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useRef, useState } from "react";
-import { useInitializeSessionId } from "@/lib/hooks/use-initialize-session-id";
 
 // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
 // Using default export to satisfy Next.js to use this component to render the page
@@ -37,7 +37,7 @@ export default function Home() {
 }
 
 function App() {
-	const defaultFormdata: DocumentSearchBody = availableAlgorithms[1];
+	const defaultFormdata: DocumentSearchBody = documentSearchBody;
 
 	useMatomo();
 	useInitializeSessionId();
@@ -66,10 +66,7 @@ function App() {
 	const { resultHistory, setResultHistory } = useHistoryStore();
 
 	const { showSplashScreenRef } = useShowSplashScreenFromLocalStorage();
-	const algorithm = availableAlgorithms.find(
-		(alg) => alg.search_algorithm === selectedSearchAlgorithm,
-	) as DocumentSearchBody;
-	const [searchConfig] = useState<DocumentSearchBody>(algorithm);
+	const [searchConfig] = useState<DocumentSearchBody>(defaultFormdata);
 
 	useEffect(() => {
 		setSidebarIsOpen(false);
