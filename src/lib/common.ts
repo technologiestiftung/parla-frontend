@@ -21,7 +21,7 @@ export interface Question {
 }
 
 export interface DocumentSearchBody {
-	query?: string;
+	query: string;
 	match_threshold: number;
 	num_probes_summaries: number;
 	num_probes_chunks: number;
@@ -92,6 +92,7 @@ const NUM_PROBES_CHUNKS = process.env.NEXT_PUBLIC_NUM_PROBES_CHUNKS
 	: 12;
 
 export const documentSearchBody: DocumentSearchBody = {
+	query: "",
 	match_threshold: 0.85,
 	num_probes_summaries: NUM_PROBES_SUMMARY,
 	num_probes_chunks: NUM_PROBES_CHUNKS,
