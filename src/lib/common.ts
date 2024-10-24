@@ -88,33 +88,15 @@ export enum Algorithms {
 const NUM_PROBES_SUMMARY = process.env.NEXT_PUBLIC_NUM_PROBES_SUMMARY || 4;
 const NUM_PROBES_CHUNKS = process.env.NEXT_PUBLIC_NUM_PROBES_CHUNKS || 12;
 
-export const availableAlgorithms = [
-	{
-		match_threshold: 0.85,
-		num_probes_summaries: NUM_PROBES_SUMMARY,
-		num_probes_chunks: NUM_PROBES_CHUNKS,
-		chunk_limit: 64,
-		document_limit: 20,
-		search_algorithm: Algorithms.ChunksOnly,
-	} as DocumentSearchBody,
-	{
-		match_threshold: 0.85,
-		num_probes_summaries: NUM_PROBES_SUMMARY,
-		num_probes_chunks: NUM_PROBES_CHUNKS,
-		chunk_limit: 128,
-		summary_limit: 16,
-		document_limit: 20,
-		search_algorithm: Algorithms.ChunksAndSummaries,
-	} as DocumentSearchBody,
-	{
-		match_threshold: 0.85,
-		num_probes_summaries: NUM_PROBES_SUMMARY,
-		num_probes_chunks: NUM_PROBES_CHUNKS,
-		summary_limit: 64,
-		document_limit: 20,
-		search_algorithm: Algorithms.SummariesThenChunks,
-	} as DocumentSearchBody,
-];
+export const documentSearchBody = {
+	match_threshold: 0.85,
+	num_probes_summaries: NUM_PROBES_SUMMARY,
+	num_probes_chunks: NUM_PROBES_CHUNKS,
+	chunk_limit: 128,
+	summary_limit: 16,
+	document_limit: 20,
+	search_algorithm: Algorithms.ChunksAndSummaries,
+} as DocumentSearchBody;
 
 export interface FeedbackType {
 	id: number;
