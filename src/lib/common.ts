@@ -21,11 +21,10 @@ export interface Question {
 }
 
 export interface DocumentSearchBody {
-	query: string;
+	query?: string;
 	match_threshold: number;
 	num_probes_summaries: number;
 	num_probes_chunks: number;
-	match_count: number;
 	chunk_limit: number;
 	summary_limit: number;
 	document_limit: number;
@@ -85,10 +84,14 @@ export enum Algorithms {
 
 // num_probes should be set to sqrt(num_rows_of_table / 1000)
 // for reference, see https://github.com/pgvector/pgvector
-const NUM_PROBES_SUMMARY = process.env.NEXT_PUBLIC_NUM_PROBES_SUMMARY || 4;
-const NUM_PROBES_CHUNKS = process.env.NEXT_PUBLIC_NUM_PROBES_CHUNKS || 12;
+const NUM_PROBES_SUMMARY = process.env.NEXT_PUBLIC_NUM_PROBES_SUMMARY
+	? parseInt(process.env.NEXT_PUBLIC_NUM_PROBES_SUMMARY)
+	: 4;
+const NUM_PROBES_CHUNKS = process.env.NEXT_PUBLIC_NUM_PROBES_CHUNKS
+	? parseInt(process.env.NEXT_PUBLIC_NUM_PROBES_CHUNKS)
+	: 12;
 
-export const documentSearchBody = {
+export const documentSearchBody: DocumentSearchBody = {
 	match_threshold: 0.85,
 	num_probes_summaries: NUM_PROBES_SUMMARY,
 	num_probes_chunks: NUM_PROBES_CHUNKS,
@@ -96,7 +99,7 @@ export const documentSearchBody = {
 	summary_limit: 16,
 	document_limit: 20,
 	search_algorithm: Algorithms.ChunksAndSummaries,
-} as DocumentSearchBody;
+};
 
 export interface FeedbackType {
 	id: number;
