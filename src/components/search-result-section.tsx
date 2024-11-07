@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Link } from "./link";
 import { AcrobatIcon } from "./ui/icons/acrobat-icon";
 import { GlobeIcon } from "@radix-ui/react-icons";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface SearchResultProps {
 	documentMatch: ResponseDocumentMatch | undefined;
@@ -20,7 +22,10 @@ function ExpandableTableCell({ content }: { content: string }) {
 
 	return (
 		<p className="text-sm sm:text-base mb-4">
-			{displayedContent}
+			<ReactMarkdown remarkPlugins={[remarkGfm]} className="markdown-container">
+				{displayedContent}
+			</ReactMarkdown>
+
 			<button
 				className={cn(
 					"underline text-blue-700 hover:text-blue-900",
