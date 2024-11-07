@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { TextLoadingSkeleton } from "./text-loading-skeleton";
 import { AnswerFeedback } from "@/components/ui/answer-feedback";
+import remarkGfm from "remark-gfm";
 
 type AnswerProps = {
 	generatedAnswer: string | null;
@@ -56,7 +57,10 @@ export function Answer(props: AnswerProps): JSX.Element {
 				{generatedAnswer && (
 					<>
 						<div data-testid="generated-answer">
-							<ReactMarkdown className="markdown-container leading-6 bg-white p-4 rounded-lg shadow-md space-y-4">
+							<ReactMarkdown
+								remarkPlugins={[remarkGfm]}
+								className="markdown-container leading-6 bg-white p-4 rounded-lg shadow-md space-y-4"
+							>
 								{generatedAnswer}
 							</ReactMarkdown>
 						</div>
