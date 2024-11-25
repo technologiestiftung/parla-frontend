@@ -101,27 +101,19 @@
 	}
 
 	.markdown-container h1 {
-		@apply text-6xl;
+		@apply text-3xl py-2;
 	}
 
 	.markdown-container h2 {
-		@apply text-5xl;
+		@apply text-2xl py-2;
 	}
 
 	.markdown-container h3 {
-		@apply text-4xl;
+		@apply text-xl py-2;
 	}
 
 	.markdown-container h4 {
-		@apply text-3xl;
-	}
-
-	.markdown-container h5 {
-		@apply text-2xl;
-	}
-
-	.markdown-container h6 {
-		@apply text-xl;
+		@apply text-lg py-2;
 	}
 
 	.markdown-container pre {
@@ -130,6 +122,21 @@
 
 	.markdown-container code {
 		@apply font-sans;
+	}
+
+	.markdown-container {
+		tbody,
+		td,
+		tfoot,
+		th,
+		thead,
+		tr {
+			text-align: left;
+			border-color: inherit !important;
+			border-style: solid !important;
+			border-width: 2px !important;
+			padding: 0.5rem;
+		}
 	}
 }
 
