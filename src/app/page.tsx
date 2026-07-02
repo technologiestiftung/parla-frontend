@@ -23,7 +23,12 @@ import { useMatomo } from "@/lib/hooks/use-matomo";
 import { loadUserRequest } from "@/lib/load-user-request";
 import { cn } from "@/lib/utils";
 import { vectorSearch } from "@/lib/vector-search";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+	notFound,
+	usePathname,
+	useRouter,
+	useSearchParams,
+} from "next/navigation";
 import React, { Suspense, useEffect, useRef, useState } from "react";
 
 // https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
@@ -60,6 +65,7 @@ function App() {
 		useState<DocumentSearchResponse | null>(null);
 	const [generatedAnswer, setGeneratedAnswer] = useState<string | null>(null);
 	const [_errors, setErrors] = useState<Record<string, any> | null>(null);
+	const [requestNotFound, setRequestNotFound] = useState(false);
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const [historyIsOpen, setHistoryIsOpen] = useState(true);
 
@@ -187,6 +193,7 @@ function App() {
 			.resultHistory.find((entry) => entry.id === id);
 		if (!historyEntry) {
 			setRequestLoading(true);
+			setRequestNotFound(false);
 			try {
 				const userRequest = await loadUserRequest(
 					id,
@@ -199,7 +206,7 @@ function App() {
 				]);
 			} catch (e) {
 				console.log(e);
-				router.push("/");
+				setRequestNotFound(true);
 			} finally {
 				setRequestLoading(false);
 			}
@@ -216,6 +223,10 @@ function App() {
 			setFormData((s) => ({ ...s, query: historyEntry!.query }));
 			window.history.pushState({}, "", `/${historyEntry.id}`);
 		}
+	}
+
+	if (requestNotFound) {
+		notFound();
 	}
 
 	return (

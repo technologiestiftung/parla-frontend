@@ -1,5 +1,11 @@
 export const texts = {
 	backText: "Zurück",
+	notFound: {
+		title: "Seite nicht gefunden",
+		description:
+			"Die von Ihnen aufgerufene Seite existiert nicht oder wurde verschoben.",
+		backToHome: "Zur Startseite",
+	},
 	disclaimerLabel: "Hinweis",
 	disclaimerAriaLabel: "Hinweis zur Verbindlichkeit der Antworten",
 	noResultsTitle:
