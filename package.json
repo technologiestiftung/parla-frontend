@@ -41,7 +41,7 @@
 		"eslint": "8.57.0",
 		"eslint-config-next": "14.2.10",
 		"eslint-plugin-react": "7.33.2",
-		"next": "14.2.15",
+		"next": "15.5.16",
 		"playwright-msw": "3.0.1",
 		"postcss": "8.4.47",
 		"prettier": "3.2.5",
