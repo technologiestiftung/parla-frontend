@@ -45,7 +45,7 @@ export function SplashScreen({
 				<div className="space-y-3 text-base">
 					<p>
 						Dieser Prototyp durchsucht die Schriftlichen Anfragen und die
-						Hauptausschussvorgänge (&quot;Rote Nummern&quot;) der Wahlperiode 19
+						Hauptausschussvorgänge (&quot;Rote Nummern&quot;) ab der Wahlperiode 19
 						des Berliner Abgeordnetenhauses und erstellt anhand eines Large
 						Language Models Vorlagen für die Beantwortung der gestellten Frage.
 						Die Quellen sind auf{" "}
