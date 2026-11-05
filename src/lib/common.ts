@@ -90,10 +90,13 @@ const NUM_PROBES_SUMMARY = process.env.NEXT_PUBLIC_NUM_PROBES_SUMMARY
 const NUM_PROBES_CHUNKS = process.env.NEXT_PUBLIC_NUM_PROBES_CHUNKS
 	? parseInt(process.env.NEXT_PUBLIC_NUM_PROBES_CHUNKS)
 	: 12;
+const MATCH_THRESHOLD = process.env.NEXT_PUBLIC_MATCH_THRESHOLD
+	? parseFloat(process.env.NEXT_PUBLIC_MATCH_THRESHOLD)
+	: 0.85;
 
 export const documentSearchBody: DocumentSearchBody = {
 	query: "",
-	match_threshold: 0.85,
+	match_threshold: MATCH_THRESHOLD,
 	num_probes_summaries: NUM_PROBES_SUMMARY,
 	num_probes_chunks: NUM_PROBES_CHUNKS,
 	chunk_limit: 128,
