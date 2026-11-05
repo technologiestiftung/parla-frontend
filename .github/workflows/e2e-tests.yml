@@ -10,7 +10,7 @@ jobs:
     env:
       CI: true
       NEXT_PUBLIC_PARLA_API_URL: http://localhost:8080
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js from .nvmrc
