@@ -62,6 +62,8 @@ export function PromptForm(props: PromptFormProps): JSX.Element {
 					ref={textAreaRef}
 					value={query || ""}
 					rows={1}
+					// Must match MAX_QUERY_LENGTH in parla-api
+					maxLength={2000}
 					name="query"
 					id="query"
 					className="w-full py-4 pl-4 pr-[45px] rounded-md shadow-md shadow-blue-200 resize-none h-auto"
