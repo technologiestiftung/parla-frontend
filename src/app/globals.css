@@ -116,6 +116,24 @@
 		@apply text-lg py-2;
 	}
 
+	.answer-card > * + * {
+		@apply mt-4;
+	}
+
+	.answer-card :is(h1, h2, h3, h4, h5, h6) {
+		@apply font-bold py-0;
+		font-size: inherit;
+		line-height: inherit;
+	}
+
+	.answer-card h1 {
+		font-size: 1.125em;
+	}
+
+	.answer-card > :is(h1, h2, h3, h4, h5, h6) + * {
+		margin-top: 0.125em;
+	}
+
 	.markdown-container pre {
 		@apply whitespace-pre-wrap w-full font-sans;
 	}

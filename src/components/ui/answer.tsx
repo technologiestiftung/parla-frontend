@@ -59,7 +59,7 @@ export function Answer(props: AnswerProps): JSX.Element {
 						<div data-testid="generated-answer">
 							<ReactMarkdown
 								remarkPlugins={[remarkGfm]}
-								className="markdown-container leading-6 bg-white p-4 rounded-lg shadow-md space-y-4"
+								className="markdown-container answer-card leading-6 bg-white p-4 rounded-lg shadow-md"
 							>
 								{generatedAnswer}
 							</ReactMarkdown>
